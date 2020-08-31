@@ -68,9 +68,9 @@ const App = () => {
         <VideoPlayer closeVideo={closeVideo} src={video.src} />
       )}
       <div className="App">
-        <header>
+
           <Header />
-        </header>
+
 
         <div className="content-pane">
           <div className="main-pane">

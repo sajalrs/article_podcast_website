@@ -9,6 +9,11 @@
   justify-content: flex-start;
 }
 
+.ballast{
+  height: 0;
+  width: 100%;
+}
+
 #header-title {
   color: white;
   font-family: "Montserrat", sans-serif;
