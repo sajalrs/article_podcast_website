@@ -15,7 +15,7 @@ const SidePanel = (props) => {
                 title={item.title}
                 image={item.image}
                 LinkType={item.LinkType}
-                playVideo={item.playVideo}
+                onClick={item.onClick}
                 link={item.link}
               />
             </li>

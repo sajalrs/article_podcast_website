@@ -8,7 +8,7 @@ const SmallCard = (props) => {
       <ImageContainer
         image={props.image}
         LinkType={props.LinkType}
-        playVideo={props.playVideo}
+        onClick={props.onClick}
         link={props.link}
       />
       <CardBody
@@ -29,7 +29,7 @@ const ImageContainer = (props) => {
     <div
       className={styles["img-container"]}
       style={{ backgroundImage: `url('${props.image}')` }}
-      onClick={() => {props.playVideo(props.link);}}
+      onClick={() => {props.onClick(props.link);}}
     >
       <div>
         {isVideo && (

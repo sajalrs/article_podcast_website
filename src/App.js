@@ -40,6 +40,15 @@ const App = () => {
     return `https://www.youtube.com/embed/${id}?rel=0&start=${start? start : 0}&autoplay=1`;
   };
 
+  const getLinkFunction = (linkType) => {
+    switch(linkType){
+      case Card.LinkType["video-youtube"]:
+        return playVideo;
+        break;
+      default:
+        break;  
+    }
+  }
 
   return (
     
@@ -67,7 +76,9 @@ const App = () => {
                   text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                   author="Ishan Sharma"
                   LinkType={Card.LinkType["video-external"]}
-                />
+                  onClick= {playVideo}
+                  link={getEmbedPlayerLink("g-4UdaC2-F8")}
+               />
               </div>
             ) : (
               <div className="main-pane-item m">
@@ -78,7 +89,9 @@ const App = () => {
                   text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                   author="Ishan Sharma"
                   LinkType={Card.LinkType["video-external"]}
-                />
+                  onClick= {playVideo}
+                  link={getEmbedPlayerLink("g-4UdaC2-F8")}
+               />
               </div>
             )}
             <div className="main-pane-item m">
@@ -89,6 +102,8 @@ const App = () => {
                 text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                 author="Ishan Sharma"
                 LinkType={Card.LinkType["article-external"]}
+                onClick= {playVideo}
+                link={getEmbedPlayerLink("g-4UdaC2-F8")}
               />
             </div>
 
@@ -100,6 +115,8 @@ const App = () => {
                 text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                 author="Ishan Sharma"
                 LinkType={Card.LinkType["article-external"]}
+                onClick= {playVideo}
+                link={getEmbedPlayerLink("g-4UdaC2-F8")}
               />
             </div>
             <div className="main-pane-item m">
@@ -109,8 +126,9 @@ const App = () => {
                 title="Youtubers Partying During Pandemic"
                 text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                 author="Ishan Sharma"
-                isVideo={true}
                 LinkType={Card.LinkType["video-youtube"]}
+                onClick= {getLinkFunction(Card.LinkType["video-youtube"])}
+                link={getEmbedPlayerLink("g-4UdaC2-F8")}
               />
             </div>
           </div>
@@ -121,14 +139,14 @@ const App = () => {
                   title: "Podcast 1",
                   image: getImageLink("jbG9LJs_Npg"),
                   LinkType: Card.LinkType["video-youtube"],
-                  playVideo: playVideo,
+                  onClick: getLinkFunction(Card.LinkType["video-youtube"]),
                   link: getEmbedPlayerLink("jbG9LJs_Npg")
                 },
                 {
                   title: "Podcast 2",
                   image: getImageLink("g-4UdaC2-F8"),
                   LinkType: Card.LinkType["video-youtube"],
-                  playVideo: playVideo,
+                  onClick: getLinkFunction(Card.LinkType["video-youtube"]),
                   link: getEmbedPlayerLink("g-4UdaC2-F8")
                 },
                 
