@@ -1,0 +1,100 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  padding: 9px;
+  background-color: white;
+  box-sizing: border-box;
+  /* width: 60%; */
+}
+
+.img-container {
+  height: 125px;
+  width: 222px;
+  background-size: cover;
+  min-width: 222px;
+  min-height: 125px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-container:hover {
+  cursor: pointer;
+}
+
+.img-container:hover > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+}
+
+.fa-play-circle {
+  align-self: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  background-color: white;
+  padding: 1px;
+  border-radius: 50%;
+}
+
+.img-container:hover > div > .fa-play-circle {
+  color: var(--secondary-color);
+}
+
+.card-body {
+  padding-left: 18px;
+  color: var(--secondary-color);
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1px;
+}
+
+.card-body > h2 {
+  color: var(--primary-color);
+}
+
+.card-body > h2:hover {
+  color: var(--secondary-color);
+  cursor: pointer;
+}
+
+.card-body > p > .date {
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.card-body > p > .author {
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.card-body > p {
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+}
+
+
+
+/* @media screen and (max-width: 1250px){
+    .card{
+        width: 80%;
+    }
+}
+
+
+@media screen and (max-width: 550px){
+    .card{
+        width: 70%;
+        flex-direction: column;
+        padding-top: 36px;
+    }
+  }
+   */

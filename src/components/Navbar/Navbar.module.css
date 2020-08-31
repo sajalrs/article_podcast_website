@@ -1,0 +1,140 @@
+.Navbar{
+    background-color:var(--primary-color);
+    /* background-color: #05386B; */
+    margin-top: 0px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'Montserrat', sans-serif;
+    border-style: solid none solid none;
+    border-color: var(--secondary-color);
+    /* border-color:  hsl(210, 91%, 22%); */
+}
+
+.nav-links-list{
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 20px;
+
+}
+
+.navbar-title{
+
+    color: white;
+    font-size: 1.5rem;
+    margin-left: 2vw;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.navigation{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 2vw;
+}
+
+.social-links{
+    overflow: hidden;
+}
+
+.social-links .fab{
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    align-self: center;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.social-links .fas{
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    align-self: center;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.social-links .fab:hover{
+    color: white;
+}
+
+.social-links .fas:hover{
+    color: white;
+}
+
+.social-links{
+    display: flex;
+    list-style: none;
+}
+
+.nav-link{
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+.nav-link:hover{
+    background-color: var(--secondary-color);
+    color: white;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.3s ease 0s;
+    letter-spacing: 4px;
+}
+
+.fa-bars{
+    transform: translateX(1000%);
+}
+
+.fa-times{
+    transform: translateX(1000%);
+}
+
+
+@media screen and (max-width: 1250px){
+    
+    .nav-links-list{
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        transform: translate(160px, 155px);
+        background-color: var(--primary-color);
+        padding-left: 0;
+        border-style: none solid solid solid;
+        border-color:  var(--secondary-color);
+        transition: all 0.1s linear; 
+        width: 220px;
+    }
+    
+    .list-item{
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .list-item-even{
+        border-style: solid none solid none;
+        border-color:  var(--secondary-color);
+    }
+    
+    .fa-bars{
+        transform: translateX(0);
+    }
+
+    .fa-times{
+        transform: translateX(0);
+    }
+
+    
+    .nav-links-list-inactive{
+        transform: translateY(-1000%);
+    }
+
+}
