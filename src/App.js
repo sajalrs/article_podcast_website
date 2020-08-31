@@ -6,9 +6,13 @@ import MediumCard from "./components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "./components/Cards/LargeCard/LargeCard.js";
 import SidePanel from "./components/SidePanel/SidePanel.js";
 import Card from "./components/Cards/Card.js";
-import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js"
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
- 
+import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
+import Header from "./components/Header/Header.js";
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+  clearAllBodyScrollLocks,
+} from "body-scroll-lock";
 
 const App = () => {
   const [fitLarge, setFitLarge] = useState(true);
@@ -26,45 +30,48 @@ const App = () => {
       window.removeEventListener("resize", updateWindowType);
     };
   });
-  let targetElement = useRef(document.getElementById("scrollable-empty"));
+  const scrollLockRef = useRef();
 
-
-  const playVideo = (videoSrc) => {setVideo({...video, src: videoSrc, isPlaying: true}); disableBodyScroll(targetElement)};
-  const closeVideo = () => {setVideo({...video, isPlaying: false});enableBodyScroll(targetElement)};
+  const playVideo = (videoSrc) => {
+    setVideo({ ...video, src: videoSrc, isPlaying: true });
+    disableBodyScroll(scrollLockRef.current);
+  };
+  const closeVideo = () => {
+    setVideo({ ...video, isPlaying: false });
+    enableBodyScroll(scrollLockRef.current);
+  };
 
   const getImageLink = (id) => {
     return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   };
 
   const getEmbedPlayerLink = (id, start) => {
-    return `https://www.youtube.com/embed/${id}?rel=0&start=${start? start : 0}&autoplay=1`;
+    return `https://www.youtube.com/embed/${id}?rel=0&start=${
+      start ? start : 0
+    }&autoplay=1`;
   };
 
   const getLinkFunction = (linkType) => {
-    switch(linkType){
+    switch (linkType) {
       case Card.LinkType["video-youtube"]:
         return playVideo;
         break;
       default:
-        break;  
+        break;
     }
-  }
+  };
 
   return (
-    
-
     <div className="overarching">
-      <div id="scrollable-empty"></div>
+      <div ref={scrollLockRef}></div>
       {video.isPlaying && (
-        <VideoPlayer closeVideo={closeVideo} src={video.src}/>
+        <VideoPlayer closeVideo={closeVideo} src={video.src} />
       )}
       <div className="App">
         <header>
-          <div className="App-header">
-            <h1 id="header-title">THE FALSE 9</h1>
-          </div>
-          <Navbar />
+          <Header />
         </header>
+
         <div className="content-pane">
           <div className="main-pane">
             {fitLarge ? (
@@ -76,9 +83,9 @@ const App = () => {
                   text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                   author="Ishan Sharma"
                   LinkType={Card.LinkType["video-external"]}
-                  onClick= {playVideo}
+                  onClick={playVideo}
                   link={getEmbedPlayerLink("g-4UdaC2-F8")}
-               />
+                />
               </div>
             ) : (
               <div className="main-pane-item m">
@@ -89,9 +96,9 @@ const App = () => {
                   text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                   author="Ishan Sharma"
                   LinkType={Card.LinkType["video-external"]}
-                  onClick= {playVideo}
+                  onClick={playVideo}
                   link={getEmbedPlayerLink("g-4UdaC2-F8")}
-               />
+                />
               </div>
             )}
             <div className="main-pane-item m">
@@ -102,7 +109,7 @@ const App = () => {
                 text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                 author="Ishan Sharma"
                 LinkType={Card.LinkType["article-external"]}
-                onClick= {playVideo}
+                onClick={playVideo}
                 link={getEmbedPlayerLink("g-4UdaC2-F8")}
               />
             </div>
@@ -115,7 +122,7 @@ const App = () => {
                 text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                 author="Ishan Sharma"
                 LinkType={Card.LinkType["article-external"]}
-                onClick= {playVideo}
+                onClick={playVideo}
                 link={getEmbedPlayerLink("g-4UdaC2-F8")}
               />
             </div>
@@ -127,7 +134,7 @@ const App = () => {
                 text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."
                 author="Ishan Sharma"
                 LinkType={Card.LinkType["video-youtube"]}
-                onClick= {getLinkFunction(Card.LinkType["video-youtube"])}
+                onClick={getLinkFunction(Card.LinkType["video-youtube"])}
                 link={getEmbedPlayerLink("g-4UdaC2-F8")}
               />
             </div>
@@ -140,16 +147,15 @@ const App = () => {
                   image: getImageLink("jbG9LJs_Npg"),
                   LinkType: Card.LinkType["video-youtube"],
                   onClick: getLinkFunction(Card.LinkType["video-youtube"]),
-                  link: getEmbedPlayerLink("jbG9LJs_Npg")
+                  link: getEmbedPlayerLink("jbG9LJs_Npg"),
                 },
                 {
                   title: "Podcast 2",
                   image: getImageLink("g-4UdaC2-F8"),
                   LinkType: Card.LinkType["video-youtube"],
                   onClick: getLinkFunction(Card.LinkType["video-youtube"]),
-                  link: getEmbedPlayerLink("g-4UdaC2-F8")
+                  link: getEmbedPlayerLink("g-4UdaC2-F8"),
                 },
-                
               ]}
             />
           </div>
