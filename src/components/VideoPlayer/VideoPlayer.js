@@ -1,6 +1,7 @@
 import React from 'react'
 import styles from './VideoPlayer.module.css'
-const VideoPlayer = (props) => {
+const VideoPlayer = (props, ref) => {
+
     return (
             <div className={styles["youtube-video-container"]} id="youtube-video-container">
               <div className={styles["closeable"]}>
@@ -22,5 +23,5 @@ const VideoPlayer = (props) => {
             </div>
         
     )
-}
+};
 export default VideoPlayer

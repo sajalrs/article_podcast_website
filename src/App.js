@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar.js";
 import Footer from "./components/Footer/Footer.js";
@@ -21,16 +21,16 @@ const App = () => {
     const updateWindowType = () => {
       setFitLarge(window.innerWidth >= 960);
     };
-   
     window.addEventListener("resize", updateWindowType);
     return () => {
       window.removeEventListener("resize", updateWindowType);
-     
     };
   });
+  let targetElement = useRef(document.getElementById("scrollable-empty"));
 
-  const playVideo = (videoSrc) => {setVideo({...video, src: videoSrc, isPlaying: true});};
-  const closeVideo = () => {setVideo({...video, isPlaying: false});};
+
+  const playVideo = (videoSrc) => {setVideo({...video, src: videoSrc, isPlaying: true}); disableBodyScroll(targetElement)};
+  const closeVideo = () => {setVideo({...video, isPlaying: false});enableBodyScroll(targetElement)};
 
   const getImageLink = (id) => {
     return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
@@ -45,6 +45,7 @@ const App = () => {
     
 
     <div className="overarching">
+      <div id="scrollable-empty"></div>
       {video.isPlaying && (
         <VideoPlayer closeVideo={closeVideo} src={video.src}/>
       )}
