@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import Home from "./pages/Home.js"
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar.js";
 import Footer from "./components/Footer/Footer.js";
@@ -70,8 +71,12 @@ const App = () => {
       <div className="App">
 
           <Header />
+          <div className="content-pane"> 
+          <Home fitLarge={fitLarge} playVideo={playVideo} getImageLink={getImageLink} getEmbedPlayerLink={getEmbedPlayerLink} getLinkFunction={getLinkFunction}/>
 
+          </div>
 
+{/* 
         <div className="content-pane">
           <div className="main-pane">
             {fitLarge ? (
@@ -159,8 +164,8 @@ const App = () => {
               ]}
             />
           </div>
-        </div>
-        <div className="footer-container">
+        </div>*/}
+        <div className="footer-container"> 
           <Footer />
         </div>
       </div>

@@ -4,6 +4,10 @@
   --tertiary-color: #b1b1b1;
 }
 
+.Home{
+  align-self: center;
+  width: 100%;
+}
 .overarching{
   position: relative;
   width: 100%;
