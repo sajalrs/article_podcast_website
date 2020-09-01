@@ -88,6 +88,10 @@
     letter-spacing: 4px;
 }
 
+.link-text:hover{
+    cursor: pointer;
+}
+
 .fa-bars{
     transform: translateX(1000%);
 }

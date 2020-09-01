@@ -1,7 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import MenuItems from './MenuItems.js'
 import styles from './Navbar.module.css'
-
+import {Link} from 'react-router-dom'
 const Navbar = () => {
     const [clicked, setClicked] = useState(false); 
     useEffect(() => {
@@ -26,7 +26,7 @@ const Navbar = () => {
             <nav>
                 <div className={styles["navigation"]}>
                 <ul className={clicked?`${styles["nav-links-list"]} ${styles["nav-links-list-active"]}`:`${styles["nav-links-list"]} ${styles["nav-links-list-inactive"]}`}>
-    {MenuItems.map((item, index) => {return <li key={index} className={index%2===0?`${styles["list-item"]} ${styles["list-item-even"]}`:`${styles["list-item"]} ${styles["list-item-odd"]}`}><a className={styles[item.className]} href={item.url}><label>{item.title.toUpperCase()}</label></a></li>;})}
+    {MenuItems.map((item, index) => {return <li key={index} className={index%2===0?`${styles["list-item"]} ${styles["list-item-even"]}`:`${styles["list-item"]} ${styles["list-item-odd"]}`}><Link to={item.url} className={styles[item.className]}><label className={styles["link-text"]}>{item.title.toUpperCase()}</label></Link></li>;})}
                 </ul>
                 <ul className={styles["social-links"]}>
                     <li><i className={clicked?`${styles["fas"]} ${styles["fa-times"]} fas fa-times`:`${styles["fas"]} ${styles["fa-bars"]} fas fa-bars`} onClick={()=> {setClicked(!clicked);}}/></li>

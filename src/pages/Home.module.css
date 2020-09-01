@@ -1,4 +1,4 @@
-  /*   
+    
   .Home {
     background-color: white;
     height: 100%;
@@ -6,9 +6,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* position: absolute; */
-    /* z-index: 0;
-  } */
+  }
    
   
   
@@ -20,8 +18,7 @@
     padding-top: 36px;
     padding-bottom: 36px;
     display: flex;
-    /* background-color: #edf5e1; */
-  }
+    }
   
   .main-pane{
     padding-left: 36px;

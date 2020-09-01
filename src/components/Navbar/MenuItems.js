@@ -1,13 +1,13 @@
 const MenuItems = [
     {
         "title": "Home",
-        "url": "#header",
+        "url": "/",
         "className": "nav-link"
     },
         
     {
         "title": "Podcasts",
-        "url": "#header",
+        "url": "/about",
         "className": "nav-link"
     },
     {
