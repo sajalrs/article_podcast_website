@@ -67,7 +67,7 @@ const Home = (props) => {
           </div>
           <div className={`${styles["main-pane-item"]} ${styles["m"]}`}>
             <MediumCard
-              image="https://cdn.vox-cdn.com/thumbor/gl6Ss1kHw9REtww2xEZPEYeD-f4=/0x106:880x601/280x158/filters:format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/67298922/Screen_Shot_2020_08_26_at_2.27.31_PM.0.png"
+              // image="https://cdn.vox-cdn.com/thumbor/gl6Ss1kHw9REtww2xEZPEYeD-f4=/0x106:880x601/280x158/filters:format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/67298922/Screen_Shot_2020_08_26_at_2.27.31_PM.0.png"
               date="March 15, 2020"
               title="Youtubers Partying During Pandemic"
               text="Breaking down every fantasy-relevant situation to prepare you for your 2020 draft."

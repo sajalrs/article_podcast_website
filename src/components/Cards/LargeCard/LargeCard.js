@@ -27,6 +27,7 @@ const ImageContainer = (props) => {
     props.LinkType === Card.LinkType["video-external"] ||
     props.LinkType === Card.LinkType["video-youtube"];
   return (
+    props.image?
     <div
       className={styles["img-container"]}
       style={{ backgroundImage: `url('${props.image}')` }}
@@ -41,13 +42,14 @@ const ImageContainer = (props) => {
           ></i>
         )}
       </div>
-    </div>
+    </div>: null
   );
 };
 
 const CardBody = (props) => {
   return (
-    <div className={styles["card-body"]}>
+    (props.title) ?
+    (<div className={styles["card-body"]}>
       <h2
         onClick={() => {
           props.onClick(props.link);
@@ -56,11 +58,12 @@ const CardBody = (props) => {
         {props.title}
       </h2>
       <p>
-        <span className={styles["author"]}>{props.author}</span> |{" "}
+        <span className={styles["author"]}>{props.author}</span> {" "}
         <span className={styles["date"]}>{props.date}</span>
       </p>
       <p className={styles["body-content"]}>{props.text}</p>
-    </div>
+    </div>) :
+    null
   );
 };
 

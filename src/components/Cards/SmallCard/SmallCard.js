@@ -26,6 +26,7 @@ const ImageContainer = (props) => {
     props.LinkType === Card.LinkType["video-external"] ||
     props.LinkType === Card.LinkType["video-youtube"];
   return (
+    props.image?
     <div
       className={styles["img-container"]}
       style={{ backgroundImage: `url('${props.image}')` }}
@@ -38,15 +39,16 @@ const ImageContainer = (props) => {
           ></i>
         )}
       </div>
-    </div>
+    </div>: null
   );
 };
 
 const CardBody = (props) => {
   return (
-    <div className={styles["card-body"]}>
+    props.title?
+    (<div className={styles["card-body"]}>
       <h2>{props.title}</h2>
-    </div>
+    </div>): null
   );
 };
 
