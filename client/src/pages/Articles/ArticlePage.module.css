@@ -1,4 +1,4 @@
-    
+
   .ArticlePage {
     background-color: white;
     height: 100%;
@@ -17,16 +17,33 @@
     padding-top: 36px;
     padding-bottom: 36px;
     display: flex;
-    }
+    flex-direction: row;
+  }
   
   .main-pane{
     padding-left: 36px;
     padding-right: 18px;
+    display: flex;
+    flex-direction: column;
   }
   
   .main-pane-item{
     padding-top: 36px;
     padding-bottom: 36px;
+    display: flex;
+  }
+
+  .subheading{
+    align-self: flex-start;
+    font-size: 2rem;
+    color: var(--primary-color);
+    font-family: 'Montserrat', sans-serif;
+  }
+  .main-pane p{
+    padding: 18px 0px;
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90vw;
   }
   
   .m{
@@ -38,6 +55,27 @@
     padding-right: 36px;
     padding-left: 18px;
   }
+
+  .image-container img{
+    max-width: 100%;
+    width: fit-content;
+    align-self: center;
+  }
+
+  .image-container{
+    display: flex;
+    flex-direction: column;
+  }
+  
+
+  .image-container > figcaption{
+    padding-top: 18px;
+    padding: 18px 0px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90vw;
+  }
+
   /* 
   .App-header {
     background-image: url("headerbackgroundcropped.jpg");
@@ -74,5 +112,18 @@
   
     .content-pane{
       width: 100%;
+    }
+
+  .image-container {
+      max-width: 80vw;
+    } 
+
+    .image-container > img {
+    
+      max-width: 80vw;
+    } 
+    .image-container > figcaption{
+     
+      max-width: 80vw;
     }
   }

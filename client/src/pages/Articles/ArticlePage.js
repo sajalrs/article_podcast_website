@@ -1,45 +1,43 @@
-import React,{useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import SidePanel from "../../components/SidePanel/SidePanel.js";
 import Card from "../../components/Cards/Card.js";
 import styles from "./ArticlePage.module.css";
-import Header from "../../components/Header/Header"
-import Footer from "../../components/Footer/Footer"
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 const ArticlePage = (props) => {
-
   const [article, setArticle] = useState({
     title: "",
     author: "",
     date: "",
-    sections: [{title: "", text: ""}],
-    images: [{src: "", caption: ""}]
-  })
+    sections: [{ title: "", text: "" }],
+    images: [{ src: "", caption: "" }],
+  });
 
   const largeCardRef = useRef();
   useEffect(() => {
-    const getArticle = async () => 
-    {
-      const response = await fetch('/articles');
+    const getArticle = async () => {
+      const response = await fetch("/articles");
       const body = await response.json();
-      if(response.status !== 200) throw Error(body.message);
-      
-      return body;
-    } 
+      if (response.status !== 200) throw Error(body.message);
 
-    getArticle()
-      .then(res => {setArticle({
+      return body;
+    };
+
+    getArticle().then((res) => {
+      setArticle({
         title: res.title,
         author: res.author,
         date: res.date,
-        images: res.images,
-        sections: res.sections})
-      })
+        image: res.image,
+        sections: res.sections,
+      });
+    });
 
-      console.log(article)
-  },[article.title])
-
+    console.log(article);
+  }, [article.title]);
 
   return (
     <div className={styles["ArticlePage"]}>
@@ -47,19 +45,38 @@ const ArticlePage = (props) => {
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
           <div className={styles["main-pane-item"]}>
-          <LargeCard
+            <LargeCard
               title={article.title}
               author={article.author}
-              date ={article.date}
-              image={article.images[0].src}
-              />
-              
-            {article.sections.map((item) => { return <p>{item.text}</p>})}
+              date={article.date}
+            image={article.image}
+            />
           </div>
-            
-          </div>
+
+          {article.sections.map((item) => {
+            return (
+              <div>
+                {item.hasOwnProperty("subheading") ? (
+                  <h2 className={styles["subheading"]}>{item.subheading}</h2>
+                ) : item.hasOwnProperty("paragraph") ? (
+                  <p>{item.paragraph.text}</p>
+                ) : item.hasOwnProperty("image") ? (
+                  <div className={styles["main-pane-item"]}>
+                    <figure className={styles["image-container"]}>
+      
+                      <img src={item.image.src} alt={item.image.caption} />
+                      <figcaption>
+                        <strong>Picture:</strong> {item.image.caption}
+                      </figcaption>
+                    </figure>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            );
+          })}
         </div>
- 
         <div className={styles["side-pane"]}>
           <SidePanel
             vidArray={[
@@ -80,8 +97,10 @@ const ArticlePage = (props) => {
             ]}
           />
         </div>
-      <div className="footer-container"> 
-          <Footer />
+      </div>
+
+      <div className={styles["footer-container"]}>
+        <Footer />
       </div>
     </div>
   );

@@ -10,7 +10,6 @@ const Navbar = () => {
                 setClicked(window.innerWidth < 1250);
             } 
         }
-
         window.addEventListener("resize", updateDropDown);
         return () => {
             window.addEventListener("resize", updateDropDown);

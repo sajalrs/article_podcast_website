@@ -7,6 +7,7 @@ const Header = () => {
   const headerBoxRef = useRef();
   useEffect(() => {
     const fixNavbar = (e) => {
+      console.log(window.scrollY)
       if (window.scrollY > headerBoxRef.current.clientHeight) {
         changeNavFix(true);
       } else {

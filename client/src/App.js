@@ -17,7 +17,7 @@ const App = () => {
 
   useEffect(() => {
     const updateWindowType = () => {
-      setFitLarge(window.innerWidth >= 960);
+      setFitLarge(window.innerWidth >= 940);
     };
     window.addEventListener("resize", updateWindowType);
     return () => {

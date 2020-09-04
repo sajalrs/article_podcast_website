@@ -7,12 +7,12 @@ const MenuItems = [
         
     {
         "title": "Podcasts",
-        "url": "/about",
+        "url": "/",
         "className": "nav-link"
     },
     {
         "title": "Blog",
-        "url": "#header",
+        "url": "/articles",
         "className": "nav-link"
     },
     {

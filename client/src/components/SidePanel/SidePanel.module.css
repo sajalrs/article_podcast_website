@@ -3,15 +3,20 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    
     align-items: center;
+    width: fit-content;
+   
 }
 
 .card-list{
     padding-left: 0px;
     list-style: none;
-    border-style: none none solid solid;
     padding: 36px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    border-style: none none solid solid;
+    border-color: var(--primary-color);
 }
 
 .side-panel-title{
