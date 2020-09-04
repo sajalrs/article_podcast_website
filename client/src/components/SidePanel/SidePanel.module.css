@@ -1,37 +1,52 @@
+.SidePanel {
+  position: absolute;
+  right: 0px;
+  background-color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  width: fit-content;
+}
+
+.card-list {
+  padding-left: 0px;
+  list-style: none;
+  padding: 36px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  border-style: solid none solid solid;
+  border-color: var(--primary-color);
+}
+
+.side-panel-title {
+  display: flex;
+  justify-content: center;
+  font-family: "Monteserrat", sans-serif;
+  margin-bottom: 0px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 3px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  width: 364px;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  transform: rotate(90deg)  translate(206px, 201px); 
+
+}
+
 .SidePanel{
-    background-color: white;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    
-    align-items: center;
-    width: fit-content;
-   
+    transform: translate(363px, 0px);
 }
 
-.card-list{
-    padding-left: 0px;
-    list-style: none;
-    padding: 36px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    border-style: none none solid solid;
-    border-color: var(--primary-color);
-}
-
-.side-panel-title{
-    display: flex;
-    justify-content: center;
-    font-family: 'Monteserrat', sans-serif;
-    margin-bottom: 0px;
-    color: white;
+.fa-chevron-down{
+    padding-left: 15px;
     font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 3px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 364px;
-    border-radius: 5px;
-    background-color: var(--primary-color);
 }
 
+.fa-chevron-down:hover{
+    color: #b1b1b1;
+}

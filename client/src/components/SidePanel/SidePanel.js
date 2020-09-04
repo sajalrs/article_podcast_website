@@ -6,7 +6,7 @@ const SidePanel = (props) => {
   const vidArray = props.vidArray;
   return (
     <div className={styles["SidePanel"]}>
-      <label className={styles["side-panel-title"]}>VIDEO PODCASTS</label>
+      <label className={styles["side-panel-title"]}>VIDEO PODCASTS <i className={`${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}></i></label>
       <ul className={styles["card-list"]}>
         {vidArray.map((item, index) => {
           return (

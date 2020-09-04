@@ -6,6 +6,7 @@ import Card from "../../components/Cards/Card.js";
 import styles from "./Home.module.css";
 import Header from "../../components/Header/Header"
 import Footer from "../../components/Footer/Footer"
+import SmallCard from "../../components/Cards/SmallCard/SmallCard.js";
 
 const Home = (props) => {
   return (
@@ -97,6 +98,10 @@ const Home = (props) => {
               },
             ]}
           />
+          <SmallCard
+              title="Podcast 1"
+              image={props.getImageLink("jbG9LJs_Npg")}
+              />
         </div>
     
       </div>

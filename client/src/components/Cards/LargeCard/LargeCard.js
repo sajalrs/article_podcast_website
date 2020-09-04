@@ -22,9 +22,9 @@ const LargeCard = (props) => {
         text={props.text}
         date={props.date}
         author={props.author}
-        onClick={props.onClick}
+        onClick={props.onClick? props.onClick : () => {console.log("")}}
         link={props.link}
-
+       
       />
     </article>
   );

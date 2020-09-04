@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import SmallCard from "../../components/Cards/SmallCard/SmallCard.js";
 import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import SidePanel from "../../components/SidePanel/SidePanel.js";
@@ -40,44 +41,52 @@ const ArticlePage = (props) => {
   }, [article.title]);
 
   return (
-    <div className={styles["ArticlePage"]}>
-      <Header />
-      <div className={styles["content-pane"]}>
-        <div className={styles["main-pane"]}>
-          <div className={styles["main-pane-item"]}>
-            <LargeCard
-              title={article.title}
-              author={article.author}
-              date={article.date}
+    <div className={styles["overarching"]}>
+      <div className={styles["primary-color-background"]}></div>
+      <div className={styles["ArticlePage"]}>
+        <Header />
+        <div className={styles["headline"]}>
+          <LargeCard
+            title={article.title}
+            author={article.author}
+            date={article.date}
             image={article.image}
-            />
+          />
+        </div>
+        <div className={styles["content-pane"]}>
+          <div className={styles["main-pane"]}>
+            <div className={styles["main-pane-item"]}></div>
+
+            {article.sections.map((item) => {
+              return (
+                <div>
+                  {item.hasOwnProperty("subheading") ? (
+                    <h2 className={styles["subheading"]}>{item.subheading}</h2>
+                  ) : item.hasOwnProperty("paragraph") ? (
+                    <p>{item.paragraph.text}</p>
+                  ) : item.hasOwnProperty("image") ? (
+                    <div className={styles["main-pane-item"]}>
+                      <figure className={styles["image-container"]}>
+                        <img src={item.image.src} alt={item.image.caption} />
+                        <figcaption>
+                          <strong>Picture:</strong> {item.image.caption}
+                        </figcaption>
+                      </figure>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              );
+            })}
           </div>
 
-          {article.sections.map((item) => {
-            return (
-              <div>
-                {item.hasOwnProperty("subheading") ? (
-                  <h2 className={styles["subheading"]}>{item.subheading}</h2>
-                ) : item.hasOwnProperty("paragraph") ? (
-                  <p>{item.paragraph.text}</p>
-                ) : item.hasOwnProperty("image") ? (
-                  <div className={styles["main-pane-item"]}>
-                    <figure className={styles["image-container"]}>
-      
-                      <img src={item.image.src} alt={item.image.caption} />
-                      <figcaption>
-                        <strong>Picture:</strong> {item.image.caption}
-                      </figcaption>
-                    </figure>
-                  </div>
-                ) : (
-                  ""
-                )}
-              </div>
-            );
-          })}
-        </div>
-        <div className={styles["side-pane"]}>
+          <div className={styles["side-pane"]}>
+          <SmallCard
+            title="Podcast 1"
+            image={props.getImageLink("jbG9LJs_Npg")}
+          />
+          </div>
           <SidePanel
             vidArray={[
               {
@@ -96,11 +105,12 @@ const ArticlePage = (props) => {
               },
             ]}
           />
+  
         </div>
-      </div>
 
-      <div className={styles["footer-container"]}>
-        <Footer />
+        <div className={styles["footer-container"]}>
+          <Footer />
+        </div>
       </div>
     </div>
   );
