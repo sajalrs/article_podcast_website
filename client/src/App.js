@@ -10,11 +10,46 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App = () => {
   const [fitLarge, setFitLarge] = useState(true);
-  const [sideBarClicked, setSideBarClicked] = useState(false);
+  const [sideBarClicked, setSideBarClickedOrig] = useState(false);
+  const [topOffset, setTopOffset] = useState(100);
   const [video, setVideo] = useState({
     src: "https://www.youtube.com/embed/jbG9LJs_Npg?rel=0&autoplay=1",
     isPlaying: false,
   });
+  const [navbarClicked, setNavbarClickedOrig] = useState(false); 
+  useEffect(() => {
+      const updateDropDown = () =>{
+          if(window.innerWidth > 1250 && navbarClicked){
+              setNavbarClicked(window.innerWidth < 1250);
+          } 
+      }
+      window.addEventListener("resize", updateDropDown);
+      return () => {
+          window.addEventListener("resize", updateDropDown);
+      }
+  },[navbarClicked])
+
+  const setNavbarClicked = (toSet) =>  {
+    if(toSet){
+      setTopOffset(topOffset + 140);
+      setSideBarClickedOrig(false)
+    } else {
+      setTopOffset(topOffset - 140)
+    }
+    setNavbarClickedOrig(toSet);
+ 
+  }
+
+  const setSideBarClicked = (toSet) => {
+    if(toSet){
+        if(navbarClicked){
+          setTopOffset(topOffset-140);
+          setNavbarClickedOrig(false);
+        }
+    }
+    
+    setSideBarClickedOrig(toSet);
+  }
 
   useEffect(() => {
     const updateWindowType = () => {
@@ -26,6 +61,7 @@ const App = () => {
       // clearAllBodyScrollLocks();
     };
   });
+
   const scrollLockRef = useRef();
 
   const playVideo = (videoSrc) => {
@@ -78,6 +114,9 @@ const App = () => {
                     getLinkFunction={getLinkFunction}
                     sideBarClicked={sideBarClicked}
                     setSideBarClicked={setSideBarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
                   />
                 );
               }}
@@ -95,7 +134,12 @@ const App = () => {
                     getLinkFunction={getLinkFunction}
                     sideBarClicked={sideBarClicked}
                     setSideBarClicked={setSideBarClicked}
-                  />
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
+                    />
                 );
               }}
             />

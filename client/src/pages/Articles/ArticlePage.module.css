@@ -170,12 +170,17 @@
      
       max-width: 80vw;
     }
+
+    .main-pane label, .main-pane h2, .main-pane p{
+      padding-right: 7vw;
+    }
+
   }
 
   @media screen and (max-width: 550px) {
     .main-pane>p{
       padding-left: 0px;
-
+    
     }
 
     .main-pane{
@@ -184,6 +189,13 @@
       align-items: center;
     }
 
+    .main-pane label, .main-pane h2, .main-pane p{
+      padding-right: 15vw;
+      padding-left: 5vw;
+      font-size: 1.4rem;
+    }
+
+    
    
 
 

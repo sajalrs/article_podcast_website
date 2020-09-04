@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, forwardRef } from "react";
 import SmallCard from "../Cards/SmallCard/SmallCard.js";
 import styles from "./SidePanel.module.css";
 
@@ -6,6 +6,7 @@ const SidePanel = (props) => {
   const vidArray = props.vidArray;
   return (
     <div
+      style={{top: props.top}}
       className={
         props.sideBarClicked
           ? `${styles["SidePanel"]} ${styles["maximized"]}`

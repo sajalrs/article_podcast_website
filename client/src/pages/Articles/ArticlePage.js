@@ -9,6 +9,27 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
 const ArticlePage = (props) => {
+  const [sidePanelFixed, setSidePanelFix] = useState(false);
+  const headerBoxRef = useRef()
+  useEffect(() => {
+    window.scrollTo(0,0);
+  },[])
+  useEffect(() => {
+    const fixNavbar = (e) => {
+      if (window.scrollY >  (headerBoxRef.current.clientHeight - 66 - 35 + 644  )) {
+       
+        setSidePanelFix(true);
+      } else {
+        setSidePanelFix(false);
+      }
+    };
+
+    window.addEventListener("scroll", fixNavbar);
+    return () => {
+      window.removeEventListener("scroll", fixNavbar);
+    };
+  },[sidePanelFixed]);
+
   const [article, setArticle] = useState({
     title: "",
     author: "",
@@ -27,6 +48,7 @@ const ArticlePage = (props) => {
       return body;
     };
 
+
     getArticle().then((res) => {
       setArticle({
         title: res.title,
@@ -37,14 +59,36 @@ const ArticlePage = (props) => {
       });
     });
 
-    console.log(article);
   }, [article.title]);
+
+
+  const renderOnceSidePanel =  (<SidePanel
+    sideBarClicked={props.sideBarClicked}
+    setSideBarClicked={props.setSideBarClicked}
+     vidArray={[
+       {
+         title: "Podcast 1",
+         image: props.getImageLink("jbG9LJs_Npg"),
+         LinkType: Card.LinkType["video-youtube"],
+         onClick: props.getLinkFunction(Card.LinkType["video-youtube"]),
+         link: props.getEmbedPlayerLink("jbG9LJs_Npg"),
+       },
+       {
+         title: "Podcast 2",
+         image: props.getImageLink("g-4UdaC2-F8"),
+         LinkType: Card.LinkType["video-youtube"],
+         onClick: props.getLinkFunction(Card.LinkType["video-youtube"]),
+         link: props.getEmbedPlayerLink("g-4UdaC2-F8"),
+       },
+     ]}
+   />)
+
 
   return (
     <div className={styles["overarching"]}>
       <div className={styles["primary-color-background"]}></div>
       <div className={styles["ArticlePage"]}>
-        <Header/>
+        <Header ref={headerBoxRef} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
         <div className={styles["headline"]}>
           <LargeCard
             title={article.title}
@@ -87,26 +131,18 @@ const ArticlePage = (props) => {
             image={props.getImageLink("jbG9LJs_Npg")}
           />
           </div>
-          <SidePanel
-            sideBarClicked={props.sideBarClicked}
-            setSideBarClicked={props.setSideBarClicked}
-            vidArray={[
-              {
-                title: "Podcast 1",
-                image: props.getImageLink("jbG9LJs_Npg"),
-                LinkType: Card.LinkType["video-youtube"],
-                onClick: props.getLinkFunction(Card.LinkType["video-youtube"]),
-                link: props.getEmbedPlayerLink("jbG9LJs_Npg"),
-              },
-              {
-                title: "Podcast 2",
-                image: props.getImageLink("g-4UdaC2-F8"),
-                LinkType: Card.LinkType["video-youtube"],
-                onClick: props.getLinkFunction(Card.LinkType["video-youtube"]),
-                link: props.getEmbedPlayerLink("g-4UdaC2-F8"),
-              },
-            ]}
-          />
+          {sidePanelFixed ? (
+          <div style={{ position: "fixed", top: (props.topOffset) , right: "0px"}}>
+                   {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
+            {renderOnceSidePanel}
+          </div>
+        
+      ) : (
+        <div style={{marginTop: (props.topOffset)}}>
+          {renderOnceSidePanel}
+        </div>
+      )}
+       
   
         </div>
 

@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, forwardRef } from "react";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Header.module.css";
 
-const Header = () => {
+const Header = forwardRef((props, ref) => {
   const [navFixed, changeNavFix] = useState(false);
   const headerBoxRef = useRef();
   useEffect(() => {
     const fixNavbar = (e) => {
-      console.log(window.scrollY)
       if (window.scrollY > headerBoxRef.current.clientHeight) {
         changeNavFix(true);
       } else {
@@ -21,10 +20,12 @@ const Header = () => {
     };
   });
 
-  const renderOnceNavbar = <Navbar/>;
+  const renderOnceNavbar = (
+    <Navbar navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked} />
+  );
 
   return (
-    <header>
+    <header ref={ref}>
       <div className={styles["header"]} ref={headerBoxRef}>
         <h1 id={styles["header-title"]}>THE FALSE 9</h1>
       </div>
@@ -43,6 +44,6 @@ const Header = () => {
       )}
     </header>
   );
-};
+});
 
 export default Header;

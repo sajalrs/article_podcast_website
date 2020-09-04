@@ -98,3 +98,9 @@
     }
   }
    */
+   @media screen and (max-width: 550px){
+    .card{
+      display: flex;
+      flex-direction: column;
+    }
+  }

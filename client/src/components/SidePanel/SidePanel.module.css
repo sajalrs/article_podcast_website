@@ -4,10 +4,10 @@
   background-color: white;
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
   width: fit-content;
-  top: 50px;
+  /* top: 50px; */
+  height: 80vh;  
 }
 
 .card-list {
@@ -18,9 +18,13 @@
   margin-top: 0px;
   border-style: solid none solid solid;
   border-color: var(--primary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .side-panel-title {
+  position: absolute;
   display: flex;
   justify-content: center;
   font-family: "Monteserrat", sans-serif;
@@ -34,12 +38,19 @@
   width: 364px;
   border-radius: 5px;
   background-color: var(--primary-color);
-  transform: rotate(90deg)  translate(211px, 207px); 
-
+  height: min-content;
+  /* height: 100%; */
+  transform: rotate(90deg);
+  right: 208px;
+  top: 285px;
+  
+  border-style: solid solid solid solid;
+  border-color: var(--secondary-color);
+  margin-right: 0px;
 }
 
 .minimized{
-    transform: translate(363px, 0px);
+    transform: translate(364px, 0px);
 }
 
 .fas{
@@ -52,9 +63,11 @@
 }
 
 @media screen and (max-width: 550px) {
-    .SidePanel{
+    /* .SidePanel{
         padding-top: 0px;
-    }
+    } */
+
+    
 
 }
 
