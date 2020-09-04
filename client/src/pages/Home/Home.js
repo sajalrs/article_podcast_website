@@ -80,7 +80,17 @@ const Home = (props) => {
           </div>
         </div>
         <div className={styles["side-pane"]}>
-          <SidePanel
+         
+          <SmallCard
+              title="Podcast 1"
+              image={props.getImageLink("jbG9LJs_Npg")}
+              />
+        </div>
+    
+      </div>
+      <SidePanel
+           sideBarClicked={props.sideBarClicked}
+           setSideBarClicked={props.setSideBarClicked}
             vidArray={[
               {
                 title: "Podcast 1",
@@ -98,13 +108,6 @@ const Home = (props) => {
               },
             ]}
           />
-          <SmallCard
-              title="Podcast 1"
-              image={props.getImageLink("jbG9LJs_Npg")}
-              />
-        </div>
-    
-      </div>
       <div className={styles["footer-container"]}> 
           <Footer />
         </div>

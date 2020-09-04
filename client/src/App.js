@@ -10,6 +10,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App = () => {
   const [fitLarge, setFitLarge] = useState(true);
+  const [sideBarClicked, setSideBarClicked] = useState(false);
   const [video, setVideo] = useState({
     src: "https://www.youtube.com/embed/jbG9LJs_Npg?rel=0&autoplay=1",
     isPlaying: false,
@@ -75,6 +76,8 @@ const App = () => {
                     getImageLink={getImageLink}
                     getEmbedPlayerLink={getEmbedPlayerLink}
                     getLinkFunction={getLinkFunction}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
                   />
                 );
               }}
@@ -90,6 +93,8 @@ const App = () => {
                     getImageLink={getImageLink}
                     getEmbedPlayerLink={getEmbedPlayerLink}
                     getLinkFunction={getLinkFunction}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
                   />
                 );
               }}

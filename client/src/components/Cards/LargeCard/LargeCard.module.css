@@ -110,3 +110,10 @@
   font-size: 1rem;
   font-weight: bold;
 }
+/* 
+@media screen and (max-width: 550px) {
+  .card{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+} */

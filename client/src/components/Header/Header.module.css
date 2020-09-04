@@ -28,6 +28,7 @@
   .header {
     display: none;
     transition: all 200ms ease-in;
+    width: 0;
   }
 }
 

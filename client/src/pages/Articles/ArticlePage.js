@@ -44,7 +44,7 @@ const ArticlePage = (props) => {
     <div className={styles["overarching"]}>
       <div className={styles["primary-color-background"]}></div>
       <div className={styles["ArticlePage"]}>
-        <Header />
+        <Header/>
         <div className={styles["headline"]}>
           <LargeCard
             title={article.title}
@@ -88,6 +88,8 @@ const ArticlePage = (props) => {
           />
           </div>
           <SidePanel
+            sideBarClicked={props.sideBarClicked}
+            setSideBarClicked={props.setSideBarClicked}
             vidArray={[
               {
                 title: "Podcast 1",

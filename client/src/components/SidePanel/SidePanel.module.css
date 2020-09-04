@@ -5,9 +5,9 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-
   align-items: center;
   width: fit-content;
+  top: 50px;
 }
 
 .card-list {
@@ -34,19 +34,30 @@
   width: 364px;
   border-radius: 5px;
   background-color: var(--primary-color);
-  transform: rotate(90deg)  translate(206px, 201px); 
+  transform: rotate(90deg)  translate(211px, 207px); 
 
 }
 
-.SidePanel{
+.minimized{
     transform: translate(363px, 0px);
 }
 
-.fa-chevron-down{
+.fas{
     padding-left: 15px;
     font-size: 1.5rem;
 }
 
-.fa-chevron-down:hover{
+.side-panel-title:hover{
     color: #b1b1b1;
 }
+
+@media screen and (max-width: 550px) {
+    .SidePanel{
+        padding-top: 0px;
+    }
+
+}
+
+/* .maximized{
+    transform: translate(-363, 0px);
+} */

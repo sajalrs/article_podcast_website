@@ -10,7 +10,7 @@
     border-style: solid none solid none;
     border-color: var(--secondary-color);
     /* border-color:  hsl(210, 91%, 22%); */
-
+    
 }
 
 .nav-links-list{
@@ -103,12 +103,19 @@
 
 
 @media screen and (max-width: 1250px){
-    
+    .navigation{
+        position: relative;
+        width: 100%;
+    }
+
     .nav-links-list{
         list-style: none;
         display: flex;
         flex-direction: column;
-        transform: translate(160px, 155px);
+        position: absolute;
+        top: 63px;
+        right: 0px;
+        margin-top: 0px;
         background-color: var(--primary-color);
         padding-left: 0;
         border-style: none solid solid solid;
@@ -142,4 +149,15 @@
         transform: translateY(-1000%);
     }
 
+
+}
+
+@media screen and (max-width: 550px) {
+  
+    .nav-links-list{
+        right: 0px;
+        width: 100vw;
+    }    
+   
+    
 }
