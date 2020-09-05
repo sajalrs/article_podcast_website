@@ -34,14 +34,16 @@ const ArticlePage = (props) => {
     title: "",
     author: "",
     date: "",
-    sections: [{ title: "", text: "" }],
-    images: [{ src: "", caption: "" }],
+    sections: [],
+    images: [],
   });
 
+
+  
   const largeCardRef = useRef();
   useEffect(() => {
     const getArticle = async () => {
-      const response = await fetch("/articles");
+      const response = await fetch("/articles/page");
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
 

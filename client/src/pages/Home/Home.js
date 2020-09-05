@@ -29,6 +29,26 @@ const Home = (props) => {
       window.removeEventListener("scroll", fixNavbar);
     };
   },[sidePanelFixed]);
+  const [homepageLinks, setHomePageLinks] = useState({
+    links: []
+  })
+  useEffect(() => {
+    console.log(React.version);
+    const getHomepageLinks = async () => {
+      const response = await fetch("/articles");
+      const body = await response.json();
+      if (response.status !== 200) throw Error(body.message);
+
+      return body;
+    };
+
+
+    getHomepageLinks().then((res) => {
+      setHomePageLinks({links: res["links"]})
+    });
+    }, []);
+
+
 
   const renderOnceSidePanel =  (<SidePanel
   sideBarClicked={props.sideBarClicked}
@@ -56,6 +76,21 @@ const Home = (props) => {
     <Header ref={headerBoxRef} className={styles["Header"]} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
+            {homepageLinks.links.map((item) => {
+                 return (<div className={`${styles["main-pane-item"]}`}>
+                    <LargeCard
+                      image={item.image}
+                      date={item.date}
+                      title={item.title}
+                      text={item.description}
+                      author={item.author}
+                      LinkType={item.LinkType}
+                      link={"article?page=" + item.to}
+                      onClick={props.getLinkFunction(item.LinkType)}/>
+                 </div>)
+            })}
+         
+
           {/* {props.fitLarge ? ( */}
             <div className={`${styles["main-pane-item"]} ${styles["l"]}`}>
               <LargeCard
