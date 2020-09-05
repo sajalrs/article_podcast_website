@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import Home from "./pages/Home/Home.js";
 import ArticlePage from "./pages/Articles/ArticlePage.js";
 import "./App.css";
@@ -9,6 +10,7 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App = () => {
+  const history = useHistory();
   const [fitLarge, setFitLarge] = useState(true);
   const [sideBarClicked, setSideBarClickedOrig] = useState(false);
   const [topOffset, setTopOffset] = useState(100);
@@ -71,7 +73,9 @@ const App = () => {
     setVideo({ ...video, isPlaying: false });
     enableBodyScroll(scrollLockRef.current);
   };
-
+  const goToArticle = (articleLink) => {
+    history.push(articleLink)
+  }
   const getImageLink = (id) => {
     return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   };
@@ -86,6 +90,8 @@ const App = () => {
     switch (linkType) {
       case Card.LinkType["video-youtube"]:
         return playVideo;
+      case Card.LinkType["article-internal"]:
+        return goToArticle;
       default:
         break;
     }
