@@ -43,8 +43,7 @@ const App = () => {
   const setSideBarClicked = (toSet) => {
     if(toSet){
         if(navbarClicked){
-          setTopOffset(topOffset-140);
-          setNavbarClickedOrig(false);
+          setNavbarClicked(false);
         }
     }
     
