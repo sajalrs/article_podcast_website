@@ -105,9 +105,8 @@
       padding-left: 0px;      
       padding-right: 0px;
     }
-
     .main-pane label, .main-pane h2, .main-pane p{
-      padding-right: 15vw;
-      padding-left: 5vw;
+      padding-left: 0px;
+      padding-right: 0px; 
     }
   }

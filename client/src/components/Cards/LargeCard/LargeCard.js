@@ -38,7 +38,6 @@ const ImageContainer =(props) => {
     props.image?
     <div
       className={styles["img-container"]}
-      style={{ backgroundImage: `url('${props.image}')` }}
       onClick={() => {
         props.onClick(props.link);
       }}

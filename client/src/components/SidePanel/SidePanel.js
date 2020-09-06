@@ -14,7 +14,7 @@ const SidePanel = (props) => {
       }
     >
       <label className={styles["side-panel-title"]} onClick={() => {props.setSideBarClicked(!props.sideBarClicked)}}>
-        VIDEO PODCASTS{" "}
+        <label className={styles["side-panel-title-text"]}>VIDEO PODCASTS{" "}</label>
         <i
           className={props.sideBarClicked? `${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up` :`${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
         ></i>
