@@ -67,27 +67,15 @@ const Articles = (props) => {
   const renderOnceSidePanel =  (<SidePanel
   sideBarClicked={props.sideBarClicked}
   setSideBarClicked={props.setSideBarClicked}
-   vidArray={[
-     {
-       title: "Podcast 1",
-       image: props.getImageLink("jbG9LJs_Npg"),
-       LinkType: Card.LinkType["video-youtube"],
-       onClick: getLinkFunction(Card.LinkType["video-youtube"]),
-       link: props.getHyperLink(Card.LinkType["video-youtube"])("jbG9LJs_Npg"),
-     },
-     {
-       title: "Podcast 2",
-       image: props.getImageLink("g-4UdaC2-F8"),
-       LinkType: Card.LinkType["video-youtube"],
-       onClick: getLinkFunction(Card.LinkType["video-youtube"]),
-       link: props.getHyperLink(Card.LinkType["video-youtube"])("g-4UdaC2-F8"),
-     },
-   ]}
+  youtubeIds={props.youtubeIds}
+  getImageLink={props.getImageLink}
+  playVideo={props.playVideo}
+  getHyperLink={props.getHyperLink}
  />)
   return (
     
     <div className={styles["Articles"]}>
-    <Header ref={headerBoxRef} className={styles["Header"]} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
+    <Header ref={headerBoxRef} className={styles["Header"]} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked} sideBarClicked={props.sideBarClicked} setSideBarClicked={props.setSideBarClicked}/>
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
             {homepageLinks.links.map((item) => {

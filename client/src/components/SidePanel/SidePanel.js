@@ -1,12 +1,28 @@
-import React, { useState, forwardRef, useEffect } from "react";
+import React, { useState, forwardRef, useEffect, useRef } from "react";
 import SmallCard from "../Cards/SmallCard/SmallCard.js";
 import styles from "./SidePanel.module.css";
+import Card from "../Cards/Card.js";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 
 const SidePanel = (props) => {
-
-  const vidArray = props.vidArray;
+  const cardListRef = useRef();
+  const sidePanelDivRef = useRef();
+  const [titlePos, setTitlePos] = useState();
+  useEffect(() => {
+    if(props.sideBarClicked){
+      disableBodyScroll(cardListRef.current);
+    } else{
+      enableBodyScroll(cardListRef.current);
+    }
+  }, [props.sideBarClicked])
+  
+  useEffect(() => {
+    setTitlePos(sidePanelDivRef.current.innerWidth);
+  },[])
+  const vidArray = props.youtubeIds;
   return (
     <div
+      ref={sidePanelDivRef}
       style={{top: props.top}}
       className={
         props.sideBarClicked
@@ -14,26 +30,28 @@ const SidePanel = (props) => {
           : `${styles["SidePanel"]} ${styles["minimized"]}`
       }
     >
-      <label className={styles["side-panel-title"]} onClick={() => {props.setSideBarClicked(!props.sideBarClicked)}}>
+      {/* style={{right: titlePos}} */}
+      <label className={styles["side-panel-title"]}  onClick={() => {props.setSideBarClicked(!props.sideBarClicked)}}>
         <label className={styles["side-panel-title-text"]}>VIDEO PODCASTS{" "}</label>
         <i
           className={props.sideBarClicked? `${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up` :`${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
         ></i>
       </label>
-      <ul className={styles["card-list"]}>
-        {vidArray.map((item, index) => {
+      <ul ref={cardListRef} className={styles["card-list"]}>
+        {vidArray?
+        vidArray.map((item, index) => {
           return (
             <li key={index}>
               <SmallCard
-                title={item.title}
-                image={item.image}
-                LinkType={item.LinkType}
-                onClick={item.onClick}
-                link={item.link}
+                title="Podcast"
+                image={props.getImageLink(item)}
+                LinkType={Card.LinkType["video-youtube"]}
+                onClick={props.playVideo}
+                link={props.getHyperLink(Card.LinkType["video-youtube"])(item)}
               />
             </li>
           );
-        })}
+        }): null}
       </ul>
     </div>
   );

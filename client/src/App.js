@@ -6,7 +6,7 @@ import "./App.css";
 import Card from "./components/Cards/Card.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
 
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App = () => {
@@ -45,9 +45,7 @@ const App = () => {
 
 
     getVideoIds().then((res) => {
-      // setVideoIds({items: res["items"]});
-      // 
-      const ids = res["items"].map((item) => {return item.id.videoId});
+      const ids = res["items"].map((item) => {return item.id});
       setVideoIds({"ids": ids});
     });
     }, []);
@@ -68,10 +66,13 @@ const App = () => {
   }
 
   const setSideBarClicked = (toSet) => {
+    
     if(toSet){
         if(navbarClicked){
           setNavbarClicked(false);
         }
+    }else {
+      clearAllBodyScrollLocks();
     }
     
     setSideBarClickedOrig(toSet);
@@ -149,7 +150,7 @@ const App = () => {
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
-                  
+                    youtubeIds={videoIds.ids}
                   />
                 );
               }}
@@ -171,6 +172,7 @@ const App = () => {
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
+                    youtubeIds={videoIds.ids}
                     />
                 );
               }}
@@ -192,6 +194,7 @@ const App = () => {
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
+                    youtubeIds={videoIds.ids}
                     />
                 );
               }}

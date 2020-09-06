@@ -13,7 +13,7 @@ const Navbar = (props) => {
             <nav>
                 <div className={styles["navigation"]}>
                 <ul className={props.navbarClicked?`${styles["nav-links-list"]} ${styles["nav-links-list-active"]}`:`${styles["nav-links-list"]} ${styles["nav-links-list-inactive"]}`}>
-    {MenuItems.map((item, index) => {return <li key={index} className={index%2===0?`${styles["list-item"]} ${styles["list-item-even"]}`:`${styles["list-item"]} ${styles["list-item-odd"]}`}><Link onClick={() => props.setNavbarClicked(false)} to={item.url} className={styles[item.className]}><label className={styles["link-text"]}>{item.title.toUpperCase()}</label></Link></li>;})}
+    {MenuItems.map((item, index) => {return <li key={index} className={index%2===0?`${styles["list-item"]} ${styles["list-item-even"]}`:`${styles["list-item"]} ${styles["list-item-odd"]}`}><Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to={item.url} className={styles[item.className]}><label className={styles["link-text"]}>{item.title.toUpperCase()}</label></Link></li>;})}
                 </ul>
                 <ul className={styles["social-links"]}>
                     <li><i className={props.navbarClicked?`${styles["fas"]} ${styles["fa-times"]} fas fa-times`:`${styles["fas"]} ${styles["fa-bars"]} fas fa-bars`} onClick={()=> {props.setNavbarClicked(!props.navbarClicked);}}/></li>
