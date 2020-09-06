@@ -28,10 +28,10 @@ const Footer = () => {
                     </div>
                     <div className={styles["footer-link-items"]}>
                      <h2>Podcasts</h2>
-                        <a href="">Anchor</a>
-                        <a href="">Spotify</a>
-                        <a href="">Apple Music</a>
-                        <a href="">Hamro Patro</a>
+                        <a href="https://anchor.fm/thefalse9podcast" target="_blank">Anchor</a>
+                        <a href="https://open.spotify.com/show/5AFWCgFUdp0S7VGmv23EiB" target="_blank">Spotify</a>
+                        <a href="https://podcasts.apple.com/us/podcast/the-false-nine-podcast/id1467336074" target="_blank">Apple Podcasts</a>
+                        <a href="https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy8zMzNlMTIyYy9wb2RjYXN0L3Jzcw==" target="_blank">Google Podcasts</a>
                     </div>
                 </div>
 
@@ -41,9 +41,9 @@ const Footer = () => {
                     <div className={styles["footer-link-items"]}>
                     <h2>Social</h2>
                         <a href="">Facebook</a>
-                        <a href="">Twitter</a>
-                        <a href="">Instagram</a> 
-                        <a href="">YouTube</a>   
+                        <a href="https://twitter.com/TFalse9podcast" target="_blank">Twitter</a>
+                        <a href="https://www.instagram.com/thefalse9podcast/" target="_blank">Instagram</a> 
+                        <a href="https://www.youtube.com/channel/UCV2Y62okiOmoXzYIh_xAcGw" target="_blank">YouTube</a>   
                     </div>
                     <div className={styles["footer-link-items"]}>
                     <h2>Legal</h2>
@@ -63,8 +63,8 @@ const Footer = () => {
                 <div className={styles["social-media-wrap"]}>
                     <div className={styles["social-icons"]}>
                     <a href="" className={styles["social-icon-link"]}><i className={`${styles["fab"]} ${styles["fa-facebook-f"]} fab fa-facebook-f`}/></a>
-                    <a href="" className={styles["social-icon-link"]}><i className={`${styles["fab"]} ${styles["fa-twitter"]} fab fa-twitter`}/></a>
-                    <a href="" className={styles["social-icon-link"]}><i className={`${styles["fab"]} ${styles["fa-youtube"]} fab fa-youtube`}/></a>
+                    <a  href="https://twitter.com/TFalse9podcast" target="_blank" className={styles["social-icon-link"]}><i className={`${styles["fab"]} ${styles["fa-twitter"]} fab fa-twitter`}/></a>
+                    <a href="https://www.youtube.com/channel/UCV2Y62okiOmoXzYIh_xAcGw" target="_blank" className={styles["social-icon-link"]}><i className={`${styles["fab"]} ${styles["fa-youtube"]} fab fa-youtube`}/></a>
                     </div>
                 </div>
 

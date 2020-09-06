@@ -1,8 +1,9 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef, useEffect } from "react";
 import SmallCard from "../Cards/SmallCard/SmallCard.js";
 import styles from "./SidePanel.module.css";
 
 const SidePanel = (props) => {
+
   const vidArray = props.vidArray;
   return (
     <div

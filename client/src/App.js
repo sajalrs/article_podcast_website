@@ -30,8 +30,29 @@ const App = () => {
           window.addEventListener("resize", updateDropDown);
       }
   },[navbarClicked])
+  const [videoIds, setVideoIds] = useState({
+    items : []
+  });
+  useEffect(() => {
 
+    const getVideoIds = async () => {
+      const response = await fetch("/youtube");
+      const body = await response.json();
+      if (response.status !== 200) throw Error(body.message);
+
+      return body;
+    };
+
+
+    getVideoIds().then((res) => {
+      // setVideoIds({items: res["items"]});
+      // 
+      const ids = res["items"].map((item) => {return item.id.videoId});
+      setVideoIds({"ids": ids});
+    });
+    }, []);
   const setNavbarClicked = (toSet) =>  {
+    console.log(videoIds);
     if(toSet){
       
       setTopOffset(topOffset + 140);
