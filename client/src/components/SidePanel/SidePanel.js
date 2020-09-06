@@ -9,12 +9,12 @@ const SidePanel = (props) => {
   const sidePanelDivRef = useRef();
   const [titlePos, setTitlePos] = useState();
   useEffect(() => {
-    if(props.sideBarClicked){
+    if(props.sideBarClicked && props.sidePanelFixed){
       disableBodyScroll(cardListRef.current);
     } else{
       enableBodyScroll(cardListRef.current);
     }
-  }, [props.sideBarClicked])
+  }, [props.sideBarClicked, props.sidePanelFixed])
   
   useEffect(() => {
     setTitlePos(sidePanelDivRef.current.innerWidth);
@@ -37,7 +37,7 @@ const SidePanel = (props) => {
           className={props.sideBarClicked? `${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up` :`${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
         ></i>
       </label>
-      <ul ref={cardListRef} className={styles["card-list"]}>
+      <ul ref={cardListRef} className={props.sidePanelFixed? `${styles["card-list"]} ${styles["card-list-fixed"]} `: `${styles["card-list"]} ${styles["card-list-not-fixed"]} ` } >
         {vidArray?
         vidArray.map((item, index) => {
           return (
