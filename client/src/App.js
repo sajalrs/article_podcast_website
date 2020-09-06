@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useHistory } from "react-router-dom";
 import Home from "./pages/Home/Home.js";
+import Articles from "./pages/Articles/Articles"
 import ArticlePage from "./pages/Articles/ArticlePage.js";
 import "./App.css";
 import Card from "./components/Cards/Card.js";
@@ -10,7 +10,7 @@ import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App = () => {
-  const history = useHistory();
+
   const [fitLarge, setFitLarge] = useState(true);
   const [sideBarClicked, setSideBarClickedOrig] = useState(false);
   const [topOffset, setTopOffset] = useState(100);
@@ -33,10 +33,14 @@ const App = () => {
 
   const setNavbarClicked = (toSet) =>  {
     if(toSet){
+      
       setTopOffset(topOffset + 140);
       setSideBarClickedOrig(false)
     } else {
-      setTopOffset(topOffset - 140)
+      if(topOffset!= 100){
+        setTopOffset(topOffset - 140);
+      }
+      
     }
     setNavbarClickedOrig(toSet);
  
@@ -73,9 +77,7 @@ const App = () => {
     setVideo({ ...video, isPlaying: false });
     enableBodyScroll(scrollLockRef.current);
   };
-  const goToArticle = (articleLink) => {
-    history.push(articleLink)
-  }
+
   const getImageLink = (id) => {
     return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   };
@@ -86,16 +88,21 @@ const App = () => {
     }&autoplay=1`;
   };
 
-  const getLinkFunction = (linkType) => {
+  const getInternalArticleLink = (id) => {
+    return "articles/id=" + id;
+  }
+
+  const getHyperLink = (linkType) => {
     switch (linkType) {
       case Card.LinkType["video-youtube"]:
-        return playVideo;
+        return getEmbedPlayerLink;
       case Card.LinkType["article-internal"]:
-        return goToArticle;
+        return getInternalArticleLink;
       default:
         break;
     }
   };
+
 
   return (
     <div className="overarching">
@@ -107,36 +114,56 @@ const App = () => {
         <BrowserRouter>
           <Switch>
             <Route
-              path="/"
               exact
+              path="/"
               render={() => {
                 return (
                   <Home
                     fitLarge={fitLarge}
                     playVideo={playVideo}
                     getImageLink={getImageLink}
-                    getEmbedPlayerLink={getEmbedPlayerLink}
-                    getLinkFunction={getLinkFunction}
+                    getHyperLink={getHyperLink}
                     sideBarClicked={sideBarClicked}
                     setSideBarClicked={setSideBarClicked}
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
+                  
                   />
                 );
               }}
             />
             <Route
-              path="/articles"
               exact
+              path="/articles/:id"
               render={() => {
                 return (
                   <ArticlePage
                     fitLarge={fitLarge}
                     playVideo={playVideo}
                     getImageLink={getImageLink}
-                    getEmbedPlayerLink={getEmbedPlayerLink}
-                    getLinkFunction={getLinkFunction}
+                    getHyperLink={getHyperLink}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
+                    />
+                );
+              }}
+            />
+            <Route
+              exact
+              path="/articles"
+              render={() => {
+                return (
+                  <Articles
+                    fitLarge={fitLarge}
+                    playVideo={playVideo}
+                    getImageLink={getImageLink}
+                    getHyperLink={getHyperLink}
                     sideBarClicked={sideBarClicked}
                     setSideBarClicked={setSideBarClicked}
                     navbarClicked={navbarClicked}

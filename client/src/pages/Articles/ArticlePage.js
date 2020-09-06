@@ -7,8 +7,12 @@ import Card from "../../components/Cards/Card.js";
 import styles from "./ArticlePage.module.css";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import {useHistory, useParams} from 'react-router-dom'
+
 
 const ArticlePage = (props) => {
+  const {id} = useParams()
+  const history = useHistory();
   const [sidePanelFixed, setSidePanelFix] = useState(false);
   const headerBoxRef = useRef()
   useEffect(() => {
@@ -42,8 +46,9 @@ const ArticlePage = (props) => {
   
   const largeCardRef = useRef();
   useEffect(() => {
+    console.log(id);
     const getArticle = async () => {
-      const response = await fetch("/articles/page");
+      const response = await fetch("/articles/page?" + id);
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
 
@@ -63,7 +68,18 @@ const ArticlePage = (props) => {
 
   }, [article.title]);
 
-
+  const getLinkFunction = (linkType) => {
+    switch (linkType) {
+      case Card.LinkType["video-youtube"]:
+        return props.playVideo;
+      case Card.LinkType["article-internal"]:
+        return ((articleLink) => {
+          history.push(articleLink);
+        });
+      default:
+        break;
+    }
+  };
   const renderOnceSidePanel =  (<SidePanel
     sideBarClicked={props.sideBarClicked}
     setSideBarClicked={props.setSideBarClicked}
@@ -72,15 +88,15 @@ const ArticlePage = (props) => {
          title: "Podcast 1",
          image: props.getImageLink("jbG9LJs_Npg"),
          LinkType: Card.LinkType["video-youtube"],
-         onClick: props.getLinkFunction(Card.LinkType["video-youtube"]),
-         link: props.getEmbedPlayerLink("jbG9LJs_Npg"),
+         onClick: getLinkFunction(Card.LinkType["video-youtube"]),
+         link: props.getHyperLink(Card.LinkType["video-youtube"])("jbG9LJs_Npg"),
        },
        {
          title: "Podcast 2",
          image: props.getImageLink("g-4UdaC2-F8"),
          LinkType: Card.LinkType["video-youtube"],
-         onClick: props.getLinkFunction(Card.LinkType["video-youtube"]),
-         link: props.getEmbedPlayerLink("g-4UdaC2-F8"),
+         onClick: getLinkFunction(Card.LinkType["video-youtube"]),
+         link: props.getHyperLink(Card.LinkType["video-youtube"])("jbG9LJs_Npg"),
        },
      ]}
    />)
@@ -97,6 +113,7 @@ const ArticlePage = (props) => {
             author={article.author}
             date={article.date}
             image={article.image}
+            onClick={() => {}}
           />
         </div>
         <div className={styles["content-pane"]}>
@@ -128,10 +145,7 @@ const ArticlePage = (props) => {
           </div>
 
           <div className={styles["side-pane"]}>
-          <SmallCard
-            title="Podcast 1"
-            image={props.getImageLink("jbG9LJs_Npg")}
-          />
+         
           </div>
           {sidePanelFixed ? (
           <div style={{ position: "fixed", top: (props.topOffset) , right: "0px"}}>
