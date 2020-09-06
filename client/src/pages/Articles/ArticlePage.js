@@ -84,22 +84,10 @@ const ArticlePage = (props) => {
   const renderOnceSidePanel =  (<SidePanel
     sideBarClicked={props.sideBarClicked}
     setSideBarClicked={props.setSideBarClicked}
-     vidArray={[
-       {
-         title: "Podcast 1",
-         image: props.getImageLink("jbG9LJs_Npg"),
-         LinkType: Card.LinkType["video-youtube"],
-         onClick: getLinkFunction(Card.LinkType["video-youtube"]),
-         link: props.getHyperLink(Card.LinkType["video-youtube"])("jbG9LJs_Npg"),
-       },
-       {
-         title: "Podcast 2",
-         image: props.getImageLink("g-4UdaC2-F8"),
-         LinkType: Card.LinkType["video-youtube"],
-         onClick: getLinkFunction(Card.LinkType["video-youtube"]),
-         link: props.getHyperLink(Card.LinkType["video-youtube"])("jbG9LJs_Npg"),
-       },
-     ]}
+    youtubeIds={props.youtubeIds}
+    getImageLink={props.getImageLink}
+    playVideo={props.playVideo}
+    getHyperLink={props.getHyperLink}
    />)
 
 
@@ -107,7 +95,7 @@ const ArticlePage = (props) => {
     <div className={styles["overarching"]}>
       <div className={styles["primary-color-background"]}></div>
       <div className={styles["ArticlePage"]}>
-        <Header ref={headerBoxRef} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
+        <Header ref={headerBoxRef} sideBarClicked={props.sideBarClicked} setSideBarClicked={props.setSideBarClicked} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
         <div className={styles["headline"]}>
           <LargeCard
             title={article.title}
