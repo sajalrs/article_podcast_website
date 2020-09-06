@@ -5,7 +5,7 @@ const Article = require("../models/Articles");
 const HomepageLink = require("../models/HomepageLinks");
 const e = require("express");
 
-router.get("/", (req, res) => {
+router.get("/pages", (req, res) => {
   HomepageLink.find({}, (err, data) => {
     if (err) {
       res.send(err);
