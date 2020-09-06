@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/page", (req, res) => {
-  const id = req.query.page;
+  const id = req.query.id;
   Article.findById(id, (err, data) => {
     if (err) {
       res.send(err);

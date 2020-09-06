@@ -3,13 +3,13 @@ import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import SidePanel from "../../components/SidePanel/SidePanel.js";
 import Card from "../../components/Cards/Card.js";
-import styles from "./Home.module.css";
+import styles from "./Articles.module.css";
 import Header from "../../components/Header/Header"
 import Footer from "../../components/Footer/Footer"
 import SmallCard from "../../components/Cards/SmallCard/SmallCard.js";
 import {useHistory} from 'react-router-dom'
 
-const Home = (props) => {
+const Articles = (props) => {
   const history = useHistory();
   const [sidePanelFixed, setSidePanelFix] = useState(false);
   const headerBoxRef = useRef()
@@ -86,7 +86,7 @@ const Home = (props) => {
  />)
   return (
     
-    <div className={styles["Home"]}>
+    <div className={styles["Articles"]}>
     <Header ref={headerBoxRef} className={styles["Header"]} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
@@ -130,4 +130,4 @@ const Home = (props) => {
   );
 };
 
-export default Home;
+export default Articles;
