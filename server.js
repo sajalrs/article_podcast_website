@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const articlesRoute = require('./routes/articles');
+const path = require('path');
 require('dotenv/config');
 app.use(express.urlencoded({
   extended: true
