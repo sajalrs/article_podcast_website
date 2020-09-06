@@ -10,7 +10,6 @@ router.get("/pages", (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      console.log(data);
       res.json({links: data});
     }
   });
@@ -22,7 +21,6 @@ router.get("/page", (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      console.log(data);
       res.json(data);
     }
   });
