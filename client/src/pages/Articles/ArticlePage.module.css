@@ -190,9 +190,8 @@
     }
 
     .main-pane label, .main-pane h2, .main-pane p{
-      padding-right: 15vw;
-      padding-left: 5vw;
-      font-size: 1.4rem;
+      padding-left: 0px;
+      padding-right: 0px; 
     }
 
     

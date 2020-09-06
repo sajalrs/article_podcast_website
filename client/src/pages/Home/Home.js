@@ -103,8 +103,7 @@ const Home = (props) => {
                       onClick={getLinkFunction(item.LinkType)}/>
                  </div>)
             })}
-         
-     
+
         </div>
         <div className={styles["side-pane"]}>
          
