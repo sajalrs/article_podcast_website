@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const articlesRoute = require('./routes/articles');
+const youtubeRoute = require('./routes/youtube')
 const path = require('path');
 require('dotenv/config');
 app.use(express.urlencoded({
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use('/articles', articlesRoute);
+app.use('/youtube', youtubeRoute);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 

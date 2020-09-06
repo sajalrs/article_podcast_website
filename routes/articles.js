@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Article = require("../models/Articles");
 const HomepageLink = require("../models/HomepageLinks");
-const e = require("express");
+// const e = require("express");
 
 router.get("/pages", (req, res) => {
   HomepageLink.find({}, (err, data) => {

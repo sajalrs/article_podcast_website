@@ -18,8 +18,8 @@ const Navbar = (props) => {
                 <ul className={styles["social-links"]}>
                     <li><i className={props.navbarClicked?`${styles["fas"]} ${styles["fa-times"]} fas fa-times`:`${styles["fas"]} ${styles["fa-bars"]} fas fa-bars`} onClick={()=> {props.setNavbarClicked(!props.navbarClicked);}}/></li>
                     <li><a href=""><i className={`${styles["fab"]} ${styles["fa-facebook-f"]} fab fa-facebook-f`}/></a></li>
-                    <li><a href=""><i className={`${styles["fab"]} ${styles["fa-twitter"]} fab fa-twitter`}/></a></li>
-                    <li><a href=""><i className={`${styles["fab"]} ${styles["fa-youtube"]} fab fa-youtube`}/></a></li>
+                    <li><a href="https://twitter.com/TFalse9podcast" target="_blank"><i className={`${styles["fab"]} ${styles["fa-twitter"]} fab fa-twitter`}/></a></li>
+                    <li><a href="https://www.youtube.com/channel/UCV2Y62okiOmoXzYIh_xAcGw" target="_blank"><i className={`${styles["fab"]} ${styles["fa-youtube"]} fab fa-youtube`}/></a></li>
                 </ul>
                 </div>
             </nav>
