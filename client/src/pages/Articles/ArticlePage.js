@@ -7,21 +7,19 @@ import Card from "../../components/Cards/Card.js";
 import styles from "./ArticlePage.module.css";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import {useHistory, useParams} from 'react-router-dom'
-
+import { useHistory, useParams } from "react-router-dom";
 
 const ArticlePage = (props) => {
-  const {id} = useParams()
+  const { id } = useParams();
   const history = useHistory();
   const [sidePanelFixed, setSidePanelFix] = useState(false);
-  const headerBoxRef = useRef()
+  const headerBoxRef = useRef();
   useEffect(() => {
-    window.scrollTo(0,0);
-  },[])
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     const fixNavbar = (e) => {
-      if (window.scrollY >  (headerBoxRef.current.clientHeight - 66 - 35 + 644  )) {
-       
+      if (window.scrollY > headerBoxRef.current.clientHeight - 66 - 35 + 644) {
         setSidePanelFix(true);
       } else {
         setSidePanelFix(false);
@@ -32,7 +30,7 @@ const ArticlePage = (props) => {
     return () => {
       window.removeEventListener("scroll", fixNavbar);
     };
-  },[sidePanelFixed]);
+  }, [sidePanelFixed]);
 
   const [article, setArticle] = useState({
     title: "",
@@ -42,8 +40,6 @@ const ArticlePage = (props) => {
     images: [],
   });
 
-
-  
   const largeCardRef = useRef();
   useEffect(() => {
     console.log(id);
@@ -56,7 +52,6 @@ const ArticlePage = (props) => {
       return body;
     };
 
-
     getArticle().then((res) => {
       setArticle({
         title: res.title,
@@ -66,7 +61,6 @@ const ArticlePage = (props) => {
         sections: res.sections,
       });
     });
-
   }, [article.title]);
 
   const getLinkFunction = (linkType) => {
@@ -74,28 +68,36 @@ const ArticlePage = (props) => {
       case Card.LinkType["video-youtube"]:
         return props.playVideo;
       case Card.LinkType["article-internal"]:
-        return ((articleLink) => {
+        return (articleLink) => {
           history.push(articleLink);
-        });
+        };
       default:
         break;
     }
   };
-  const renderOnceSidePanel =  (<SidePanel
-    sideBarClicked={props.sideBarClicked}
-    setSideBarClicked={props.setSideBarClicked}
-    youtubeIds={props.youtubeIds}
-    getImageLink={props.getImageLink}
-    playVideo={props.playVideo}
-    getHyperLink={props.getHyperLink}
-   />)
-
+  const renderOnceSidePanel = (
+    <SidePanel
+      sideBarClicked={props.sideBarClicked}
+      setSideBarClicked={props.setSideBarClicked}
+      youtubeIds={props.youtubeIds}
+      getImageLink={props.getImageLink}
+      playVideo={props.playVideo}
+      getHyperLink={props.getHyperLink}
+      sidePanelFixed={sidePanelFixed}
+    />
+  );
 
   return (
     <div className={styles["overarching"]}>
       <div className={styles["primary-color-background"]}></div>
       <div className={styles["ArticlePage"]}>
-        <Header ref={headerBoxRef} sideBarClicked={props.sideBarClicked} setSideBarClicked={props.setSideBarClicked} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
+        <Header
+          ref={headerBoxRef}
+          sideBarClicked={props.sideBarClicked}
+          setSideBarClicked={props.setSideBarClicked}
+          navbarClicked={props.navbarClicked}
+          setNavbarClicked={props.setNavbarClicked}
+        />
         <div className={styles["headline"]}>
           <LargeCard
             title={article.title}
@@ -133,22 +135,19 @@ const ArticlePage = (props) => {
             })}
           </div>
 
-          <div className={styles["side-pane"]}>
-         
-          </div>
+          <div className={styles["side-pane"]}></div>
           {sidePanelFixed ? (
-          <div style={{ position: "fixed", top: (props.topOffset) , right: "0px"}}>
-                   {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
-            {renderOnceSidePanel}
-          </div>
-        
-      ) : (
-        <div style={{marginTop: (props.topOffset)}}>
-          {renderOnceSidePanel}
-        </div>
-      )}
-       
-  
+            <div
+              style={{ position: "fixed", top: props.topOffset, right: "0px" }}
+            >
+              {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
+              {renderOnceSidePanel}
+            </div>
+          ) : (
+            <div style={{ marginTop: props.topOffset }}>
+              {renderOnceSidePanel}
+            </div>
+          )}
         </div>
 
         <div className={styles["footer-container"]}>

@@ -70,6 +70,7 @@ const Home = (props) => {
   getImageLink={props.getImageLink}
   playVideo={props.playVideo}
   getHyperLink={props.getHyperLink}
+  sidePanelFixed={sidePanelFixed}
  />)
   return (
     
