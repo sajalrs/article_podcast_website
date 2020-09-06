@@ -111,8 +111,3 @@
   font-weight: bold;
 }
 
-@media screen and (max-width: 550px) {
-  .img-container{
-    background-color: transparent;
-  }
-}
