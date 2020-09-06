@@ -5,22 +5,25 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: row;
-  width: fit-content;
   /* top: 50px; */
+  width: fit-content;
+  padding-top: 36px;
+  padding-bottom: 36px;
   height: 80vh;  
+  border-style: solid none solid solid;
+  border-color: var(--primary-color);
 }
 
 .card-list {
-  padding-left: 0px;
+  padding-left: 36px;
   list-style: none;
-  padding: 36px;
+  padding-right: 36px;
   margin-bottom: 0px;
   margin-top: 0px;
-  border-style: solid none solid solid;
-  border-color: var(--primary-color);
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
 }
 
 .side-panel-title {
@@ -41,16 +44,15 @@
   height: min-content;
   /* height: 100%; */
   transform: rotate(90deg);
-  right: 208px;
   top: 285px;
-  
+  right: 226px;
   border-style: solid solid solid solid;
   border-color: var(--secondary-color);
   margin-right: 0px;
 }
 
 .minimized{
-    transform: translate(364px, 0px);
+    transform: translate(379px, 0px);
 }
 
 .fas{
@@ -73,15 +75,15 @@
     display: flex;
     align-items: flex-start;
     padding: 0px;
-    width: 40px;
+    width: 45px;
     height: 40px;
-    transform: translate(-151px, 0px);
+    transform: translate(-135px, 0px);
     padding: 10px;
     padding-right: 5px;
   }
 
   .fas{
-    transform: rotate(90deg) translate(2.5px, 5px);
+    transform: rotate(90deg) translate(2.5px, 10px);
    
     
   }
@@ -92,6 +94,8 @@
 
   .fa-chevron-up{
     color: white;
+    padding-bottom: 20px;
+    padding-left: 0px;
   }
 
 }
