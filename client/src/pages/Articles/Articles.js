@@ -37,7 +37,7 @@ const Articles = (props) => {
   useEffect(() => {
 
     const getHomepageLinks = async () => {
-      const response = await fetch("/articles/pages");
+      const response = await fetch("articles/pages");
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
 
