@@ -21,9 +21,11 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.use('/articles', articlesRoute);
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-app.use('/articles', articlesRoute);
+
 
 
 
