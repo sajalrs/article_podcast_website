@@ -8,7 +8,7 @@ import Header from "../../components/Header/Header"
 import Footer from "../../components/Footer/Footer"
 import SmallCard from "../../components/Cards/SmallCard/SmallCard.js";
 import {useHistory} from 'react-router-dom'
-
+import TextEditor from '../../components/TextEditor/TextEditor.js'
 const Home = (props) => {
   const history = useHistory();
   const [sidePanelFixed, setSidePanelFix] = useState(false);
@@ -91,6 +91,7 @@ const Home = (props) => {
                       onClick={getLinkFunction(item.LinkType)}/>
                  </div>)
             })}
+            <TextEditor />
 
         </div>
         <div className={styles["side-pane"]}>
