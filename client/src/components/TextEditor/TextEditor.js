@@ -1,10 +1,12 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, forwardRef, Ref, PropsWithChildren } from "react";
 import isHotkey from "is-hotkey";
 import { Editable, withReact, useSlate, Slate } from "slate-react";
 import { Editor, Transforms, createEditor, Node } from "slate";
 import { withHistory } from "slate-history";
 import isUrl from "is-url";
 import imageExtensions from "image-extensions";
+import { cx, css } from 'emotion'
+
 const HOTKEYS = {
   "mod+b": "bold",
   "mod+i": "italic",
@@ -18,7 +20,7 @@ const TextEditor = () => {
   const [value, setValue] = useState(initialValue);
   const renderElement = useCallback((props) => <Element {...props} />, []);
   const renderLeaf = useCallback((props) => <Leaf {...props} />, []);
-  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
+  const editor = useMemo(() => withImages(withHistory(withReact(createEditor()))), []);
 
   return (
     <Slate editor={editor} value={value} onChange={(value) => setValue(value)}>
@@ -54,6 +56,42 @@ const TextEditor = () => {
     </Slate>
   );
 };
+
+
+const withImages = editor => {
+    const { insertData, isVoid } = editor
+  
+    editor.isVoid = element => {
+      return element.type === 'image' ? true : isVoid(element)
+    }
+  
+    editor.insertData = data => {
+      const text = data.getData('text/plain')
+      const { files } = data
+  
+      if (files && files.length > 0) {
+        for (const file of files) {
+          const reader = new FileReader()
+          const [mime] = file.type.split('/')
+  
+          if (mime === 'image') {
+            reader.addEventListener('load', () => {
+              const url = reader.result
+              insertImage(editor, url)
+            })
+  
+            reader.readAsDataURL(file)
+          }
+        }
+      } else if (isImageUrl(text)) {
+        insertImage(editor, text)
+      } else {
+        insertData(data)
+      }
+    }
+  
+    return editor
+  }
 
 const toggleBlock = (editor, format) => {
   const isActive = isBlockActive(editor, format);
@@ -250,4 +288,97 @@ const initialValue = [
   },
 ];
 
+const Button = React.forwardRef(
+    (
+      {
+        className,
+        active,
+        reversed,
+        ...props
+      },
+      ref) => (
+      <span
+        {...props}
+        ref={ref}
+        className={cx(
+          className,
+          css`
+            cursor: pointer;
+            color: ${reversed
+              ? active
+                ? 'white'
+                : '#aaa'
+              : active
+              ? 'black'
+              : '#ccc'};
+          `
+        )}
+      />
+    )
+  )
+
+  const Icon = React.forwardRef(
+    (
+      { className, ...props },
+      ref
+    ) => (
+      <span
+        {...props}
+        ref={ref}
+        className={cx(
+          'material-icons',
+          className,
+          css`
+            font-size: 18px;
+            vertical-align: text-bottom;
+          `
+        )}
+      />
+    )
+  )
+
+  const Toolbar = React.forwardRef(
+    (
+      { className, ...props },
+      ref
+    ) => (
+      <Menu
+        {...props}
+        ref={ref}
+        className={cx(
+          className,
+          css`
+            position: relative;
+            padding: 1px 18px 17px;
+            margin: 0 -20px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+          `
+        )}
+      />
+    )
+  )
+
+  const Menu = React.forwardRef(
+    (
+      { className, ...props },
+      ref
+    ) => (
+      <div
+        {...props}
+        ref={ref}
+        className={cx(
+          className,
+          css`
+            & > * {
+              display: inline-block;
+            }
+            & > * + * {
+              margin-left: 15px;
+            }
+          `
+        )}
+      />
+    )
+  )
 export default TextEditor;
