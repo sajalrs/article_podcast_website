@@ -123,7 +123,7 @@ const ArticlePage = (props) => {
                       <figure className={styles["image-container"]}>
                         <img src={item.image.src} alt={item.image.caption} />
                         <figcaption>
-                          <strong>Picture:</strong> {item.image.caption}
+                          {item.image.caption? (<i><strong>Picture:</strong> {item.image.caption}</i>) : null}
                         </figcaption>
                       </figure>
                     </div>
