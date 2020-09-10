@@ -1,9 +1,12 @@
 import React, { useState, useRef } from "react";
-import { Editor } from "slate-react";
-import { Value } from "slate";
+import { Editor, getEventTransfer } from "slate-react";
+import { Block, Value } from "slate";
 import styles from "./TextEditor.module.css";
 import FormatToolbar from "./FormatToolbar";
 import { isKeyHotkey } from "is-hotkey";
+import imageExtensions from 'image-extensions'
+import isUrl from 'is-url'
+
 
 const initialValue = Value.fromJSON({
   document: {
@@ -16,7 +19,7 @@ const initialValue = Value.fromJSON({
             object: "text",
             leaves: [
               {
-                text: "My first paragraph",
+                text: "This text is editable",
               },
             ],
           },
@@ -35,14 +38,52 @@ const TextEditor = () => {
   const isUnderlinedHotkey = isKeyHotkey("mod+u");
   const isCodeHotkey = isKeyHotkey("mod+`");
 
-  const hasMark = (type) => {
-    return value.activeMarks.some((node) => node.type === type);
+  const hasMark = type => {
+    return value.activeMarks.some(mark => mark.type === type);
   };
 
  const hasBlock = type => {
     return value.blocks.some(node => node.type === type)
   }
 
+  const isImage = (url) => {
+    return imageExtensions.includes(getExtension(url));
+  }
+
+  const getExtension = (url) => {
+      return new URL(url).pathname.split('.').pop;
+  }
+
+  const insertImage = (editor, src, target) => {
+    if(target){
+        editor.select(target)
+    }
+
+    editor.insertBlock({
+        type: 'image',
+        data: {src},
+    })
+  } 
+
+  const schema = {
+    document: {
+      last: { type: 'paragraph' },
+      normalize: (editor, { code, node, child }) => {
+        switch (code) {
+          case 'last_child_type_invalid': {
+            const paragraph = Block.create('paragraph')
+            return editor.insertNodeByKey(node.key, node.nodes.size, paragraph)
+          }
+        }
+      },
+    },
+    blocks: {
+      image: {
+        isVoid: true,
+      },
+    },
+  }
+  
 
   const renderMarkButton = (type, icon) => {
     const isActive = hasMark(type);
@@ -50,11 +91,23 @@ const TextEditor = () => {
       <button
         active={isActive}
         onPointerDown={(event) => onClickMark(event, type)}
+        className={isActive? `styles["active] styles["tooltip-icon-button"]`: styles["tooltip-icon-button"]}
       >
         <i className={icon} />
       </button>
     );
   };
+
+  const renderImageButton = (icon) => {
+      return(
+        <button
+        className={styles["tooltip-icon-button"]}
+        onPointerDown={onClickImage}
+      >
+        <i className={icon} />
+      </button>
+      )
+  }
 
   const renderBlockButton = (type, icon) => {
     let isActive = hasBlock(type);
@@ -69,6 +122,7 @@ const TextEditor = () => {
 
     return (
       <button
+      className={isActive? `styles["active] styles["tooltip-icon-button"]`: styles["tooltip-icon-button"]}
         active={isActive}
         onPointerDown={(event) => onClickBlock(event, type)}
       >
@@ -93,6 +147,15 @@ const TextEditor = () => {
         return <li {...attributes}>{children}</li>;
       case "numbered-list":
         return <ol {...attributes}>{children}</ol>;
+      case "image": {
+        const src = node.data.get('src')
+        return (
+          <img
+            {...attributes}
+            src={src}
+          />
+        )
+      }
       default:
         return next();
     }
@@ -138,6 +201,13 @@ const TextEditor = () => {
     event.preventDefault();
     ref.current.toggleMark(type);
   };
+
+  const onClickImage = event => {
+      event.preventDefault();
+      const src = window.prompt("enter the URL of the image:");
+      if(!src) return
+      ref.current.command(insertImage, src)
+  }
 
   const onClickBlock = (event, type) => {
     event.preventDefault();
@@ -186,18 +256,52 @@ const TextEditor = () => {
     }
   };
 
+   const onDropOrPaste = (event, editor, next) => {
+    const target = editor.findEventRange(event)
+    if (!target && event.type === 'drop') return next()
+
+    const transfer = getEventTransfer(event)
+    const { type, text, files } = transfer
+
+    if (type === 'files') {
+      for (const file of files) {
+        const reader = new FileReader()
+        const [mime] = file.type.split('/')
+        if (mime !== 'image') continue
+
+        reader.addEventListener('load', () => {
+          editor.command(insertImage, reader.result, target)
+        })
+
+        reader.readAsDataURL(file)
+      }
+      return
+    }
+
+    if (type === 'text') {
+      if (!isUrl(text)) return next()
+      if (!isImage(text)) return next()
+      editor.command(insertImage, text, target)
+      return
+    }
+
+    next()
+  }
+
+
   return (
     <div className={styles["overarching"]}>
       <FormatToolbar>
-        {renderMarkButton("bold", "fas fa-bold")}
-        {renderMarkButton("italic", "fas fa-italic")}
-        {renderMarkButton("underlined", "fas fa-underline")}
-        {renderMarkButton("code", "fas fa-code")}
-        {renderBlockButton("heading-one", "fas fa-heading")}
-        {renderBlockButton("heading-two", "fas fa-heading")}
-        {renderBlockButton("block-quote", "fas fa-quote-right")}
-        {renderBlockButton("numbered-list", "fas fa-list-ol")}
-        {renderBlockButton("bulleted-list", "fas fa-list-ul")}
+        {renderMarkButton("bold", `${styles["fas"]} ${styles["fa-bold"]} fas fa-bold`)}
+        {renderMarkButton("italic", `${styles["fas"]} ${styles["fa-italic"]} fas fa-italic`)}
+        {renderMarkButton("underlined", `${styles["fas"]} ${styles["fa-underline"]} fas fa-underline`)}
+        {renderMarkButton("code", `${styles["fas"]} ${styles["fa-code"]} fas fa-code`)}
+        {renderBlockButton("heading-one", `${styles["fas"]} ${styles["fa-h1"]} fas fa-heading`)}
+        {renderBlockButton("heading-two", `${styles["fas"]} ${styles["fa-h2"]} fas fa-heading`)}
+        {renderBlockButton("block-quote", `${styles["fas"]} ${styles["fa-quote-right"]} fas fa-quote-right`)}
+        {renderBlockButton("numbered-list", `${styles["fas"]} ${styles["fa-list-ol"]} fas fa-list-ol`)}
+        {renderBlockButton("bulleted-list", `${styles["fas"]} ${styles["fa-list-ul"]} fas fa-list-ul`)}
+        {renderImageButton("fas fa-image")}
       </FormatToolbar>
       <Editor
         ref={ref}
@@ -207,10 +311,12 @@ const TextEditor = () => {
         onKeyDown={onKeyDown}
         renderMark={renderMark}
         renderBlock={renderBlock}
+        onDrop={onDropOrPaste}
+        schema={schema}
       />
     </div>
   );
-};
+  };
 
 
 
