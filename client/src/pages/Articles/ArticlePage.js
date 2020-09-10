@@ -45,7 +45,7 @@ const ArticlePage = (props) => {
     console.log(id);
     const getArticle = async () => {
       console.log(id);
-      const response = await fetch("/articles/page?" + id);
+      const response = await fetch("/articles/?" + id);
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
 

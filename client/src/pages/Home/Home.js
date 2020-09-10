@@ -91,7 +91,6 @@ const Home = (props) => {
                       onClick={getLinkFunction(item.LinkType)}/>
                  </div>)
             })}
-            <TextEditor />
 
         </div>
         <div className={styles["side-pane"]}>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Home from "./pages/Home/Home.js";
 import Articles from "./pages/Articles/Articles"
 import ArticlePage from "./pages/Articles/ArticlePage.js";
+import Edit from "./pages/Articles/Edit"
 import "./App.css";
 import Card from "./components/Cards/Card.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
@@ -152,6 +153,28 @@ const App = () => {
                     topOffset={topOffset}
                     youtubeIds={videoIds.ids}
                   />
+                );
+              }}
+            />
+            <Route
+              exact
+              path="/articles/:id/edit"
+              render={() => {
+                return (
+                  <Edit
+                    fitLarge={fitLarge}
+                    playVideo={playVideo}
+                    getImageLink={getImageLink}
+                    getHyperLink={getHyperLink}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
+                    youtubeIds={videoIds.ids}
+                    />
                 );
               }}
             />
