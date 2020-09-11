@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Home from "./pages/Home/Home.js";
+import CreateArticle from "./pages/CreateArticle";
 import Articles from "./pages/Articles/Articles"
 import ArticlePage from "./pages/Articles/ArticlePage.js";
 import Edit from "./pages/Articles/Edit"
@@ -221,6 +222,11 @@ const App = () => {
                     />
                 );
               }}
+            />
+            <Route
+              path="/create/articles"
+              render={() => {
+                return <CreateArticle/>}}
             />
             <Route
               path="/"

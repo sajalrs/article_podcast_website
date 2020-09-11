@@ -169,7 +169,7 @@ const ArticlePage = (props) => {
         author: res.author,
         date: res.date,
         image: res.image,
-        content: html.serialize(res.content)
+        content: res.content? html.serialize(res.content) : `<p></p>`
       });
  
     }
