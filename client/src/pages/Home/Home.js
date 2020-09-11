@@ -31,11 +31,11 @@ const Home = (props) => {
       window.removeEventListener("scroll", fixNavbar);
     };
   },[sidePanelFixed]);
-  const [homepageLinks, setHomePageLinks] = useState({
+  const [articles, setArticles] = useState({
     links: []
   })
   useEffect(() => {
-    const getHomepageLinks = async () => {
+    const getArticles = async () => {
       const response = await fetch("articles/pages");
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
@@ -44,8 +44,8 @@ const Home = (props) => {
     };
 
 
-    getHomepageLinks().then((res) => {
-      setHomePageLinks({links: res["links"]})
+    getArticles().then((res) => {
+      setArticles({links: res["links"]})
     });
     }, []);
 
@@ -78,7 +78,7 @@ const Home = (props) => {
     <Header ref={headerBoxRef} className={styles["Header"]} sideBarClicked={props.sideBarClicked} setSideBarClicked={props.setSideBarClicked} navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked}/>
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
-            {homepageLinks.links.map((item) => {
+            {articles.links.map((item) => {
                  return (<div className={`${styles["main-pane-item"]}`}>
                     <LargeCard
                       image={item.image}
@@ -86,9 +86,9 @@ const Home = (props) => {
                       title={item.title}
                       text={item.description}
                       author={item.author}
-                      LinkType={item.LinkType}
-                      link={props.getHyperLink(item.LinkType)(item.to)}
-                      onClick={getLinkFunction(item.LinkType)}/>
+                      LinkType={Card.LinkType["article-internal"]}
+                      link={props.getHyperLink(Card.LinkType["article-internal"])(item["_id"])}
+                      onClick={getLinkFunction(Card.LinkType["article-internal"])}/>
                  </div>)
             })}
 

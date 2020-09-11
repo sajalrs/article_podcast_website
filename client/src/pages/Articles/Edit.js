@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import SmallCard from "../../components/Cards/SmallCard/SmallCard.js";
-import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import SidePanel from "../../components/SidePanel/SidePanel.js";
 import Card from "../../components/Cards/Card.js";
@@ -9,7 +7,32 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useHistory, useParams } from "react-router-dom";
 import TextEditor from '../../components/TextEditor/TextEditor'
+import {Value } from "slate";
+import Plain from 'slate-plain-serializer'
+
+const initialValue = {
+  document: {
+    nodes: [
+      {
+        object: "block",
+        type: "paragraph",
+        nodes: [
+          {
+            object: "text",
+            leaves: [
+              {
+                text: "This text is editable",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+};
+
 const Edit = (props) => {
+  const [textEditorValue, setTextEditorValue] = useState(Value.fromJSON(initialValue));
   const { id } = useParams();
   const history = useHistory();
   const [sidePanelFixed, setSidePanelFix] = useState(false);
@@ -34,18 +57,17 @@ const Edit = (props) => {
   }, [sidePanelFixed]);
 
   const [article, setArticle] = useState({
+    id: {},
     title: "",
     author: "",
     date: "",
-    sections: [],
-    images: [],
+    image: {}
   });
 
   const largeCardRef = useRef();
   useEffect(() => {
     console.log(id);
     const getArticle = async () => {
-      console.log(id);
       const response = await fetch("/articles?" + id);
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
@@ -55,14 +77,38 @@ const Edit = (props) => {
 
     getArticle().then((res) => {
       setArticle({
+        id: res._id,
         title: res.title,
         author: res.author,
         date: res.date,
         image: res.image,
-        sections: res.sections,
       });
+     
+      if(res.content) setTextEditorValue(Value.fromJSON(res.content));
+        
+      
+      
+      
     });
-  }, [article.title]);
+  },[]);
+
+
+ 
+  const saveArticle = async () => {
+    const editedArticle = {...article, content: textEditorValue.toJSON()};
+    
+    const requestOptions = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(editedArticle)
+    };
+
+    const response = await fetch(`/articles/edit`, requestOptions);
+    const data = await response.json();
+    if (response.status !== 200) throw Error(data.message);
+  
+
+  }
 
   const getLinkFunction = (linkType) => {
     switch (linkType) {
@@ -76,6 +122,9 @@ const Edit = (props) => {
         break;
     }
   };
+
+  
+
   const renderOnceSidePanel = (
     <SidePanel
       sideBarClicked={props.sideBarClicked}
@@ -110,7 +159,7 @@ const Edit = (props) => {
         </div>
         <div className={styles["content-pane"]}>
           <div className={styles["main-pane"]}>
-            <TextEditor/>
+            <TextEditor value={textEditorValue} setValue={setTextEditorValue} onSave={saveArticle}/>
           </div>
 
           <div className={styles["side-pane"]}></div>

@@ -8,7 +8,8 @@ import styles from "./ArticlePage.module.css";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useHistory, useParams } from "react-router-dom";
-
+import {Value, Editor } from "slate";
+import Html from 'slate-html-serializer'
 const ArticlePage = (props) => {
   const { id } = useParams();
   const history = useHistory();
@@ -25,7 +26,7 @@ const ArticlePage = (props) => {
         setSidePanelFix(false);
       }
     };
-
+ 
     window.addEventListener("scroll", fixNavbar);
     return () => {
       window.removeEventListener("scroll", fixNavbar);
@@ -36,15 +37,110 @@ const ArticlePage = (props) => {
     title: "",
     author: "",
     date: "",
-    sections: [],
     images: [],
+    content: `<p></p>`
   });
 
   const largeCardRef = useRef();
   useEffect(() => {
-    console.log(id);
+    const BLOCK_TAGS = {
+      p: 'paragraph',
+      blockquote: 'block-quote',
+      ul: `bulleted-list`,
+      h1: `heading-one`,
+      h2: `heading-two`,
+      li: `list-item`,
+      ol: `numbered-list`,
+      img: `image`
+    }
+    
+    // Add a dictionary of mark tags.
+    const MARK_TAGS = {
+      em: 'italic',
+      strong: 'bold',
+      u: 'underline',
+      code: `code`
+    }
+    
+    const rules = [
+      {
+        deserialize(el, next) {
+          const type = BLOCK_TAGS[el.tagName.toLowerCase()]
+          if (type) {
+            return {
+              object: 'block',
+              type: type,
+              data: {
+                className: el.getAttribute('class'),
+              },
+              nodes: next(el.childNodes),
+            }
+          }
+        },
+        serialize(obj, children) {
+          if (obj.object == 'block') {
+            switch (obj.type) {
+              case 'paragraph':
+                return  <div className={styles["main-pane-item"]}><p>{children}</p></div>
+                case "block-quote":
+                  return  <div className={styles["main-pane-item"]}><blockquote>{children}</blockquote></div>;
+                case "bulleted-list":
+                  return <div className={styles["main-pane-item"]}><ul>{children}</ul></div>;
+                case "heading-one":
+                  return <div className={styles["main-pane-item"]}><h1 className={styles["heading"]}>{children}</h1></div>;
+                case "heading-two":
+                  return <div className={styles["main-pane-item"]}><h2>{children}</h2></div>;
+                case "list-item":
+                  return <div className={styles["main-pane-item"]}><li>{children}</li></div>;
+                case "numbered-list":
+                  return <div className={styles["main-pane-item"]}><ol>{children}</ol></div>;
+                case "image": {
+                  const src = obj.data['src']
+                  return (
+                    <div className={styles["main-pane-item"]}>
+                    <figure className={styles["image-container"]}>
+                    <img
+                      src={src}
+                    />
+                    </figure>
+                    </div>
+                  )
+                }
+            }
+          }
+        },
+      },
+      // Add a new rule that handles marks...
+      {
+        deserialize(el, next) {
+          const type = MARK_TAGS[el.tagName.toLowerCase()]
+          if (type) {
+            return {
+              object: 'mark',
+              type: type,
+              nodes: next(el.childNodes),
+            }
+          }
+        },
+        serialize(obj, children) {
+          if (obj.object == 'mark') {
+            switch (obj.type) {
+              case 'bold':
+                return <strong>{children}</strong>
+              case 'italic':
+                return <em>{children}</em>
+              case 'code':
+                return <code>{children}</code>
+              case 'underline':
+                return <u>{children}</u>
+            }
+          }
+        },
+      },
+    ]
+    const html = new Html({rules})
+
     const getArticle = async () => {
-      console.log(id);
       const response = await fetch("/articles/?" + id);
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
@@ -58,10 +154,16 @@ const ArticlePage = (props) => {
         author: res.author,
         date: res.date,
         image: res.image,
-        sections: res.sections,
+        content: html.serialize(res.content)
       });
-    });
-  }, [article.title]);
+ 
+    }
+   
+    );
+  }, []);
+
+
+  
 
   const getLinkFunction = (linkType) => {
     switch (linkType) {
@@ -87,6 +189,7 @@ const ArticlePage = (props) => {
     />
   );
 
+
   return (
     <div className={styles["overarching"]}>
       <div className={styles["primary-color-background"]}></div>
@@ -108,10 +211,11 @@ const ArticlePage = (props) => {
           />
         </div>
         <div className={styles["content-pane"]}>
-          <div className={styles["main-pane"]}>
-            <div className={styles["main-pane-item"]}></div>
+          <div className={styles["main-pane"]} 
+          dangerouslySetInnerHTML={{__html: article.content}}
+        >
 
-            {article.sections.map((item) => {
+            {/* {article.sections.map((item) => {
               return (
                 <div>
                   {item.hasOwnProperty("subheading") ? (
@@ -132,7 +236,9 @@ const ArticlePage = (props) => {
                   )}
                 </div>
               );
-            })}
+            })} */}
+
+
           </div>
 
           <div className={styles["side-pane"]}></div>

@@ -68,9 +68,8 @@
     justify-content: center;
   }
 
-  .subheading{
+  .heading{
     align-self: flex-start;
-    font-size: 2rem;
     color: var(--primary-color);
     font-family: 'Montserrat', sans-serif;
   }
