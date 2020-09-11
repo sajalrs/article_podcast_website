@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Editor, getEventTransfer } from "slate-react";
-import { Block, Value } from "slate";
+import { Block} from "slate";
 import styles from "./TextEditor.module.css";
 import FormatToolbar from "./FormatToolbar";
 import { isKeyHotkey } from "is-hotkey";
@@ -8,35 +8,39 @@ import imageExtensions from 'image-extensions'
 import isUrl from 'is-url'
 
 
-const initialValue = Value.fromJSON({
-  document: {
-    nodes: [
-      {
-        object: "block",
-        type: "paragraph",
-        nodes: [
-          {
-            object: "text",
-            leaves: [
-              {
-                text: "This text is editable",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
-});
 
-const TextEditor = () => {
-  const [value, setValue] = useState(initialValue);
+
+const schema = {
+    document: {
+      last: { type: 'paragraph' },
+      normalize: (editor, { code, node, child }) => {
+        switch (code) {
+          case 'last_child_type_invalid': {
+            const paragraph = Block.create('paragraph')
+            return editor.insertNodeByKey(node.key, node.nodes.size, paragraph)
+          }
+        }
+      },
+    },
+    blocks: {
+      image: {
+        isVoid: true,
+      },
+    },
+  }
+  
+
+const TextEditor = (props) => {
+
   const ref = useRef();
+  const value = props.value;
+  const setValue = props.setValue;
   const DEFAULT_NODE = 'paragraph'
   const isBoldHotkey = isKeyHotkey("mod+b");
   const isItalicHotkey = isKeyHotkey("mod+i");
   const isUnderlinedHotkey = isKeyHotkey("mod+u");
   const isCodeHotkey = isKeyHotkey("mod+`");
+  const isTabHotkey = isKeyHotkey("tab");
 
   const hasMark = type => {
     return value.activeMarks.some(mark => mark.type === type);
@@ -65,25 +69,6 @@ const TextEditor = () => {
     })
   } 
 
-  const schema = {
-    document: {
-      last: { type: 'paragraph' },
-      normalize: (editor, { code, node, child }) => {
-        switch (code) {
-          case 'last_child_type_invalid': {
-            const paragraph = Block.create('paragraph')
-            return editor.insertNodeByKey(node.key, node.nodes.size, paragraph)
-          }
-        }
-      },
-    },
-    blocks: {
-      image: {
-        isVoid: true,
-      },
-    },
-  }
-  
 
   const renderMarkButton = (type, icon) => {
     const isActive = hasMark(type);
@@ -108,6 +93,18 @@ const TextEditor = () => {
       </button>
       )
   }
+
+  const renderSaveButton = (icon) => {
+    return(
+      <button
+      className={styles["tooltip-icon-button"]}
+      onPointerDown={props.onSave? props.onSave : () => console.log(JSON.stringify(value.toJSON()))}
+    >
+      <i className={icon} />
+    </button>
+    )
+}
+
 
   const renderBlockButton = (type, icon) => {
     let isActive = hasBlock(type);
@@ -189,7 +186,10 @@ const TextEditor = () => {
       mark = "underlined";
     } else if (isCodeHotkey(event)) {
       mark = "code";
-    } else {
+    } else if (isTabHotkey(event)) {
+      event.preventDefault();
+      return next()
+    }else {
       return next();
     }
 
@@ -205,6 +205,7 @@ const TextEditor = () => {
   const onClickImage = event => {
       event.preventDefault();
       const src = window.prompt("enter the URL of the image:");
+      // const caption = window.prompt("enter a caption for the image")
       if(!src) return
       ref.current.command(insertImage, src)
   }
@@ -301,7 +302,9 @@ const TextEditor = () => {
         {renderBlockButton("block-quote", `${styles["fas"]} ${styles["fa-quote-right"]} fas fa-quote-right`)}
         {renderBlockButton("numbered-list", `${styles["fas"]} ${styles["fa-list-ol"]} fas fa-list-ol`)}
         {renderBlockButton("bulleted-list", `${styles["fas"]} ${styles["fa-list-ul"]} fas fa-list-ul`)}
-        {renderImageButton("fas fa-image")}
+        {renderImageButton(`${styles["fas"]} ${styles["fa-image"]} fas fa-image`)}
+        {renderSaveButton(`${styles["fas"]} ${styles["fa-save"]} fas fa-save`)}
+ 
       </FormatToolbar>
       <Editor
         ref={ref}

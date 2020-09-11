@@ -5,7 +5,7 @@ const ArticleSchema = mongoose.Schema({
   author: String,
   date: String,
   image: String,
-  sections: [Object],
+  content: Object
 });
 
 module.exports = mongoose.model("Articles", ArticleSchema);
