@@ -33,7 +33,7 @@ const Header = forwardRef((props, ref) => {
       {navFixed ? (
         <div>
           <div style={{ width: "100%", height: "66px" }}></div>
-          <div style={{ position: "fixed", width: "100%", top: "0px" }}>
+          <div style={{ position: "fixed", width: "100%", top: "0px", zIndex: 1 }}>
             {renderOnceNavbar}
           </div>
         </div>
