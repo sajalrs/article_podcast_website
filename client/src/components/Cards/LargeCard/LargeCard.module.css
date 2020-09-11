@@ -98,16 +98,27 @@
   color: var(--secondary-color);
   font-weight: bold;
   font-size: 1.5rem;
+  
 }
 
 .card-body > p > .author {
   color: var(--secondary-color);
   font-weight: bold;
   font-size: 1.5rem;
+  padding-right: 10px;
+ 
 }
+
+
 
 .card-body > p {
   font-size: 1rem;
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
+
+
 
