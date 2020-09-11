@@ -193,9 +193,7 @@ const TextEditor = (props) => {
         );
       case "list-item":
         return (
-          <div className={styles["main-pane-item"]}>
             <li>{children}</li>
-          </div>
         );
       case "numbered-list":
         return (

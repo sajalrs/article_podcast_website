@@ -41,9 +41,16 @@
 
 .main-pane-item{
     padding-top: 18px;
-    padding-bottom: 18px;
     display: flex;
     justify-content: center;
+  }
+
+ 
+  .main-pane-item li{
+    padding-top: 18px;
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90vw;
   }
 
   .heading{
@@ -117,7 +124,7 @@
       max-width: 80vw;
     }
 
-    .main-pane label, .main-pane h2, .main-pane p{
+    .main-pane label, .main-pane h2, .main-pane p, .main-pane-item li{
       padding-right: 7vw;
     }
 
@@ -131,5 +138,6 @@
 
     .Editor{
         width: 100vw;
+        align-items: center;
     }
 }

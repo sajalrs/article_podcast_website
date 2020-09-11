@@ -91,7 +91,7 @@ const ArticlePage = (props) => {
                 case "heading-two":
                   return <div className={styles["main-pane-item"]}><h2>{children}</h2></div>;
                 case "list-item":
-                  return <div className={styles["main-pane-item"]}><li>{children}</li></div>;
+                  return <li>{children}</li>;
                 case "numbered-list":
                   return <div className={styles["main-pane-item"]}><ol>{children}</ol></div>;
                 case "image": {
