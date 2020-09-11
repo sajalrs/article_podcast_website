@@ -118,6 +118,17 @@ const Edit = (props) => {
     })
   }, [article.title, article.author, article.author, article.date, article.image])
 
+  // useEffect(() => {
+  //   const keyDownHandler = (e) => {
+
+  //   }
+
+
+  //   return () => {
+  //     cleanup
+  //   }
+  // }, [])
+
   const saveArticle = async () => {
     const editedArticle = { ...article, content: textEditorValue.toJSON() };
 
@@ -230,13 +241,13 @@ const Edit = (props) => {
         <div className={styles["content-pane"]}>
           <div className={styles["main-pane"]}>
             <form ref={headlineFormRef} onSubmit={handleSubmit} className={styles["headline-form"]}>
-              <div className={styles["horizontal"]}><label>Title: <input className={styles["headline-form-input"]} type="text" value={formData.title} onChange={onTitleChange} /></label></div>
+              <div className={styles["horizontal"]}><label>Title: </label><input className={styles["headline-form-input"]} type="text" value={formData.title} onChange={onTitleChange} /></div>
               <div className={styles["horizontal"]}>
-              <label>Author: <input className={`${styles["headline-form-input"]} ${styles["same-line"]}`} type="text" value={formData.author} onChange={onAuthorChange} /></label>
-              <label>Date: <input className={`${styles["headline-form-input"]} ${styles["same-line"]}`} type="text" value={formData.date} onChange={onDateChange} /></label>
+              <label>Author: </label><input className={`${styles["headline-form-input"]} ${styles["same-line"]}`} type="text" value={formData.author} onChange={onAuthorChange} />
+              <label>Date: </label><input className={`${styles["headline-form-input"]} ${styles["same-line"]}`} type="text" value={formData.date} onChange={onDateChange} />
               </div>
               <div className={styles["horizontal"]}>
-              <label>Image: <input className={styles["headline-form-input"]} type="text" value={formData.image} onChange={onImageChange} /></label>
+              <label>Image: </label><input className={styles["headline-form-input"]} type="text" value={formData.image} onChange={onImageChange} />
           
               </div>
               <input type="submit" value="Change Card" className={styles["submit-button"]}/>

@@ -17,6 +17,10 @@
     background-color: white;
 }
 
+.fas{
+    color: var(--secondary-color);
+}
+
 .tooltip-icon-button{
     font-size: 1.5rem ;
     border: 0px;
