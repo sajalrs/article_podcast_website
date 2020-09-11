@@ -19,7 +19,7 @@ const ArticlePage = (props) => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    const fixNavbar = (e) => {
+    const fixSidePanel = (e) => {
       if (window.scrollY > headerBoxRef.current.clientHeight - 66 - 35 + 644) {
         setSidePanelFix(true);
       } else {
@@ -27,9 +27,9 @@ const ArticlePage = (props) => {
       }
     };
  
-    window.addEventListener("scroll", fixNavbar);
+    window.addEventListener("scroll", fixSidePanel);
     return () => {
-      window.removeEventListener("scroll", fixNavbar);
+      window.removeEventListener("scroll", fixSidePanel);
     };
   }, [sidePanelFixed]);
 
@@ -115,7 +115,7 @@ const ArticlePage = (props) => {
                       src={src}
                     />
                     <figcaption>
-                        {children}
+                        <strong>{children}</strong>
                     </figcaption>
                     </figure>
                     </div>

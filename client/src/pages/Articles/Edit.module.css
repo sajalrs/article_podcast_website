@@ -63,20 +63,19 @@
   }
   
   .main-pane-item{
-    padding-top: 36px;
-    padding-bottom: 36px;
+    padding-top: 18px;
+    padding-bottom: 18px;
     display: flex;
     justify-content: center;
   }
 
-  .subheading{
+  .heading{
     align-self: flex-start;
     font-size: 2rem;
     color: var(--primary-color);
     font-family: 'Montserrat', sans-serif;
   }
   .main-pane p{
-    padding: 18px 0px;
     font-size: 1.5rem;
     font-family: 'Montserrat', sans-serif;
     max-width: 90vw;
@@ -221,7 +220,6 @@
     } 
 
     .image-container > img {
-    
       max-width: 80vw;
     } 
     .image-container > figcaption{
