@@ -92,9 +92,9 @@ const Articles = (props) => {
                   title={item.title}
                   text={item.description}
                   author={item.author}
-                  LinkType={item.LinkType}
-                  link={props.getHyperLink(item.LinkType)(item.to)}
-                  onClick={getLinkFunction(item.LinkType)}
+                  LinkType={Card.LinkType["article-internal"]}
+                  link={props.getHyperLink(Card.LinkType["article-internal"])(item["_id"])}
+                  onClick={getLinkFunction(Card.LinkType["article-internal"])}
                 />
               </div>
             );
