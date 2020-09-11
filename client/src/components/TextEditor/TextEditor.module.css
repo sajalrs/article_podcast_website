@@ -14,6 +14,7 @@
     padding: 10px 0;
     /* margin: 0 0 px 0; */
     width: 65vw;
+    background-color: white;
 }
 
 .tooltip-icon-button{
@@ -38,6 +39,44 @@
     width: 65vw;
 }
 
+.main-pane-item{
+    padding-top: 18px;
+    padding-bottom: 18px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .heading{
+    align-self: flex-start;
+    color: var(--primary-color);
+    font-family: 'Montserrat', sans-serif;
+  }
+  .main-pane p{
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90vw;
+  }
+
+  .image-container img{
+    max-width: 100%;
+    width: fit-content;
+    align-self: center;
+  }
+
+  .image-container{
+    display: flex;
+    flex-direction: column;
+  }
+  
+
+  .image-container > figcaption{
+    padding-top: 18px;
+    padding: 18px 0px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90vw;
+  }
+
 /* .Editor span{
     text-align: flex-start;
 }
@@ -46,13 +85,51 @@
     margin: 0 auto;
 }
  */
-
-@media screen and (max-width: 500px){
+ 
+ @media screen and (max-width: 1350px){
+    /* .App-header{
+      background-image: url("headerbackgroundcroppedsmallscreen.jpg");
+      height: 12vh;
+      transition: all 200ms linear;
+    }
+  
+    #header-title{
+      font-size: 8vmax;
+    } */
     .format-toolbar{
         width: 90vw;
     }
 
     .Editor{
         width: 90vw;
+    }
+  
+
+  .image-container {
+      max-width: 80vw;
+    } 
+
+    .image-container > img {
+      max-width: 80vw;
+    } 
+    .image-container > figcaption{
+     
+      max-width: 80vw;
+    }
+
+    .main-pane label, .main-pane h2, .main-pane p{
+      padding-right: 7vw;
+    }
+
+  }
+
+
+@media screen and (max-width: 500px){
+    .format-toolbar{
+        width: 100vw;
+    }
+
+    .Editor{
+        width: 100vw;
     }
 }

@@ -50,8 +50,9 @@ const Edit = (props) => {
   const { id } = useParams();
   const history = useHistory();
   const [sidePanelFixed, setSidePanelFix] = useState(false);
+  const [toolbarFixed, setToolbarFix] = useState(false); 
   const headerBoxRef = useRef();
-
+  const headlineFormRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -70,8 +71,21 @@ const Edit = (props) => {
     };
   }, [sidePanelFixed]);
 
+  useEffect(() => {
+    const fixToolbar = (e) => {
+      if (window.scrollY > headerBoxRef.current.clientHeight + headlineFormRef.current.clientHeight - 66 + 644) {
+        setToolbarFix(true);
+      } else {
+        setToolbarFix(false);
+      }
+    };
 
-  const largeCardRef = useRef();
+    window.addEventListener("scroll", fixToolbar);
+    return () => {
+      window.removeEventListener("scroll", fixToolbar);
+    };
+  }, [toolbarFixed]);
+  
   useEffect(() => {
     console.log(id);
     const getArticle = async () => {
@@ -216,7 +230,7 @@ const Edit = (props) => {
         </div>
         <div className={styles["content-pane"]}>
           <div className={styles["main-pane"]}>
-            <form onSubmit={handleSubmit} className={styles["headline-form"]}>
+            <form ref={headlineFormRef} onSubmit={handleSubmit} className={styles["headline-form"]}>
               <div className={styles["horizontal"]}><label>Title: <input className={styles["headline-form-input"]} type="text" value={formData.title} onChange={onTitleChange} /></label></div>
               <div className={styles["horizontal"]}>
               <label>Author: <input className={`${styles["headline-form-input"]} ${styles["same-line"]}`} type="text" value={formData.author} onChange={onAuthorChange} /></label>
@@ -233,6 +247,7 @@ const Edit = (props) => {
               value={textEditorValue}
               setValue={setTextEditorValue}
               onSave={saveArticle}
+              toolbarFixed={toolbarFixed}
             />
           </div>
 

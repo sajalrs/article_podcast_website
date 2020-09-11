@@ -161,29 +161,69 @@ const TextEditor = (props) => {
     const { attributes, children, node } = props;
 
     switch (node.type) {
+      case "paragraph":
+        return (
+          <div className={styles["main-pane-item"]}>
+            <p>{children}</p>
+          </div>
+        );
       case "block-quote":
-        return <blockquote {...attributes}>{children}</blockquote>;
+        return (
+          <div className={styles["main-pane-item"]}>
+            <blockquote>{children}</blockquote>
+          </div>
+        );
       case "bulleted-list":
-        return <ul {...attributes}>{children}</ul>;
+        return (
+          <div className={styles["main-pane-item"]}>
+            <ul>{children}</ul>
+          </div>
+        );
       case "heading-one":
-        return <h1 {...attributes}>{children}</h1>;
+        return (
+          <div className={styles["main-pane-item"]}>
+            <h1 className={styles["heading"]}>{children}</h1>
+          </div>
+        );
       case "heading-two":
-        return <h2 {...attributes}>{children}</h2>;
+        return (
+          <div className={styles["main-pane-item"]}>
+            <h2>{children}</h2>
+          </div>
+        );
       case "list-item":
-        return <li {...attributes}>{children}</li>;
+        return (
+          <div className={styles["main-pane-item"]}>
+            <li>{children}</li>
+          </div>
+        );
       case "numbered-list":
-        return <ol {...attributes}>{children}</ol>;
+        return (
+          <div className={styles["main-pane-item"]}>
+            <ol>{children}</ol>
+          </div>
+        );
       case "image": {
         const src = node.data.get("src");
-        return <img {...attributes} src={src} />;
+        return (
+          <div className={styles["main-pane-item"]}>
+            <figure className={styles["image-container"]}>
+              <img src={src} />
+            </figure>
+          </div>
+        );
       }
       case "figure": {
         const src = node.data.get("src");
         return (
-          <figure {...attributes}>
-            <img src={src} />
-            <figcaption>{children}</figcaption>
-          </figure>
+          <div className={styles["main-pane-item"]}>
+            <figure className={styles["image-container"]}>
+              <img src={src} />
+              <figcaption>
+                <strong>{children}</strong>
+              </figcaption>
+            </figure>
+          </div>
         );
       }
       default:
@@ -329,54 +369,67 @@ const TextEditor = (props) => {
     next();
   };
 
+  const renderOnceToolbar = (
+    <FormatToolbar>
+      {renderMarkButton(
+        "bold",
+        `${styles["fas"]} ${styles["fa-bold"]} fas fa-bold`
+      )}
+      {renderMarkButton(
+        "italic",
+        `${styles["fas"]} ${styles["fa-italic"]} fas fa-italic`
+      )}
+      {renderMarkButton(
+        "underlined",
+        `${styles["fas"]} ${styles["fa-underline"]} fas fa-underline`
+      )}
+      {renderMarkButton(
+        "code",
+        `${styles["fas"]} ${styles["fa-code"]} fas fa-code`
+      )}
+      {renderBlockButton(
+        "heading-one",
+        `${styles["fas"]} ${styles["fa-h1"]} fas fa-heading`
+      )}
+      {renderBlockButton(
+        "heading-two",
+        `${styles["fas"]} ${styles["fa-h2"]} fas fa-heading`
+      )}
+      {renderBlockButton(
+        "block-quote",
+        `${styles["fas"]} ${styles["fa-quote-right"]} fas fa-quote-right`
+      )}
+      {renderBlockButton(
+        "numbered-list",
+        `${styles["fas"]} ${styles["fa-list-ol"]} fas fa-list-ol`
+      )}
+      {renderBlockButton(
+        "bulleted-list",
+        `${styles["fas"]} ${styles["fa-list-ul"]} fas fa-list-ul`
+      )}
+      {renderImageButton(`${styles["fas"]} ${styles["fa-image"]} fas fa-image`)}
+      {renderFigureButton(
+        `${styles["fas"]} ${styles["fa-images"]} fas fa-images`
+      )}
+
+      {renderSaveButton(`${styles["fas"]} ${styles["fa-save"]} fas fa-save`)}
+    </FormatToolbar>
+  );
+
   return (
     <div className={styles["overarching"]}>
-      <FormatToolbar>
-        {renderMarkButton(
-          "bold",
-          `${styles["fas"]} ${styles["fa-bold"]} fas fa-bold`
-        )}
-        {renderMarkButton(
-          "italic",
-          `${styles["fas"]} ${styles["fa-italic"]} fas fa-italic`
-        )}
-        {renderMarkButton(
-          "underlined",
-          `${styles["fas"]} ${styles["fa-underline"]} fas fa-underline`
-        )}
-        {renderMarkButton(
-          "code",
-          `${styles["fas"]} ${styles["fa-code"]} fas fa-code`
-        )}
-        {renderBlockButton(
-          "heading-one",
-          `${styles["fas"]} ${styles["fa-h1"]} fas fa-heading`
-        )}
-        {renderBlockButton(
-          "heading-two",
-          `${styles["fas"]} ${styles["fa-h2"]} fas fa-heading`
-        )}
-        {renderBlockButton(
-          "block-quote",
-          `${styles["fas"]} ${styles["fa-quote-right"]} fas fa-quote-right`
-        )}
-        {renderBlockButton(
-          "numbered-list",
-          `${styles["fas"]} ${styles["fa-list-ol"]} fas fa-list-ol`
-        )}
-        {renderBlockButton(
-          "bulleted-list",
-          `${styles["fas"]} ${styles["fa-list-ul"]} fas fa-list-ul`
-        )}
-        {renderImageButton(
-          `${styles["fas"]} ${styles["fa-image"]} fas fa-image`
-        )}
-        {renderFigureButton(
-          `${styles["fas"]} ${styles["fa-images"]} fas fa-images`
-        )}
-
-        {renderSaveButton(`${styles["fas"]} ${styles["fa-save"]} fas fa-save`)}
-      </FormatToolbar>
+            {props.toolbarFixed ? (
+            <div
+              style={{ position: "fixed", top: "66px" }}
+            >
+              {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
+              {renderOnceToolbar}
+            </div>
+          ) : (
+            <div>
+              {renderOnceToolbar}
+            </div>
+          )}
       <Editor
         ref={ref}
         className={styles["Editor"]}
