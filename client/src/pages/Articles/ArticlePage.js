@@ -106,6 +106,21 @@ const ArticlePage = (props) => {
                     </div>
                   )
                 }
+                case "figure": {
+                  const src = obj.data['src']
+                  return (
+                    <div className={styles["main-pane-item"]}>
+                    <figure className={styles["image-container"]}>
+                    <img
+                      src={src}
+                    />
+                    <figcaption>
+                        {children}
+                    </figcaption>
+                    </figure>
+                    </div>
+                  )
+                }
             }
           }
         },
@@ -162,7 +177,7 @@ const ArticlePage = (props) => {
     );
   }, []);
 
-
+  
   
 
   const getLinkFunction = (linkType) => {
