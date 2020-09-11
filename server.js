@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const articlesRoute = require('./routes/articles');
 const youtubeRoute = require('./routes/youtube')
+const createRoute = require('./routes/create')
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -24,6 +25,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use('/articles', articlesRoute);
 app.use('/youtube', youtubeRoute);
+app.use('/create', createRoute);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
