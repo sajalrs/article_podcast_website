@@ -17,12 +17,13 @@
 }
 
 .tooltip-icon-button{
+    font-size: 1.5rem ;
     border: 0px;
     background-color: white;
 }
 
 .fa-h2{
-    font-size: 0.7rem;
+    font-size: 1.2rem;
 }
 
 .active{
