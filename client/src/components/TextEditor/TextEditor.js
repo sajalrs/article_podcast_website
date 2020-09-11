@@ -1,74 +1,79 @@
 import React, { useState, useRef } from "react";
 import { Editor, getEventTransfer } from "slate-react";
-import { Block} from "slate";
+import { Block } from "slate";
 import styles from "./TextEditor.module.css";
 import FormatToolbar from "./FormatToolbar";
 import { isKeyHotkey } from "is-hotkey";
-import imageExtensions from 'image-extensions'
-import isUrl from 'is-url'
-
-
-
+import imageExtensions from "image-extensions";
+import isUrl from "is-url";
 
 const schema = {
-    document: {
-      last: { type: 'paragraph' },
-      normalize: (editor, { code, node, child }) => {
-        switch (code) {
-          case 'last_child_type_invalid': {
-            const paragraph = Block.create('paragraph')
-            return editor.insertNodeByKey(node.key, node.nodes.size, paragraph)
-          }
+  document: {
+    last: { type: "paragraph" },
+    normalize: (editor, { code, node, child }) => {
+      switch (code) {
+        case "last_child_type_invalid": {
+          const paragraph = Block.create("paragraph");
+          return editor.insertNodeByKey(node.key, node.nodes.size, paragraph);
         }
-      },
+      }
     },
-    blocks: {
-      image: {
-        isVoid: true,
-      },
+  },
+  blocks: {
+    image: {
+      isVoid: true,
     },
-  }
-  
+  },
+};
 
 const TextEditor = (props) => {
-
   const ref = useRef();
   const value = props.value;
   const setValue = props.setValue;
-  const DEFAULT_NODE = 'paragraph'
+  const DEFAULT_NODE = "paragraph";
   const isBoldHotkey = isKeyHotkey("mod+b");
   const isItalicHotkey = isKeyHotkey("mod+i");
   const isUnderlinedHotkey = isKeyHotkey("mod+u");
   const isCodeHotkey = isKeyHotkey("mod+`");
   const isTabHotkey = isKeyHotkey("tab");
 
-  const hasMark = type => {
-    return value.activeMarks.some(mark => mark.type === type);
+  const hasMark = (type) => {
+    return value.activeMarks.some((mark) => mark.type === type);
   };
 
- const hasBlock = type => {
-    return value.blocks.some(node => node.type === type)
-  }
+  const hasBlock = (type) => {
+    return value.blocks.some((node) => node.type === type);
+  };
 
   const isImage = (url) => {
     return imageExtensions.includes(getExtension(url));
-  }
+  };
 
   const getExtension = (url) => {
-      return new URL(url).pathname.split('.').pop;
-  }
+    return new URL(url).pathname.split(".").pop;
+  };
 
   const insertImage = (editor, src, target) => {
-    if(target){
-        editor.select(target)
+    if (target) {
+      editor.select(target);
     }
 
     editor.insertBlock({
-        type: 'image',
-        data: {src},
-    })
-  } 
+      type: "image",
+      data: { src },
+    });
+  };
 
+  const insertFigure = (editor, src, target) => {
+    if (target) {
+      editor.select(target);
+    }
+
+    editor.insertBlock({
+      type: "figure",
+      data: { src },
+    });
+  };
 
   const renderMarkButton = (type, icon) => {
     const isActive = hasMark(type);
@@ -76,7 +81,11 @@ const TextEditor = (props) => {
       <button
         active={isActive}
         onPointerDown={(event) => onClickMark(event, type)}
-        className={isActive? `styles["active] styles["tooltip-icon-button"]`: styles["tooltip-icon-button"]}
+        className={
+          isActive
+            ? `styles["active] styles["tooltip-icon-button"]`
+            : styles["tooltip-icon-button"]
+        }
       >
         <i className={icon} />
       </button>
@@ -84,27 +93,43 @@ const TextEditor = (props) => {
   };
 
   const renderImageButton = (icon) => {
-      return(
-        <button
+    return (
+      <button
         className={styles["tooltip-icon-button"]}
         onPointerDown={onClickImage}
       >
         <i className={icon} />
       </button>
-      )
-  }
+    );
+  };
 
   const renderSaveButton = (icon) => {
-    return(
+    return (
       <button
-      className={styles["tooltip-icon-button"]}
-      onPointerDown={props.onSave? props.onSave : () => console.log(JSON.stringify(value.toJSON()))}
-    >
-      <i className={icon} />
-    </button>
-    )
-}
+        className={styles["tooltip-icon-button"]}
+        onPointerDown={
+          props.onSave
+            ? props.onSave
+            : () => console.log(JSON.stringify(value.toJSON()))
+        }
+      >
+        <i className={icon} />
+      </button>
+    );
+  };
 
+  const renderFigureButton = (icon) => {
+    let isActive = hasBlock("figure");
+    return (
+      <button
+        active={isActive}
+        className={styles["tooltip-icon-button"]}
+        onPointerDown={onClickFigure}
+      >
+        <i className={icon} />
+      </button>
+    );
+  };
 
   const renderBlockButton = (type, icon) => {
     let isActive = hasBlock(type);
@@ -119,7 +144,11 @@ const TextEditor = (props) => {
 
     return (
       <button
-      className={isActive? `styles["active] styles["tooltip-icon-button"]`: styles["tooltip-icon-button"]}
+        className={
+          isActive
+            ? `styles["active] styles["tooltip-icon-button"]`
+            : styles["tooltip-icon-button"]
+        }
         active={isActive}
         onPointerDown={(event) => onClickBlock(event, type)}
       >
@@ -145,13 +174,17 @@ const TextEditor = (props) => {
       case "numbered-list":
         return <ol {...attributes}>{children}</ol>;
       case "image": {
-        const src = node.data.get('src')
+        const src = node.data.get("src");
+        return <img {...attributes} src={src} />;
+      }
+      case "figure": {
+        const src = node.data.get("src");
         return (
-          <img
-            {...attributes}
-            src={src}
-          />
-        )
+          <figure {...attributes}>
+            <img src={src} />
+            <figcaption>{children}</figcaption>
+          </figure>
+        );
       }
       default:
         return next();
@@ -188,8 +221,8 @@ const TextEditor = (props) => {
       mark = "code";
     } else if (isTabHotkey(event)) {
       event.preventDefault();
-      return next()
-    }else {
+      return next();
+    } else {
       return next();
     }
 
@@ -202,13 +235,20 @@ const TextEditor = (props) => {
     ref.current.toggleMark(type);
   };
 
-  const onClickImage = event => {
-      event.preventDefault();
-      const src = window.prompt("enter the URL of the image:");
-      // const caption = window.prompt("enter a caption for the image")
-      if(!src) return
-      ref.current.command(insertImage, src)
-  }
+  const onClickImage = (event) => {
+    event.preventDefault();
+    const src = window.prompt("enter the URL of the image:");
+    // const caption = window.prompt("enter a caption for the image")
+    if (!src) return;
+    ref.current.command(insertImage, src);
+  };
+
+  const onClickFigure = (event) => {
+    event.preventDefault();
+    const src = window.prompt("enter the URL of the image:");
+    if (!src) return;
+    ref.current.command(insertFigure, src);
+  };
 
   const onClickBlock = (event, type) => {
     event.preventDefault();
@@ -257,54 +297,85 @@ const TextEditor = (props) => {
     }
   };
 
-   const onDropOrPaste = (event, editor, next) => {
-    const target = editor.findEventRange(event)
-    if (!target && event.type === 'drop') return next()
+  const onDropOrPaste = (event, editor, next) => {
+    const target = editor.findEventRange(event);
+    if (!target && event.type === "drop") return next();
 
-    const transfer = getEventTransfer(event)
-    const { type, text, files } = transfer
+    const transfer = getEventTransfer(event);
+    const { type, text, files } = transfer;
 
-    if (type === 'files') {
+    if (type === "files") {
       for (const file of files) {
-        const reader = new FileReader()
-        const [mime] = file.type.split('/')
-        if (mime !== 'image') continue
+        const reader = new FileReader();
+        const [mime] = file.type.split("/");
+        if (mime !== "image") continue;
 
-        reader.addEventListener('load', () => {
-          editor.command(insertImage, reader.result, target)
-        })
+        reader.addEventListener("load", () => {
+          editor.command(insertImage, reader.result, target);
+        });
 
-        reader.readAsDataURL(file)
+        reader.readAsDataURL(file);
       }
-      return
+      return;
     }
 
-    if (type === 'text') {
-      if (!isUrl(text)) return next()
-      if (!isImage(text)) return next()
-      editor.command(insertImage, text, target)
-      return
+    if (type === "text") {
+      if (!isUrl(text)) return next();
+      if (!isImage(text)) return next();
+      editor.command(insertImage, text, target);
+      return;
     }
 
-    next()
-  }
-
+    next();
+  };
 
   return (
     <div className={styles["overarching"]}>
       <FormatToolbar>
-        {renderMarkButton("bold", `${styles["fas"]} ${styles["fa-bold"]} fas fa-bold`)}
-        {renderMarkButton("italic", `${styles["fas"]} ${styles["fa-italic"]} fas fa-italic`)}
-        {renderMarkButton("underlined", `${styles["fas"]} ${styles["fa-underline"]} fas fa-underline`)}
-        {renderMarkButton("code", `${styles["fas"]} ${styles["fa-code"]} fas fa-code`)}
-        {renderBlockButton("heading-one", `${styles["fas"]} ${styles["fa-h1"]} fas fa-heading`)}
-        {renderBlockButton("heading-two", `${styles["fas"]} ${styles["fa-h2"]} fas fa-heading`)}
-        {renderBlockButton("block-quote", `${styles["fas"]} ${styles["fa-quote-right"]} fas fa-quote-right`)}
-        {renderBlockButton("numbered-list", `${styles["fas"]} ${styles["fa-list-ol"]} fas fa-list-ol`)}
-        {renderBlockButton("bulleted-list", `${styles["fas"]} ${styles["fa-list-ul"]} fas fa-list-ul`)}
-        {renderImageButton(`${styles["fas"]} ${styles["fa-image"]} fas fa-image`)}
+        {renderMarkButton(
+          "bold",
+          `${styles["fas"]} ${styles["fa-bold"]} fas fa-bold`
+        )}
+        {renderMarkButton(
+          "italic",
+          `${styles["fas"]} ${styles["fa-italic"]} fas fa-italic`
+        )}
+        {renderMarkButton(
+          "underlined",
+          `${styles["fas"]} ${styles["fa-underline"]} fas fa-underline`
+        )}
+        {renderMarkButton(
+          "code",
+          `${styles["fas"]} ${styles["fa-code"]} fas fa-code`
+        )}
+        {renderBlockButton(
+          "heading-one",
+          `${styles["fas"]} ${styles["fa-h1"]} fas fa-heading`
+        )}
+        {renderBlockButton(
+          "heading-two",
+          `${styles["fas"]} ${styles["fa-h2"]} fas fa-heading`
+        )}
+        {renderBlockButton(
+          "block-quote",
+          `${styles["fas"]} ${styles["fa-quote-right"]} fas fa-quote-right`
+        )}
+        {renderBlockButton(
+          "numbered-list",
+          `${styles["fas"]} ${styles["fa-list-ol"]} fas fa-list-ol`
+        )}
+        {renderBlockButton(
+          "bulleted-list",
+          `${styles["fas"]} ${styles["fa-list-ul"]} fas fa-list-ul`
+        )}
+        {renderImageButton(
+          `${styles["fas"]} ${styles["fa-image"]} fas fa-image`
+        )}
+        {renderFigureButton(
+          `${styles["fas"]} ${styles["fa-images"]} fas fa-images`
+        )}
+
         {renderSaveButton(`${styles["fas"]} ${styles["fa-save"]} fas fa-save`)}
- 
       </FormatToolbar>
       <Editor
         ref={ref}
@@ -319,8 +390,6 @@ const TextEditor = (props) => {
       />
     </div>
   );
-  };
-
-
+};
 
 export default TextEditor;
