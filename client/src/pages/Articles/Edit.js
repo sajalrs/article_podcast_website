@@ -110,7 +110,6 @@ const Edit = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("Running this")
     setFormData({
       title: article.title,
       author: article.author,
@@ -131,6 +130,7 @@ const Edit = (props) => {
     const response = await fetch(`/articles/edit`, requestOptions);
     const data = await response.json();
     if (response.status !== 200) throw Error(data.message);
+    alert("Article saved");
   };
 
   const getLinkFunction = (linkType) => {
@@ -161,7 +161,6 @@ const Edit = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     // if(!(article.title === formData.title && article.image === formData.image && article.author === formData.author)){
-      console.log(article); 
     setArticle({
         ...article,
         title: formData.title,

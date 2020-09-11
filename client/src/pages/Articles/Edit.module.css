@@ -68,6 +68,11 @@
     justify-content: center;
   }
 
+  .main-pane-item li{
+    padding-top: 18px;
+
+  }
+
   .heading{
     align-self: flex-start;
     font-size: 2rem;

@@ -68,7 +68,7 @@ const CardBody = (props) => {
         {props.title}
       </h2>
       <p>
-        <span className={styles["author"]}>{props.author}</span> {" "}
+        <span className={styles["author"]}>{props.author}</span>
         <span className={styles["date"]}>{props.date}</span>
       </p>
       {props.text && <p className={styles["body-content"]}>{props.text}</p>}
