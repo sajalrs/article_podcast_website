@@ -216,13 +216,19 @@ const Edit = (props) => {
         </div>
         <div className={styles["content-pane"]}>
           <div className={styles["main-pane"]}>
-            <form onSubmit={handleSubmit}>
-              <label>Title: <input type="text" value={formData.title} onChange={onTitleChange} /></label>
-              <label>Author: <input type="text" value={formData.author} onChange={onAuthorChange} /></label>
-              <label>Date: <input type="text" value={formData.date} onChange={onDateChange} /></label>
-              <label>Image: <input type="text" value={formData.image} onChange={onImageChange} /></label>
-              <input type="submit" value="Submit"/>
-            </form>
+            <form onSubmit={handleSubmit} className={styles["headline-form"]}>
+              <div className={styles["horizontal"]}><label>Title: <input className={styles["headline-form-input"]} type="text" value={formData.title} onChange={onTitleChange} /></label></div>
+              <div className={styles["horizontal"]}>
+              <label>Author: <input className={`${styles["headline-form-input"]} ${styles["same-line"]}`} type="text" value={formData.author} onChange={onAuthorChange} /></label>
+              <label>Date: <input className={`${styles["headline-form-input"]} ${styles["same-line"]}`} type="text" value={formData.date} onChange={onDateChange} /></label>
+              </div>
+              <div className={styles["horizontal"]}>
+              <label>Image: <input className={styles["headline-form-input"]} type="text" value={formData.image} onChange={onImageChange} /></label>
+          
+              </div>
+              <input type="submit" value="Submit" className={styles["submit-button"]}/>
+  
+                        </form>
             <TextEditor
               value={textEditorValue}
               setValue={setTextEditorValue}
