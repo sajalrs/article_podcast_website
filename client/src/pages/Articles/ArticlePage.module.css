@@ -56,9 +56,10 @@
   .main-pane{
     padding-left: 36px;
     padding-right: 18px;
-    justify-content: center;
+    justify-content: flex-start;
     display: flex;
     flex-direction: column;
+    min-height: 1000px;
   }
   
   .main-pane-item{

@@ -226,7 +226,7 @@ const Edit = (props) => {
               <label>Image: <input className={styles["headline-form-input"]} type="text" value={formData.image} onChange={onImageChange} /></label>
           
               </div>
-              <input type="submit" value="Submit" className={styles["submit-button"]}/>
+              <input type="submit" value="Change Card" className={styles["submit-button"]}/>
   
                         </form>
             <TextEditor
