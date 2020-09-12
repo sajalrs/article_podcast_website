@@ -118,16 +118,21 @@ const Edit = (props) => {
     })
   }, [article.title, article.author, article.author, article.date, article.image])
 
-  // useEffect(() => {
-  //   const keyDownHandler = (e) => {
+  useEffect(() => {
+    const keyDownHandler = (e) => {
+      console.log("Running Effect")
+      if(e.keyCode === 83 && e.ctrlKey){
+        e.preventDefault();
+        saveArticle();
+      }
+    }
 
-  //   }
-
-
-  //   return () => {
-  //     cleanup
-  //   }
-  // }, [])
+    document.addEventListener("keydown", keyDownHandler)
+    return () => {
+      
+    document.removeEventListener("keydown", keyDownHandler)
+    }
+  }, [article, textEditorValue])
 
   const saveArticle = async () => {
     const editedArticle = { ...article, content: textEditorValue.toJSON() };
