@@ -46,15 +46,7 @@
     flex-direction: column;
   }
 
-  .video {
-    overflow: hidden;
-    /* 16:9 aspect ratio */
-    position: relative;
+  .video iframe{
+    width: 96vmin;
+    height: 54vmin;
   }
-
-  .video iframe {
-    border: 0;
-    height: 100%;
-    width: 100%;
- }
-  
