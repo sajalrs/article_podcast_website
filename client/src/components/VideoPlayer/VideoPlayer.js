@@ -11,8 +11,6 @@ const VideoPlayer = (props, ref) => {
                 </div>
                 <div className={styles["video"]}>
                   <iframe
-                    width="886"
-                    height="498"
                     src={props.src}
                     frameborder="0"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
