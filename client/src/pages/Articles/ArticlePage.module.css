@@ -59,6 +59,13 @@
     max-width: 90vw;
   }
 
+  .main-pane-item blockquote{
+    padding-top: 18px;
+    font-size: 1.5rem;
+    font-family: 'Montserrat', sans-serif;
+    max-width: 90vw;
+  }
+
   .main-pane{
     padding-left: 36px;
     padding-right: 18px;
@@ -189,7 +196,7 @@
       max-width: 80vw;
     }
 
-    .main-pane label, .main-pane h2, .main-pane p,.main-pane-item li{
+    .main-pane label, .main-pane h2, .main-pane p,.main-pane-item li, .main-pane-item blockquote{
       padding-right: 7vw;
     }
 
@@ -208,7 +215,7 @@
     }
 
 
-    .main-pane label, .main-pane h2, .main-pane p, .main-pane-item li{
+    .main-pane label, .main-pane h2, .main-pane p, .main-pane-item li, .main-pane-item blockquote{
       padding-left: 0px;
       padding-right: 0px; 
     }
