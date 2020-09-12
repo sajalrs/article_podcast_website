@@ -10,7 +10,6 @@ import TextEditor from "../../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css"
-import moment from 'moment';
 const initialValue = {
   document: {
     nodes: [
@@ -112,7 +111,6 @@ const Edit = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log(moment(article.date));
     setFormData({
       title: article.title,
       author: article.author,
