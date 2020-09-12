@@ -20,7 +20,7 @@ const LargeCard = (props) => {
       <CardBody
         title={props.title}
         text={props.text}
-        date={props.date}
+        date={Card.formatDate(props.date)}
         author={props.author}
         onClick={props.onClick? props.onClick : () => {console.log("")}}
         link={props.link}

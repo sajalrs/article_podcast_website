@@ -62,6 +62,7 @@ const Home = (props) => {
       }
     };
 
+  
 
   const renderOnceSidePanel =  (<SidePanel
   sideBarClicked={props.sideBarClicked}
