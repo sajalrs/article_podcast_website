@@ -5,7 +5,7 @@ const Article = require("../models/Articles");
 
 
 router.get("/pages", (req, res) => {
-  const query = Article.find({}).select('_id title author date image')
+  const query = Article.find({}).select('_id title author date image').sort('-date');
   query.exec((err, data) => {
     if (err) {
       res.send(err);

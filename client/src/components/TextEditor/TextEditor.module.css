@@ -132,6 +132,8 @@
       padding-right: 7vw;
     }
 
+    
+
   }
 
 
@@ -143,5 +145,9 @@
     .Editor{
         width: 100vw;
         align-items: center;
+    }
+
+    .heading{
+      padding-left: 7vw;
     }
 }
