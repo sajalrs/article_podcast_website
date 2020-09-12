@@ -78,6 +78,20 @@
     font-weight: bold;
   }
 
+  .DatePicker{
+    padding: 8px 10px;
+    border-radius: 2px;
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 16px;
+    border: 1px solid var(--secondary-color);
+    background-color: rgb(250,250,250);
+    width: fit-content;
+  }
+
   .heading{
     align-self: flex-start;
     font-size: 2rem;
@@ -109,20 +123,23 @@
     width: 100%;
     background-color: rgb(250,250,250);
 }
-
+/* 
 .same-line{
   width: 100%;
-}
+} */
 
 
 
 .horizontal{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
- 
+  width: 100%;
+  justify-content: flex-end;
 }
 
+.horizontal-same-line{
+  display: flex;
+}
 
   .submit-button {
     border: none;
@@ -215,6 +232,21 @@
       font-size: 8vmax;
     } */
   
+    .horizontal-same-line{
+      
+      display: flex;
+      flex-direction: column;
+    }
+
+    .horizontal{
+      justify-content: flex-start;
+    }
+
+    .headline-form-input, .DatePicker{
+      margin-right: 7vw;
+    }
+
+
     .content-pane{
       width: 100%;
     }
