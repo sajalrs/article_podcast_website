@@ -81,7 +81,7 @@
   width: 100%;
   /* background-color: #026670; */
   background-color: var(--primary-color);
-  color: white;
+  color:  var(--font-color);
   font-family: "Montserrat", sans-serif;
   letter-spacing: 1px;
   font-size: 1.5rem;
