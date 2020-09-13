@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import MenuItems from './MenuItems.js'
 import styles from './Navbar.module.css'
 import {Link} from 'react-router-dom'
+import FalseNineIcon from '../../Icons/FalseNineFitting'
 const Navbar = (props) => {
 
 
@@ -9,7 +10,7 @@ const Navbar = (props) => {
 
     return(
         <div className={styles["Navbar"]}>
-            <label className={styles["navbar-title"]}>THE FALSE 9</label>
+            <div className={styles["navbar-title-logo"]}><FalseNineIcon width="40px" height="40px"/><label className={styles["navbar-title"]}>THE FALSE 9</label></div>
             <nav>
                 <div className={styles["navigation"]}>
                 <ul className={props.navbarClicked?`${styles["nav-links-list"]} ${styles["nav-links-list-active"]}`:`${styles["nav-links-list"]} ${styles["nav-links-list-inactive"]}`}>
