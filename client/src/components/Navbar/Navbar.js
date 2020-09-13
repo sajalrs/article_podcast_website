@@ -10,7 +10,7 @@ const Navbar = (props) => {
 
     return(
         <div className={styles["Navbar"]}>
-            <div className={styles["navbar-title-logo"]}><FalseNineIcon width="40px" height="40px"/><label className={styles["navbar-title"]}>THE FALSE 9</label></div>
+            <div className={styles["navbar-title-logo"]}><FalseNineIcon width="37px" height="37px"/><label className={styles["navbar-title"]}>THE FALSE 9</label></div>
             <nav>
                 <div className={styles["navigation"]}>
                 <ul className={props.navbarClicked?`${styles["nav-links-list"]} ${styles["nav-links-list-active"]}`:`${styles["nav-links-list"]} ${styles["nav-links-list-inactive"]}`}>

@@ -14,14 +14,22 @@
   width: 100%;
 }
 
+.title-word{
+  display: flex;
+  align-items: center;
+  padding-right: 2vw;
+}
+
 #header-title {
-  color: white;
-  font-family: "Montserrat", sans-serif;
-  font-size: 9vmax;
+  color:#D4AF37;
+  font-family: 'Cabin Condensed',"Montserrat", sans-serif;
+  font-size: 8vw;
   padding-left: 2vw;
-  text-shadow: 6px 6px var(--primary-color);
+  text-shadow: 8px 8px var(--primary-color);
   letter-spacing: 3px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 @media screen and (max-width: 550px) {
@@ -30,6 +38,7 @@
     transition: all 200ms ease-in;
     width: 0;
   }
+
 }
 
 @media screen and (max-width: 1350px) {
@@ -39,7 +48,9 @@
     transition: all 200ms linear;
   }
 
+
   #header-title {
-    font-size: 8vmax;
+    font-size: 8vw;
+    text-shadow: 4px 4px var(--primary-color);
   }
 }
