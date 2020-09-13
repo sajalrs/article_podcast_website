@@ -32,7 +32,7 @@ const App = () => {
           window.addEventListener("resize", updateDropDown);
       }
   },[navbarClicked])
-  const [videoIds, setVideoIds] = useState({
+  const [youtube, setYoutube] = useState({
     items : []
   });
   useEffect(() => {
@@ -47,12 +47,11 @@ const App = () => {
 
 
     getVideoIds().then((res) => {
-      const ids = res["items"].map((item) => {return item.id});
-      setVideoIds({"ids": ids});
+      const curVideos = res["items"].map((item) => {return {"id": item.id, "title": item.title, "date": item.date}});
+      setYoutube({curVideos});
     });
     }, []);
   const setNavbarClicked = (toSet) =>  {
-    console.log(videoIds);
     if(toSet){
       
       setTopOffset(topOffset + 140);
@@ -152,7 +151,7 @@ const App = () => {
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
-                    youtubeIds={videoIds.ids}
+                    youtubeVideos={youtube}
                   />
                 );
               }}
@@ -174,7 +173,7 @@ const App = () => {
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
-                    youtubeIds={videoIds.ids}
+                    youtubeVideos={youtube}
                     />
                 );
               }}
@@ -196,7 +195,7 @@ const App = () => {
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
-                    youtubeIds={videoIds.ids}
+                    youtubeVideos={youtube}
                     />
                 );
               }}
@@ -218,7 +217,7 @@ const App = () => {
                     navbarClicked={navbarClicked}
                     setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
-                    youtubeIds={videoIds.ids}
+                    youtubeVideos={youtube}
                     />
                 );
               }}

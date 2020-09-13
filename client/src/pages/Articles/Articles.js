@@ -64,7 +64,7 @@ const Articles = (props) => {
     <SidePanel
       sideBarClicked={props.sideBarClicked}
       setSideBarClicked={props.setSideBarClicked}
-      youtubeIds={props.youtubeIds}
+      youtubeVideos={props.youtubeVideos}
       getImageLink={props.getImageLink}
       playVideo={props.playVideo}
       getHyperLink={props.getHyperLink}
