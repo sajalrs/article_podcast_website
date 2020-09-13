@@ -20,13 +20,20 @@
 
 }
 
+.navbar-title-logo{
+    display: flex;
+    align-items: center;
+    margin-left: 1.5vw;
+}
+
 .navbar-title{
 
-    color: white;
+    color:#D4AF37;
     font-size: 1.5rem;
-    margin-left: 2vw;
+   
     font-weight: bold;
     letter-spacing: 3px;
+    padding-left: 1vw;
 }
 
 .navigation{
