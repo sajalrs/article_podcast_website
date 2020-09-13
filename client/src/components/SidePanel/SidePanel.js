@@ -19,7 +19,7 @@ const SidePanel = (props) => {
   useEffect(() => {
     setTitlePos(sidePanelDivRef.current.innerWidth);
   },[])
-  const vidArray = props.youtubeIds;
+  const vidArray = props.youtubeVideos.curVideos;
   return (
     <div
       ref={sidePanelDivRef}
@@ -43,11 +43,11 @@ const SidePanel = (props) => {
           return (
             <li key={index}>
               <SmallCard
-                title="Podcast"
-                image={props.getImageLink(item)}
+                title={item.title}
+                image={props.getImageLink(item.id)}
                 LinkType={Card.LinkType["video-youtube"]}
                 onClick={props.playVideo}
-                link={props.getHyperLink(Card.LinkType["video-youtube"])(item)}
+                link={props.getHyperLink(Card.LinkType["video-youtube"])(item.id)}
               />
             </li>
           );

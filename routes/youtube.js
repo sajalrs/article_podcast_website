@@ -3,10 +3,13 @@ const router = express.Router();
 const fetch = require("node-fetch");
 const mongoose = require("mongoose");
 const YoutubeLink = require("../models/YoutubeLinks");
+const e = require("express");
+const { query } = require("express");
 
 
 router.get("/", (req, res) => {
-  YoutubeLink.find({}, (err, data) => {
+  const query = YoutubeLink.find({}).sort('-date');
+  query.exec((err, data) => {
     if(err){
       res.send(err);
     } else {
@@ -15,13 +18,42 @@ router.get("/", (req, res) => {
   } )
 
 
-  // fetch("https://www.googleapis.com/youtube/v3/search?part=id&channelId=UCV2Y62okiOmoXzYIh_xAcGw&maxResults=10&order=date&key=" + process.env.YOUTUBE_API)
-  //   .then(response => response.json())
-  //     .then(data => res.json({"items": data.items}))
+ 
      
     
 })
 
+
+// router.get("/edit", (req,res) => {
+//   YoutubeLink.find({}, (err, data) => {
+//     if(err){
+//       res.send(err)
+//     } else {
+//       data.forEach((element, index) => {
+//          fetch(`https://www.googleapis.com/youtube/v3/videos?part=id%2Csnippet&id=${element["id"]}&key=${process.env.YOUTUBE_API}`)
+//           .then(response => response.json())
+//            .then(data => {
+//              const title = data["items"][0]["snippet"]["title"]
+//              const date = data["items"][0]["snippet"]["publishedAt"]
+//              console.log(`title: ${title}`)
+//              console.log(`date: ${date}`)
+//         element.title = title;
+//         element.date = date;
+//         element.save((error, returned) => {
+//           if(error){
+//             res.send(err);
+//           }else {
+//             console.log(returned);
+//           }
+//         })
+//             })
+           
+  
+//       })
+//       res.send("success");
+//     }
+//   })
+// })
 
 
 module.exports = router;
