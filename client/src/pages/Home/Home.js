@@ -67,7 +67,7 @@ const Home = (props) => {
   const renderOnceSidePanel =  (<SidePanel
   sideBarClicked={props.sideBarClicked}
   setSideBarClicked={props.setSideBarClicked}
-  youtubeIds={props.youtubeIds}
+  youtubeVideos={props.youtubeVideos}
   getImageLink={props.getImageLink}
   playVideo={props.playVideo}
   getHyperLink={props.getHyperLink}
