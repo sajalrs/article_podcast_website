@@ -13,7 +13,7 @@
     align-items: center;
     margin-bottom: 24px;
     padding: 24px;
-    color: white;
+    color:  var(--font-color);
 }
 
 .footer-subscription > p{
@@ -48,7 +48,7 @@
 .submit-btn {
     border: none;
     background:  var(--secondary-color);
-    color: white;
+    color:  var(--font-color);
     font-weight: 700;
     padding: 18px;
     letter-spacing: 1px;
@@ -60,7 +60,7 @@
 }
 
 .submit-btn:hover {
-    color: white;
+    color:  var(--font-color);
     font-weight: bold;
     letter-spacing: 3px;
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
@@ -94,7 +94,7 @@
 }
 
 .fab:hover{
-    color: white;
+    color:  var(--font-color);
     -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.3s ease 0s;
@@ -103,7 +103,7 @@
 .website-rights{
     font-size: 1.5rem;
     font-family: 'Montserrat', sans-serif;
-    color: white;
+    color:  var(--font-color);
 }
 
 .footer-links{
@@ -130,12 +130,12 @@
 
 .footer-link-items > h2{
     margin-bottom: 16px;
-    color: white;
+    color:  var(--font-color);
     font-family: 'Montserrat', sans-serif;
 }
 
 .footer-link-items a{
-    color: white;
+    color:  var(--font-color);
     text-decoration: none;
     margin-bottom: 8px;
 }

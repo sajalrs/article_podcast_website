@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef, forwardRef } from "react";
 import Navbar from "../Navbar/Navbar";
 import styles from "./Header.module.css";
-
+import FalseNineIcon from '../../Icons/FalseNineFitting'
+import FIcon from '../../Icons/F'
+import NineIcon from '../../Icons/Nine'
 const Header = forwardRef((props, ref) => {
   const [navFixed, changeNavFix] = useState(false);
   const headerBoxRef = useRef();
@@ -27,7 +29,7 @@ const Header = forwardRef((props, ref) => {
   return (
     <header ref={ref}>
       <div className={styles["header"]} ref={headerBoxRef}>
-        <h1 id={styles["header-title"]}>THE FALSE 9</h1>
+        <h1 id={styles["header-title"]}><span className={styles["title-word"]}>the</span><span className={styles["title-word"]}> <FIcon height="9vw" width="7vw"/>alse</span><span className={styles["title-word"]}> <NineIcon  height="9vw" width="8vw"/></span></h1>
       </div>
 
       {navFixed ? (
