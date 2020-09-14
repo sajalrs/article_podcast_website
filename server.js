@@ -24,9 +24,9 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
   
  
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
+  // app.get('/*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  // });
 
   app.get('/.well-known/pki-validation/C3701E4D57417E8F8AB5A18E30D23FC4.txt', (req, res)=> {
     res.sendFile(path.join(__dirname, './', 'C3701E4D57417E8F8AB5A18E30D23FC4.txt'))
