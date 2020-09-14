@@ -29,7 +29,7 @@ const Header = forwardRef((props, ref) => {
   return (
     <header ref={ref}>
       <div className={styles["header"]} ref={headerBoxRef}>
-        <h1 id={styles["header-title"]}><span className={styles["title-word"]}>the</span><span className={styles["title-word"]}> <FIcon height="9vw" width="7vw"/>alse</span><span className={styles["title-word"]}> <NineIcon  height="9vw" width="8vw"/></span></h1>
+        <h1 id={styles["header-title"]}><span className={styles["title-word"]}>The</span><span className={styles["title-word"]}> <FIcon height="9vw" width="7vw"/>alse</span><span className={styles["title-word"]}><NineIcon  height="9vw" width="8vw"/></span></h1>
       </div>
 
       {navFixed ? (
