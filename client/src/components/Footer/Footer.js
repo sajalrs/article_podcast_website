@@ -1,9 +1,14 @@
 import React from 'react';
 import styles from './Footer.module.css'
+import AudioPlayer from '../AudioPlayer/AudioPlayer'
 
 const Footer = () => {
     return(
+        <div>
+                <AudioPlayer/>
+
        <div className={styles["footer-container"]}>
+       
            <section className={styles["footer-subscription"]}>
                <p className={styles["footer-subscription-heading"]}>
                    Join our weekly newsletter
@@ -69,6 +74,7 @@ const Footer = () => {
                 </div>
 
            </section>
+       </div>
        </div>
     );
 
