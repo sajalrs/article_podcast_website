@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const articlesRoute = require('./routes/articles');
 const youtubeRoute = require('./routes/youtube')
 const createRoute = require('./routes/create')
+const podcastsRoute = require('./routes/podcasts')
 const path = require('path');
 const bodyParser = require('body-parser');
 
@@ -19,7 +20,7 @@ const port = process.env.PORT || 5000;
 app.use('/articles', articlesRoute);
 app.use('/youtube', youtubeRoute);
 app.use('/create', createRoute);
-
+app.use('/podcasts', podcastsRoute);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
   
