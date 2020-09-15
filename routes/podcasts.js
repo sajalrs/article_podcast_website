@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
         }
         })
         
-        res.json(toReturn);
+        res.json({items: toReturn});
       });
 });
 
