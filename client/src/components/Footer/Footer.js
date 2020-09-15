@@ -5,8 +5,7 @@ import AudioPlayer from '../AudioPlayer/AudioPlayer'
 const Footer = () => {
     return(
         <div>
-                <AudioPlayer/>
-
+        <AudioPlayer/>
        <div className={styles["footer-container"]}>
        
            <section className={styles["footer-subscription"]}>
