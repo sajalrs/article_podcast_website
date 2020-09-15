@@ -11,6 +11,7 @@ import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+
 const App = () => {
 
   const [fitLarge, setFitLarge] = useState(true);
@@ -51,6 +52,9 @@ const App = () => {
       setYoutube({curVideos});
     });
     }, []);
+
+
+
   const setNavbarClicked = (toSet) =>  {
     if(toSet){
       
