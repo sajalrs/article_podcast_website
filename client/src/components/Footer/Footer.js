@@ -2,10 +2,18 @@ import React from 'react';
 import styles from './Footer.module.css'
 import AudioPlayer from '../AudioPlayer/AudioPlayer'
 
-const Footer = () => {
+const Footer = (props) => {
     return(
         <div>
-        <AudioPlayer/>
+        <AudioPlayer
+             selectedTrack={props.selectedTrack}
+             setSelectedTrack={props.setSelectedTrack}
+             player={props.player}
+            setPlayer={props.setPlayer}
+            forwardPodcasts={props.forwardPodcasts}
+            rewindPodcasts={props.rewindPodcasts}
+ 
+        />
        <div className={styles["footer-container"]}>
        
            <section className={styles["footer-subscription"]}>

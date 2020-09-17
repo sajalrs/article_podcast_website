@@ -93,7 +93,9 @@ const Articles = (props) => {
                   text={item.description}
                   author={item.author}
                   LinkType={Card.LinkType["article-internal"]}
-                  link={props.getHyperLink(Card.LinkType["article-internal"])(item["_id"])}
+                  link={props.getHyperLink(Card.LinkType["article-internal"])(
+                    item["_id"]
+                  )}
                   onClick={getLinkFunction(Card.LinkType["article-internal"])}
                 />
               </div>
@@ -115,7 +117,15 @@ const Articles = (props) => {
       </div>
 
       <div className={styles["footer-container"]}>
-        <Footer />
+        <Footer
+          selectedTrack={props.selectedTrack}
+          setSelectedTrack={props.setSelectedTrack}
+          player={props.player}
+            setPlayer={props.setPlayer}
+            forwardPodcasts={props.forwardPodcasts}
+            rewindPodcasts={props.rewindPodcasts}
+ 
+        />
       </div>
     </div>
   );
