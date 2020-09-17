@@ -84,13 +84,14 @@ const AudioPlayer = (props) => {
   const progress = (100 / duration) * currentTime;
   return (
     <div className={styles["audio-player"]}>
-      <div>
-       
-    
+      <div className={styles["title-container"]}>
+        
+
           {
             props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
               .title
           }
+          </div>
         <div className={styles["controls"]}>
         <i
           onClick={() => props.rewindPodcasts()}
@@ -117,6 +118,7 @@ const AudioPlayer = (props) => {
             {progressTime}    <input
               ref={seekBarRef}
               type="range"
+              className={styles["progress-bar-slider"]}
               onChange={handleSliderChange}
               value={progress}
             /> {progressDuration}
@@ -126,7 +128,6 @@ const AudioPlayer = (props) => {
         
   
      
-      </div>
 
       <audio ref={audioRef} />
       {/*https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a  */}
