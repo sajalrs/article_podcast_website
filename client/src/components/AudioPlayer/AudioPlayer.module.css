@@ -19,3 +19,12 @@
     
   }
   
+.title-container{
+    overflow-x: hidden;
+    width: 80vw;
+}
+
+.controls{
+    display: flex;
+    align-items: center;
+}

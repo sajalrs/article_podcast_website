@@ -85,12 +85,17 @@ const AudioPlayer = (props) => {
   return (
     <div>
       <div>
-        <h1>
+       
+    
           {
             props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
               .title
           }
-        </h1>
+        <div className={styles["controls"]}>
+        <i
+          onClick={() => props.rewindPodcasts()}
+          className={`${styles["backward-button"]} ${styles["fas"]} ${styles["fa-step-backward"]} fas fa-step-backward`}
+        ></i>
         {props.player === "paused" && (
           <i
             onClick={() => props.setPlayer("playing")}
@@ -103,27 +108,24 @@ const AudioPlayer = (props) => {
             className={`${styles["pause-button"]} ${styles["far"]} ${styles["fa-pause-circle"]} far fa-pause-circle`}
           ></i>
         )}
-        {props.player === "playing" || props.player === "paused" ? (
+          <i
+          onClick={() => props.forwardPodcasts()}
+          className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
+        ></i>
+        </div>
           <div>
-            {progressTime} / {progressDuration}
-            <input
+            {progressTime}    <input
               ref={seekBarRef}
               type="range"
               onChange={handleSliderChange}
               value={progress}
-            />
+            /> {progressDuration}
+         
           </div>
-        ) : (
-          ""
-        )}
-        <i
-          onClick={() => props.rewindPodcasts()}
-          className={`${styles["backward-button"]} ${styles["fas"]} ${styles["fa-step-backward"]} fas fa-step-backward`}
-        ></i>
-        <i
-          onClick={() => props.forwardPodcasts()}
-          className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
-        ></i>
+         
+        
+  
+     
       </div>
 
       <audio ref={audioRef} />
