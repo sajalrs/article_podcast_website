@@ -1,0 +1,21 @@
+
+
+.fa-pause-circle, .fa-play-circle {
+    align-self: center;
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    background-color: white;
+    border-radius: 50%;
+   
+  }
+
+  .backward-button, .forward-button{
+    align-self: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--secondary-color);
+    
+    
+  }
+  

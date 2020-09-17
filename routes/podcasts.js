@@ -15,8 +15,7 @@ router.get("/", (req, res) => {
           "title": element["title"],
           "by": element["dc:creator"],
           "link": element["enclosure"]["url"],
-          "duration": element["enclosure"]["length"],
-          "date": element["pubDate"]
+          "date": element["pubDate"],
         }
         })
         
