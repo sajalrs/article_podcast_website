@@ -83,7 +83,7 @@ const AudioPlayer = (props) => {
   const progressTime = getTime(currentTime);
   const progress = (100 / duration) * currentTime;
   return (
-    <div>
+    <div className={styles["audio-player"]}>
       <div>
        
     
@@ -113,7 +113,7 @@ const AudioPlayer = (props) => {
           className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
         ></i>
         </div>
-          <div>
+          <div className={styles["progress-bar"]}>
             {progressTime}    <input
               ref={seekBarRef}
               type="range"
