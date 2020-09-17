@@ -8,6 +8,7 @@
     border-radius: 50%;
     padding: 1px;
 
+
 }
 
   .backward-button, .forward-button{
@@ -15,13 +16,19 @@
     font-size: 1.5rem;
     font-weight: bold;
     color: var(--secondary-color);
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 7px;
+    padding-right: 7px;
   }
-  
+
+  .backward-button:hover, .forward-button:hover{
+      font-size: 1.7rem;
+  }
+
+  .fa-pause-circle:hover, .fa-play-circle:hover{
+    font-size: 3.2rem;
+}
+
 .title-container{
-    overflow-x: hidden;
-    align-self: center;
     padding-left: 10vw;
     padding-right: 10vw;
     font-family: 'Montserrat', sans-serif;
@@ -29,7 +36,6 @@
     font-weight: bold;
     font-size: 1rem;
     letter-spacing: 1.5px;
- 
 
 }
 
@@ -37,20 +43,25 @@
     display: flex;
     justify-content: center;
     align-self: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .audio-player{
     display: flex;
-    flex-direction: column;
-    /* align-items: center; */
-    padding-top: 18px;
-    padding-bottom: 18px;
+    flex-direction: row; 
+    align-items: center;
+    padding: 18px;
     background-color: var(--primary-color);
     border-style: solid none solid none;
     border-color: var(--secondary-color);
-    
+    justify-content: center;
+}
+
+.player{
+    display: flex;
+    flex-direction: column;
+
 }
 
 .progress-bar{
@@ -62,7 +73,6 @@
     font-weight: bold;
     font-size: 1rem;
     letter-spacing: 1.5px;
- 
        
 }
 
@@ -70,4 +80,25 @@
     width: 40vw;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.image{
+    width: 160px;
+    height: 160px;
+}
+
+.image-container{
+    display: flex;
+}
+@media screen and (max-width: 550px){
+
+    .image{
+       display: none;
+    }
+
+
+
+    
+
+  
 }
