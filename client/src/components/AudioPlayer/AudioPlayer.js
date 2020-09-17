@@ -16,11 +16,10 @@ const AudioPlayer = (props) => {
     props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
   );
   const prevPlayer = usePrevious(props.player);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(2172.892);
+
   const seekBarRef = useRef();
   useEffect(() => {
-    console.log("Ran");
     if (
       props.selectedTrack.items[props.selectedTrack.currentlyPlaying] !==
       prevTrack
@@ -31,14 +30,22 @@ const AudioPlayer = (props) => {
         : null;
       if (track) {
         audioRef.current.src = track;
-        audioRef.current.play();
-        props.setPlayer("playing");
+        if (prevTrack && !(prevTrack.title ===  props.selectedTrack.items[props.selectedTrack.currentlyPlaying].title)){
+          audioRef.current.play();
+          props.setPlayer("playing");
+        } else{
+          props.setPlayer("paused");
+          if(props.currentTime !== 0){
+            audioRef.current.currentTime = props.currentTime;
+          }
+        }
+
       }
     }
   }, [props.selectedTrack.items[props.selectedTrack.currentlyPlaying]].title);
 
   useEffect(() => {
-    console.log("Ran this");
+
     if (props.player !== prevPlayer) {
       if (props.player === "paused") {
         audioRef.current.pause();
@@ -50,8 +57,7 @@ const AudioPlayer = (props) => {
 
   useEffect(() => {
     audioRef.current.addEventListener("timeupdate", (e) => {
-      setCurrentTime(e.target.currentTime);
-      setDuration(e.target.duration);
+      props.setCurrentTime(e.target.currentTime);
     });
     return () => {
       audioRef.current.removeEventListener("timeupdate", () => {});
@@ -61,7 +67,7 @@ const AudioPlayer = (props) => {
   const handleSliderChange = (e) => {
     const time = duration * (e.target.value / 100);
     audioRef.current.currentTime = time;
-    setCurrentTime(time);
+    props.setCurrentTime(time);
   };
 
   function usePrevious(value) {
@@ -80,18 +86,27 @@ const AudioPlayer = (props) => {
     }
   }
   const progressDuration = getTime(duration);
-  const progressTime = getTime(currentTime);
-  const progress = (100 / duration) * currentTime;
+  const progressTime = getTime(props.currentTime);
+  const progress = (100 / duration) * props.currentTime;
   return (
     <div className={styles["audio-player"]}>
+      <div className={styles["image-container"]}>
+        <img className={styles["image"]} src={props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
+              .image
+          }/>
+      </div>  
+      <div className={styles["player"]}>
       <div className={styles["title-container"]}>
         
 
           {
             props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
-              .title
+              .title.toUpperCase()
           }
           </div>
+        <div className={styles["image-controls"]}>
+           
+
         <div className={styles["controls"]}>
         <i
           onClick={() => props.rewindPodcasts()}
@@ -110,7 +125,7 @@ const AudioPlayer = (props) => {
           ></i>
         )}
           <i
-          onClick={() => props.forwardPodcasts()}
+          onClick={() =>   props.forwardPodcasts()}
           className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
         ></i>
         </div>
@@ -124,8 +139,8 @@ const AudioPlayer = (props) => {
             /> {progressDuration}
          
           </div>
-         
-        
+          </div>
+          </div> 
   
      
 

@@ -12,7 +12,8 @@ const Footer = (props) => {
             setPlayer={props.setPlayer}
             forwardPodcasts={props.forwardPodcasts}
             rewindPodcasts={props.rewindPodcasts}
- 
+            currentTime={props.currentTime}
+            setCurrentTime={props.setCurrentTime}
         />
        <div className={styles["footer-container"]}>
        

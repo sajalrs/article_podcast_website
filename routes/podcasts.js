@@ -11,11 +11,13 @@ router.get("/", (req, res) => {
         let json = JSON.parse(parser.toJson(data, {reversible: false}));
         // res.json(json.rss.channel.item);
 
-        const toReturn = json.rss.channel.item.map((element) => {return {
+        const toReturn = json.rss.channel.item.map((element, index) => {return {
+          "index": index,
           "title": element["title"],
           "by": element["dc:creator"],
           "link": element["enclosure"]["url"],
           "date": element["pubDate"],
+          "image": element["itunes:image"]["href"]
         }
         })
         
