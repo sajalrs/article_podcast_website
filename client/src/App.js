@@ -19,6 +19,7 @@ import {
 } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
+
 const App = () => {
   const [fitLarge, setFitLarge] = useState(true);
   const [sideBarClicked, setSideBarClickedOrig] = useState(false);
@@ -28,7 +29,7 @@ const App = () => {
     isPlaying: false,
   });
   const [navbarClicked, setNavbarClickedOrig] = useState(false);
-
+  const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
   const [player, setPlayer] = useState("paused");
   const [youtube, setYoutube] = useState({
     items: [],
@@ -47,7 +48,7 @@ const App = () => {
     currentlyPlaying: 0,
   });
   const [currentTime, setCurrentTime] = useState(0);
- 
+  const prevPlayer = usePrevious(player);
 
 
 
@@ -105,6 +106,15 @@ const App = () => {
       // clearAllBodyScrollLocks();
     };
   });
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+
   const setNavbarClicked = (toSet) => {
     if (toSet) {
       setTopOffset(topOffset + 140);
@@ -130,9 +140,11 @@ const App = () => {
     setSideBarClickedOrig(toSet);
   };
 
+
   const playVideo = (videoSrc) => {
     setVideo({ ...video, src: videoSrc, isPlaying: true });
     disableBodyScroll(scrollLockRef.current);
+    setPlayer("paused");
   };
   const closeVideo = () => {
     setVideo({ ...video, isPlaying: false });
@@ -219,6 +231,9 @@ const App = () => {
                     rewindPodcasts={rewindPodcasts}
                     currentTime={currentTime}
                     setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+
                   />
                 );
               }}
@@ -249,6 +264,9 @@ const App = () => {
                     rewindPodcasts={rewindPodcasts}
                     currentTime={currentTime}
                     setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+
                   />
                 );
               }}
@@ -279,6 +297,9 @@ const App = () => {
                     rewindPodcasts={rewindPodcasts}
                     currentTime={currentTime}
                     setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+
                   />
                 );
               }}
@@ -309,6 +330,9 @@ const App = () => {
                     rewindPodcasts={rewindPodcasts}
                     currentTime={currentTime}
                     setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+
                   />
                 );
               }}

@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, forwardRef } from "react";
 import styles from "./AudioPlayer.module.css";
-const AudioPlayer = (props) => {
+const AudioPlayer = forwardRef((props, ref) => {
   // const [selectedTrack, setSelectedTrack] = useState({
   //   title: "False Nine Podcast #17 Champions League RO16 first leg review",
   //   by: "Ishan Sharma, Susajjan Dhungana and Ojash Dangal",
@@ -17,8 +17,19 @@ const AudioPlayer = (props) => {
   );
   const prevPlayer = usePrevious(props.player);
   const [duration, setDuration] = useState(2172.892);
-
+  
   const seekBarRef = useRef();
+  useEffect(() => {
+    if (props.player !== prevPlayer) {
+      if (props.player === "paused") {
+        audioRef.current.pause();
+      } else if (props.player === "playing" && prevPlayer === "paused") {
+        audioRef.current.play();
+      }
+    }
+  }, [props.player]);
+
+
   useEffect(() => {
     if (
       props.selectedTrack.items[props.selectedTrack.currentlyPlaying] !==
@@ -30,30 +41,28 @@ const AudioPlayer = (props) => {
         : null;
       if (track) {
         audioRef.current.src = track;
-        if (prevTrack && !(prevTrack.title ===  props.selectedTrack.items[props.selectedTrack.currentlyPlaying].title)){
+        if (
+          prevTrack &&
+          !(
+            prevTrack.title ===
+            props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
+              .title
+          )
+        ) {
           audioRef.current.play();
           props.setPlayer("playing");
-        } else{
-          props.setPlayer("paused");
-          if(props.currentTime !== 0){
+        } else {
+ 
+         props.setPlayer("paused");
+          if (props.currentTime !== 0) {
             audioRef.current.currentTime = props.currentTime;
           }
         }
-
       }
     }
   }, [props.selectedTrack.items[props.selectedTrack.currentlyPlaying]].title);
 
-  useEffect(() => {
 
-    if (props.player !== prevPlayer) {
-      if (props.player === "paused") {
-        audioRef.current.pause();
-      } else if (props.player === "playing" && prevPlayer === "paused") {
-        audioRef.current.play();
-      }
-    }
-  }, [props.player]);
 
   useEffect(() => {
     audioRef.current.addEventListener("timeupdate", (e) => {
@@ -89,65 +98,83 @@ const AudioPlayer = (props) => {
   const progressTime = getTime(props.currentTime);
   const progress = (100 / duration) * props.currentTime;
   return (
-    <div className={styles["audio-player"]}>
-      <div className={styles["image-container"]}>
-        <img className={styles["image"]} src={props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
-              .image
-          }/>
-      </div>  
-      <div className={styles["player"]}>
-      <div className={styles["title-container"]}>
-        
+    <div ref={ref} className={styles["audio-player"]}>
 
-          {
+      <div className={props.isActive ? styles["image-container"] : `${styles["image-container"]} ${styles["image-container-inactive"]}`}>
+        <img
+          className={styles["image"]}
+          src={
             props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
-              .title.toUpperCase()
+              .image
           }
-          </div>
-        <div className={styles["image-controls"]}>
-           
-
-        <div className={styles["controls"]}>
-        <i
-          onClick={() => props.rewindPodcasts()}
-          className={`${styles["backward-button"]} ${styles["fas"]} ${styles["fa-step-backward"]} fas fa-step-backward`}
-        ></i>
-        {props.player === "paused" && (
-          <i
-            onClick={() => props.setPlayer("playing")}
-            className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
-          ></i>
-        )}
-        {props.player === "playing" && (
-          <i
-            onClick={() => props.setPlayer("paused")}
-            className={`${styles["pause-button"]} ${styles["far"]} ${styles["fa-pause-circle"]} far fa-pause-circle`}
-          ></i>
-        )}
-          <i
-          onClick={() =>   props.forwardPodcasts()}
-          className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
-        ></i>
+        />
+        
+      </div>
+      <div className={styles["player"]}>
+       <div className={styles["minimized"]}>
+       <div className={styles["title-container"]}>
+          {props.selectedTrack.items[
+            props.selectedTrack.currentlyPlaying
+          ].title.toUpperCase()}
         </div>
+        
+       {props.isActive ? 
+          
+          <i
+          onClick={() => props.setActive(false) }
+          className={`${styles["audio-player-inactive"]} ${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
+        ></i>:
+        <i
+            onClick={() => props.setActive(true) }
+            className={`${styles["audio-player-active"]} ${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up`}
+          ></i>
+       }
+    
+
+       </div>
+      
+
+        <div className={props.isActive? styles["image-controls"] : `${styles["image-controls"]} ${styles["image-controls-inactive"]}`}>
+          <div className={styles["controls"]}>
+            <i
+              onClick={() => props.rewindPodcasts()}
+              className={`${styles["backward-button"]} ${styles["fas"]} ${styles["fa-step-backward"]} fas fa-step-backward`}
+            ></i>
+            {props.player === "paused" && (
+              <i
+                onClick={() => props.setPlayer("playing")}
+                className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
+              ></i>
+            )}
+            {props.player === "playing" && (
+              <i
+                onClick={() => props.setPlayer("paused")}
+                className={`${styles["pause-button"]} ${styles["far"]} ${styles["fa-pause-circle"]} far fa-pause-circle`}
+              ></i>
+            )}
+            <i
+              onClick={() => props.forwardPodcasts()}
+              className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
+            ></i>
+          </div>
           <div className={styles["progress-bar"]}>
-            {progressTime}    <input
+            {progressTime}{" "}
+            <input
               ref={seekBarRef}
               type="range"
               className={styles["progress-bar-slider"]}
               onChange={handleSliderChange}
               value={progress}
-            /> {progressDuration}
-         
+            />{" "}
+            {progressDuration}
           </div>
-          </div>
-          </div> 
-  
-     
+        </div>
+      </div>
 
       <audio ref={audioRef} />
       {/*https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a  */}
     </div>
   );
-};
+});
 
 export default AudioPlayer;
