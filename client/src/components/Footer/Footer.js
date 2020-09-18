@@ -53,7 +53,7 @@ const Footer = (props) => {
       setCurrentTime={props.setCurrentTime}
       isActive={isActive}
       setActive={setActive}
-     
+      audioRef={props.audioRef}
     />
   );
 

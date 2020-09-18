@@ -49,7 +49,7 @@ const App = () => {
   });
   const [currentTime, setCurrentTime] = useState(0);
   const prevPlayer = usePrevious(player);
-
+  const audioRef = useRef();
 
 
   useEffect(() => {
@@ -152,6 +152,7 @@ const App = () => {
   };
 
   const forwardPodcasts = () => {
+    setCurrentTime(0);
     if (podcasts.currentlyPlaying === podcasts.items.length - 1) {
       setPodcasts({ ...podcasts, currentlyPlaying: 0 });
     } else {
@@ -163,6 +164,7 @@ const App = () => {
   };
 
   const rewindPodcasts = () => {
+    setCurrentTime(0);
     if (podcasts.currentlyPlaying === 0) {
       setPodcasts({ ...podcasts, currentlyPlaying: podcasts.items.length - 1 });
     } else {
@@ -204,6 +206,7 @@ const App = () => {
       {video.isPlaying && (
         <VideoPlayer closeVideo={closeVideo} src={video.src} />
       )}
+      <audio ref={audioRef} />
       <div className="App">
         <BrowserRouter>
           <Switch>
@@ -233,7 +236,7 @@ const App = () => {
                     setCurrentTime={setCurrentTime}
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
-
+                    audioRef={audioRef}
                   />
                 );
               }}
@@ -266,7 +269,7 @@ const App = () => {
                     setCurrentTime={setCurrentTime}
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
-
+                    audioRef={audioRef}
                   />
                 );
               }}
@@ -299,7 +302,7 @@ const App = () => {
                     setCurrentTime={setCurrentTime}
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
-
+                    audioRef={audioRef}
                   />
                 );
               }}
@@ -332,7 +335,7 @@ const App = () => {
                     setCurrentTime={setCurrentTime}
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
-
+                    audioRef={audioRef}
                   />
                 );
               }}
