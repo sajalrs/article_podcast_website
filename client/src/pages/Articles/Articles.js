@@ -126,7 +126,7 @@ const Articles = (props) => {
             rewindPodcasts={props.rewindPodcasts}
             currentTime={props.currentTime}
             setCurrentTime={props.setCurrentTime}
-
+            audioRef={props.audioRef}
             audioPlayerFixed={props.audioPlayerFixed}
             setAudioPlayerFixed={props.setAudioPlayerFixed}
             sidePanelFixed={sidePanelFixed}
