@@ -51,7 +51,7 @@
     font-size: 1.5rem;
     color: var(--secondary-color);
     align-self: center;
-    padding: 5px;
+    padding: 3px;
     text-decoration: none;
 }
 
@@ -59,7 +59,7 @@
     font-size: 1.5rem;
     color: var(--secondary-color);
     align-self: center;
-    padding: 5px;
+    padding: 3px;
     text-decoration: none;
 }
 
@@ -119,7 +119,7 @@
         display: flex;
         flex-direction: column;
         position: absolute;
-        top: 63px;
+        top: 60px;
         right: 0px;
         margin-top: 0px;
         background-color: var(--primary-color);
@@ -165,5 +165,9 @@
         width: 100vw;
     }    
    
+    .social-links .fab, .social-links .fas, .navbar-title {
+        font-size: 1.3rem;
+    }
     
+
 }
