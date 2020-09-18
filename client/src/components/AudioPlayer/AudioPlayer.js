@@ -11,7 +11,7 @@ const AudioPlayer = forwardRef((props, ref) => {
   //   currentTime: 0
   // });
   // const [player, setPlayer] = useState("paused");
-
+  
   const prevTrack = usePrevious(
     props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
   ) || {
@@ -108,6 +108,10 @@ const AudioPlayer = forwardRef((props, ref) => {
       <div className={styles["player"]}>
         <div className={styles["minimized"]}>
           {!props.isActive && <div id={styles["bars"]}>
+          <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+
             <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
             <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
             <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
