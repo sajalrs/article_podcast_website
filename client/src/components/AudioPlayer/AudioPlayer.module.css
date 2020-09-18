@@ -29,8 +29,6 @@
 }
 
 .title-container{
-    padding-left: 10vw;
-    padding-right: 10vw;
     font-family: 'Montserrat', sans-serif;
     color: white;
     font-weight: bold;
@@ -89,16 +87,50 @@
 
 .image-container{
     display: flex;
+    padding-right: 5vw;
 }
+
+.audio-player-active, .audio-player-inactive{
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.audio-player-active:hover, .audio-player-inactive:hover{
+     color: white;
+ }
+
+
+.minimized{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.image-controls-inactive{
+    display: none;
+}
+
+.image-container-inactive{
+    display: none;
+}
+
 @media screen and (max-width: 550px){
 
     .image{
        display: none;
     }
 
-
-
-    
+    .title-container{
+        padding-left: 0;
+        padding-right: 0;
+        font-size: 1rem;
+    }
+/* 
+    .title-container{
+        display: none;
+    } */
 
   
 }

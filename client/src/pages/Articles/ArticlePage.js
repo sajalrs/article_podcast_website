@@ -270,7 +270,7 @@ const ArticlePage = (props) => {
           <div className={styles["side-pane"]}></div>
           {sidePanelFixed ? (
             <div
-              style={{ position: "fixed", top: props.topOffset, right: "0px" }}
+              style={{ position: "fixed", top: props.topOffset, right: "0px", zIndex: 1 }}
             >
               {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
               {renderOnceSidePanel}
@@ -292,6 +292,10 @@ const ArticlePage = (props) => {
             rewindPodcasts={props.rewindPodcasts}
             currentTime={props.currentTime}
             setCurrentTime={props.setCurrentTime}
+
+            audioPlayerFixed={props.audioPlayerFixed}
+            setAudioPlayerFixed={props.setAudioPlayerFixed}
+            sidePanelFixed={sidePanelFixed}
           />
         </div>
       </div>
