@@ -11,14 +11,13 @@ import Edit from "./pages/Articles/Edit";
 import "./App.css";
 import Card from "./components/Cards/Card.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
-
+import TermsOfService from "./pages/Legal/TermsOfService/TermsOfService"
 import {
   disableBodyScroll,
   enableBodyScroll,
   clearAllBodyScrollLocks,
 } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-
 
 const App = () => {
   const [fitLarge, setFitLarge] = useState(true);
@@ -313,6 +312,39 @@ const App = () => {
               render={() => {
                 return (
                   <Articles
+                    fitLarge={fitLarge}
+                    playVideo={playVideo}
+                    getImageLink={getImageLink}
+                    getHyperLink={getHyperLink}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
+                    youtubeVideos={youtube}
+                    selectedTrack={podcasts}
+                    setSelectedTrack={setPodcasts}
+                    player={player}
+                    setPlayer={setPlayer}
+                    forwardPodcasts={forwardPodcasts}
+                    rewindPodcasts={rewindPodcasts}
+                    currentTime={currentTime}
+                    setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+                    audioRef={audioRef}
+                  />
+                );
+              }}
+            />
+              <Route
+              exact
+              path="/legal/termsofservice"
+              render={() => {
+                return (
+                  <TermsOfService
                     fitLarge={fitLarge}
                     playVideo={playVideo}
                     getImageLink={getImageLink}

@@ -21,6 +21,7 @@ app.use('/articles', articlesRoute);
 app.use('/youtube', youtubeRoute);
 app.use('/create', createRoute);
 app.use('/podcasts', podcastsRoute);
+
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
   

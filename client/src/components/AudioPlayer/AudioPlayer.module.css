@@ -22,10 +22,12 @@
 
   .backward-button:hover, .forward-button:hover{
       font-size: 1.7rem;
+      cursor: pointer;
   }
 
   .fa-pause-circle:hover, .fa-play-circle:hover{
     font-size: 3.2rem;
+    cursor: pointer;
 }
 
 .title-container{
@@ -34,7 +36,11 @@
     font-weight: bold;
     font-size: 1rem;
     letter-spacing: 1.5px;
+    margin-left: 10.5vw;
+}
 
+.title-container:hover{
+    cursor: pointer;
 }
 
 .controls{
@@ -80,6 +86,10 @@
     margin-right: 10px;
 }
 
+.progress-bar-slider:hover{
+    cursor: pointer;
+}
+
 .image{
     width: 160px;
     height: 160px;
@@ -99,6 +109,7 @@
 
 .audio-player-active:hover, .audio-player-inactive:hover{
      color: white;
+     cursor: pointer;
  }
 
 
@@ -116,12 +127,78 @@
     display: none;
 }
 
+#bars {
+    height: 40px;
+    left: 8vw;
+    margin: -30px 0 0 -20px;
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    
+}
+
+.bar {
+   background: var(--secondary-color);
+    bottom: 1px;
+    height: 3px;
+    position: absolute;
+    width: 3px;      
+    animation: sound 0ms -800ms linear infinite alternate;
+}
+
+.bar-paused{
+    background: var(--secondary-color);
+    bottom: 1px;
+    height: 3px;
+    position: absolute;
+    width: 3px;      
+
+}
+.bar-paused:nth-child(1)  { left: 1px; height: 12px; opacity: 0.5;}
+.bar-paused:nth-child(2)  { left: 5px; height: 20px; opacity: 0.6;}
+.bar-paused:nth-child(3)  { left: 9px; height: 10px; opacity: 0.7;}
+.bar-paused:nth-child(4)  { left: 13px;  height: 18px; opacity: 1;}
+.bar-paused:nth-child(5)  { left: 17px;  height: 23px; opacity: 0.8;}
+.bar-paused:nth-child(6)  { left: 21px;  height: 12px; opacity: 0.35;}
+.bar-paused:nth-child(7)  { left: 25px; height: 28px; opacity: 0.54;}
+.bar-paused:nth-child(8)  { left: 29px;  height: 13px; opacity: 0.35;}
+.bar-paused:nth-child(9)  { left: 33px; height: 23px; opacity: 0.4;}
+.bar-paused:nth-child(10) { left: 37px;  height: 15px; opacity: 0.9;}
+@keyframes sound {
+    0% {
+       opacity: .35;
+        height: 3px; 
+    }
+    100% {
+        opacity: 1;       
+        height: 28px;        
+    }
+}
+
+.bar:nth-child(1)  { left: 1px; animation-duration: 474ms; }
+.bar:nth-child(2)  { left: 5px; animation-duration: 433ms; }
+.bar:nth-child(3)  { left: 9px; animation-duration: 407ms; }
+.bar:nth-child(4)  { left: 13px; animation-duration: 458ms; }
+.bar:nth-child(5)  { left: 17px; animation-duration: 400ms; }
+.bar:nth-child(6)  { left: 21px; animation-duration: 427ms; }
+.bar:nth-child(7)  { left: 25px; animation-duration: 441ms; }
+.bar:nth-child(8)  { left: 29px; animation-duration: 419ms; }
+.bar:nth-child(9)  { left: 33px; animation-duration: 487ms; }
+.bar:nth-child(10) { left: 37px; animation-duration: 442ms; }
+
 @media screen and (max-width: 550px){
 
     .image{
-       display: none;
+        width: 80vmin;
+        height: 80vmin;
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
+    .audio-player{
+        /* height: 100vh; */
+        flex-direction: column;
+    }
     .title-container{
         padding-left: 0;
         padding-right: 0;
