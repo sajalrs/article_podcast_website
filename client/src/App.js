@@ -151,7 +151,7 @@ const App = () => {
     enableBodyScroll(scrollLockRef.current);
   };
 
-  const forwardPodcasts = () => {
+  const rewindPodcasts = () => {
     setCurrentTime(0);
     if (podcasts.currentlyPlaying === podcasts.items.length - 1) {
       setPodcasts({ ...podcasts, currentlyPlaying: 0 });
@@ -163,7 +163,7 @@ const App = () => {
     }
   };
 
-  const rewindPodcasts = () => {
+  const forwardPodcasts = () => {
     setCurrentTime(0);
     if (podcasts.currentlyPlaying === 0) {
       setPodcasts({ ...podcasts, currentlyPlaying: podcasts.items.length - 1 });
@@ -206,7 +206,7 @@ const App = () => {
       {video.isPlaying && (
         <VideoPlayer closeVideo={closeVideo} src={video.src} />
       )}
-      <audio ref={audioRef} />
+      <audio ref={audioRef} src="https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a"/>
       <div className="App">
         <BrowserRouter>
           <Switch>
