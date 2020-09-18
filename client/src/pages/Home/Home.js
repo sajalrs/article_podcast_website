@@ -105,7 +105,12 @@ const Home = (props) => {
         <div className={styles["side-pane"]}></div>
         {sidePanelFixed ? (
           <div
-            style={{ position: "fixed", top: props.topOffset, right: "0px", zIndex: 1 }}
+            style={{
+              position: "fixed",
+              top: props.topOffset,
+              right: "0px",
+              zIndex: 1,
+            }}
           >
             {renderOnceSidePanel}
           </div>
@@ -121,15 +126,19 @@ const Home = (props) => {
           selectedTrack={props.selectedTrack}
           setSelectedTrack={props.setSelectedTrack}
           player={props.player}
-            setPlayer={props.setPlayer}
-            forwardPodcasts={props.forwardPodcasts}
-            rewindPodcasts={props.rewindPodcasts}
-            currentTime={props.currentTime}
-            setCurrentTime={props.setCurrentTime}
-            audioPlayerFixed={props.audioPlayerFixed}
-            setAudioPlayerFixed={props.setAudioPlayerFixed}
-            sidePanelFixed={sidePanelFixed}
-            audioRef={props.audioRef}
+          setPlayer={props.setPlayer}
+          forwardPodcasts={props.forwardPodcasts}
+          rewindPodcasts={props.rewindPodcasts}
+          currentTime={props.currentTime}
+          setCurrentTime={props.setCurrentTime}
+          audioPlayerFixed={props.audioPlayerFixed}
+          setAudioPlayerFixed={props.setAudioPlayerFixed}
+          sidePanelFixed={sidePanelFixed}
+          audioRef={props.audioRef}
+          sideBarClicked={props.sideBarClicked}
+          setSideBarClicked={props.setSideBarClicked}
+          navbarClicked={props.navbarClicked}
+          setNavbarClicked={props.setNavbarClicked}
         />
       </div>
     </div>
