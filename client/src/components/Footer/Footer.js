@@ -2,10 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./Footer.module.css";
 import AudioPlayer from "../AudioPlayer/AudioPlayer";
 import SidePanel from "../SidePanel/SidePanel";
-
+import {Link} from "react-router-dom";
 const Footer = (props) => {
   
-  const [isActive, setActive] = useState(true);
+  const [isActive, setActive] = useState(false);
   const [boxHeight, setBoxHeight] = useState(0);
   const footerBoxRef = useRef();
   const audioPlayerBoxRef = useRef();
@@ -161,7 +161,8 @@ const Footer = (props) => {
             <div className={styles["footer-link-items"]}>
               <h2>Legal</h2>
               <a href="">Privacy</a>
-              <a href="">Terms of Service</a>
+             
+              <Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to="/legal/termsofservice">Terms of Service</Link>
             </div>
           </div>
         </div>

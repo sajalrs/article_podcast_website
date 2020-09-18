@@ -296,6 +296,10 @@ const ArticlePage = (props) => {
             audioPlayerFixed={props.audioPlayerFixed}
             setAudioPlayerFixed={props.setAudioPlayerFixed}
             sidePanelFixed={sidePanelFixed}
+            sideBarClicked={props.sideBarClicked}
+            setSideBarClicked={props.setSideBarClicked}
+            navbarClicked={props.navbarClicked}
+            setNavbarClicked={props.setNavbarClicked}
           />
         </div>
       </div>

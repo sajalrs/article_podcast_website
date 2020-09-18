@@ -324,18 +324,22 @@ const Edit = (props) => {
 
         <div className={styles["footer-container"]}>
           <Footer
-            selectedTrack={props.selectedTrack}
-            setSelectedTrack={props.setSelectedTrack}
-            player={props.player}
-            setPlayer={props.setPlayer}
-            forwardPodcasts={props.forwardPodcasts}
-            rewindPodcasts={props.rewindPodcasts}
-            currentTime={props.currentTime}
-            setCurrentTime={props.setCurrentTime}
-            audioPlayerFixed={props.audioPlayerFixed}
-            setAudioPlayerFixed={props.setAudioPlayerFixed}
-          sidePanelFixed={sidePanelFixed}
-          audioRef={props.audioRef}
+             selectedTrack={props.selectedTrack}
+             setSelectedTrack={props.setSelectedTrack}
+             player={props.player}
+               setPlayer={props.setPlayer}
+               forwardPodcasts={props.forwardPodcasts}
+               rewindPodcasts={props.rewindPodcasts}
+               currentTime={props.currentTime}
+               setCurrentTime={props.setCurrentTime}
+               audioRef={props.audioRef}
+               audioPlayerFixed={props.audioPlayerFixed}
+               setAudioPlayerFixed={props.setAudioPlayerFixed}
+               sidePanelFixed={sidePanelFixed}
+               sideBarClicked={props.sideBarClicked}
+               setSideBarClicked={props.setSideBarClicked}
+               navbarClicked={props.navbarClicked}
+               setNavbarClicked={props.setNavbarClicked}
           />
         </div>
       </div>
