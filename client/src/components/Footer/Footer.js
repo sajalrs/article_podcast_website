@@ -6,6 +6,7 @@ import SidePanel from "../SidePanel/SidePanel";
 const Footer = (props) => {
   
   const [isActive, setActive] = useState(true);
+  const [boxHeight, setBoxHeight] = useState(0);
   const footerBoxRef = useRef();
   const audioPlayerBoxRef = useRef();
   useEffect(() => {
@@ -19,13 +20,15 @@ const Footer = (props) => {
     html.scrollHeight,
     html.offsetHeight
   );
-
-    const fixAudioPlayer = (e) => {
+    if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
+      setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
+    }
+      const fixAudioPlayer = (e) => {
   
     
       if (
         window.scrollY >
-        height - 2 * (footerBoxRef.current.clientHeight + audioPlayerBoxRef.current.clientHeight)
+        height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
       ) {
         props.setAudioPlayerFixed(false);
       } else {
@@ -64,9 +67,7 @@ const Footer = (props) => {
           <div
             style={{
               width: "100%",
-              height: audioPlayerBoxRef.current
-                ? audioPlayerBoxRef.current.clientHeight
-                : "200px",
+              height: boxHeight
             }}
           ></div>
           <div style={{ position: "fixed", width: "100%", bottom: "0px" }}>
@@ -140,7 +141,7 @@ const Footer = (props) => {
           <div className={styles["footer-link-wrapper"]}>
             <div className={styles["footer-link-items"]}>
               <h2>Social</h2>
-              <a href="">Facebook</a>
+              <a href="https://www.facebook.com/False9Podcast" target="_blank" >Facebook</a>
               <a href="https://twitter.com/TFalse9podcast" target="_blank">
                 Twitter
               </a>
@@ -171,7 +172,7 @@ const Footer = (props) => {
         <section className={styles["social-media"]}>
           <div className={styles["social-media-wrap"]}>
             <div className={styles["social-icons"]}>
-              <a href="" className={styles["social-icon-link"]}>
+              <a href="https://www.facebook.com/False9Podcast" target='_blank' className={styles["social-icon-link"]}>
                 <i
                   className={`${styles["fab"]} ${styles["fa-facebook-f"]} fab fa-facebook-f`}
                 />
@@ -184,7 +185,7 @@ const Footer = (props) => {
                 <i
                   className={`${styles["fab"]} ${styles["fa-twitter"]} fab fa-twitter`}
                 />
-              </a>
+              </a>  
               <a
                 href="https://www.youtube.com/channel/UCV2Y62okiOmoXzYIh_xAcGw"
                 target="_blank"
@@ -192,6 +193,24 @@ const Footer = (props) => {
               >
                 <i
                   className={`${styles["fab"]} ${styles["fa-youtube"]} fab fa-youtube`}
+                />
+              </a>
+              <a
+                href="https://www.instagram.com/thefalse9podcast/"
+                target="_blank"
+                className={styles["social-icon-link"]}
+              >
+                <i
+                  className={`${styles["fab"]} ${styles["fa-instagram"]} fab fa-instagram`}
+                />
+              </a>
+              <a
+                href="https://hamroaudio.appspot.com/feed/podcast/5656298525818880?fbclid=IwAR1fGF-0jFifAl5MVsMAODjFWAcUTtyPTXQHpDCfKqx1Nr0zoLwGqGmZV2g"
+                target="_blank"
+                className={styles["social-icon-link"]}
+              >
+                <i
+                  className={`${styles["fas"]} ${styles["fas-rss"]} fas fa-rss`}
                 />
               </a>
             </div>
