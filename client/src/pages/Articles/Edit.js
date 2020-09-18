@@ -335,6 +335,7 @@ const Edit = (props) => {
             audioPlayerFixed={props.audioPlayerFixed}
             setAudioPlayerFixed={props.setAudioPlayerFixed}
           sidePanelFixed={sidePanelFixed}
+          audioRef={props.audioRef}
           />
         </div>
       </div>

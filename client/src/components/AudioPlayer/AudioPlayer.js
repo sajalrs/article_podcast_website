@@ -11,71 +11,65 @@ const AudioPlayer = forwardRef((props, ref) => {
   //   currentTime: 0
   // });
   // const [player, setPlayer] = useState("paused");
-  const audioRef = useRef();
+
   const prevTrack = usePrevious(
     props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
-  );
+  ) || {
+    title: "False Nine Podcast #17 Champions League RO16 first Leg review",
+    by: "Ishan Sharma, Susajjan Dhungana and Ojash Dangal",
+    link:
+      "https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a",
+    date: "Sat, 12 Sep 2020 08:42:34 GMT",
+    image:
+      "https://d3t3ozftmdmh3i.cloudfront.net/production/podcast_uploaded_nologo/8497059/8497059-1599895849523-cbb8b2f53d641.jpg",
+  };
   const prevPlayer = usePrevious(props.player);
   const [duration, setDuration] = useState(2172.892);
-  
+
   const seekBarRef = useRef();
   useEffect(() => {
     if (props.player !== prevPlayer) {
       if (props.player === "paused") {
-        audioRef.current.pause();
+        props.audioRef.current.pause();
       } else if (props.player === "playing" && prevPlayer === "paused") {
-        audioRef.current.play();
+        props.audioRef.current.play();
       }
     }
   }, [props.player]);
 
-
   useEffect(() => {
     if (
-      props.selectedTrack.items[props.selectedTrack.currentlyPlaying] !==
-      prevTrack
+      props.selectedTrack.items[props.selectedTrack.currentlyPlaying].title !==
+      prevTrack.title
     ) {
-      let track;
-      track = props.selectedTrack
+      let track = props.selectedTrack
         ? props.selectedTrack.items[props.selectedTrack.currentlyPlaying].link
         : null;
       if (track) {
-        audioRef.current.src = track;
-        if (
-          prevTrack &&
-          !(
-            prevTrack.title ===
-            props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
-              .title
-          )
-        ) {
-          audioRef.current.play();
+        if(props.audioRef.current.src !== track){
+          props.audioRef.current.src = track;
+          props.audioRef.current.play();
           props.setPlayer("playing");
-        } else {
- 
-         props.setPlayer("paused");
-          if (props.currentTime !== 0) {
-            audioRef.current.currentTime = props.currentTime;
-          }
-        }
+       }
+       
+      
+      
       }
-    }
-  }, [props.selectedTrack.items[props.selectedTrack.currentlyPlaying]].title);
-
-
+    } 
+  }, [props.selectedTrack.items[props.selectedTrack.currentlyPlaying]]);
 
   useEffect(() => {
-    audioRef.current.addEventListener("timeupdate", (e) => {
+    props.audioRef.current.addEventListener("timeupdate", (e) => {
       props.setCurrentTime(e.target.currentTime);
     });
     return () => {
-      audioRef.current.removeEventListener("timeupdate", () => {});
+      props.audioRef.current.removeEventListener("timeupdate", () => {});
     };
   }, []);
 
   const handleSliderChange = (e) => {
     const time = duration * (e.target.value / 100);
-    audioRef.current.currentTime = time;
+    props.audioRef.current.currentTime = time;
     props.setCurrentTime(time);
   };
 
@@ -99,8 +93,13 @@ const AudioPlayer = forwardRef((props, ref) => {
   const progress = (100 / duration) * props.currentTime;
   return (
     <div ref={ref} className={styles["audio-player"]}>
-
-      <div className={props.isActive ? styles["image-container"] : `${styles["image-container"]} ${styles["image-container-inactive"]}`}>
+      <div
+        className={
+          props.isActive
+            ? styles["image-container"]
+            : `${styles["image-container"]} ${styles["image-container-inactive"]}`
+        }
+      >
         <img
           className={styles["image"]}
           src={
@@ -108,33 +107,35 @@ const AudioPlayer = forwardRef((props, ref) => {
               .image
           }
         />
-        
       </div>
       <div className={styles["player"]}>
-       <div className={styles["minimized"]}>
-       <div className={styles["title-container"]}>
-          {props.selectedTrack.items[
-            props.selectedTrack.currentlyPlaying
-          ].title.toUpperCase()}
+        <div className={styles["minimized"]}>
+          <div className={styles["title-container"]}>
+            {props.selectedTrack.items[
+              props.selectedTrack.currentlyPlaying
+            ].title.toUpperCase()}
+          </div>
+
+          {props.isActive ? (
+            <i
+              onClick={() => props.setActive(false)}
+              className={`${styles["audio-player-inactive"]} ${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
+            ></i>
+          ) : (
+            <i
+              onClick={() => props.setActive(true)}
+              className={`${styles["audio-player-active"]} ${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up`}
+            ></i>
+          )}
         </div>
-        
-       {props.isActive ? 
-          
-          <i
-          onClick={() => props.setActive(false) }
-          className={`${styles["audio-player-inactive"]} ${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
-        ></i>:
-        <i
-            onClick={() => props.setActive(true) }
-            className={`${styles["audio-player-active"]} ${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up`}
-          ></i>
-       }
-    
 
-       </div>
-      
-
-        <div className={props.isActive? styles["image-controls"] : `${styles["image-controls"]} ${styles["image-controls-inactive"]}`}>
+        <div
+          className={
+            props.isActive
+              ? styles["image-controls"]
+              : `${styles["image-controls"]} ${styles["image-controls-inactive"]}`
+          }
+        >
           <div className={styles["controls"]}>
             <i
               onClick={() => props.rewindPodcasts()}
@@ -171,7 +172,7 @@ const AudioPlayer = forwardRef((props, ref) => {
         </div>
       </div>
 
-      <audio ref={audioRef} />
+      
       {/*https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a  */}
     </div>
   );
