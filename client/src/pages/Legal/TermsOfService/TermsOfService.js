@@ -238,8 +238,7 @@ const TermsOfService = (props) => {
 
   return (
     <div className={styles["overarching"]}>
-      <div className={styles["primary-color-background"]}></div>
-      <div className={styles["TermsOfService"]}>
+          <div className={styles["TermsOfService"]}>
         <Header
           ref={headerBoxRef}
           sideBarClicked={props.sideBarClicked}
