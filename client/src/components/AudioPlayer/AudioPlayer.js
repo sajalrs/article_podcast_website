@@ -160,7 +160,7 @@ const AudioPlayer = forwardRef((props, ref) => {
             ></i>
             {props.player === "paused" && (
               <i
-                onClick={() => props.setPlayer("playing")}
+                onClick={() => {props.audioRef.current.play();props.setPlayer("playing")}}
                 className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
               ></i>
             )}
