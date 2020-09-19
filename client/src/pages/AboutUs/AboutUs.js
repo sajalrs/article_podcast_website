@@ -83,17 +83,15 @@ const AboutUs = (props) => {
               </p>
             </div>
 
-            {/* <div className={styles["main-pane-item"]}>
-              <figure className={styles["image-container"]}>
-                <img src="https://i.imgur.com/TqfhPSX.jpg" />
-              </figure>
-            </div> */}
 
             <div className={styles["main-pane-item"]}>
             <h1 className={styles["heading"]}>Susajjan Dhungana, Co-Founder </h1>
             </div>
 
             <div className={`${styles["main-pane-item"]} ${styles["even"]} `}>
+            <figure className={styles["image-container"]}>
+                <img src="https://i.imgur.com/csVqT8O.jpg" />
+              </figure>
               <p>
                 Susajjan is a medical student, born and bred in Kathmandu. He is
                 a sports enthusiast, but football is still his one true love.
@@ -112,7 +110,7 @@ const AboutUs = (props) => {
 
        
             <div className={styles["main-pane-item"]}>
-            <h1 className={styles["heading"]}>Ojash Dhungel, Co-Founder </h1>
+            <h1 className={styles["heading"]}>Ojash Dangal, Co-Founder </h1>
             </div>
 
             <div className={`${styles["main-pane-item"]} ${styles["odd"]} `}>
