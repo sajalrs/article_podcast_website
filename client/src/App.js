@@ -12,6 +12,7 @@ import "./App.css";
 import Card from "./components/Cards/Card.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
 import TermsOfService from "./pages/Legal/TermsOfService/TermsOfService"
+import AboutUs from "./pages/AboutUs/AboutUs"
 import {
   disableBodyScroll,
   enableBodyScroll,
@@ -47,7 +48,6 @@ const App = () => {
     currentlyPlaying: 0,
   });
   const [currentTime, setCurrentTime] = useState(0);
-  const prevPlayer = usePrevious(player);
   const audioRef = useRef();
 
 
@@ -105,13 +105,7 @@ const App = () => {
       // clearAllBodyScrollLocks();
     };
   });
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
+
 
 
   const setNavbarClicked = (toSet) => {
@@ -345,6 +339,39 @@ const App = () => {
               render={() => {
                 return (
                   <TermsOfService
+                    fitLarge={fitLarge}
+                    playVideo={playVideo}
+                    getImageLink={getImageLink}
+                    getHyperLink={getHyperLink}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
+                    youtubeVideos={youtube}
+                    selectedTrack={podcasts}
+                    setSelectedTrack={setPodcasts}
+                    player={player}
+                    setPlayer={setPlayer}
+                    forwardPodcasts={forwardPodcasts}
+                    rewindPodcasts={rewindPodcasts}
+                    currentTime={currentTime}
+                    setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+                    audioRef={audioRef}
+                  />
+                );
+              }}
+            />
+                  <Route
+              exact
+              path="/about"
+              render={() => {
+                return (
+                  <AboutUs
                     fitLarge={fitLarge}
                     playVideo={playVideo}
                     getImageLink={getImageLink}
