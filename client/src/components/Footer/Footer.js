@@ -107,7 +107,7 @@ const Footer = (props) => {
           <div className={styles["footer-link-wrapper"]}>
             <div className={styles["footer-link-items"]}>
               <h2>About Us</h2>
-              <a href="">Team</a>
+              <Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to="/about">Team</Link>
               <a href="">Contact</a>
               <a href="">Support</a>
               <a href="">Advertisements</a>
