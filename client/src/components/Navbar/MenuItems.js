@@ -17,7 +17,7 @@ const MenuItems = [
     },
     {
         "title": "About Us",
-        "url": "#header",
+        "url": "/about",
         "className": "nav-link"
     }
 ]
