@@ -53,22 +53,18 @@ const AboutUs = (props) => {
         />
         <div className={styles["content-pane"]}>
           <div className={styles["main-pane"]}>
-          <div className={styles["main-pane-item"]}>
-                    <h1 className={styles["heading-special"]}>About Us</h1>
-                  </div>
-                
-  
             <div className={styles["main-pane-item"]}>
-            <h1 className={styles["heading"]}>Ishan Sharma, Co-Founder </h1>
-        
+              <h1 className={styles["heading-special"]}>About Us</h1>
+            </div>
+
+            <div className={styles["main-pane-item"]}>
+              <h1 className={styles["heading"]}>Ishan Sharma, Co-Founder </h1>
             </div>
 
             <div className={`${styles["main-pane-item"]} ${styles["odd"]} `}>
-            <figure className={styles["image-container"]}>
-          
-
-          <img src="https://i.imgur.com/TqfhPSX.jpg" />
-        </figure>
+              <figure className={styles["image-container"]}>
+                <img src="https://i.imgur.com/TqfhPSX.jpg" />
+              </figure>
 
               <p>
                 Ishan is a medical student, but like any football fanatic, his
@@ -83,15 +79,13 @@ const AboutUs = (props) => {
               </p>
             </div>
 
-
             <div className={styles["main-pane-item"]}>
-            <h1 className={styles["heading"]}>Susajjan Dhungana, Co-Founder </h1>
+              <h1 className={styles["heading"]}>
+                Susajjan Dhungana, Co-Founder{" "}
+              </h1>
             </div>
 
             <div className={`${styles["main-pane-item"]} ${styles["even"]} `}>
-            <figure className={styles["image-container"]}>
-                <img src="https://i.imgur.com/csVqT8O.jpg" />
-              </figure>
               <p>
                 Susajjan is a medical student, born and bred in Kathmandu. He is
                 a sports enthusiast, but football is still his one true love.
@@ -106,38 +100,40 @@ const AboutUs = (props) => {
                 classmates and their daily banter about clubs, and love for
                 football brought them together.
               </p>
+              <figure
+                className={styles["image-container"]}
+                style={{ maxWidth: "1200px" }}
+              >
+                <img src="https://i.imgur.com/csVqT8O.jpg" />
+              </figure>
             </div>
 
-       
             <div className={styles["main-pane-item"]}>
-            <h1 className={styles["heading"]}>Ojash Dangal, Co-Founder </h1>
+              <h1 className={styles["heading"]}>Ojash Dangal, Co-Founder </h1>
             </div>
 
             <div className={`${styles["main-pane-item"]} ${styles["odd"]} `}>
-            <figure className={styles["image-container"]}>
+              <figure className={styles["image-container"]}>
                 <img src="https://i.imgur.com/zGAKRsH.jpg" />
               </figure>
               <p>
                 Also pursuing his career in medicine currently, Ojash is a
                 skeptical, cynical Liverpool fan who’s been following the club
-                since about the last decade. He's probably possesses the most
+                since about the last decade. He probably possesses the most
                 knowledge about Liverpool after Jurgen Klopp and the other club
                 employees. He's also someone who’s very fond of the trend of
                 quantifying football via the use of data and metrics. Ojash
                 regularly interacted with Ishan and Susajjan on Twitter and came
-                immediately on board after the idea of creating this podcast was
+                on board immediately after the idea of creating this podcast was
                 suggested. He is the calm, knowledgable voice in the False 9
                 Podcast and is known for his pages of research before recording
                 an episode. Apart from football, he likes playing snooker and is
                 a connoisseur of good music.
               </p>
-          
             </div>
 
-         
-
             <div className={styles["main-pane-item"]}>
-            <h1 className={styles["heading"]}>Madhu Acharya, Producer </h1>
+              <h1 className={styles["heading"]}>Madhu Acharya, Producer </h1>
             </div>
 
             <div className={`${styles["main-pane-item"]} ${styles["even"]} `}>
@@ -160,11 +156,34 @@ const AboutUs = (props) => {
                 <img src="https://i.imgur.com/S7gichq.jpg" />
               </figure>
             </div>
+
+            <div className={styles["main-pane-item"]}>
+              <h1 className={styles["heading"]}>
+                Sajal Satyal, Webpage Developer{" "}
+              </h1>
+            </div>
+
+            <div className={`${styles["main-pane-item"]} ${styles["odd"]} `}>
+              <figure
+                className={styles["image-container"]}
+                style={{ maxWidth: "1000px" }}
+              >
+                <img src="https://i.imgur.com/VAt6ABq.jpg" />
+              </figure>
+              <p>
+                Sajal has just finished his Bachelor's degree in Computer
+                Science. He's a self proclaimed Barca fan. Sajal can't remember
+                the last time he watched a football match but he probably knows
+                more about Barca than Bartomeu. His interest however lies in
+                all things technology. Sajal is a curious person and likes to learn about
+                different things. His witty sense of humor and constant self
+                criticism is the reason he repeatedly challenged himself to do
+                better while making this website.
+              </p>
+            </div>
           </div>
 
-          <div className={styles["side-pane"]}>
-        
-          </div>
+          <div className={styles["side-pane"]}></div>
           {sidePanelFixed ? (
             <div
               style={{
