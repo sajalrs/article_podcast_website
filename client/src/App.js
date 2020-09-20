@@ -12,6 +12,7 @@ import "./App.css";
 import Card from "./components/Cards/Card.js";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
 import TermsOfService from "./pages/Legal/TermsOfService/TermsOfService"
+import Privacy from "./pages/Legal/Privacy/Privacy"
 import AboutUs from "./pages/AboutUs/AboutUs"
 import {
   disableBodyScroll,
@@ -306,6 +307,39 @@ const App = () => {
               render={() => {
                 return (
                   <Articles
+                    fitLarge={fitLarge}
+                    playVideo={playVideo}
+                    getImageLink={getImageLink}
+                    getHyperLink={getHyperLink}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
+                    youtubeVideos={youtube}
+                    selectedTrack={podcasts}
+                    setSelectedTrack={setPodcasts}
+                    player={player}
+                    setPlayer={setPlayer}
+                    forwardPodcasts={forwardPodcasts}
+                    rewindPodcasts={rewindPodcasts}
+                    currentTime={currentTime}
+                    setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+                    audioRef={audioRef}
+                  />
+                );
+              }}
+            />
+                    <Route
+              exact
+              path="/legal/privacy"
+              render={() => {
+                return (
+                  <Privacy
                     fitLarge={fitLarge}
                     playVideo={playVideo}
                     getImageLink={getImageLink}
