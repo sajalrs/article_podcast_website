@@ -25,31 +25,34 @@ const ImageContainer = (props) => {
   const isVideo =
     props.LinkType === Card.LinkType["video-external"] ||
     props.LinkType === Card.LinkType["video-youtube"];
-  return (
-    props.image?
+  return props.image ? (
     <div
       className={styles["img-container"]}
       style={{ backgroundImage: `url('${props.image}')` }}
-      onClick={() => {props.onClick(props.link);}}
+      onClick={() => {
+        if(props.LinkType === Card.LinkType["audio-internal"]){
+          props.audioRef.current.play();
+        }
+        props.onClick(props.link);
+      }}
     >
       <div>
         {isVideo && (
           <i
-            className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`} 
+            className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
           ></i>
         )}
       </div>
-    </div>: null
-  );
+    </div>
+  ) : null;
 };
 
 const CardBody = (props) => {
-  return (
-    props.title?
-    (<div className={styles["card-body"]}>
+  return props.title ? (
+    <div className={styles["card-body"]}>
       <h2>{props.title}</h2>
-    </div>): null
-  );
+    </div>
+  ) : null;
 };
 
 export default SmallCard;

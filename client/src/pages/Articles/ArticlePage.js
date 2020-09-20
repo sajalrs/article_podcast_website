@@ -236,6 +236,7 @@ const ArticlePage = (props) => {
             date={article.date}
             image={article.image}
             onClick={() => {}}
+            audioRef={props.audioRef}
           />
         </div>
         <div className={styles["content-pane"]}>

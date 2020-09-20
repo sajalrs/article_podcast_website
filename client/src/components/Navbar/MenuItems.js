@@ -7,7 +7,7 @@ const MenuItems = [
         
     {
         "title": "Podcasts",
-        "url": "/",
+        "url": "/podcasts",
         "className": "nav-link"
     },
     {

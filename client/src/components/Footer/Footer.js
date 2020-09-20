@@ -211,7 +211,7 @@ const Footer = (props) => {
                 className={styles["social-icon-link"]}
               >
                 <i
-                  className={`${styles["fas"]} ${styles["fas-rss"]} fas fa-rss`}
+                  className={`${styles["fab"]} ${styles["fas"]} ${styles["fas-rss"]} fas fa-rss`}
                 />
               </a>
             </div>

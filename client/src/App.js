@@ -6,6 +6,7 @@ import React, {
 import Home from "./pages/Home/Home.js";
 import CreateArticle from "./pages/CreateArticle";
 import Articles from "./pages/Articles/Articles";
+import Podcasts from "./pages/Podcasts/Podcasts";
 import ArticlePage from "./pages/Articles/ArticlePage.js";
 import Edit from "./pages/Articles/Edit";
 import "./App.css";
@@ -145,6 +146,10 @@ const App = () => {
     enableBodyScroll(scrollLockRef.current);
   };
 
+  const playAudio = (podcastIndex) => {
+     setPodcasts({ ...podcasts, currentlyPlaying: podcastIndex });
+  }
+
   const rewindPodcasts = () => {
     setCurrentTime(0);
     if (podcasts.currentlyPlaying === podcasts.items.length - 1) {
@@ -231,6 +236,7 @@ const App = () => {
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
                     audioRef={audioRef}
+                    playAudio={playAudio}
                   />
                 );
               }}
@@ -264,6 +270,7 @@ const App = () => {
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
                     audioRef={audioRef}
+                    playAudio={playAudio}
                   />
                 );
               }}
@@ -297,6 +304,7 @@ const App = () => {
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
                     audioRef={audioRef}
+                    playAudio={playAudio}
                   />
                 );
               }}
@@ -330,6 +338,41 @@ const App = () => {
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
                     audioRef={audioRef}
+                    playAudio={playAudio}
+                  />
+                );
+              }}
+            />
+             <Route
+              exact
+              path="/podcasts"
+              render={() => {
+                return (
+                  <Podcasts
+                    fitLarge={fitLarge}
+                    playVideo={playVideo}
+                    getImageLink={getImageLink}
+                    getHyperLink={getHyperLink}
+                    sideBarClicked={sideBarClicked}
+                    setSideBarClicked={setSideBarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    navbarClicked={navbarClicked}
+                    setNavbarClicked={setNavbarClicked}
+                    topOffset={topOffset}
+                    youtubeVideos={youtube}
+                    selectedTrack={podcasts}
+                    setSelectedTrack={setPodcasts}
+                    player={player}
+                    setPlayer={setPlayer}
+                    forwardPodcasts={forwardPodcasts}
+                    rewindPodcasts={rewindPodcasts}
+                    currentTime={currentTime}
+                    setCurrentTime={setCurrentTime}
+                    audioPlayerFixed={audioPlayerFixed}
+                    setAudioPlayerFixed={setAudioPlayerFixed}
+                    audioRef={audioRef}
+                    playAudio={playAudio}
                   />
                 );
               }}
@@ -363,6 +406,7 @@ const App = () => {
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
                     audioRef={audioRef}
+                    playAudio={playAudio}
                   />
                 );
               }}
@@ -396,6 +440,7 @@ const App = () => {
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
                     audioRef={audioRef}
+                    playAudio={playAudio}
                   />
                 );
               }}
@@ -429,6 +474,7 @@ const App = () => {
                     audioPlayerFixed={audioPlayerFixed}
                     setAudioPlayerFixed={setAudioPlayerFixed}
                     audioRef={audioRef}
+                    playAudio={playAudio}
                   />
                 );
               }}
