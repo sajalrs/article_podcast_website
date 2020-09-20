@@ -160,7 +160,7 @@ const Footer = (props) => {
             </div>
             <div className={styles["footer-link-items"]}>
               <h2>Legal</h2>
-              <a href="">Privacy</a>
+              <Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to="/legal/privacy">Privacy</Link>
              
               <Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to="/legal/termsofservice">Terms of Service</Link>
             </div>
