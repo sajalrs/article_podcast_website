@@ -15,7 +15,7 @@ const LargeCard = (props) => {
         LinkType={props.LinkType}
         onClick={props.onClick}
         link={props.link}
-        
+        audioRef={props.audioRef}
       />
       <CardBody
         title={props.title}
@@ -24,7 +24,8 @@ const LargeCard = (props) => {
         author={props.author}
         onClick={props.onClick? props.onClick : () => {console.log("")}}
         link={props.link}
-       
+        LinkType={props.LinkType}
+        audioRef={props.audioRef}
       />
     </article>
   );
@@ -32,13 +33,17 @@ const LargeCard = (props) => {
 
 const ImageContainer =(props) => {
   const isVideo =
-    props.LinkType === Card.LinkType["video-external"] ||
-    props.LinkType === Card.LinkType["video-youtube"];
+  props.LinkType === Card.LinkType["video-external"] ||
+  props.LinkType === Card.LinkType["video-youtube"] || 
+  props.LinkType === Card.LinkType["audio-internal"];
   return (
     props.image?
     <div
       className={styles["img-container"]}
       onClick={() => {
+        if(props.LinkType === Card.LinkType["audio-internal"]){
+          props.audioRef.current.play();
+        }
         props.onClick(props.link);
       }}
     >
@@ -62,6 +67,9 @@ const CardBody = (props) => {
     (<div className={styles["card-body"]}>
       <h2
         onClick={() => {
+          if(props.LinkType === Card.LinkType["audio-internal"]){
+            props.audioRef.current.play();
+          }
           props.onClick(props.link);
         }}
       >

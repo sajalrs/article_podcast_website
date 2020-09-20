@@ -97,7 +97,8 @@ const Home = (props) => {
                     item["_id"]
                   )}
                   onClick={getLinkFunction(Card.LinkType["article-internal"])}
-                />
+                  audioRef={props.audioRef}
+               />
               </div>
             );
           })}
