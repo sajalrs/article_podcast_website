@@ -16,6 +16,7 @@ const Podcasts = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   useEffect(() => {
     const fixNavbar = (e) => {
       if (window.scrollY > headerBoxRef.current.clientHeight - 66) {
@@ -33,19 +34,7 @@ const Podcasts = (props) => {
   const [homepageLinks, setHomePageLinks] = useState({
     links: [],
   });
-  useEffect(() => {
-    const getHomepageLinks = async () => {
-      const response = await fetch("articles/pages");
-      const body = await response.json();
-      if (response.status !== 200) throw Error(body.message);
 
-      return body;
-    };
-
-    getHomepageLinks().then((res) => {
-      setHomePageLinks({ links: res["links"] });
-    });
-  }, []);
 
   const getLinkFunction = (linkType) => {
     switch (linkType) {
@@ -55,6 +44,8 @@ const Podcasts = (props) => {
         return (articleLink) => {
           history.push(articleLink);
         };
+      case Card.LinkType["audio-internal"]:
+        return props.playAudio;
       default:
         break;
     }
@@ -83,20 +74,18 @@ const Podcasts = (props) => {
       />
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
-          {homepageLinks.links.map((item) => {
+          {props.selectedTrack.items.map((item) => {
             return (
               <div className={`${styles["main-pane-item"]}`}>
-                <LargeCard
+                <MediumCard
                   image={item.image}
                   date={item.date}
                   title={item.title}
                   text={item.description}
-                  author={item.author}
-                  LinkType={Card.LinkType["article-internal"]}
-                  link={props.getHyperLink(Card.LinkType["article-internal"])(
-                    item["_id"]
-                  )}
-                  onClick={getLinkFunction(Card.LinkType["article-internal"])}
+                  LinkType={Card.LinkType["audio-internal"]}
+                    link={item.index}
+                  onClick={getLinkFunction(Card.LinkType["audio-internal"])}
+                  audioRef={props.audioRef}
                 />
               </div>
             );
