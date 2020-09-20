@@ -10,8 +10,8 @@
 }
 
 .img-container {
-  /* max-height: 125px;
-  max-width: 222px; */
+  max-height: 125px;
+  max-width: 222px;
   background-size: cover;
   display: flex;
   justify-content: center;
