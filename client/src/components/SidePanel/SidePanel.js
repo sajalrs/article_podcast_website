@@ -4,7 +4,7 @@ import styles from "./SidePanel.module.css";
 import Card from "../Cards/Card.js";
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import {useSelector, useDispatch} from 'react-redux'
-import {setSidebarClicked, setSidebarFixed, setNavbarClicked} from '../.././actions';
+import {setSidebarClicked, setSidebarFixed, setNavbarClicked} from '../../redux/actions';
 
 
 const SidePanel = (props) => {

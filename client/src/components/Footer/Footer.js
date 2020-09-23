@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styles from "./Footer.module.css";
 import AudioPlayer from "../AudioPlayer/AudioPlayer";
 import {useSelector, useDispatch} from "react-redux"
-import {setNavbarClicked, setSidebarClicked} from "../../actions"
+import {setNavbarClicked, setSidebarClicked} from "../../redux/actions"
 import {Link} from "react-router-dom";
 const Footer = (props) => {
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
