@@ -1,6 +1,8 @@
 import navbarClickedReducer from './navbarclicked';
 import {combineReducers} from 'redux';
 
-const rootReducers = combineReducers({
-  navbarClicked: navbarClickedReducer,  
+const rootReducer = combineReducers({
+  navbarClicked: navbarClickedReducer
 })
+
+export default rootReducer;
