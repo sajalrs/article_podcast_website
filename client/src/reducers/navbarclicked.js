@@ -7,4 +7,4 @@ const navbarClickedReducer = (state = false, action) => {
     }
 }
 
-export default navbarClicked;
+export default navbarClickedReducer;
