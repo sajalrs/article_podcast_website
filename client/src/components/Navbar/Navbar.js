@@ -7,7 +7,7 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setNavbarClicked} from '../.././actions';
 
 const Navbar = (props) => {
-    const navbarClicked = useSelector(state => state.navbarClicked)
+    const navbarClicked = useSelector(state => state.navbar.clicked)
     const dispatch = useDispatch();
 
     return(
