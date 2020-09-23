@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Footer.module.css";
 import AudioPlayer from "../AudioPlayer/AudioPlayer";
-import SidePanel from "../SidePanel/SidePanel";
+import {useSelector} from "react-redux"
 import {Link} from "react-router-dom";
 const Footer = (props) => {
-  
+  const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const [isActive, setActive] = useState(false);
   const [boxHeight, setBoxHeight] = useState(0);
   const footerBoxRef = useRef();
@@ -62,7 +62,7 @@ const Footer = (props) => {
 
   return (
     <div>
-      {props.audioPlayerFixed && props.sidePanelFixed ?(
+      {props.audioPlayerFixed && sidebarFixed ?(
         <div>
           <div
             style={{

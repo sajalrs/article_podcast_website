@@ -7,37 +7,22 @@ import Card from "../../components/Cards/Card.js";
 import styles from "./AboutUs.module.css";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-
+import {useSelector} from "react-redux"
 const AboutUs = (props) => {
-  const [sidePanelFixed, setSidePanelFix] = useState(false);
+  const sidebarFixed =  useSelector(state => state.sidebar.fixed)
   const headerBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    const fixSidePanel = (e) => {
-      if (window.scrollY > headerBoxRef.current.clientHeight - 66) {
-        setSidePanelFix(true);
-      } else {
-        setSidePanelFix(false);
-      }
-    };
-
-    window.addEventListener("scroll", fixSidePanel);
-    return () => {
-      window.removeEventListener("scroll", fixSidePanel);
-    };
-  }, [sidePanelFixed]);
 
   const renderOnceSidePanel = (
     <SidePanel
-      sideBarClicked={props.sideBarClicked}
-      setSideBarClicked={props.setSideBarClicked}
       youtubeVideos={props.youtubeVideos}
       getImageLink={props.getImageLink}
       playVideo={props.playVideo}
       getHyperLink={props.getHyperLink}
-      sidePanelFixed={sidePanelFixed}
+      headerBoxRef={headerBoxRef}
+      sidebarFixTopOffset={0}
     />
   );
 
@@ -46,10 +31,6 @@ const AboutUs = (props) => {
       <div className={styles["AboutUs"]}>
         <Header
           ref={headerBoxRef}
-          sideBarClicked={props.sideBarClicked}
-          setSideBarClicked={props.setSideBarClicked}
-          navbarClicked={props.navbarClicked}
-          setNavbarClicked={props.setNavbarClicked}
         />
         <div className={styles["content-pane"]}>
           <div className={styles["main-pane"]}>
@@ -184,7 +165,7 @@ const AboutUs = (props) => {
           </div>
 
           <div className={styles["side-pane"]}></div>
-          {sidePanelFixed ? (
+          {sidebarFixed ? (
             <div
               style={{
                 position: "fixed",
@@ -216,11 +197,6 @@ const AboutUs = (props) => {
             audioRef={props.audioRef}
             audioPlayerFixed={props.audioPlayerFixed}
             setAudioPlayerFixed={props.setAudioPlayerFixed}
-            sidePanelFixed={sidePanelFixed}
-            sideBarClicked={props.sideBarClicked}
-            setSideBarClicked={props.setSideBarClicked}
-            navbarClicked={props.navbarClicked}
-            setNavbarClicked={props.setNavbarClicked}
           />
         </div>
       </div>

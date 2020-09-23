@@ -10,6 +10,17 @@ const Navbar = (props) => {
     const navbarClicked = useSelector(state => state.navbar.clicked)
     const sidebarClicked = useSelector(state => state.sidebar.clicked)
     const dispatch = useDispatch();
+    useEffect(() => {
+        const updateDropDown = () => {
+          if (window.innerWidth > 1250 && navbarClicked) {
+            dispatch(setNavbarClicked(window.innerWidth < 1250));
+          }
+        };
+        window.addEventListener("resize", updateDropDown);
+        return () => {
+          window.addEventListener("resize", updateDropDown);
+        };
+      }, [navbarClicked]);
 
     return(
         <div className={styles["Navbar"]}>

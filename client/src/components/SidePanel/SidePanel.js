@@ -4,7 +4,7 @@ import styles from "./SidePanel.module.css";
 import Card from "../Cards/Card.js";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import {useSelector, useDispatch} from 'react-redux'
-import {setSidebarClicked} from '../.././actions';
+import {setSidebarClicked, setSidebarFixed} from '../.././actions';
 
 
 const SidePanel = (props) => {
@@ -12,15 +12,31 @@ const SidePanel = (props) => {
   const sidePanelDivRef = useRef();
   const [titlePos, setTitlePos] = useState();
   const sidebarClicked = useSelector(state => state.sidebar.clicked);
+  const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const dispatch = useDispatch();
   useEffect(() => {
-    if(sidebarClicked && props.sidePanelFixed){
+    if(sidebarClicked && sidebarFixed){
       disableBodyScroll(cardListRef.current);
     } else{
       enableBodyScroll(cardListRef.current);
     }
-  }, [sidebarClicked, props.sidePanelFixed])
-  
+  }, [sidebarClicked, sidebarFixed])
+  useEffect(() => {
+    const fixSidebar = (e) => {
+      if (window.scrollY > props.headerBoxRef.current.clientHeight - 66 + props.sidebarFixTopOffset) {
+        dispatch(setSidebarFixed(true));
+      } else {
+        dispatch(setSidebarFixed(false));
+      }
+    };
+
+    window.addEventListener("scroll", fixSidebar);
+    return () => {
+      window.removeEventListener("scroll", fixSidebar);
+    };
+  }, [sidebarFixed]);
+
+
   useEffect(() => {
     setTitlePos(sidePanelDivRef.current.innerWidth);
   },[])
@@ -42,7 +58,7 @@ const SidePanel = (props) => {
           className={sidebarClicked? `${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up` :`${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
         ></i>
       </label>
-      <ul ref={cardListRef} className={props.sidePanelFixed? `${styles["card-list"]} ${styles["card-list-fixed"]} `: `${styles["card-list"]} ${styles["card-list-not-fixed"]} ` } >
+      <ul ref={cardListRef} className={sidebarFixed? `${styles["card-list"]} ${styles["card-list-fixed"]} `: `${styles["card-list"]} ${styles["card-list-not-fixed"]} ` } >
         {vidArray?
         vidArray.map((item, index) => {
           return (
