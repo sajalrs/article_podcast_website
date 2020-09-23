@@ -23,7 +23,7 @@ const Header = forwardRef((props, ref) => {
   });
 
   const renderOnceNavbar = (
-    <Navbar navbarClicked={props.navbarClicked} setNavbarClicked={props.setNavbarClicked} sideBarClicked={props.sideBarClicked} setSideBarClicked={props.setSideBarClicked} />
+    <Navbar/>
   );
 
   return (

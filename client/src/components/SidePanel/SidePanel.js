@@ -11,7 +11,7 @@ const SidePanel = (props) => {
   const cardListRef = useRef();
   const sidePanelDivRef = useRef();
   const [titlePos, setTitlePos] = useState();
-  const sidebarClicked = useSelector(state => state.sidebarClicked);
+  const sidebarClicked = useSelector(state => state.sidebar.clicked);
   const dispatch = useDispatch();
   useEffect(() => {
     if(sidebarClicked && props.sidePanelFixed){

@@ -1,10 +1,10 @@
 import navbarReducer from './navbarReducer';
-import sidebarClickedReducer from './sidebarClicked';
+import sidebarReducer from './sidebarReducer';
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
   navbar: navbarReducer,
-  sidebarClicked: sidebarClickedReducer
+  sidebar: sidebarReducer
 })
 
 export default rootReducer;
