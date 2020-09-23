@@ -204,6 +204,10 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;">In order to resol
 const TermsOfService = (props) => {
   const headerBoxRef = useRef();
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
+  const topOffset = useSelector(state => state.sidebar.topOffset);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
  
   const renderOnceSidePanel = (
@@ -234,13 +238,13 @@ const TermsOfService = (props) => {
           <div className={styles["side-pane"]}></div>
           {sidebarFixed ? (
             <div
-              style={{ position: "fixed", top: props.topOffset, right: "0px", zIndex: 1 }}
+              style={{ position: "fixed", top: topOffset, right: "0px", zIndex: 1 }}
             >
               {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
               {renderOnceSidePanel}
             </div>
           ) : (
-            <div style={{ marginTop: props.topOffset }}>
+            <div style={{ marginTop: topOffset }}>
               {renderOnceSidePanel}
             </div>
           )}

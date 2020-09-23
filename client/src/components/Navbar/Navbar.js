@@ -4,12 +4,26 @@ import styles from './Navbar.module.css'
 import {Link} from 'react-router-dom'
 import FalseNineIcon from '../../Icons/FalseNineFitting'
 import {useSelector, useDispatch} from 'react-redux'
-import {setNavbarClicked, setSidebarClicked} from '../.././actions';
+import {setNavbarClicked, setSidebarClicked, setTopOffset} from '../.././actions';
 
 const Navbar = (props) => {
     const navbarClicked = useSelector(state => state.navbar.clicked)
     const sidebarClicked = useSelector(state => state.sidebar.clicked)
+    const topOffset = useSelector(state => state.sidebar.topOffset)
     const dispatch = useDispatch();
+    useEffect(() => {
+    
+            if (navbarClicked) {
+                dispatch(setTopOffset(topOffset + 140));
+              dispatch(setSidebarClicked(false));
+            } else {
+              if (topOffset != 100) {
+                dispatch(setTopOffset(topOffset - 140));
+              }
+            }
+   
+    }, [navbarClicked])
+
     useEffect(() => {
         const updateDropDown = () => {
           if (window.innerWidth > 1250 && navbarClicked) {

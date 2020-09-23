@@ -17,6 +17,8 @@ const Home = (props) => {
     window.scrollTo(0, 0);
   }, []);
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
+  const topOffset = useSelector(state => state.sidebar.topOffset);
+
   const [articles, setArticles] = useState({
     links: [],
   });
@@ -90,7 +92,7 @@ const Home = (props) => {
           <div
             style={{
               position: "fixed",
-              top: props.topOffset,
+              top: topOffset,
               right: "0px",
               zIndex: 1,
             }}
@@ -98,7 +100,7 @@ const Home = (props) => {
             {renderOnceSidePanel}
           </div>
         ) : (
-          <div style={{ marginTop: props.topOffset }}>
+          <div style={{ marginTop: topOffset }}>
             {renderOnceSidePanel}
           </div>
         )}
