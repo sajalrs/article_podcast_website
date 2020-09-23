@@ -1,3 +1,4 @@
+//Navbar Actions
 export const setNavbarClicked = (setTo) => {
     return{
         type: 'SET_NAVBAR_CLICKED',
@@ -5,6 +6,8 @@ export const setNavbarClicked = (setTo) => {
     }
 }
 
+
+//Sidebar Actions
 export const setSidebarClicked = (setTo) => {
     return{
         type: 'SET_SIDEBAR_CLICKED',
@@ -23,6 +26,21 @@ export const setSidebarFixed = (setTo) => {
 export const setTopOffset = (setTo) => {
     return{
         type: 'SET_TOP_OFFSET',
+        payload: setTo
+    }
+}
+
+//AudioPlayer Actions
+export const setAudioPlayerPlayer = (setTo) => {
+    return {
+        type: SET_AUDIOPLAYER_PLAYER,
+        payload: setTo
+    }
+}
+
+export const setAudioPlayerCurrentTime = (setTo) => {
+    return {
+        type: SET_AUDIOPLAYER_CURRENTTIME,
         payload: setTo
     }
 }

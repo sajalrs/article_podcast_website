@@ -4,7 +4,7 @@ import styles from './Navbar.module.css'
 import {Link} from 'react-router-dom'
 import FalseNineIcon from '../../Icons/FalseNineFitting'
 import {useSelector, useDispatch} from 'react-redux'
-import {setNavbarClicked, setSidebarClicked, setTopOffset} from '../.././actions';
+import {setNavbarClicked, setSidebarClicked, setTopOffset} from '../../redux/actions';
 
 const Navbar = (props) => {
     const navbarClicked = useSelector(state => state.navbar.clicked)
