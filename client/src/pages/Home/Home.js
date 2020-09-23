@@ -110,14 +110,11 @@ const Home = (props) => {
         <Footer
           selectedTrack={props.selectedTrack}
           setSelectedTrack={props.setSelectedTrack}
-          player={props.player}
-          setPlayer={props.setPlayer}
+        
           forwardPodcasts={props.forwardPodcasts}
           rewindPodcasts={props.rewindPodcasts}
-          currentTime={props.currentTime}
-          setCurrentTime={props.setCurrentTime}
-          audioPlayerFixed={props.audioPlayerFixed}
-          setAudioPlayerFixed={props.setAudioPlayerFixed}
+         
+      
           audioRef={props.audioRef}
 
         />
