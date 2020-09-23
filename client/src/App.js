@@ -53,17 +53,7 @@ const App = () => {
   const audioRef = useRef();
 
 
-  useEffect(() => {
-    const updateDropDown = () => {
-      if (window.innerWidth > 1250 && navbarClicked) {
-        setNavbarClicked(window.innerWidth < 1250);
-      }
-    };
-    window.addEventListener("resize", updateDropDown);
-    return () => {
-      window.addEventListener("resize", updateDropDown);
-    };
-  }, [navbarClicked]);
+
 
   useEffect(() => {
     const getVideoIds = async () => {
@@ -219,10 +209,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
@@ -251,12 +237,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
@@ -285,12 +265,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
@@ -319,12 +293,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
@@ -353,12 +321,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
@@ -387,12 +349,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
@@ -421,12 +377,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
@@ -455,12 +405,6 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    sideBarClicked={sideBarClicked}
-                    setSideBarClicked={setSideBarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
-                    navbarClicked={navbarClicked}
-                    setNavbarClicked={setNavbarClicked}
                     topOffset={topOffset}
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}

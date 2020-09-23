@@ -10,6 +10,7 @@ import TextEditor from "../../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import {useSelector} from "react-redux"
 const initialValue = {
   document: {
     nodes: [
@@ -32,7 +33,7 @@ const initialValue = {
 };
 
 const Edit = (props) => {
-  
+  const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const [textEditorValue, setTextEditorValue] = useState(
     Value.fromJSON(initialValue)
   );
@@ -52,27 +53,13 @@ const Edit = (props) => {
   });
   const { id } = useParams();
   const history = useHistory();
-  const [sidePanelFixed, setSidePanelFix] = useState(false);
   const [toolbarFixed, setToolbarFix] = useState(false);
   const headerBoxRef = useRef();
   const headlineFormRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    const fixNavbar = (e) => {
-      if (window.scrollY > headerBoxRef.current.clientHeight - 66 - 35 + 644) {
-        setSidePanelFix(true);
-      } else {
-        setSidePanelFix(false);
-      }
-    };
 
-    window.addEventListener("scroll", fixNavbar);
-    return () => {
-      window.removeEventListener("scroll", fixNavbar);
-    };
-  }, [sidePanelFixed]);
 
   useEffect(() => {
     const fixToolbar = (e) => {
@@ -178,13 +165,12 @@ const Edit = (props) => {
 
   const renderOnceSidePanel = (
     <SidePanel
-      sideBarClicked={props.sideBarClicked}
-      setSideBarClicked={props.setSideBarClicked}
       youtubeVideos={props.youtubeVideos}
       getImageLink={props.getImageLink}
       playVideo={props.playVideo}
       getHyperLink={props.getHyperLink}
-      sidePanelFixed={sidePanelFixed}
+      headerBoxRef={headerBoxRef}
+      sidebarFixTopOffset={35 + 644}
     />
   );
 
@@ -236,10 +222,6 @@ const Edit = (props) => {
       <div className={styles["Edit"]}>
         <Header
           ref={headerBoxRef}
-          sideBarClicked={props.sideBarClicked}
-          setSideBarClicked={props.setSideBarClicked}
-          navbarClicked={props.navbarClicked}
-          setNavbarClicked={props.setNavbarClicked}
         />
         <div className={styles["headline"]}>
           <LargeCard
@@ -309,7 +291,7 @@ const Edit = (props) => {
           </div>
 
           <div className={styles["side-pane"]}></div>
-          {sidePanelFixed ? (
+          {sidebarFixed ? (
             <div
               style={{ position: "fixed", top: props.topOffset, right: "0px",zIndex: 1  }}
             >
@@ -336,11 +318,6 @@ const Edit = (props) => {
                audioRef={props.audioRef}
                audioPlayerFixed={props.audioPlayerFixed}
                setAudioPlayerFixed={props.setAudioPlayerFixed}
-               sidePanelFixed={sidePanelFixed}
-               sideBarClicked={props.sideBarClicked}
-               setSideBarClicked={props.setSideBarClicked}
-               navbarClicked={props.navbarClicked}
-               setNavbarClicked={props.setNavbarClicked}
           />
         </div>
       </div>

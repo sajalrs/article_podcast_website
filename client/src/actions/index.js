@@ -23,7 +23,7 @@ export const setSidebarClicked = (setTo) => {
 
 export const setSidebarFixed = (setTo) => {
     return{
-        type: 'SET_SIDEBAR_CLICKED',
+        type: 'SET_SIDEBAR_FIXED',
         payload: setTo
     }
 }

@@ -7,6 +7,7 @@ import SidePanel from "../../../components/SidePanel/SidePanel.js";
 import styles from "./TermsOfService.module.css";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
+import {useSelector} from "react-redux"
 
 const htmlPage = `
 
@@ -201,38 +202,18 @@ Calibri;color:#595959;mso-themecolor:text1;mso-themetint:166;">In order to resol
 `
 
 const TermsOfService = (props) => {
-  const [sidePanelFixed, setSidePanelFix] = useState(false);
   const headerBoxRef = useRef();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  useEffect(() => {
-    const fixSidePanel = (e) => {
-      if (window.scrollY > headerBoxRef.current.clientHeight - 66) {
-        setSidePanelFix(true);
-      } else {
-        setSidePanelFix(false);
-      }
-    };
-
-    window.addEventListener("scroll", fixSidePanel);
-    return () => {
-      window.removeEventListener("scroll", fixSidePanel);
-    };
-  }, [sidePanelFixed]);
-
+  const sidebarFixed = useSelector(state => state.sidebar.fixed);
 
  
-
   const renderOnceSidePanel = (
     <SidePanel
-      sideBarClicked={props.sideBarClicked}
-      setSideBarClicked={props.setSideBarClicked}
       youtubeVideos={props.youtubeVideos}
       getImageLink={props.getImageLink}
       playVideo={props.playVideo}
       getHyperLink={props.getHyperLink}
-      sidePanelFixed={sidePanelFixed}
+      headerBoxRef={headerBoxRef}
+      sidebarFixTopOffset={0}
     />
   );
 
@@ -241,10 +222,6 @@ const TermsOfService = (props) => {
           <div className={styles["TermsOfService"]}>
         <Header
           ref={headerBoxRef}
-          sideBarClicked={props.sideBarClicked}
-          setSideBarClicked={props.setSideBarClicked}
-          navbarClicked={props.navbarClicked}
-          setNavbarClicked={props.setNavbarClicked}
         />
         <div className={styles["content-pane"]}>
           <div
@@ -255,7 +232,7 @@ const TermsOfService = (props) => {
           </div>
 
           <div className={styles["side-pane"]}></div>
-          {sidePanelFixed ? (
+          {sidebarFixed ? (
             <div
               style={{ position: "fixed", top: props.topOffset, right: "0px", zIndex: 1 }}
             >
@@ -282,11 +259,6 @@ const TermsOfService = (props) => {
             audioRef={props.audioRef}
             audioPlayerFixed={props.audioPlayerFixed}
             setAudioPlayerFixed={props.setAudioPlayerFixed}
-            sidePanelFixed={sidePanelFixed}
-            sideBarClicked={props.sideBarClicked}
-            setSideBarClicked={props.setSideBarClicked}
-            navbarClicked={props.navbarClicked}
-            setNavbarClicked={props.setNavbarClicked}
           />
         </div>
       </div>
