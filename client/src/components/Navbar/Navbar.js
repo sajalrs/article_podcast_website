@@ -4,10 +4,11 @@ import styles from './Navbar.module.css'
 import {Link} from 'react-router-dom'
 import FalseNineIcon from '../../Icons/FalseNineFitting'
 import {useSelector, useDispatch} from 'react-redux'
-import {setNavbarClicked} from '../.././actions';
+import {setNavbarClicked, setSidebarClicked} from '../.././actions';
 
 const Navbar = (props) => {
     const navbarClicked = useSelector(state => state.navbar.clicked)
+    const sidebarClicked = useSelector(state => state.sidebar.clicked)
     const dispatch = useDispatch();
 
     return(
@@ -16,7 +17,7 @@ const Navbar = (props) => {
             <nav>
                 <div className={styles["navigation"]}>
                 <ul className={navbarClicked?`${styles["nav-links-list"]} ${styles["nav-links-list-active"]}`:`${styles["nav-links-list"]} ${styles["nav-links-list-inactive"]}`}>
-    {MenuItems.map((item, index) => {return <li key={index} className={index%2===0?`${styles["list-item"]} ${styles["list-item-even"]}`:`${styles["list-item"]} ${styles["list-item-odd"]}`}><Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};dispatch(setNavbarClicked(false));}} to={item.url} className={styles[item.className]}><label className={styles["link-text"]}>{item.title.toUpperCase()}</label></Link></li>;})}
+    {MenuItems.map((item, index) => {return <li key={index} className={index%2===0?`${styles["list-item"]} ${styles["list-item-even"]}`:`${styles["list-item"]} ${styles["list-item-odd"]}`}><Link onClick={() => {if(sidebarClicked){dispatch(setSidebarClicked(false))};dispatch(setNavbarClicked(false));}} to={item.url} className={styles[item.className]}><label className={styles["link-text"]}>{item.title.toUpperCase()}</label></Link></li>;})}
                 </ul>
                 <ul className={styles["social-links"]}>
                     <li><i className={navbarClicked?`${styles["fas"]} ${styles["fa-times"]} fas fa-times`:`${styles["fas"]} ${styles["fa-bars"]} fas fa-bars`} onClick={()=> {dispatch(setNavbarClicked(!navbarClicked));}}/></li>
