@@ -18,19 +18,14 @@ import AboutUs from "./pages/AboutUs/AboutUs"
 import {
   disableBodyScroll,
   enableBodyScroll,
-  clearAllBodyScrollLocks,
 } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 const App = () => {
-  const [fitLarge, setFitLarge] = useState(true);
-  const [sideBarClicked, setSideBarClickedOrig] = useState(false);
-  const [topOffset, setTopOffset] = useState(100);
   const [video, setVideo] = useState({
     src: "https://www.youtube.com/embed/jbG9LJs_Npg?rel=0&autoplay=1",
     isPlaying: false,
   });
-  const [navbarClicked, setNavbarClickedOrig] = useState(false);
   const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
   const [player, setPlayer] = useState("paused");
   const [youtube, setYoutube] = useState({
@@ -87,43 +82,22 @@ const App = () => {
 
   }, []);
 
-  useEffect(() => {
-    const updateWindowType = () => {
-      setFitLarge(window.innerWidth >= 940);
-    };
-    window.addEventListener("resize", updateWindowType);
-    return () => {
-      window.removeEventListener("resize", updateWindowType);
-      // clearAllBodyScrollLocks();
-    };
-  });
+  // useEffect(() => {
+  //   const updateWindowType = () => {
+  //     setFitLarge(window.innerWidth >= 940);
+  //   };
+  //   window.addEventListener("resize", updateWindowType);
+  //   return () => {
+  //     window.removeEventListener("resize", updateWindowType);
+  //     // clearAllBodyScrollLocks();
+  //   };
+  // });
 
 
 
-  const setNavbarClicked = (toSet) => {
-    if (toSet) {
-      setTopOffset(topOffset + 140);
-      setSideBarClickedOrig(false);
-    } else {
-      if (topOffset != 100) {
-        setTopOffset(topOffset - 140);
-      }
-    }
-    setNavbarClickedOrig(toSet);
-  };
+
   const scrollLockRef = useRef();
 
-  const setSideBarClicked = (toSet) => {
-    if (toSet) {
-      if (navbarClicked) {
-        setNavbarClicked(false);
-      }
-    } else {
-      clearAllBodyScrollLocks();
-    }
-
-    setSideBarClickedOrig(toSet);
-  };
 
 
   const playVideo = (videoSrc) => {
@@ -205,11 +179,11 @@ const App = () => {
               render={() => {
                 return (
                   <Home
-                    fitLarge={fitLarge}
+                 
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+                  
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
@@ -233,11 +207,11 @@ const App = () => {
               render={() => {
                 return (
                   <Edit
-                    fitLarge={fitLarge}
+                   
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+                  
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
@@ -261,11 +235,11 @@ const App = () => {
               render={() => {
                 return (
                   <ArticlePage
-                    fitLarge={fitLarge}
+                  
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+                  
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
@@ -289,11 +263,11 @@ const App = () => {
               render={() => {
                 return (
                   <Articles
-                    fitLarge={fitLarge}
+                   
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+                   
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
@@ -317,11 +291,11 @@ const App = () => {
               render={() => {
                 return (
                   <Podcasts
-                    fitLarge={fitLarge}
+               
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+                  
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
@@ -345,11 +319,11 @@ const App = () => {
               render={() => {
                 return (
                   <Privacy
-                    fitLarge={fitLarge}
+                   
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+                  
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
@@ -373,11 +347,11 @@ const App = () => {
               render={() => {
                 return (
                   <TermsOfService
-                    fitLarge={fitLarge}
+                   
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+                   
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
@@ -401,11 +375,11 @@ const App = () => {
               render={() => {
                 return (
                   <AboutUs
-                    fitLarge={fitLarge}
+                    
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                    topOffset={topOffset}
+
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
