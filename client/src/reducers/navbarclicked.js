@@ -1,6 +1,6 @@
 const navbarClickedReducer = (state = false, action) => {
     switch(action.type){
-        case 'SET':
+        case 'SET_NAVBAR_CLICKED':
             return action.payload;
         default:
             return state;
