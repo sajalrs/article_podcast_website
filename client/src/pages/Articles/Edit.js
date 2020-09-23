@@ -32,6 +32,7 @@ const initialValue = {
 };
 
 const Edit = (props) => {
+  
   const [textEditorValue, setTextEditorValue] = useState(
     Value.fromJSON(initialValue)
   );
