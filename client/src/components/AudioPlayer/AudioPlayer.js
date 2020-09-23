@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect, forwardRef } from "react";
+import {useSelector, useDispatch} from 'react-redux'
+import {setAudioPlayerPlayer, setAudioPlayerCurrentTime} from '../../redux/actions'
 import styles from "./AudioPlayer.module.css";
 const AudioPlayer = forwardRef((props, ref) => {
   // const [selectedTrack, setSelectedTrack] = useState({
@@ -23,19 +25,22 @@ const AudioPlayer = forwardRef((props, ref) => {
     image:
       "https://d3t3ozftmdmh3i.cloudfront.net/production/podcast_uploaded_nologo/8497059/8497059-1599895849523-cbb8b2f53d641.jpg",
   };
-  const prevPlayer = usePrevious(props.player);
+  const player = useSelector(state => state.audioPlayer.player);
+  const currentTime = useSelector(state => state.audioPlayer.currentTime);
+  const dispatch = useDispatch();
+  const prevPlayer = usePrevious(player);
   const [duration, setDuration] = useState(2172.892);
-
+  
   const seekBarRef = useRef();
   useEffect(() => {
-    if (props.player !== prevPlayer) {
-      if (props.player === "paused") {
+    if (player !== prevPlayer) {
+      if (player === "paused") {
         props.audioRef.current.pause();
-      } else if (props.player === "playing" && prevPlayer === "paused") {
+      } else if (player === "playing" && prevPlayer === "paused") {
         props.audioRef.current.play();
       }
     }
-  }, [props.player]);
+  }, [player]);
 
   useEffect(() => {
     if (
@@ -49,7 +54,7 @@ const AudioPlayer = forwardRef((props, ref) => {
         if (props.audioRef.current.src !== track) {
           props.audioRef.current.src = track;
           props.audioRef.current.play();
-          props.setPlayer("playing");
+          dispatch(setAudioPlayerPlayer("playing"));
         }
       }
     }
@@ -57,7 +62,7 @@ const AudioPlayer = forwardRef((props, ref) => {
 
   useEffect(() => {
     props.audioRef.current.addEventListener("timeupdate", (e) => {
-      props.setCurrentTime(e.target.currentTime);
+      dispatch(setAudioPlayerCurrentTime(e.target.currentTime));
     });
     return () => {
       props.audioRef.current.removeEventListener("timeupdate", () => {});
@@ -67,7 +72,7 @@ const AudioPlayer = forwardRef((props, ref) => {
   const handleSliderChange = (e) => {
     const time = duration * (e.target.value / 100);
     props.audioRef.current.currentTime = time;
-    props.setCurrentTime(time);
+    dispatch(setAudioPlayerCurrentTime(time));
   };
 
   function usePrevious(value) {
@@ -86,8 +91,8 @@ const AudioPlayer = forwardRef((props, ref) => {
     }
   }
   const progressDuration = getTime(duration);
-  const progressTime = getTime(props.currentTime);
-  const progress = (100 / duration) * props.currentTime;
+  const progressTime = getTime(currentTime);
+  const progress = (100 / duration) * currentTime;
   return (
     <div ref={ref} className={styles["audio-player"]}>
       <div
@@ -108,20 +113,20 @@ const AudioPlayer = forwardRef((props, ref) => {
       <div className={styles["player"]}>
         <div className={styles["minimized"]}>
           {!props.isActive && <div id={styles["bars"]}>
-          <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+          <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
 
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
-            <div className={props.player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
+            <div className={player === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
           </div>}
 
           <div
@@ -158,15 +163,15 @@ const AudioPlayer = forwardRef((props, ref) => {
               onClick={() => props.rewindPodcasts()}
               className={`${styles["backward-button"]} ${styles["fas"]} ${styles["fa-step-backward"]} fas fa-step-backward`}
             ></i>
-            {props.player === "paused" && (
+            {player === "paused" && (
               <i
-                onClick={() => {props.audioRef.current.play();props.setPlayer("playing")}}
+                onClick={() => {props.audioRef.current.play();dispatch(setAudioPlayerPlayer("playing"))}}
                 className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
               ></i>
             )}
-            {props.player === "playing" && (
+            {player === "playing" && (
               <i
-                onClick={() => props.setPlayer("paused")}
+                onClick={() => dispatch(setAudioPlayerPlayer("paused"))}
                 className={`${styles["pause-button"]} ${styles["far"]} ${styles["fa-pause-circle"]} far fa-pause-circle`}
               ></i>
             )}

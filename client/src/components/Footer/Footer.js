@@ -9,9 +9,10 @@ const Footer = (props) => {
   const sidebarClicked = useSelector(state => state.sidebar.clicked);
   const dispatch = useDispatch();
   const [isActive, setActive] = useState(false);
-  const [boxHeight, setBoxHeight] = useState(0);
+  const [boxHeight, setBoxHeight] = useState(202);
   const footerBoxRef = useRef();
   const audioPlayerBoxRef = useRef();
+  const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
   useEffect(() => {
     const body = document.body,
     html = document.documentElement;
@@ -33,9 +34,9 @@ const Footer = (props) => {
         window.scrollY >
         height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
       ) {
-        props.setAudioPlayerFixed(false);
+        setAudioPlayerFixed(false);
       } else {
-        props.setAudioPlayerFixed(true);
+        setAudioPlayerFixed(true);
       }
     
     };
@@ -51,12 +52,8 @@ const Footer = (props) => {
       ref={audioPlayerBoxRef}
       selectedTrack={props.selectedTrack}
       setSelectedTrack={props.setSelectedTrack}
-      player={props.player}
-      setPlayer={props.setPlayer}
       forwardPodcasts={props.forwardPodcasts}
       rewindPodcasts={props.rewindPodcasts}
-      currentTime={props.currentTime}
-      setCurrentTime={props.setCurrentTime}
       isActive={isActive}
       setActive={setActive}
       audioRef={props.audioRef}
@@ -65,7 +62,7 @@ const Footer = (props) => {
 
   return (
     <div>
-      {props.audioPlayerFixed && sidebarFixed ?(
+      {audioPlayerFixed && sidebarFixed ?(
         <div>
           <div
             style={{

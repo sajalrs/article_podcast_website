@@ -20,13 +20,15 @@ import {
   enableBodyScroll,
 } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import {useDispatch} from 'react-redux'
+import {setAudioPlayerPlayer} from './redux/actions'
 
 const App = () => {
   const [video, setVideo] = useState({
     src: "https://www.youtube.com/embed/jbG9LJs_Npg?rel=0&autoplay=1",
     isPlaying: false,
   });
-  const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
+  
   const [player, setPlayer] = useState("paused");
   const [youtube, setYoutube] = useState({
     items: [],
@@ -46,7 +48,7 @@ const App = () => {
   });
   const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef();
-
+  const dispatch = useDispatch();
 
 
 
@@ -103,7 +105,7 @@ const App = () => {
   const playVideo = (videoSrc) => {
     setVideo({ ...video, src: videoSrc, isPlaying: true });
     disableBodyScroll(scrollLockRef.current);
-    setPlayer("paused");
+    dispatch(setAudioPlayerPlayer("paused"));
   };
   const closeVideo = () => {
     setVideo({ ...video, isPlaying: false });
@@ -115,7 +117,6 @@ const App = () => {
   }
 
   const rewindPodcasts = () => {
-    setCurrentTime(0);
     if (podcasts.currentlyPlaying === podcasts.items.length - 1) {
       setPodcasts({ ...podcasts, currentlyPlaying: 0 });
     } else {
@@ -127,7 +128,6 @@ const App = () => {
   };
 
   const forwardPodcasts = () => {
-    setCurrentTime(0);
     if (podcasts.currentlyPlaying === 0) {
       setPodcasts({ ...podcasts, currentlyPlaying: podcasts.items.length - 1 });
     } else {
@@ -187,14 +187,10 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+              
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+                 
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -215,14 +211,11 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+                    
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+                
+                  
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -243,14 +236,11 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+                    
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+                   
+                 
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -271,14 +261,11 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+                  
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+                  
+               
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -299,14 +286,10 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+                   
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+                
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -327,14 +310,10 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+ 
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+               
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -355,14 +334,11 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+                
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+                
+                   
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -383,14 +359,10 @@ const App = () => {
                     youtubeVideos={youtube}
                     selectedTrack={podcasts}
                     setSelectedTrack={setPodcasts}
-                    player={player}
-                    setPlayer={setPlayer}
+               
                     forwardPodcasts={forwardPodcasts}
                     rewindPodcasts={rewindPodcasts}
-                    currentTime={currentTime}
-                    setCurrentTime={setCurrentTime}
-                    audioPlayerFixed={audioPlayerFixed}
-                    setAudioPlayerFixed={setAudioPlayerFixed}
+        
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />

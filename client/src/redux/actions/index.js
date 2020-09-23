@@ -33,14 +33,14 @@ export const setTopOffset = (setTo) => {
 //AudioPlayer Actions
 export const setAudioPlayerPlayer = (setTo) => {
     return {
-        type: SET_AUDIOPLAYER_PLAYER,
+        type: 'SET_AUDIOPLAYER_PLAYER',
         payload: setTo
     }
 }
 
 export const setAudioPlayerCurrentTime = (setTo) => {
     return {
-        type: SET_AUDIOPLAYER_CURRENTTIME,
+        type: 'SET_AUDIOPLAYER_CURRENTTIME',
         payload: setTo
     }
 }
