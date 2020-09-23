@@ -2,9 +2,9 @@ import React, { useState, forwardRef, useEffect, useRef } from "react";
 import SmallCard from "../Cards/SmallCard/SmallCard.js";
 import styles from "./SidePanel.module.css";
 import Card from "../Cards/Card.js";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 import {useSelector, useDispatch} from 'react-redux'
-import {setSidebarClicked, setSidebarFixed} from '../.././actions';
+import {setSidebarClicked, setSidebarFixed, setNavbarClicked} from '../.././actions';
 
 
 const SidePanel = (props) => {
@@ -13,7 +13,25 @@ const SidePanel = (props) => {
   const [titlePos, setTitlePos] = useState();
   const sidebarClicked = useSelector(state => state.sidebar.clicked);
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
+  const navbarClicked = useSelector(state => state.navbar.clicked)
+  const topOffset = useSelector(state => state.sidebar.topOffset);
   const dispatch = useDispatch();
+  useEffect(() => {
+
+  
+    if (sidebarClicked) {
+      if (navbarClicked) {
+        dispatch(setNavbarClicked(false));
+      }
+    } else {
+      clearAllBodyScrollLocks();
+    }
+
+
+
+  }
+  , [sidebarClicked])
+  
   useEffect(() => {
     if(sidebarClicked && sidebarFixed){
       disableBodyScroll(cardListRef.current);

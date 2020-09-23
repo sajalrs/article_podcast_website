@@ -10,6 +10,7 @@ import Footer from "../../components/Footer/Footer";
 import {useSelector} from "react-redux"
 const AboutUs = (props) => {
   const sidebarFixed =  useSelector(state => state.sidebar.fixed)
+  const topOffset = useSelector(state => state.sidebar.topOffset);
   const headerBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -169,7 +170,7 @@ const AboutUs = (props) => {
             <div
               style={{
                 position: "fixed",
-                top: props.topOffset,
+                top: topOffset,
                 right: "0px",
                 zIndex: 1,
               }}
@@ -178,7 +179,7 @@ const AboutUs = (props) => {
               {renderOnceSidePanel}
             </div>
           ) : (
-            <div style={{ marginTop: props.topOffset }}>
+            <div style={{ marginTop: topOffset }}>
               {renderOnceSidePanel}
             </div>
           )}

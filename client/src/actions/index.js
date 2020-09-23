@@ -5,14 +5,6 @@ export const setNavbarClicked = (setTo) => {
     }
 }
 
-export const setNavbarFixed = (setTo) => {
-    return{
-        type: 'SET_NAVBAR_FIXED',
-        payload: setTo
-    }
-}
-
-
 export const setSidebarClicked = (setTo) => {
     return{
         type: 'SET_SIDEBAR_CLICKED',
@@ -24,6 +16,13 @@ export const setSidebarClicked = (setTo) => {
 export const setSidebarFixed = (setTo) => {
     return{
         type: 'SET_SIDEBAR_FIXED',
+        payload: setTo
+    }
+}
+
+export const setTopOffset = (setTo) => {
+    return{
+        type: 'SET_TOP_OFFSET',
         payload: setTo
     }
 }

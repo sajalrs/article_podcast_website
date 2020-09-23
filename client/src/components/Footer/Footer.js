@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./Footer.module.css";
 import AudioPlayer from "../AudioPlayer/AudioPlayer";
-import {useSelector} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
+import {setNavbarClicked, setSidebarClicked} from "../../actions"
 import {Link} from "react-router-dom";
 const Footer = (props) => {
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
+  const sidebarClicked = useSelector(state => state.sidebar.clicked);
+  const dispatch = useDispatch();
   const [isActive, setActive] = useState(false);
   const [boxHeight, setBoxHeight] = useState(0);
   const footerBoxRef = useRef();
@@ -107,7 +110,7 @@ const Footer = (props) => {
           <div className={styles["footer-link-wrapper"]}>
             <div className={styles["footer-link-items"]}>
               <h2>About Us</h2>
-              <Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to="/about">Team</Link>
+              <Link onClick={() => {if(sidebarClicked){dispatch(setSidebarClicked(false))};dispatch(setNavbarClicked(false));}} to="/about">Team</Link>
               <a href="">Contact</a>
               <a href="">Support</a>
               <a href="">Advertisements</a>
@@ -160,9 +163,9 @@ const Footer = (props) => {
             </div>
             <div className={styles["footer-link-items"]}>
               <h2>Legal</h2>
-              <Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to="/legal/privacy">Privacy</Link>
+              <Link onClick={() => {if(sidebarClicked){dispatch(setSidebarClicked(false))};dispatch(setNavbarClicked(false));}}to="/legal/privacy">Privacy</Link>
              
-              <Link onClick={() => {if(props.sideBarClicked){props.setSideBarClicked(false)};props.setNavbarClicked(false);}} to="/legal/termsofservice">Terms of Service</Link>
+              <Link onClick={() => {if(sidebarClicked){dispatch(setSidebarClicked(false))};dispatch(setNavbarClicked(false));}} to="/legal/termsofservice">Terms of Service</Link>
             </div>
           </div>
         </div>
