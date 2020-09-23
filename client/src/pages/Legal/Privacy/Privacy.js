@@ -7,7 +7,7 @@ import SidePanel from "../../../components/SidePanel/SidePanel.js";
 import styles from "./Privacy.module.css";
 import Header from "../../../components/Header/Header";
 import Footer from "../../../components/Footer/Footer";
-
+import {useSelector} from "react-redux"
 const htmlPage = `<style>
 [data-custom-class='body'], [data-custom-class='body'] * {
         background: transparent !important;
@@ -64,38 +64,24 @@ word-break: break-word !important;
     <div style="color: #595959;font-size: 14px;font-family: Arial;padding-top:16px;">This privacy policy was created using <a style="color: rgb(48, 48, 241) !important;" href="https://termly.io/products/privacy-policy-generator/?ftseo">Termly’s Privacy Policy Generator</a>.</div>`
 
 const Privacy = (props) => {
-  const [sidePanelFixed, setSidePanelFix] = useState(false);
   const headerBoxRef = useRef();
+  const sidebarFixed = useSelector(state => state.sidebar.fixed);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    const fixSidePanel = (e) => {
-      if (window.scrollY > headerBoxRef.current.clientHeight - 66) {
-        setSidePanelFix(true);
-      } else {
-        setSidePanelFix(false);
-      }
-    };
 
-    window.addEventListener("scroll", fixSidePanel);
-    return () => {
-      window.removeEventListener("scroll", fixSidePanel);
-    };
-  }, [sidePanelFixed]);
 
 
  
 
   const renderOnceSidePanel = (
     <SidePanel
-      sideBarClicked={props.sideBarClicked}
-      setSideBarClicked={props.setSideBarClicked}
       youtubeVideos={props.youtubeVideos}
       getImageLink={props.getImageLink}
       playVideo={props.playVideo}
       getHyperLink={props.getHyperLink}
-      sidePanelFixed={sidePanelFixed}
+      headerBoxRef={headerBoxRef}
+      sidebarFixTopOffset={0}
     />
   );
 
@@ -104,10 +90,6 @@ const Privacy = (props) => {
           <div className={styles["Privacy"]}>
         <Header
           ref={headerBoxRef}
-          sideBarClicked={props.sideBarClicked}
-          setSideBarClicked={props.setSideBarClicked}
-          navbarClicked={props.navbarClicked}
-          setNavbarClicked={props.setNavbarClicked}
         />
         <div className={styles["content-pane"]}>
           <div
@@ -118,7 +100,7 @@ const Privacy = (props) => {
           </div>
 
           <div className={styles["side-pane"]}></div>
-          {sidePanelFixed ? (
+          {sidebarFixed ? (
             <div
               style={{ position: "fixed", top: props.topOffset, right: "0px", zIndex: 1 }}
             >
@@ -145,11 +127,6 @@ const Privacy = (props) => {
             audioRef={props.audioRef}
             audioPlayerFixed={props.audioPlayerFixed}
             setAudioPlayerFixed={props.setAudioPlayerFixed}
-            sidePanelFixed={sidePanelFixed}
-            sideBarClicked={props.sideBarClicked}
-            setSideBarClicked={props.setSideBarClicked}
-            navbarClicked={props.navbarClicked}
-            setNavbarClicked={props.setNavbarClicked}
           />
         </div>
       </div>

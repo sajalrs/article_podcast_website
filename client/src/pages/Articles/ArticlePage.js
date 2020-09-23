@@ -10,28 +10,16 @@ import Footer from "../../components/Footer/Footer";
 import { useHistory, useParams } from "react-router-dom";
 import { Value, Editor } from "slate";
 import Html from "slate-html-serializer";
+import {useSelector} from "react-redux"
 const ArticlePage = (props) => {
   const { id } = useParams();
   const history = useHistory();
-  const [sidePanelFixed, setSidePanelFix] = useState(false);
+  const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const headerBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    const fixSidePanel = (e) => {
-      if (window.scrollY > headerBoxRef.current.clientHeight - 66 - 35 + 644) {
-        setSidePanelFix(true);
-      } else {
-        setSidePanelFix(false);
-      }
-    };
 
-    window.addEventListener("scroll", fixSidePanel);
-    return () => {
-      window.removeEventListener("scroll", fixSidePanel);
-    };
-  }, [sidePanelFixed]);
 
   const [article, setArticle] = useState({
     title: "",
@@ -208,13 +196,12 @@ const ArticlePage = (props) => {
   };
   const renderOnceSidePanel = (
     <SidePanel
-      sideBarClicked={props.sideBarClicked}
-      setSideBarClicked={props.setSideBarClicked}
       youtubeVideos={props.youtubeVideos}
       getImageLink={props.getImageLink}
       playVideo={props.playVideo}
       getHyperLink={props.getHyperLink}
-      sidePanelFixed={sidePanelFixed}
+      headerBoxRef={headerBoxRef}
+      sidebarFixTopOffset={35 + 644}
     />
   );
 
@@ -224,10 +211,7 @@ const ArticlePage = (props) => {
       <div className={styles["ArticlePage"]}>
         <Header
           ref={headerBoxRef}
-          sideBarClicked={props.sideBarClicked}
-          setSideBarClicked={props.setSideBarClicked}
-          navbarClicked={props.navbarClicked}
-          setNavbarClicked={props.setNavbarClicked}
+  
         />
         <div className={styles["headline"]}>
           <LargeCard
@@ -269,7 +253,7 @@ const ArticlePage = (props) => {
           </div>
 
           <div className={styles["side-pane"]}></div>
-          {sidePanelFixed ? (
+          {sidebarFixed ? (
             <div
               style={{ position: "fixed", top: props.topOffset, right: "0px", zIndex: 1 }}
             >
@@ -296,11 +280,6 @@ const ArticlePage = (props) => {
             audioRef={props.audioRef}
             audioPlayerFixed={props.audioPlayerFixed}
             setAudioPlayerFixed={props.setAudioPlayerFixed}
-            sidePanelFixed={sidePanelFixed}
-            sideBarClicked={props.sideBarClicked}
-            setSideBarClicked={props.setSideBarClicked}
-            navbarClicked={props.navbarClicked}
-            setNavbarClicked={props.setNavbarClicked}
           />
         </div>
       </div>
