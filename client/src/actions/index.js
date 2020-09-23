@@ -4,3 +4,10 @@ export const setNavbarClicked = (setTo) => {
         payload: setTo
     }
 }
+
+export const setSidebarClicked = (setTo) => {
+    return{
+        type: 'SET_SIDEBAR_CLICKED',
+        payload: setTo
+    }
+}
