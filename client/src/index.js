@@ -8,10 +8,25 @@ import rootReducer from './redux/reducers'
 import thunk from 'redux-thunk'
 import {Provider} from 'react-redux'
 import axios from 'axios'
+import {setAudioPlayerPodcasts} from './redux/actions'
 
+const fetchUsers = () => {
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__ || compose;
+  return function(dispatch){
+    axios.get("/podcasts")
+      .then(response => {
+        dispatch(setAudioPlayerPodcasts({ items: response.data["items"], currentlyPlaying: 0 }))
+      })
+      .catch(error => {
+        console.log(error.message)
+      })
+  }
+}
+
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)))
+store.dispatch(fetchUsers())
+
 
 
 ReactDOM.render(
