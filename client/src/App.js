@@ -29,7 +29,6 @@ const App = () => {
     isPlaying: false,
   });
   
-  const [player, setPlayer] = useState("paused");
   const [youtube, setYoutube] = useState({
     items: [],
   });
@@ -46,7 +45,6 @@ const App = () => {
     ],
     currentlyPlaying: 0,
   });
-  const [currentTime, setCurrentTime] = useState(0);
   const audioRef = useRef();
   const dispatch = useDispatch();
 
