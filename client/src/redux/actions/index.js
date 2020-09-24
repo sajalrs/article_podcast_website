@@ -44,3 +44,10 @@ export const setAudioPlayerCurrentTime = (setTo) => {
         payload: setTo
     }
 }
+
+export const setAudioPlayerPodcasts = (setTo) => {
+    return {
+        type: 'SET_AUDIOPLAYER_PODCASTS',
+        payload: setTo
+    }
+}
