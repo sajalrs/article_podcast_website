@@ -15,11 +15,6 @@ import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
 import TermsOfService from "./pages/Legal/TermsOfService/TermsOfService"
 import Privacy from "./pages/Legal/Privacy/Privacy"
 import AboutUs from "./pages/AboutUs/AboutUs"
-import {
-  disableBodyScroll,
-  enableBodyScroll,
-  clearAllBodyScrollLocks
-} from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {useDispatch,useSelector} from 'react-redux'
 import {setAudioPlayerIsPlaying, setVideoPlayerIsPlaying} from './redux/actions'
