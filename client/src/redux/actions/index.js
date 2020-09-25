@@ -59,6 +59,28 @@ export const setAudioPlayerSelected = (setTo) => {
     }
 }
 
+export const pauseAudio =() =>{
+    return{
+        type: 'SET_AUDIOPLAYER_IS_PLAYING',
+        payload: false
+    }
+}
+
+export const playAudio = (setTo) => {
+    if(setTo === undefined){
+        return {
+            type: 'SET_AUDIOPLAYER_IS_PLAYING',
+            payload: true
+        }
+    } else{
+        return {
+            type: 'PLAY_AUDIO',
+            payload: setTo
+        }
+    }
+
+}
+
 //VideoPlayer Actions
 
 export const setVideoPlayerSelected = (setTo) => {
@@ -81,3 +103,25 @@ export const setVideoPlayerYoutubeVideos = (setTo) => {
         payload: setTo
     }
 }
+
+export const playVideo = (setTo) => {
+    if(setTo === undefined){
+        return {
+            type: 'SET_VIDEOPLAYER_IS_PLAYING',
+            payload: true
+        }
+    } else{
+        return {
+            type: 'PLAY_VIDEO',
+            payload: setTo
+        }
+    }
+}
+
+export const pauseVideo = () => {
+    return {
+        type: 'SET_VIDEOPLAYER_IS_PLAYING',
+        payload: false
+    }
+}
+
