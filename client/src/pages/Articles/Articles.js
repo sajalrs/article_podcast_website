@@ -51,7 +51,7 @@ const Articles = (props) => {
 
   const renderOnceSidePanel = (
     <SidePanel
-      youtubeVideos={props.youtubeVideos}
+     
       getImageLink={props.getImageLink}
       playVideo={props.playVideo}
       getHyperLink={props.getHyperLink}
@@ -103,11 +103,7 @@ const Articles = (props) => {
 
       <div className={styles["footer-container"]}>
         <Footer
-          selectedTrack={props.selectedTrack}
-          setSelectedTrack={props.setSelectedTrack}
-          
-            forwardPodcasts={props.forwardPodcasts}
-            rewindPodcasts={props.rewindPodcasts}
+       
            
             audioRef={props.audioRef}
         
