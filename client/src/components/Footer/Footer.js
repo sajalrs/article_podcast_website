@@ -50,10 +50,6 @@ const Footer = (props) => {
   const renderOnceAudioPlayer = (
     <AudioPlayer
       ref={audioPlayerBoxRef}
-      selectedTrack={props.selectedTrack}
-      setSelectedTrack={props.setSelectedTrack}
-      forwardPodcasts={props.forwardPodcasts}
-      rewindPodcasts={props.rewindPodcasts}
       isActive={isActive}
       setActive={setActive}
       audioRef={props.audioRef}

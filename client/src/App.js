@@ -18,10 +18,11 @@ import AboutUs from "./pages/AboutUs/AboutUs"
 import {
   disableBodyScroll,
   enableBodyScroll,
+  clearAllBodyScrollLocks
 } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import {useDispatch} from 'react-redux'
-import {setAudioPlayerIsPlaying} from './redux/actions'
+import {useDispatch,useSelector} from 'react-redux'
+import {setAudioPlayerIsPlaying, setVideoPlayerIsPlaying} from './redux/actions'
 
 const App = () => {
   const [video, setVideo] = useState({
@@ -81,33 +82,22 @@ const App = () => {
     });
 
   }, []);
-
-  // useEffect(() => {
-  //   const updateWindowType = () => {
-  //     setFitLarge(window.innerWidth >= 940);
-  //   };
-  //   window.addEventListener("resize", updateWindowType);
-  //   return () => {
-  //     window.removeEventListener("resize", updateWindowType);
-  //     // clearAllBodyScrollLocks();
-  //   };
-  // });
+  const scrollLockRef = useRef()
 
 
-
-
-  const scrollLockRef = useRef();
 
 
 
   const playVideo = (videoSrc) => {
+    dispatch(setVideoPlayerIsPlaying(true));
     setVideo({ ...video, src: videoSrc, isPlaying: true });
-    disableBodyScroll(scrollLockRef.current);
+    // disableBodyScroll(scrollLockRef.current);
     dispatch(setAudioPlayerIsPlaying(false));
   };
   const closeVideo = () => {
+    dispatch(setVideoPlayerIsPlaying(false));
     setVideo({ ...video, isPlaying: false });
-    enableBodyScroll(scrollLockRef.current);
+    // enableBodyScroll(scrollLockRef.current);
   };
 
   const playAudio = (podcastIndex) => {
@@ -141,10 +131,9 @@ const App = () => {
 
   return (
     <div className="overarching">
-      <div ref={scrollLockRef}></div>
-      {video.isPlaying && (
-        <VideoPlayer closeVideo={closeVideo} src={video.src} />
-      )}
+        <div ref={scrollLockRef}></div>
+        <VideoPlayer scrollLockRef={scrollLockRef} closeVideo={closeVideo} src={video.src} />
+   
       <audio ref={audioRef} src="https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a" type="audio/mpeg"/>
       <div className="App">
         <BrowserRouter>
