@@ -1,9 +1,29 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import styles from './VideoPlayer.module.css'
-const VideoPlayer = (props, ref) => {
+import {
+  disableBodyScroll,
+  enableBodyScroll,
+} from "body-scroll-lock";
+import {useSelector} from 'react-redux'
+const VideoPlayer = (props) => {
+    
+    const isPlaying = useSelector(state => state.videoPlayer.isPlaying)
+  
 
+    useEffect(() => {
+      if(isPlaying){
+        disableBodyScroll(props.scrollLockRef.current)
+      } else{
+        enableBodyScroll(props.scrollLockRef.current)
+      }
+
+    },[isPlaying, props.scrollLockRef.current])
+
+    const selected = useSelector(state=> state.videoPlayer.selected)
     return (
-            <div className={styles["youtube-video-container"]} id="youtube-video-container">
+        isPlaying? 
+            (<div className={styles["youtube-video-container"]} id="youtube-video-container">
+            
               <div className={styles["closeable"]}>
                 <div className={styles["close-button"]}>
                   <i className={`${styles["fas"]} ${styles["fa-times"]} fas fa-times`} onClick={() => {props.closeVideo()}}></i>
@@ -11,15 +31,15 @@ const VideoPlayer = (props, ref) => {
                 </div>
                 <div className={styles["video"]}>
                   <iframe
-                    src={props.src}
+                    src={selected}
                     frameborder="0"
                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen="true"
                   ></iframe>
                 </div>
               </div>
-            </div>
-        
+            </div>)
+            : null        
     )
 };
 export default VideoPlayer
