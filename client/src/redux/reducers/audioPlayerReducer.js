@@ -20,12 +20,14 @@ const audioPlayerReducer = (
   switch (actions.type) {
     case "SET_AUDIOPLAYER_IS_PLAYING":
       return { ...state, isPlaying: actions.payload };
-    case "SET_AUDIOPLAYER_CURRENT_TIME":
+    case "SET_AUDIOPLAYER_CURRENTTIME":
       return { ...state, currentTime: actions.payload };
     case "SET_AUDIOPLAYER_PODCASTS":
         return {...state, podcasts: actions.payload};
     case "SET_AUDIOPLAYER_SELECTED":
         return {...state, selected: actions.payload};
+    case "PLAY_AUDIO":
+      return {...state, selected: actions.payload, isPlaying: true}
     default:
       return state;
   }
