@@ -1,6 +1,6 @@
 const videoPlayerReducer = (
   state = {
-    selected: 0,
+    selected: "https://www.youtube.com/embed/vpWIvnnWxaY?rel=0&start=0&autoplay=1",
     isPlaying: false,
     youtubeVideos: [
       {
