@@ -11,19 +11,22 @@ import axios from "axios";
 import {
   setAudioPlayerPodcasts,
   setVideoPlayerYoutubeVideos,
-  setBlogArticles
+  setBlogArticles,
 } from "./redux/actions";
 
 const fetchBlogArticles = () => {
-  return function (dispatch) {
+  return (dispatch) => {
     axios
       .get("/articles/pages")
       .then((response) => {
-        dispatch(
-          setBlogArticles(
-            response.data["links"],
-          )
-        );
+        const articles = response.data["links"].map((item, index) => {
+          return {
+            index: index,
+            ...item,
+            link: `articles/id=${item.id}`,
+          };
+        });
+        dispatch(setBlogArticles(articles));
       })
       .catch((error) => {
         console.log(error.message);
@@ -31,18 +34,18 @@ const fetchBlogArticles = () => {
   };
 };
 
-
-
 const fetchPodcasts = () => {
-  return function (dispatch) {
+  return (dispatch) => {
     axios
       .get("/podcasts")
       .then((response) => {
-        dispatch(
-          setAudioPlayerPodcasts(
-            response.data["items"],
-          )
-        );
+        const podcasts = response.data["items"].map((item, index) => {
+          return {
+            index: index,
+            ...item
+          }
+        })
+        dispatch(setAudioPlayerPodcasts(podcasts));
       })
       .catch((error) => {
         console.log(error.message);
@@ -51,17 +54,19 @@ const fetchPodcasts = () => {
 };
 
 const fetchYoutubeVideos = () => {
-  return function (dispatch) {
+  return (dispatch) => {
     axios
       .get("/youtube")
       .then((response) => {
-        const curVideos = response.data["items"].map((item) => {
-          return { 
-            id: item.id, 
+        const curVideos = response.data["items"].map((item, index) => {
+          return {
+            index: index,
+            id: item.id,
             title: item.title,
             image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
-            link:   `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
-            date: item.date };
+            link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
+            date: item.date,
+          };
         });
         dispatch(setVideoPlayerYoutubeVideos(curVideos));
       })
