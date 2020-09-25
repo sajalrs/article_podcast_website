@@ -125,7 +125,7 @@ export const playVideo = (setTo) => {
     }
 }
 
-export const pauseVideo = () => {
+export const closeVideo = () => {
     return {
         type: 'SET_VIDEOPLAYER_IS_PLAYING',
         payload: false
