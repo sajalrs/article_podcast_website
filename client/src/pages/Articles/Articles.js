@@ -10,7 +10,6 @@ import SmallCard from "../../components/Cards/SmallCard/SmallCard.js";
 import { useHistory } from "react-router-dom";
 import {useSelector} from "react-redux"
 const Articles = (props) => {
-  const history = useHistory();
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const topOffset = useSelector(state => state.sidebar.topOffset);
 
@@ -19,42 +18,10 @@ const Articles = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const [homepageLinks, setHomePageLinks] = useState({
-    links: [],
-  });
-  useEffect(() => {
-    const getHomepageLinks = async () => {
-      const response = await fetch("articles/pages");
-      const body = await response.json();
-      if (response.status !== 200) throw Error(body.message);
 
-      return body;
-    };
-
-    getHomepageLinks().then((res) => {
-      setHomePageLinks({ links: res["links"] });
-    });
-  }, []);
-
-  const getLinkFunction = (linkType) => {
-    switch (linkType) {
-      case Card.LinkType["video-youtube"]:
-        return props.playVideo;
-      case Card.LinkType["article-internal"]:
-        return (articleLink) => {
-          history.push(articleLink);
-        };
-      default:
-        break;
-    }
-  };
 
   const renderOnceSidePanel = (
     <SidePanel
-     
-      getImageLink={props.getImageLink}
-      playVideo={props.playVideo}
-      getHyperLink={props.getHyperLink}
       headerBoxRef={headerBoxRef}
       sidebarFixTopOffset={0}
     />
@@ -76,12 +43,8 @@ const Articles = (props) => {
                   title={item.title}
                   text={item.description}
                   author={item.author}
-                  LinkType={Card.LinkType["article-internal"]}
-                  link={props.getHyperLink(Card.LinkType["article-internal"])(
-                    item["_id"]
-                  )}
-                  onClick={getLinkFunction(Card.LinkType["article-internal"])}
-                  audioRef={props.audioRef}
+                  contentType={item.contentType}
+                  link={item.link}
                />
               </div>
             );
@@ -103,10 +66,6 @@ const Articles = (props) => {
 
       <div className={styles["footer-container"]}>
         <Footer
-       
-           
-            audioRef={props.audioRef}
-        
             headerBoxRef={headerBoxRef}
             sidebarFixTopOffset={0}
         />
