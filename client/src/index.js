@@ -11,7 +11,27 @@ import axios from "axios";
 import {
   setAudioPlayerPodcasts,
   setVideoPlayerYoutubeVideos,
+  setBlogArticles
 } from "./redux/actions";
+
+const fetchBlogArticles = () => {
+  return function (dispatch) {
+    axios
+      .get("/articles/pages")
+      .then((response) => {
+        dispatch(
+          setBlogArticles(
+            response.data["links"],
+          )
+        );
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
+};
+
+
 
 const fetchPodcasts = () => {
   return function (dispatch) {
@@ -53,6 +73,7 @@ const fetchYoutubeVideos = () => {
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
+store.dispatch(fetchBlogArticles());
 store.dispatch(fetchPodcasts());
 store.dispatch(fetchYoutubeVideos());
 
