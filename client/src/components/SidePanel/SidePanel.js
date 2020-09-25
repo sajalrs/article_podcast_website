@@ -15,6 +15,7 @@ const SidePanel = (props) => {
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const navbarClicked = useSelector(state => state.navbar.clicked)
   const topOffset = useSelector(state => state.sidebar.topOffset);
+  const youtubeVideos = useSelector(state => state.videoPlayer.youtubeVideos)
   const dispatch = useDispatch();
   useEffect(() => {
 
@@ -60,7 +61,7 @@ const SidePanel = (props) => {
   useEffect(() => {
     setTitlePos(sidePanelDivRef.current.innerWidth);
   },[])
-  const vidArray = props.youtubeVideos.curVideos;
+ 
   return (
     <div
       ref={sidePanelDivRef}
@@ -79,20 +80,19 @@ const SidePanel = (props) => {
         ></i>
       </label>
       <ul ref={cardListRef} className={sidebarFixed? `${styles["card-list"]} ${styles["card-list-fixed"]} `: `${styles["card-list"]} ${styles["card-list-not-fixed"]} ` } >
-        {vidArray?
-        vidArray.map((item, index) => {
+        {
+        youtubeVideos.map((item, index) => {
           return (
             <li key={index}>
               <SmallCard
                 title={item.title}
-                image={props.getImageLink(item.id)}
+                image={item.image}
                 LinkType={Card.LinkType["video-youtube"]}
                 onClick={props.playVideo}
-                link={props.getHyperLink(Card.LinkType["video-youtube"])(item.id)}
+                link={item.link}
               />
             </li>
-          );
-        }): null}
+        )})}
       </ul>
     </div>
   );
