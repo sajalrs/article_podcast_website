@@ -11,8 +11,7 @@ router.get("/", (req, res) => {
         let json = JSON.parse(parser.toJson(data, {reversible: false}));
         // res.json(json.rss.channel.item);
 
-        const toReturn = json.rss.channel.item.map((element, index) => {const text = element["description"].replace(/<[^>]+>/g, '').replace(/&nbsp;/, ''); return {
-          "index": index,
+        const toReturn = json.rss.channel.item.map((element) => {const text = element["description"].replace(/<[^>]+>/g, '').replace(/&nbsp;/, ''); return {
           "title": element["title"],
           "by": element["dc:creator"],
           "link": element["enclosure"]["url"],
