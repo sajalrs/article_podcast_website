@@ -59,6 +59,13 @@ export const setAudioPlayerSelected = (setTo) => {
     }
 }
 
+export const setAudioPLayerRef = (setTo) => {
+    return {
+        type: 'SET_AUDIOPLAYER_REF',
+        payload: setTo
+    }
+}
+
 export const pauseAudio =() =>{
     return{
         type: 'SET_AUDIOPLAYER_IS_PLAYING',
