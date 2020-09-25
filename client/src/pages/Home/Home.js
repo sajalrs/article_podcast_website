@@ -65,10 +65,8 @@ const Home = (props) => {
 
       <div className={styles["footer-container"]}>
         <Footer
-      
-      
-          audioRef={props.audioRef}
-
+          headerBoxRef={headerBoxRef}
+          sidebarFixTopOffset={0}
         />
       </div>
     </div>
