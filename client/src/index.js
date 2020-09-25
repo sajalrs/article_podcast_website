@@ -7,6 +7,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
+import Card from "./components/Cards/Card.js";
 import axios from "axios";
 import {
   setAudioPlayerPodcasts,
@@ -23,6 +24,7 @@ const fetchBlogArticles = () => {
           return {
             index: index,
             ...item,
+            contentType: Card.ContentType["article-internal"],
             link: `articles/id=${item.id}`,
           };
         });
@@ -42,7 +44,8 @@ const fetchPodcasts = () => {
         const podcasts = response.data["items"].map((item, index) => {
           return {
             index: index,
-            ...item
+            ...item,
+            contentType: Card.ContentType["audio-internal"]
           }
         })
         dispatch(setAudioPlayerPodcasts(podcasts));
@@ -66,6 +69,7 @@ const fetchYoutubeVideos = () => {
             image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
             link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
             date: item.date,
+            contentType: Card.ContentType["video-youtube"]
           };
         });
         dispatch(setVideoPlayerYoutubeVideos(curVideos));
