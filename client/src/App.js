@@ -21,7 +21,7 @@ import {
 } from "body-scroll-lock";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {useDispatch} from 'react-redux'
-import {setAudioPlayerPlayer} from './redux/actions'
+import {setAudioPlayerIsPlaying} from './redux/actions'
 
 const App = () => {
   const [video, setVideo] = useState({
@@ -103,7 +103,7 @@ const App = () => {
   const playVideo = (videoSrc) => {
     setVideo({ ...video, src: videoSrc, isPlaying: true });
     disableBodyScroll(scrollLockRef.current);
-    dispatch(setAudioPlayerPlayer("paused"));
+    dispatch(setAudioPlayerIsPlaying(false));
   };
   const closeVideo = () => {
     setVideo({ ...video, isPlaying: false });

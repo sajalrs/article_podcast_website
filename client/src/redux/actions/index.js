@@ -31,7 +31,7 @@ export const setTopOffset = (setTo) => {
 }
 
 //AudioPlayer Actions
-export const setAudioPlayerPlayer = (setTo) => {
+export const setAudioPlayerIsPlaying = (setTo) => {
     return {
         type: 'SET_AUDIOPLAYER_IS_PLAYING',
         payload: setTo
