@@ -114,28 +114,6 @@ const App = () => {
      setPodcasts({ ...podcasts, currentlyPlaying: podcastIndex });
   }
 
-  const rewindPodcasts = () => {
-    if (podcasts.currentlyPlaying === podcasts.items.length - 1) {
-      setPodcasts({ ...podcasts, currentlyPlaying: 0 });
-    } else {
-      setPodcasts({
-        ...podcasts,
-        currentlyPlaying: podcasts.currentlyPlaying + 1,
-      });
-    }
-  };
-
-  const forwardPodcasts = () => {
-    if (podcasts.currentlyPlaying === 0) {
-      setPodcasts({ ...podcasts, currentlyPlaying: podcasts.items.length - 1 });
-    } else {
-      setPodcasts({
-        ...podcasts,
-        currentlyPlaying: podcasts.currentlyPlaying - 1,
-      });
-    }
-  };
-
   const getImageLink = (id) => {
     return `https://img.youtube.com/vi/${id}/hqdefault.jpg`;
   };
@@ -182,12 +160,7 @@ const App = () => {
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
                   
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
-              
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
+
                  
                     audioRef={audioRef}
                     playAudio={playAudio}
@@ -205,15 +178,7 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                  
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
-                    
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
-                
-                  
+
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -231,12 +196,8 @@ const App = () => {
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
                   
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
-                    
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
+
+                 
                    
                  
                     audioRef={audioRef}
@@ -255,15 +216,7 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                   
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
-                  
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
-                  
-               
+
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />
@@ -280,13 +233,7 @@ const App = () => {
                     playVideo={playVideo}
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
-                  
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
-                   
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
+
                 
                     audioRef={audioRef}
                     playAudio={playAudio}
@@ -305,12 +252,7 @@ const App = () => {
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
                   
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
- 
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
+
                
                     audioRef={audioRef}
                     playAudio={playAudio}
@@ -329,13 +271,7 @@ const App = () => {
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
                    
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
-                
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
-                
+        
                    
                     audioRef={audioRef}
                     playAudio={playAudio}
@@ -354,13 +290,6 @@ const App = () => {
                     getImageLink={getImageLink}
                     getHyperLink={getHyperLink}
 
-                    youtubeVideos={youtube}
-                    selectedTrack={podcasts}
-                    setSelectedTrack={setPodcasts}
-               
-                    forwardPodcasts={forwardPodcasts}
-                    rewindPodcasts={rewindPodcasts}
-        
                     audioRef={audioRef}
                     playAudio={playAudio}
                   />

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, forwardRef } from "react";
 import {useSelector, useDispatch} from 'react-redux'
-import {setAudioPlayerIsPlaying, setAudioPlayerCurrentTime} from '../../redux/actions'
+import {setAudioPlayerIsPlaying, setAudioPlayerCurrentTime, setAudioPlayerSelected} from '../../redux/actions'
 import styles from "./AudioPlayer.module.css";
 const AudioPlayer = forwardRef((props, ref) => {
   // const [selectedTrack, setSelectedTrack] = useState({
@@ -13,9 +13,11 @@ const AudioPlayer = forwardRef((props, ref) => {
   //   currentTime: 0
   // });
   // const [player, setPlayer] = useState("paused");
+  const podcasts = useSelector(state => state.audioPlayer.podcasts)
+  const selected = useSelector(state => state.audioPlayer.selected)
   
   const prevTrack = usePrevious(
-    props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
+    podcasts[selected]
   ) || {
     title: "False Nine Podcast #17 Champions League RO16 first Leg review",
     by: "Ishan Sharma, Susajjan Dhungana and Ojash Dangal",
@@ -27,7 +29,7 @@ const AudioPlayer = forwardRef((props, ref) => {
   };
   const isPlaying = useSelector(state => state.audioPlayer.isPlaying);
   const currentTime = useSelector(state => state.audioPlayer.currentTime);
-  const currentlyPlaying = useSelector(state => state.audioPlayer.podcasts[state.audioPlayer.selected])
+  
   
   const dispatch = useDispatch();
   const wasPlaying = usePrevious(isPlaying);
@@ -46,10 +48,10 @@ const AudioPlayer = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (
-      currentlyPlaying.title != prevTrack.title
+      podcasts[selected].title != prevTrack.title
     ) {
-      let track = currentlyPlaying
-        ? currentlyPlaying.link
+      let track = podcasts[selected]
+        ? podcasts[selected].link
         : null;
       if (track) {
         if (props.audioRef.current.src !== track) {
@@ -59,7 +61,7 @@ const AudioPlayer = forwardRef((props, ref) => {
         }
       }
     }
-  }, [currentlyPlaying]);
+  }, [podcasts[selected]]);
 
   useEffect(() => {
     props.audioRef.current.addEventListener("timeupdate", (e) => {
@@ -74,6 +76,25 @@ const AudioPlayer = forwardRef((props, ref) => {
     const time = duration * (e.target.value / 100);
     props.audioRef.current.currentTime = time;
     dispatch(setAudioPlayerCurrentTime(time));
+  };
+
+
+  
+  const rewindPodcasts = () => {
+    if (selected === podcasts.length - 1) {
+      dispatch(setAudioPlayerSelected(0));
+    } else {
+      dispatch(setAudioPlayerSelected(selected+1));
+    }
+  };
+
+  const forwardPodcasts = () => {
+    if (selected === 0) {
+      dispatch(setAudioPlayerSelected(podcasts.length-1));
+
+    } else {
+      dispatch(setAudioPlayerSelected(selected-1))
+    }
   };
 
   function usePrevious(value) {
@@ -106,7 +127,7 @@ const AudioPlayer = forwardRef((props, ref) => {
         <img
           className={styles["image"]}
           src={
-           currentlyPlaying
+           podcasts[selected]
               .image
           }
         />
@@ -134,7 +155,7 @@ const AudioPlayer = forwardRef((props, ref) => {
             className={styles["title-container"]}
             onClick={() => props.setActive(!props.isActive)}
           >
-            {currentlyPlaying.title.toUpperCase()}
+            {podcasts[selected].title.toUpperCase()}
           </div>
 
           {props.isActive ? (
@@ -159,7 +180,7 @@ const AudioPlayer = forwardRef((props, ref) => {
         >
           <div className={styles["controls"]}>
             <i
-              onClick={() => props.rewindPodcasts()}
+              onClick={() => rewindPodcasts()}
               className={`${styles["backward-button"]} ${styles["fas"]} ${styles["fa-step-backward"]} fas fa-step-backward`}
             ></i>
             {!isPlaying && (
@@ -175,7 +196,7 @@ const AudioPlayer = forwardRef((props, ref) => {
               ></i>
             )}
             <i
-              onClick={() => props.forwardPodcasts()}
+              onClick={() => forwardPodcasts()}
               className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
             ></i>
           </div>
