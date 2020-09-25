@@ -27,6 +27,8 @@ const AudioPlayer = forwardRef((props, ref) => {
   };
   const isPlaying = useSelector(state => state.audioPlayer.isPlaying);
   const currentTime = useSelector(state => state.audioPlayer.currentTime);
+  const currentlyPlaying = useSelector(state => state.audioPlayer.podcasts[state.audioPlayer.selected])
+  
   const dispatch = useDispatch();
   const wasPlaying = usePrevious(isPlaying);
   const [duration, setDuration] = useState(2172.892);
@@ -44,11 +46,10 @@ const AudioPlayer = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (
-      props.selectedTrack.items[props.selectedTrack.currentlyPlaying].title !==
-      prevTrack.title
+      currentlyPlaying.title != prevTrack.title
     ) {
-      let track = props.selectedTrack
-        ? props.selectedTrack.items[props.selectedTrack.currentlyPlaying].link
+      let track = currentlyPlaying
+        ? currentlyPlaying.link
         : null;
       if (track) {
         if (props.audioRef.current.src !== track) {
@@ -58,7 +59,7 @@ const AudioPlayer = forwardRef((props, ref) => {
         }
       }
     }
-  }, [props.selectedTrack.items[props.selectedTrack.currentlyPlaying]]);
+  }, [currentlyPlaying]);
 
   useEffect(() => {
     props.audioRef.current.addEventListener("timeupdate", (e) => {
@@ -105,7 +106,7 @@ const AudioPlayer = forwardRef((props, ref) => {
         <img
           className={styles["image"]}
           src={
-            props.selectedTrack.items[props.selectedTrack.currentlyPlaying]
+           currentlyPlaying
               .image
           }
         />
@@ -133,9 +134,7 @@ const AudioPlayer = forwardRef((props, ref) => {
             className={styles["title-container"]}
             onClick={() => props.setActive(!props.isActive)}
           >
-            {props.selectedTrack.items[
-              props.selectedTrack.currentlyPlaying
-            ].title.toUpperCase()}
+            {currentlyPlaying.title.toUpperCase()}
           </div>
 
           {props.isActive ? (
