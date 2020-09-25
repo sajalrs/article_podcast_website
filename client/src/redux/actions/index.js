@@ -51,3 +51,26 @@ export const setAudioPlayerPodcasts = (setTo) => {
         payload: setTo
     }
 }
+
+//VideoPlayer Actions
+
+export const setVideoPlayerSelected = (setTo) => {
+    return {
+        type: 'SET_VIDEOPLAYER_SELECTED',
+        payload: setTo
+    }
+}
+
+export const setVideoPlayerIsPlaying = (setTo) => {
+    return {
+        type: 'SET_VIDEOPLAYER_IS_PLAYING',
+        payload: setTo
+    }
+}
+
+export const setVideoPlayerYoutubeVideos = (setTo) => {
+    return {
+        type: 'SET_VIDEOPLAYER_YOUTUBE_VIDEOS',
+        payload: setTo
+    }
+}
