@@ -14,33 +14,15 @@ const Podcasts = (props) => {
   const headerBoxRef = useRef();
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const topOffset = useSelector(state => state.sidebar.topOffset);
-
+  const podcasts = useSelector(state=> state.audioPlayer.podcasts);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
 
-  const getLinkFunction = (linkType) => {
-    switch (linkType) {
-      case Card.LinkType["video-youtube"]:
-        return props.playVideo;
-      case Card.LinkType["article-internal"]:
-        return (articleLink) => {
-          history.push(articleLink);
-        };
-      case Card.LinkType["audio-internal"]:
-        return props.playAudio;
-      default:
-        break;
-    }
-  };
 
   const renderOnceSidePanel = (
     <SidePanel
-      youtubeVideos={props.youtubeVideos}
-      getImageLink={props.getImageLink}
-      playVideo={props.playVideo}
-      getHyperLink={props.getHyperLink}
       headerBoxRef={headerBoxRef}
       sidebarFixTopOffset={0}
     />
@@ -53,7 +35,7 @@ const Podcasts = (props) => {
       />
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
-          {props.selectedTrack.items.map((item) => {
+          {podcasts.map((item) => {
             return (
               <div className={`${styles["main-pane-item"]}`}>
                 <MediumCard
@@ -61,10 +43,8 @@ const Podcasts = (props) => {
                   date={item.date}
                   title={item.title}
                   text={item.description}
-                  LinkType={Card.LinkType["audio-internal"]}
-                    link={item.index}
-                  onClick={getLinkFunction(Card.LinkType["audio-internal"])}
-                  audioRef={props.audioRef}
+                  contentType={item.contentType}
+                  link={item.index}
                 />
               </div>
             );
@@ -85,16 +65,7 @@ const Podcasts = (props) => {
       </div>
 
       <div className={styles["footer-container"]}>
-        <Footer
-          selectedTrack={props.selectedTrack}
-          setSelectedTrack={props.setSelectedTrack}
-        
-            forwardPodcasts={props.forwardPodcasts}
-            rewindPodcasts={props.rewindPodcasts}
-          
-            audioRef={props.audioRef}
-           
-        />
+        <Footer/>
       </div>
     </div>
   );

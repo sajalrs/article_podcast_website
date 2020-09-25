@@ -65,10 +65,7 @@ const Articles = (props) => {
       </div>
 
       <div className={styles["footer-container"]}>
-        <Footer
-            headerBoxRef={headerBoxRef}
-            sidebarFixTopOffset={0}
-        />
+        <Footer/>
       </div>
     </div>
   );
