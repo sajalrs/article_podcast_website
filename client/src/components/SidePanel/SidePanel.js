@@ -41,10 +41,12 @@ const SidePanel = (props) => {
   }, [sidebarClicked, sidebarFixed])
   useEffect(() => {
     const fixSidebar = (e) => {
-      if (window.scrollY > props.headerBoxRef.current.clientHeight - 66 + props.sidebarFixTopOffset) {
+      if (window.scrollY > props.headerBoxRef.current.clientHeight - 66 + props.sidebarFixTopOffset && !sidebarFixed) {
         dispatch(setSidebarFixed(true));
       } else {
-        dispatch(setSidebarFixed(false));
+        if(sidebarFixed){
+          dispatch(setSidebarFixed(false));
+        } 
       }
     };
 
@@ -52,7 +54,7 @@ const SidePanel = (props) => {
     return () => {
       window.removeEventListener("scroll", fixSidebar);
     };
-  }, [sidebarFixed]);
+  }, []);
 
 
   useEffect(() => {
