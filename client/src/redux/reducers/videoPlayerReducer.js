@@ -23,6 +23,8 @@ const videoPlayerReducer = (
       return { ...state, isPlaying: actions.payload };
     case "SET_VIDEOPLAYER_YOUTUBE_VIDEOS":
       return { ...state, youtubeVideos: actions.payload };
+    case "PLAY_VIDEO":
+      return {...state, selected: actions.payload, isPlaying: true}
     default:
       return state;
   }

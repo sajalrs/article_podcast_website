@@ -12,8 +12,8 @@ const audioPlayerReducer = (
               date: "Sat, 12 Sep 2020 08:42:34 GMT",
               image: "https://d3t3ozftmdmh3i.cloudfront.net/production/podcast_uploaded_nologo/8497059/8497059-1599895849523-cbb8b2f53d641.jpg"
             },
-          ]
-  
+          ],
+    audioPlayerRef: null
 },
   actions
 ) => {
@@ -25,7 +25,9 @@ const audioPlayerReducer = (
     case "SET_AUDIOPLAYER_PODCASTS":
         return {...state, podcasts: actions.payload};
     case "SET_AUDIOPLAYER_SELECTED":
-        return {...state, selected: actions.payload};
+        return {...state, audioPlayerRef: actions.payload};
+        case "SET_AUDIOPLAYER_REF":
+          return {...state, selected: actions.payload};
     case "PLAY_AUDIO":
       return {...state, selected: actions.payload, isPlaying: true}
     default:
