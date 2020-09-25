@@ -132,3 +132,10 @@ export const pauseVideo = () => {
     }
 }
 
+//Articles Actions
+export const setBlogArticles = (setTo) => {
+    return{
+        type: 'SET_ARTICLES',
+        payload: setTo
+    }
+}
