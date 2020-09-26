@@ -25,7 +25,7 @@ const fetchBlogArticles = () => {
             index: index,
             ...item,
             contentType: Card.ContentType["article-internal"],
-            link: `articles/id=${item.id}`,
+            link: `articles/id=${item["_id"]}`,
           };
         });
         dispatch(setBlogArticles(articles));
