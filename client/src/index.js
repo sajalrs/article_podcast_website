@@ -45,7 +45,6 @@ const fetchPodcasts = () => {
           return {
             index: index,
             ...item,
-            link: index,
             contentType: Card.ContentType["audio-internal"]
           }
         })
