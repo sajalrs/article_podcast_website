@@ -13,14 +13,14 @@ const audioPlayerReducer = (
               image: "https://d3t3ozftmdmh3i.cloudfront.net/production/podcast_uploaded_nologo/8497059/8497059-1599895849523-cbb8b2f53d641.jpg"
             },
           ],
-    audioPlayerRef: {}
+    audioPlayerRef: null
 },
   actions
 ) => {
   switch (actions.type) {
     case "SET_AUDIOPLAYER_IS_PLAYING":
       return { ...state, isPlaying: actions.payload };
-    case "SET_AUDIOPLAYER_CURRENTTIME":
+    case "SET_AUDIOPLAYER_CURRENT_TIME":
       return { ...state, currentTime: actions.payload };
     case "SET_AUDIOPLAYER_PODCASTS":
         return {...state, podcasts: actions.payload};

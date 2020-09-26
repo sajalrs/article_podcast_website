@@ -17,7 +17,7 @@ const LargeCard = (props) => {
       case Card.ContentType["article-internal"]:
         history.push(props.link);
       case Card.ContentType["audio-internal"]:
-        dispatch(playAudio(props.link));
+        dispatch(playAudio(props.index));
       case Card.ContentType["video-youtube"]:
         dispatch(playVideo(props.link));
       default:
