@@ -15,6 +15,7 @@ const SmallCard = (props) => {
   const onClick = () => {
     switch (props.contentType) {
       case Card.ContentType["article-internal"]:
+  
         history.push(props.link);
         break;
       case Card.ContentType["audio-internal"]:
