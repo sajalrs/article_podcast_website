@@ -13,9 +13,9 @@ const AudioPlayer = forwardRef((props, ref) => {
   //   currentTime: 0
   // });
   // const [player, setPlayer] = useState("paused");
-  const podcasts = useSelector(state => state.audioPlayer.podcasts)
+  const podcasts = useSelector(state => state.audioPlayer.podcasts) 
   const selected = useSelector(state => state.audioPlayer.selected)
-  
+  const audioPlayerRef = useSelector(state => state.audioPlayer.audioPlayerRef)
   const prevTrack = usePrevious(
     podcasts[selected]
   ) || {
@@ -37,44 +37,44 @@ const AudioPlayer = forwardRef((props, ref) => {
   
   const seekBarRef = useRef();
   useEffect(() => {
-    if (isPlaying !== wasPlaying) {
+    if (audioPlayerRef && isPlaying !== wasPlaying) {
       if (!isPlaying) {
-        props.audioRef.current.pause();
+        audioPlayerRef.current.pause();
       } else if (isPlaying && !wasPlaying) {
-        props.audioRef.current.play();
+        audioPlayerRef.current.play();
       }
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioPlayerRef]);
 
   useEffect(() => {
     if (
-      podcasts[selected].title != prevTrack.title
+      audioPlayerRef && podcasts[selected].title != prevTrack.title
     ) {
       let track = podcasts[selected]
         ? podcasts[selected].link
         : null;
       if (track) {
-        if (props.audioRef.current.src !== track) {
-          props.audioRef.current.src = track;
-          props.audioRef.current.play();
+        if (audioPlayerRef.current.src !== track) {
+          audioPlayerRef.current.src = track;
+          audioPlayerRef.current.play();
           dispatch(setAudioPlayerIsPlaying(true));
         }
       }
     }
-  }, [podcasts[selected]]);
+  }, [audioPlayerRef, podcasts[selected]]);
 
-  useEffect(() => {
-    props.audioRef.current.addEventListener("timeupdate", (e) => {
+  useEffect(() => {if(audioPlayerRef){
+    audioPlayerRef.current.addEventListener("timeupdate", (e) => {
       dispatch(setAudioPlayerCurrentTime(e.target.currentTime));
     });
     return () => {
-      props.audioRef.current.removeEventListener("timeupdate", () => {});
-    };
-  }, []);
+      audioPlayerRef.current.removeEventListener("timeupdate", () => {});
+    };}
+  }, [audioPlayerRef]);
 
   const handleSliderChange = (e) => {
     const time = duration * (e.target.value / 100);
-    props.audioRef.current.currentTime = time;
+    audioPlayerRef.current.currentTime = time;
     dispatch(setAudioPlayerCurrentTime(time));
   };
 
@@ -185,7 +185,7 @@ const AudioPlayer = forwardRef((props, ref) => {
             ></i>
             {!isPlaying && (
               <i
-                onClick={() => {props.audioRef.current.play();dispatch(setAudioPlayerIsPlaying(true))}}
+                onClick={() => {audioPlayerRef.current.play();dispatch(setAudioPlayerIsPlaying(true))}}
                 className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
               ></i>
             )}
@@ -196,7 +196,7 @@ const AudioPlayer = forwardRef((props, ref) => {
               ></i>
             )}
             <i
-              onClick={() => forwardPodcasts()}
+              onClick={() => {forwardPodcasts()}}
               className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
             ></i>
           </div>

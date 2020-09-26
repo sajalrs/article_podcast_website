@@ -1,15 +1,45 @@
 import React from "react";
 import styles from "./SmallCard.module.css";
 import Card from "../Card.js";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { playAudio, playVideo } from "../../../redux/actions";
 
 const SmallCard = (props) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const audioPlayerRef = useSelector(
+    (state) => state.audioPlayer.audioPlayerRef
+  );
+
+  const onClick = () => {
+    switch (props.contentType) {
+      case Card.ContentType["article-internal"]:
+        history.push(props.link);
+      case Card.ContentType["audio-internal"]:
+        dispatch(playAudio(props.link));
+      case Card.ContentType["video-youtube"]:
+        dispatch(playVideo(props.link));
+      default:
+    }
+  };
+
+  const isPlayable =
+    props.contentType === Card.ContentType["video-external"] ||
+    props.contentType === Card.ContentType["video-youtube"] ||
+    props.contentType === Card.ContentType["audio-internal"];
+
   return (
     <article className={styles["card"]}>
       <ImageContainer
-        image={props.image}
-        LinkType={props.LinkType}
-        onClick={props.onClick}
-        link={props.link}
+               image={props.image}
+               onClick={onClick}
+               audioPlayerRef={
+                 props.contentType === Card.ContentType["audio-internal"]
+                   ? audioPlayerRef
+                   : null
+               }
+               isPlayable={isPlayable}
       />
       <CardBody
         title={props.title}
@@ -22,22 +52,20 @@ const SmallCard = (props) => {
 };
 
 const ImageContainer = (props) => {
-  const isVideo =
-    props.LinkType === Card.LinkType["video-external"] ||
-    props.LinkType === Card.LinkType["video-youtube"];
+
   return props.image ? (
     <div
       className={styles["img-container"]}
       style={{ backgroundImage: `url('${props.image}')` }}
       onClick={() => {
-        if(props.LinkType === Card.LinkType["audio-internal"]){
-          props.audioRef.current.play();
+        if (props.audioPlayerRef) {
+          props.audioPlayerRef.current.play();
         }
-        props.onClick(props.link);
+        props.onClick();
       }}
     >
       <div>
-        {isVideo && (
+        {props.isPlayable && (
           <i
             className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
           ></i>

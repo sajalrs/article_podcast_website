@@ -1,16 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
-import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import SidePanel from "../../components/SidePanel/SidePanel.js";
-import Card from "../../components/Cards/Card.js";
 import styles from "./Podcasts.module.css";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import SmallCard from "../../components/Cards/SmallCard/SmallCard.js";
-import { useHistory } from "react-router-dom";
 import {useSelector} from "react-redux"
 const Podcasts = (props) => {
-  const history = useHistory();
   const headerBoxRef = useRef();
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const topOffset = useSelector(state => state.sidebar.topOffset);
