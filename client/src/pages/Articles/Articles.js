@@ -12,7 +12,7 @@ import {useSelector} from "react-redux"
 const Articles = (props) => {
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const topOffset = useSelector(state => state.sidebar.topOffset);
-
+  const articles = useSelector(state => state.blog.articles)
   const headerBoxRef = useRef();
  
   useEffect(() => {
@@ -34,7 +34,7 @@ const Articles = (props) => {
       />
       <div className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
-          {homepageLinks.links.map((item) => {
+          {articles.map((item) => {
             return (
               <div className={`${styles["main-pane-item"]}`}>
                 <LargeCard
