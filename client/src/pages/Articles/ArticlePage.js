@@ -31,7 +31,6 @@ const ArticlePage = (props) => {
     content: `<p></p>`,
   });
 
-  const largeCardRef = useRef();
   useEffect(() => {
     const BLOCK_TAGS = {
       p: "paragraph",
@@ -184,24 +183,9 @@ const ArticlePage = (props) => {
     });
   }, []);
 
-  const getLinkFunction = (linkType) => {
-    switch (linkType) {
-      case Card.LinkType["video-youtube"]:
-        return props.playVideo;
-      case Card.LinkType["article-internal"]:
-        return (articleLink) => {
-          history.push(articleLink);
-        };
-      default:
-        break;
-    }
-  };
+
   const renderOnceSidePanel = (
     <SidePanel
-     
-      getImageLink={props.getImageLink}
-      playVideo={props.playVideo}
-      getHyperLink={props.getHyperLink}
       headerBoxRef={headerBoxRef}
       sidebarFixTopOffset={35 + 644}
     />
@@ -222,7 +206,6 @@ const ArticlePage = (props) => {
             date={article.date}
             image={article.image}
             onClick={() => {}}
-            audioRef={props.audioRef}
           />
         </div>
         <div className={styles["content-pane"]}>
@@ -271,8 +254,7 @@ const ArticlePage = (props) => {
 
         <div className={styles["footer-container"]}>
           <Footer
-          
-            audioRef={props.audioRef}
+   
         
           />
         </div>

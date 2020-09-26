@@ -59,7 +59,7 @@ export const setAudioPlayerSelected = (setTo) => {
     }
 }
 
-export const setAudioPLayerRef = (setTo) => {
+export const setAudioPlayerRef = (setTo) => {
     return {
         type: 'SET_AUDIOPLAYER_REF',
         payload: setTo

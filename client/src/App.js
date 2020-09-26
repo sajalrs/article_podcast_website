@@ -16,7 +16,7 @@ import Privacy from "./pages/Legal/Privacy/Privacy"
 import AboutUs from "./pages/AboutUs/AboutUs"
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {useDispatch} from 'react-redux'
-import {setAudioPLayerRef} from './redux/actions'
+import {setAudioPlayerRef} from './redux/actions'
 
 const App = () => {
 
@@ -25,12 +25,15 @@ const App = () => {
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
 
-  dispatch(setAudioPLayerRef(audioPlayerRef));
-
+  useEffect(() => {
+    dispatch(setAudioPlayerRef(audioPlayerRef));
+  
+  }, [audioPlayerRef])
+  
   return (
     <div className="overarching">
         <div ref={scrollLockRef}></div>
-        <VideoPlayer scrollLockRef={scrollLockRef} closeVideo={closeVideo} src={video.src} />
+        <VideoPlayer scrollLockRef={scrollLockRef} />
    
       <audio ref={audioPlayerRef} src="https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a" type="audio/mpeg"/>
       <div className="App">
