@@ -183,20 +183,20 @@ const AudioPlayer = forwardRef((props, ref) => {
               onClick={() => rewindPodcasts()}
               className={`${styles["backward-button"]} ${styles["fas"]} ${styles["fa-step-backward"]} fas fa-step-backward`}
             ></i>
-            {!isPlaying && (
+            {audioPlayerRef && !isPlaying && (
               <i
                 onClick={() => {audioPlayerRef.current.play();dispatch(setAudioPlayerIsPlaying(true))}}
                 className={`${styles["play-button"]} ${styles["far"]} ${styles["fa-play-circle"]} far fa-play-circle`}
               ></i>
             )}
-            {isPlaying && (
+            {audioPlayerRef && isPlaying && (
               <i
                 onClick={() => dispatch(setAudioPlayerIsPlaying(false))}
                 className={`${styles["pause-button"]} ${styles["far"]} ${styles["fa-pause-circle"]} far fa-pause-circle`}
               ></i>
             )}
             <i
-              onClick={() => {forwardPodcasts()}}
+              onClick={() => {audioPlayerRef.current.play();forwardPodcasts()}}
               className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
             ></i>
           </div>
