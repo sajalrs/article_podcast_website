@@ -35,7 +35,6 @@ const initialValue = {
 const Edit = (props) => {
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const topOffset = useSelector(state => state.sidebar.topOffset);
-
   const [textEditorValue, setTextEditorValue] = useState(
     Value.fromJSON(initialValue)
   );
@@ -58,11 +57,6 @@ const Edit = (props) => {
   const [toolbarFixed, setToolbarFix] = useState(false);
   const headerBoxRef = useRef();
   const headlineFormRef = useRef();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-
   useEffect(() => {
     const fixToolbar = (e) => {
       if (
@@ -136,7 +130,9 @@ const Edit = (props) => {
       document.removeEventListener("keydown", keyDownHandler);
     };
   }, [article, textEditorValue]);
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const saveArticle = async () => {
     const editedArticle = { ...article, content: textEditorValue.toJSON() };
 
@@ -150,19 +146,6 @@ const Edit = (props) => {
     const data = await response.json();
     if (response.status !== 200) throw Error(data.message);
     alert("Article saved");
-  };
-
-  const getLinkFunction = (linkType) => {
-    switch (linkType) {
-      case Card.LinkType["video-youtube"]:
-        return props.playVideo;
-      case Card.LinkType["article-internal"]:
-        return (articleLink) => {
-          history.push(articleLink);
-        };
-      default:
-        break;
-    }
   };
 
   const renderOnceSidePanel = (
@@ -231,7 +214,6 @@ const Edit = (props) => {
             author={article.author}
             date={article.date}
             image={article.image}
-            onClick={() => {}}
           />
         </div>
         <div className={styles["content-pane"]}>
@@ -310,8 +292,6 @@ const Edit = (props) => {
         <div className={styles["footer-container"]}>
           <Footer
 
-              
-               audioRef={props.audioRef}
              
           />
         </div>

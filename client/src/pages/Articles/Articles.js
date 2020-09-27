@@ -14,12 +14,9 @@ const Articles = (props) => {
   const topOffset = useSelector(state => state.sidebar.topOffset);
   const articles = useSelector(state => state.blog.articles)
   const headerBoxRef = useRef();
- 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
-
   const renderOnceSidePanel = (
     <SidePanel
       headerBoxRef={headerBoxRef}

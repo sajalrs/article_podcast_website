@@ -18,11 +18,6 @@ const ArticlePage = (props) => {
   const headerBoxRef = useRef();
   const topOffset = useSelector(state => state.sidebar.topOffset);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-
   const [article, setArticle] = useState({
     title: "",
     author: "",
@@ -30,7 +25,9 @@ const ArticlePage = (props) => {
     images: [],
     content: `<p></p>`,
   });
-
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   useEffect(() => {
     const BLOCK_TAGS = {
       p: "paragraph",
