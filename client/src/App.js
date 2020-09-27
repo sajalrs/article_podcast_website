@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useRef,
 } from "react";
-import Home from "./pages/Home/Home.js";
+import Home from "./pages/Home/HomeClone.js";
 import CreateArticle from "./pages/CreateArticle";
 import Articles from "./pages/Articles/Articles";
 import Podcasts from "./pages/Podcasts/Podcasts";
