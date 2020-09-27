@@ -67,10 +67,10 @@ const Privacy = (props) => {
   const headerBoxRef = useRef();
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const topOffset = useSelector(state => state.sidebar.topOffset);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
 
 
 

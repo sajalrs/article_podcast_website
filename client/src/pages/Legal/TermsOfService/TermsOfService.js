@@ -208,8 +208,6 @@ const TermsOfService = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
- 
   const renderOnceSidePanel = (
     <SidePanel
       youtubeVideos={props.youtubeVideos}
