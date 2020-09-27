@@ -7,13 +7,12 @@ import Footer from "../../components/Footer/Footer";
 import {useSelector} from "react-redux"
 const Podcasts = (props) => {
   const headerBoxRef = useRef();
+  const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const topOffset = useSelector(state => state.sidebar.topOffset);
   const podcasts = useSelector(state=> state.audioPlayer.podcasts);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const sidebarFixed = useSelector(state => state.sidebar.fixed);
- 
 
 
   const renderOnceSidePanel = (

@@ -7,12 +7,12 @@ import Footer from "../../components/Footer/Footer";
 import {useSelector} from 'react-redux'
 const Home = (props) => {
   const headerBoxRef = useRef();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   const sidebarFixed = useSelector(state => state.sidebar.fixed);
   const articles = useSelector(state => state.blog.articles)
   const topOffset = useSelector(state => state.sidebar.topOffset);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const renderOnceSidePanel = (
     <SidePanel
