@@ -11,6 +11,7 @@ const Navbar = (props) => {
     const sidebarClicked = useSelector(state => state.sidebar.clicked)
     const topOffset = useSelector(state => state.sidebar.topOffset)
     const dispatch = useDispatch();
+   
     useEffect(() => {
     
             if (navbarClicked) {

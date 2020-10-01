@@ -4,6 +4,7 @@ import styles from "./Page.module.css";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar"
+import AudioPlayer from "../../components/AudioPlayer/AudioPlayer"
 import { useSelector } from "react-redux";
 
 const Page = (props) => {
@@ -11,6 +12,11 @@ const Page = (props) => {
   const sidebarFixed = useSelector((state) => state.sidebar.fixed);
   const topOffset = useSelector((state) => state.sidebar.topOffset);
   const [navFixed, changeNavFix] = useState(false);
+  const [isActive, setActive] = useState(false);
+  const [boxHeight, setBoxHeight] = useState(202);
+  const audioPlayerBoxRef = useRef();
+  const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
+  const footerBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -28,6 +34,39 @@ const Page = (props) => {
       window.removeEventListener("scroll", fixNavbar);
     };
   });
+  useEffect(() => {
+    const body = document.body,
+    html = document.documentElement;
+
+  const height = Math.max(
+    body.scrollHeight,
+    body.offsetHeight,
+    html.clientHeight,
+    html.scrollHeight,
+    html.offsetHeight
+  );
+    if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
+      setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
+    }
+      const fixAudioPlayer = (e) => {
+  
+    
+      if (
+        window.scrollY >
+        height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
+      ) {
+        setAudioPlayerFixed(false);
+      } else {
+        setAudioPlayerFixed(true);
+      }
+    
+    };
+
+    window.addEventListener("scroll", fixAudioPlayer);
+    return () => {
+      window.removeEventListener("scroll", fixAudioPlayer);
+    };
+  });
 
 
   const renderOnceNavbar = (
@@ -37,6 +76,17 @@ const Page = (props) => {
   const renderOnceSidePanel = (
     <SidePanel headerBoxRef={headerBoxRef} sidebarFixTopOffset={0} />
   );
+
+  const renderOnceAudioPlayer = (
+    <AudioPlayer
+      ref={audioPlayerBoxRef}
+      isActive={isActive}
+      setActive={setActive}
+      audioRef={props.audioRef}
+    />
+  );
+
+
   return (
     <div className={styles["Page"]}>
       <Header ref={headerBoxRef} className={styles["Header"]} />
@@ -76,7 +126,24 @@ const Page = (props) => {
       </div>
 
       <div className={styles["footer-container"]}>
-        <Footer />
+      {audioPlayerFixed && sidebarFixed ?(
+        <div>
+          <div
+            style={{
+              width: "100%",
+              height: boxHeight
+            }}
+          ></div>
+          <div style={{ position: "fixed", width: "100%", bottom: "0px" }}>
+            {renderOnceAudioPlayer}
+          </div>
+        </div>
+      ) : (
+        <div style={{ position: "relative", width: "100%" }}>
+          {renderOnceAudioPlayer}
+        </div>
+      )}
+        <Footer ref={footerBoxRef}/>
       </div>
     </div>
   );
