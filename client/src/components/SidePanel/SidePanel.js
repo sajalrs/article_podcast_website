@@ -42,7 +42,7 @@ const SidePanel = (props) => {
   }, [sidebarClicked, sidebarFixed])
   useEffect(() => {
     const fixSidebar = (e) => {
-      if (window.scrollY > props.headerBoxRef.current.clientHeight - 66 + props.sidebarFixTopOffset && !sidebarFixed) {
+      if (window.scrollY > props.headerBoxRef.current.clientHeight + props.sidebarFixTopOffset && !sidebarFixed) {
         dispatch(setSidebarFixed(true));
       } else {
         if(sidebarFixed){

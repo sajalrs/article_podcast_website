@@ -1,82 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, forwardRef } from "react";
 import styles from "./Footer.module.css";
 import AudioPlayer from "../AudioPlayer/AudioPlayer";
 import {useSelector, useDispatch} from "react-redux"
 import {setNavbarClicked, setSidebarClicked} from "../../redux/actions"
 import {Link} from "react-router-dom";
-const Footer = (props) => {
-  const sidebarFixed = useSelector(state => state.sidebar.fixed);
+const Footer = forwardRef((props, ref) => {
+ 
   const sidebarClicked = useSelector(state => state.sidebar.clicked);
   const dispatch = useDispatch();
-  const [isActive, setActive] = useState(false);
-  const [boxHeight, setBoxHeight] = useState(202);
-  const footerBoxRef = useRef();
-  const audioPlayerBoxRef = useRef();
-  const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
-  useEffect(() => {
-    const body = document.body,
-    html = document.documentElement;
-
-  const height = Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    html.clientHeight,
-    html.scrollHeight,
-    html.offsetHeight
-  );
-    if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
-      setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
-    }
-      const fixAudioPlayer = (e) => {
-  
-    
-      if (
-        window.scrollY >
-        height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
-      ) {
-        setAudioPlayerFixed(false);
-      } else {
-        setAudioPlayerFixed(true);
-      }
-    
-    };
-
-    window.addEventListener("scroll", fixAudioPlayer);
-    return () => {
-      window.removeEventListener("scroll", fixAudioPlayer);
-    };
-  });
-
-  const renderOnceAudioPlayer = (
-    <AudioPlayer
-      ref={audioPlayerBoxRef}
-      isActive={isActive}
-      setActive={setActive}
-      audioRef={props.audioRef}
-    />
-  );
 
   return (
     <div>
-      {audioPlayerFixed && sidebarFixed ?(
-        <div>
-          <div
-            style={{
-              width: "100%",
-              height: boxHeight
-            }}
-          ></div>
-          <div style={{ position: "fixed", width: "100%", bottom: "0px" }}>
-            {renderOnceAudioPlayer}
-          </div>
-        </div>
-      ) : (
-        <div style={{ position: "relative", width: "100%" }}>
-          {renderOnceAudioPlayer}
-        </div>
-      )}
+      
 
-      <div ref={footerBoxRef} className={styles["footer-container"]}>
+      <div ref={ref} className={styles["footer-container"]}>
         <section className={styles["footer-subscription"]}>
           <p className={styles["footer-subscription-heading"]}>
             Join our weekly newsletter
@@ -216,6 +153,6 @@ const Footer = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default Footer;
