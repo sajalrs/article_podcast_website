@@ -6,10 +6,10 @@ import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar"
 import AudioPlayer from "../../components/AudioPlayer/AudioPlayer"
 import { useSelector } from "react-redux";
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 
 const Page = (props) => {
-  const headerBoxRef = useRef();
-  const sidebarFixed = useState(false)
+ 
   const topOffset = useState(0)
   const [navFixed, changeNavFix] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -20,7 +20,8 @@ const Page = (props) => {
   const [sidebarClicked,setSidebarClicked] = useState(false);
   const [sidebarFixed, setSidebarFixed] = useState(false);
   const [navbarClicked,setNavbarClicked] = useState(false);
-
+  const sidebarFixTopOffset=useRef(0);
+  const headerBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -33,11 +34,55 @@ const Page = (props) => {
       }
     };
 
-    window.addEventListener("scroll", fixNavbar);
-    return () => {
-      window.removeEventListener("scroll", fixNavbar);
+    const fixSidebar = (e) => {
+     
+      if (window.scrollY > headerBoxRef.current.clientHeight + sidebarFixTopOffset.current && !sidebarFixed) {
+        setSidebarFixed(true);
+        
+      } else {
+        if(sidebarFixed){
+          setSidebarFixed(false);
+
+        } 
+      }
     };
-  });
+  //   const body = document.body,
+  //   html = document.documentElement;
+
+  // const height = Math.max(
+  //   body.scrollHeight,
+  //   body.offsetHeight,
+  //   html.clientHeight,
+  //   html.scrollHeight,
+  //   html.offsetHeight
+  // );
+  //   if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
+  //     setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
+  //   }
+  //     const fixAudioPlayer = (e) => {
+  
+    
+  //     if (
+  //       window.scrollY >
+  //       height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
+  //     ) {
+  //       setAudioPlayerFixed(false);
+  //     } else {
+  //       console.log("Running")
+  //       setAudioPlayerFixed(true);
+  //     }
+    
+    // };
+    window.addEventListener("scroll", fixSidebar);
+    window.addEventListener("scroll", fixNavbar);
+    // window.addEventListener("scroll",  fixAudioPlayer);
+    
+    return () => {
+      window.removeEventListener("scroll", fixSidebar);
+      window.removeEventListener("scroll", fixNavbar);
+      // window.removeEventListener("scroll", fixAudioPlayer);
+    };
+  }, []);
   useEffect(() => {
     const body = document.body,
     html = document.documentElement;
@@ -89,39 +134,37 @@ const Page = (props) => {
   , [sidebarClicked])
 
 
-   useEffect(() => {
-    if(sidebarClicked && sidebarFixed){
-      disableBodyScroll(cardListRef.current);
-    } else{
-      enableBodyScroll(cardListRef.current);
-    }
-  }, [sidebarClicked, sidebarFixed])
-  useEffect(() => {
-    const fixSidebar = (e) => {
-      if (window.scrollY > props.headerBoxRef.current.clientHeight + props.sidebarFixTopOffset && !sidebarFixed) {
-        dispatch(setSidebarFixed(true));
-      } else {
-        if(sidebarFixed){
-          dispatch(setSidebarFixed(false));
-        } 
-      }
-    };
+ 
+  // useEffect(() => {
+  //   const fixSidebar = (e) => {
+  //     if (window.scrollY > headerBoxRef.current.clientHeight + sidebarFixTopOffset && !sidebarFixed) {
+  //       setSidebarFixed(true);
+        
+  //     } else {
+  //       if(sidebarFixed){
+  //         setSidebarFixed(false);
 
-    window.addEventListener("scroll", fixSidebar);
-    return () => {
-      window.removeEventListener("scroll", fixSidebar);
-    };
-  }, []);
+  //       } 
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", fixSidebar);
+  //   return () => {
+  //     window.removeEventListener("scroll", fixSidebar);
+  //   };
+  // });
 
   const renderOnceNavbar = (
     <Navbar/>
   );
 
   const renderOnceSidePanel = (
-    <SidePanel headerBoxRef={headerBoxRef} 
-    sidebarFixTopOffset={0}
+    <SidePanel 
+    headerBoxRef={headerBoxRef} 
     sidebarClicked={sidebarClicked}
+    setSidebarClicked={setSidebarClicked}
     sidebarFixed={sidebarFixed}
+    setSidebarFixed={setSidebarFixed}
      />
   );
 
