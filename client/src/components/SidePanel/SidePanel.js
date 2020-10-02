@@ -3,13 +3,21 @@ import SmallCard from "../Cards/SmallCard/SmallCard.js";
 import styles from "./SidePanel.module.css";
 import Card from "../Cards/Card.js";
 import {useSelector, useDispatch} from 'react-redux'
+import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
+
 
 const SidePanel = (props) => {
   const cardListRef = useRef();
   const sidePanelDivRef = useRef();
   const [titlePos, setTitlePos] = useState();
   const youtubeVideos = useSelector(state => state.videoPlayer.youtubeVideos)
-
+  useEffect(() => {
+    if(props.sidebarClicked && props.sidebarFixed){
+      disableBodyScroll(cardListRef.current);
+    } else{
+      enableBodyScroll(cardListRef.current);
+    }
+  }, [props.sidebarClicked, props.sidebarFixed])
   
   
  
