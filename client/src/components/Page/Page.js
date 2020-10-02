@@ -9,14 +9,18 @@ import { useSelector } from "react-redux";
 
 const Page = (props) => {
   const headerBoxRef = useRef();
-  const sidebarFixed = useSelector((state) => state.sidebar.fixed);
-  const topOffset = useSelector((state) => state.sidebar.topOffset);
+  const sidebarFixed = useState(false)
+  const topOffset = useState(0)
   const [navFixed, changeNavFix] = useState(false);
   const [isActive, setActive] = useState(false);
   const [boxHeight, setBoxHeight] = useState(202);
   const audioPlayerBoxRef = useRef();
   const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
   const footerBoxRef = useRef();
+  const [sidebarClicked,setSidebarClicked] = useState(false);
+  const [sidebarFixed, setSidebarFixed] = useState(false);
+  const [navbarClicked,setNavbarClicked] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -68,13 +72,57 @@ const Page = (props) => {
     };
   });
 
+  useEffect(() => {
+
+  
+    if (sidebarClicked) {
+      if (navbarClicked) {
+        setNavbarClicked(false);
+      }
+    } else {
+      clearAllBodyScrollLocks();
+    }
+
+
+
+  }
+  , [sidebarClicked])
+
+
+   useEffect(() => {
+    if(sidebarClicked && sidebarFixed){
+      disableBodyScroll(cardListRef.current);
+    } else{
+      enableBodyScroll(cardListRef.current);
+    }
+  }, [sidebarClicked, sidebarFixed])
+  useEffect(() => {
+    const fixSidebar = (e) => {
+      if (window.scrollY > props.headerBoxRef.current.clientHeight + props.sidebarFixTopOffset && !sidebarFixed) {
+        dispatch(setSidebarFixed(true));
+      } else {
+        if(sidebarFixed){
+          dispatch(setSidebarFixed(false));
+        } 
+      }
+    };
+
+    window.addEventListener("scroll", fixSidebar);
+    return () => {
+      window.removeEventListener("scroll", fixSidebar);
+    };
+  }, []);
 
   const renderOnceNavbar = (
     <Navbar/>
   );
 
   const renderOnceSidePanel = (
-    <SidePanel headerBoxRef={headerBoxRef} sidebarFixTopOffset={0} />
+    <SidePanel headerBoxRef={headerBoxRef} 
+    sidebarFixTopOffset={0}
+    sidebarClicked={sidebarClicked}
+    sidebarFixed={sidebarFixed}
+     />
   );
 
   const renderOnceAudioPlayer = (
