@@ -10,7 +10,7 @@ import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "bo
 
 const Page = (props) => {
  
-  const topOffset = useState(0)
+  const [topOffset,setTopOffset] = useState(100)
   const [navFixed, changeNavFix] = useState(false);
   const [isActive, setActive] = useState(false);
   const [boxHeight, setBoxHeight] = useState(202);
@@ -20,69 +20,78 @@ const Page = (props) => {
   const [sidebarClicked,setSidebarClicked] = useState(false);
   const [sidebarFixed, setSidebarFixed] = useState(false);
   const [navbarClicked,setNavbarClicked] = useState(false);
-  const sidebarFixTopOffset=useRef(0);
+  const sidebarFixTopOffset=useRef(200);
   const headerBoxRef = useRef();
+  const contentPaneBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  useEffect(() => {
-    const fixNavbar = (e) => {
-      if (window.scrollY > headerBoxRef.current.clientHeight) {
-        changeNavFix(true);
-      } else {
-        changeNavFix(false);
-      }
-    };
+  // useEffect(() => {
+  //   const fixNavbar = (e) => {
+  //     if (window.scrollY > headerBoxRef.current.clientHeight) {
+  //       changeNavFix(true);
+  //     } else {
+  //       changeNavFix(false);
+  //     }
+  //   };
 
-    const fixSidebar = (e) => {
+  //   const fixSidebar = (e) => {
      
-      if (window.scrollY > headerBoxRef.current.clientHeight + sidebarFixTopOffset.current && !sidebarFixed) {
-        setSidebarFixed(true);
+  //     if (window.scrollY > headerBoxRef.current.clientHeight + sidebarFixTopOffset.current && !sidebarFixed) {
+  //       setSidebarFixed(true);
         
-      } else {
-        if(sidebarFixed){
-          setSidebarFixed(false);
+  //     } else {
+  //       if(sidebarFixed){
+  //         setSidebarFixed(false);
 
-        } 
-      }
-    };
-  //   const body = document.body,
-  //   html = document.documentElement;
+  //       } 
+  //     }
+  //   };
 
-  // const height = Math.max(
-  //   body.scrollHeight,
-  //   body.offsetHeight,
-  //   html.clientHeight,
-  //   html.scrollHeight,
-  //   html.offsetHeight
-  // );
-  //   if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
-  //     setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
-  //   }
-  //     const fixAudioPlayer = (e) => {
+  //   window.addEventListener("scroll", fixSidebar);
+  //   window.addEventListener("scroll", fixNavbar);
   
     
-  //     if (
-  //       window.scrollY >
-  //       height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
-  //     ) {
-  //       setAudioPlayerFixed(false);
-  //     } else {
-  //       console.log("Running")
-  //       setAudioPlayerFixed(true);
-  //     }
-    
-    // };
-    window.addEventListener("scroll", fixSidebar);
-    window.addEventListener("scroll", fixNavbar);
-    // window.addEventListener("scroll",  fixAudioPlayer);
+  //   return () => {
+  //     window.removeEventListener("scroll", fixSidebar);
+  //     window.removeEventListener("scroll", fixNavbar);
+
+  //   }
+  // }, []);
+
+
+  useEffect(() => {
+    const scrollEvents = (e) => {
+      const curScroll = window.scrollY
+      if(curScroll > headerBoxRef.current.clientHeight){
+        changeNavFix(true)
+        if(curScroll > headerBoxRef.current.clientHeight + sidebarFixTopOffset.current){
+         setSidebarFixed(true);
+          // setAudioPlayerFixed(true);
+          
+        } else{
+          setSidebarFixed(false);
+          // setAudioPlayerFixed(false);
+        }
+      }else{
+        changeNavFix(false);
+        setSidebarFixed(false);
+        // setAudioPlayerFixed(false);
+      }
+    }
+
+    window.addEventListener("scroll",scrollEvents);
+   
+  
     
     return () => {
-      window.removeEventListener("scroll", fixSidebar);
-      window.removeEventListener("scroll", fixNavbar);
-      // window.removeEventListener("scroll", fixAudioPlayer);
-    };
-  }, []);
+      window.removeEventListener("scroll", scrollEvents);
+    }
+
+  })
+
+
+
   useEffect(() => {
     const body = document.body,
     html = document.documentElement;
@@ -132,7 +141,21 @@ const Page = (props) => {
 
   }
   , [sidebarClicked])
+  useEffect(() => {
+    
+    if (navbarClicked) {
+        setTopOffset(topOffset + 140);
+  
+        setSidebarClicked(false);
 
+    } else {
+      if (topOffset != 100) {
+        setTopOffset(topOffset - 140);
+     
+      }
+    }
+
+}, [navbarClicked])
 
  
   // useEffect(() => {
@@ -155,7 +178,11 @@ const Page = (props) => {
   // });
 
   const renderOnceNavbar = (
-    <Navbar/>
+    <Navbar
+    sidebarClicked={sidebarClicked}
+    setSidebarClicked={setSidebarClicked}
+    navbarClicked={navbarClicked}
+    setNavbarClicked={setNavbarClicked}/>
   );
 
   const renderOnceSidePanel = (
@@ -193,7 +220,7 @@ const Page = (props) => {
           {renderOnceNavbar}
         </div>
       )}
-      <div className={styles["content-pane"]}>
+      <div ref={contentPaneBoxRef} className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
           {props.mainPane.map((item) => {
             return <div className={`${styles["main-pane-item"]}`}>{item}</div>;
@@ -212,7 +239,7 @@ const Page = (props) => {
             {renderOnceSidePanel}
           </div>
         ) : (
-          <div style={{ marginTop: topOffset }}>{renderOnceSidePanel}</div>
+          <div style={{ marginTop: sidebarFixTopOffset.current}}>{renderOnceSidePanel}</div>
         )}
       </div>
 
