@@ -4,8 +4,14 @@ import styles from "./Header.module.css";
 import FalseNineIcon from '../../Icons/FalseNineFitting'
 import FIcon from '../../Icons/F'
 import NineIcon from '../../Icons/Nine'
-const Header = forwardRef((props, ref) => {
+import {useDispatch } from "react-redux";
+import {setHeaderBoxRef} from "../../redux/actions"
 
+const Header = forwardRef((props, ref) => {
+  const dispatch = useDispatch();
+  useEffect(()=> {
+    dispatch(setHeaderBoxRef(ref))
+  })
   return (
     <header ref={ref}>
       <div className={styles["header"]}>

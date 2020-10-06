@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from "react-datepicker";
+import {useSelector} from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 
 const initialValue = {
@@ -47,6 +48,7 @@ const Edit = (props) => {
     date: new Date(),
     image: "",
   });
+  const headerBoxRef = useSelector(state => state.header.headerBoxRef);
   const { id } = useParams();
   const [toolbarFixed, setToolbarFix] = useState(false);
   const headlineFormRef = useRef();
@@ -71,6 +73,26 @@ const Edit = (props) => {
       if (res.content) setTextEditorValue(Value.fromJSON(res.content));
     });
   }, []);
+  useEffect(() => {
+    const height = headerBoxRef? headerBoxRef.current.clientHeight : 380
+    const fixToolbar = (e) => {
+      if (
+        window.scrollY >
+         2* height-
+          66 +
+          644
+      ) {
+        setToolbarFix(true);
+      } else {
+        setToolbarFix(false);
+      }
+    };
+
+    window.addEventListener("scroll", fixToolbar);
+    return () => {
+      window.removeEventListener("scroll", fixToolbar);
+    };
+  }, [toolbarFixed]);
 
   useEffect(() => {
     setFormData({
@@ -89,7 +111,6 @@ const Edit = (props) => {
 
   useEffect(() => {
     const keyDownHandler = (e) => {
-      console.log("Running Effect");
       if (e.keyCode === 83 && e.ctrlKey) {
         e.preventDefault();
         saveArticle();
