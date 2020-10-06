@@ -7,7 +7,7 @@ import Home from "./pages/Home/HomeClone.js";
 import CreateArticle from "./pages/CreateArticle";
 import Articles from "./pages/Articles/ArticlesClone";
 import Podcasts from "./pages/Podcasts/PodcastsClone";
-import ArticlePage from "./pages/Articles/ArticlePage.js";
+import ArticlePage from "./pages/Articles/ArticlePageClone.js";
 import Edit from "./pages/Articles/Edit";
 import "./App.css";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
