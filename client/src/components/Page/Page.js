@@ -5,8 +5,6 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar"
 import AudioPlayer from "../../components/AudioPlayer/AudioPlayer"
-import {useDispatch } from "react-redux";
-import {setHeaderBoxRef} from "../../redux/actions"
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 
 const Page = (props) => {
@@ -23,7 +21,7 @@ const Page = (props) => {
   const [navbarClicked,setNavbarClicked] = useState(false);
   const contentPaneBoxRef = useRef();
   const headerBoxRef = useRef();
-  const dispatch = useDispatch();
+ 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -59,9 +57,7 @@ const Page = (props) => {
 
   //   }
   // }, []);
-  useEffect(()=> {
-    dispatch(setHeaderBoxRef(headerBoxRef))
-  }, [headerBoxRef])
+
 
   useEffect(() => {
     const scrollEvents = (e) => {
