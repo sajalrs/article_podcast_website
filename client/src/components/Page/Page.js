@@ -20,7 +20,6 @@ const Page = (props) => {
   const [sidebarClicked,setSidebarClicked] = useState(false);
   const [sidebarFixed, setSidebarFixed] = useState(false);
   const [navbarClicked,setNavbarClicked] = useState(false);
-  const sidebarFixTopOffset=useRef(200);
   const headerBoxRef = useRef();
   const contentPaneBoxRef = useRef();
   useEffect(() => {
@@ -67,7 +66,7 @@ const Page = (props) => {
      
       if(curScroll > headerBoxRef.current.clientHeight){
         changeNavFix(true)
-        if(curScroll > headerBoxRef.current.clientHeight + sidebarFixTopOffset.current){
+        if(curScroll > headerBoxRef.current.clientHeight + props.sidebarFixTopOffset){
          setSidebarFixed(true);
           if(curScroll >  (contentPaneBoxRef.current.clientHeight - headerBoxRef.current.clientHeight - footerBoxRef.current.clientHeight)){
             setAudioPlayerFixed(false);
@@ -246,7 +245,7 @@ const Page = (props) => {
             {renderOnceSidePanel}
           </div>
         ) : (
-          <div style={{ marginTop: sidebarFixTopOffset.current}}>{renderOnceSidePanel}</div>
+          <div style={{ marginTop: props.sidebarFixTopOffset}}>{renderOnceSidePanel}</div>
         )}
       </div>
       </div>
