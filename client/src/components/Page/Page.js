@@ -13,7 +13,7 @@ const Page = (props) => {
   const [topOffset,setTopOffset] = useState(100)
   const [navFixed, changeNavFix] = useState(false);
   const [isActive, setActive] = useState(false);
-  const [boxHeight, setBoxHeight] = useState(202);
+  // const [boxHeight, setBoxHeight] = useState(202);
   const audioPlayerBoxRef = useRef();
   const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
   const footerBoxRef = useRef();
@@ -63,20 +63,25 @@ const Page = (props) => {
   useEffect(() => {
     const scrollEvents = (e) => {
       const curScroll = window.scrollY
+      console.log(`scroll: ${curScroll} header: ${headerBoxRef.current.clientHeight} content: ${contentPaneBoxRef.current.clientHeight} footer: ${footerBoxRef.current.clientHeight}`)
+     
       if(curScroll > headerBoxRef.current.clientHeight){
         changeNavFix(true)
         if(curScroll > headerBoxRef.current.clientHeight + sidebarFixTopOffset.current){
          setSidebarFixed(true);
-          // setAudioPlayerFixed(true);
-          
+          if(curScroll >  (contentPaneBoxRef.current.clientHeight - headerBoxRef.current.clientHeight - footerBoxRef.current.clientHeight)){
+            setAudioPlayerFixed(false);
+          } else{
+            setAudioPlayerFixed(true);
+          }
         } else{
           setSidebarFixed(false);
-          // setAudioPlayerFixed(false);
+          setAudioPlayerFixed(false);
         }
       }else{
         changeNavFix(false);
         setSidebarFixed(false);
-        // setAudioPlayerFixed(false);
+        setAudioPlayerFixed(false);
       }
     }
 
@@ -92,39 +97,39 @@ const Page = (props) => {
 
 
 
-  useEffect(() => {
-    const body = document.body,
-    html = document.documentElement;
+  // useEffect(() => {
+  //   const body = document.body,
+  //   html = document.documentElement;
 
-  const height = Math.max(
-    body.scrollHeight,
-    body.offsetHeight,
-    html.clientHeight,
-    html.scrollHeight,
-    html.offsetHeight
-  );
-    if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
-      setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
-    }
-      const fixAudioPlayer = (e) => {
+  // const height = Math.max(
+  //   body.scrollHeight,
+  //   body.offsetHeight,
+  //   html.clientHeight,
+  //   html.scrollHeight,
+  //   html.offsetHeight
+  // );
+  //   if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
+  //     setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
+  //   }
+  //     const fixAudioPlayer = (e) => {
   
     
-      if (
-        window.scrollY >
-        height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
-      ) {
-        setAudioPlayerFixed(false);
-      } else {
-        setAudioPlayerFixed(true);
-      }
+  //     if (
+  //       window.scrollY >
+  //       height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
+  //     ) {
+  //       setAudioPlayerFixed(false);
+  //     } else {
+  //       setAudioPlayerFixed(true);
+  //     }
     
-    };
+  //   };
 
-    window.addEventListener("scroll", fixAudioPlayer);
-    return () => {
-      window.removeEventListener("scroll", fixAudioPlayer);
-    };
-  });
+  //   window.addEventListener("scroll", fixAudioPlayer);
+  //   return () => {
+  //     window.removeEventListener("scroll", fixAudioPlayer);
+  //   };
+  // });
 
   useEffect(() => {
 
@@ -220,14 +225,16 @@ const Page = (props) => {
           {renderOnceNavbar}
         </div>
       )}
+      <div className={styles["content-pane-side-bar"]}>
       <div ref={contentPaneBoxRef} className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
-          {props.mainPane.map((item) => {
-            return <div className={`${styles["main-pane-item"]}`}>{item}</div>;
-          })}
+          {props.mainPane}
         </div>
         <div className={styles["side-pane"]}></div>
-        {sidebarFixed ? (
+     
+      </div>
+      <div className={styles["side-bar"]}>
+      {sidebarFixed ? (
           <div
             style={{
               position: "fixed",
@@ -242,14 +249,13 @@ const Page = (props) => {
           <div style={{ marginTop: sidebarFixTopOffset.current}}>{renderOnceSidePanel}</div>
         )}
       </div>
-
+      </div>
       <div className={styles["footer-container"]}>
-      {audioPlayerFixed && sidebarFixed ?(
+      {audioPlayerFixed?(
         <div>
           <div
             style={{
-              width: "100%",
-              height: boxHeight
+              width: "100%"
             }}
           ></div>
           <div style={{ position: "fixed", width: "100%", bottom: "0px" }}>
@@ -257,7 +263,7 @@ const Page = (props) => {
           </div>
         </div>
       ) : (
-        <div style={{ position: "relative", width: "100%" }}>
+        <div style={{ position: "relative", width: "100%"}}>
           {renderOnceAudioPlayer}
         </div>
       )}
