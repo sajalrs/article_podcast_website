@@ -17,7 +17,7 @@ const Podcasts = (props) => {
       />
     </div>
   ));
-  return <Page mainPane={contents} />;
+  return <Page sidebarFixTopOffset={0} mainPane={contents} />;
 };
 
 export default Podcasts;
