@@ -3,6 +3,7 @@ import sidebarReducer from './sidebarReducer';
 import audioPlayerReducer from './audioPlayerReducer'
 import videoPlayerReducer from './videoPlayerReducer'
 import blogReducer from './blogReducer'
+import headerReducer from './headerReducer'
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
   sidebar: sidebarReducer,
   audioPlayer: audioPlayerReducer,
   videoPlayer: videoPlayerReducer,
-  blog: blogReducer
+  blog: blogReducer,
+  header: headerReducer
 })
 
 export default rootReducer;
