@@ -93,9 +93,9 @@ const Footer = forwardRef((props, ref) => {
             </div>
             <div className={styles["footer-link-items"]}>
               <h2>Legal</h2>
-              <Link onClick={() => {if(sidebarClicked){dispatch(setSidebarClicked(false))};dispatch(setNavbarClicked(false));}}to="/legal/privacy">Privacy</Link>
+              <Link to="/legal/privacy">Privacy</Link>
              
-              <Link onClick={() => {if(sidebarClicked){dispatch(setSidebarClicked(false))};dispatch(setNavbarClicked(false));}} to="/legal/termsofservice">Terms of Service</Link>
+              <Link to="/legal/termsofservice">Terms of Service</Link>
             </div>
           </div>
         </div>
