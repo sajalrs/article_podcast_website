@@ -210,6 +210,8 @@ const Page = (props) => {
 
 
   return (
+    <div className={styles["overarching"]}>
+      {props.headline?  (<div className={styles["primary-color-background"]}></div>): null}
     <div className={styles["Page"]}>
       <Header ref={headerBoxRef} className={styles["Header"]} />
       {navFixed ? (
@@ -224,6 +226,7 @@ const Page = (props) => {
           {renderOnceNavbar}
         </div>
       )}
+      {props.headline? props.headline : null}
       <div className={styles["content-pane-side-bar"]}>
       <div ref={contentPaneBoxRef} className={styles["content-pane"]}>
         <div className={styles["main-pane"]}>
@@ -268,6 +271,7 @@ const Page = (props) => {
       )}
         <Footer ref={footerBoxRef}/>
       </div>
+    </div>
     </div>
   );
 };
