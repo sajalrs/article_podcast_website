@@ -11,7 +11,7 @@ import ArticlePage from "./pages/Articles/ArticlePageClone.js";
 import Edit from "./pages/Articles/Edit";
 import "./App.css";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
-import TermsOfService from "./pages/Legal/TermsOfService/TermsOfService"
+import TermsOfService from "./pages/Legal/TermsOfService/TermsOfServiceClone"
 import Privacy from "./pages/Legal/Privacy/PrivacyClone"
 import AboutUs from "./pages/AboutUs/AboutUs"
 import { BrowserRouter, Switch, Route } from "react-router-dom";
