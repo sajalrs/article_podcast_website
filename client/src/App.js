@@ -5,7 +5,7 @@ import React, {
 } from "react";
 import Home from "./pages/Home/HomeClone.js";
 import CreateArticle from "./pages/CreateArticle";
-import Articles from "./pages/Articles/Articles";
+import Articles from "./pages/Articles/ArticlesClone";
 import Podcasts from "./pages/Podcasts/PodcastsClone";
 import ArticlePage from "./pages/Articles/ArticlePage.js";
 import Edit from "./pages/Articles/Edit";
