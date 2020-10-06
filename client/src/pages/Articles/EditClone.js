@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
-import SidePanel from "../../components/SidePanel/SidePanel.js";
-import Card from "../../components/Cards/Card.js";
-import styles from "./Edit.module.css";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
-import { useHistory, useParams } from "react-router-dom";
+import Page from "../../components/Page/Page";
+import styles from "../../components/Page/Page.module.css";
+import { useParams } from "react-router-dom";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {useSelector} from "react-redux"
+
 const initialValue = {
   document: {
     nodes: [
@@ -33,8 +30,6 @@ const initialValue = {
 };
 
 const Edit = (props) => {
-  const sidebarFixed = useSelector(state => state.sidebar.fixed);
-  const topOffset = useSelector(state => state.sidebar.topOffset);
   const [textEditorValue, setTextEditorValue] = useState(
     Value.fromJSON(initialValue)
   );
@@ -53,31 +48,8 @@ const Edit = (props) => {
     image: "",
   });
   const { id } = useParams();
-  const history = useHistory();
   const [toolbarFixed, setToolbarFix] = useState(false);
-  const headerBoxRef = useRef();
   const headlineFormRef = useRef();
-  useEffect(() => {
-    const fixToolbar = (e) => {
-      if (
-        window.scrollY >
-        headerBoxRef.current.clientHeight +
-          headlineFormRef.current.clientHeight -
-          66 +
-          644
-      ) {
-        setToolbarFix(true);
-      } else {
-        setToolbarFix(false);
-      }
-    };
-
-    window.addEventListener("scroll", fixToolbar);
-    return () => {
-      window.removeEventListener("scroll", fixToolbar);
-    };
-  }, [toolbarFixed]);
-
   useEffect(() => {
     const getArticle = async () => {
       const response = await fetch("/articles?" + id);
@@ -146,18 +118,6 @@ const Edit = (props) => {
     if (response.status !== 200) throw Error(data.message);
     alert("Article saved");
   };
-
-  const renderOnceSidePanel = (
-    <SidePanel
-    
-      getImageLink={props.getImageLink}
-      playVideo={props.playVideo}
-      getHyperLink={props.getHyperLink}
-      headerBoxRef={headerBoxRef}
-      sidebarFixTopOffset={35 + 644}
-    />
-  );
-
   const handleSubmit = (event) => {
     event.preventDefault();
     // if(!(article.title === formData.title && article.image === formData.image && article.author === formData.author)){
@@ -200,102 +160,83 @@ const Edit = (props) => {
     });
   };
 
-  return (
-    <div className={styles["overarching"]}>
-      <div className={styles["primary-color-background"]}></div>
-      <div className={styles["Edit"]}>
-        <Header
-          ref={headerBoxRef}
-        />
-        <div className={styles["headline"]}>
-          <LargeCard
-            title={article.title}
-            author={article.author}
-            date={article.date}
-            image={article.image}
+  const headline = (
+    <div className={styles["headline"]}>
+      <LargeCard
+        title={article.title}
+        author={article.author}
+        date={article.date}
+        image={article.image}
+        onClick={() => {}}
+      />
+    </div>
+  );
+
+  const contents = (
+    <div>
+      <form
+        ref={headlineFormRef}
+        onSubmit={handleSubmit}
+        className={styles["headline-form"]}
+      >
+        <div className={styles["horizontal"]}>
+          <label>Title: </label>
+          <input
+            className={styles["headline-form-input"]}
+            type="text"
+            value={formData.title}
+            onChange={onTitleChange}
           />
         </div>
-        <div className={styles["content-pane"]}>
-          <div className={styles["main-pane"]}>
-            <form
-              ref={headlineFormRef}
-              onSubmit={handleSubmit}
-              className={styles["headline-form"]}
-            >
-              <div className={styles["horizontal"]}>
-                <label>Title: </label>
-                <input
-                  className={styles["headline-form-input"]}
-                  type="text"
-                  value={formData.title}
-                  onChange={onTitleChange}
-                />
-              </div>
-              <div className={styles["horizontal-same-line"]}>
-                <div className={styles["horizontal"]}>
-                  <label>Author: </label>
-                  <input
-                    className={`${styles["headline-form-input"]}`}
-                    type="text"
-                    value={formData.author}
-                    onChange={onAuthorChange}
-                  />
-                </div>
-                <div className={styles["horizontal"]}>
-                  <label>Date: </label>
-                  <DatePicker
-                    className={`${styles["DatePicker"]}`}
-                    selected={formData.date}
-                    onChange={onDateChange}
-                  />
-                </div>
-              </div>
-              <div className={styles["horizontal"]}>
-                <label>Image: </label>
-                <input
-                  className={styles["headline-form-input"]}
-                  type="text"
-                  value={formData.image}
-                  onChange={onImageChange}
-                />
-              </div>
-              <input
-                type="submit"
-                value="Change Card"
-                className={styles["submit-button"]}
-              />
-            </form>
-            <TextEditor
-              value={textEditorValue}
-              setValue={setTextEditorValue}
-              onSave={saveArticle}
-              toolbarFixed={toolbarFixed}
+        <div className={styles["horizontal-same-line"]}>
+          <div className={styles["horizontal"]}>
+            <label>Author: </label>
+            <input
+              className={`${styles["headline-form-input"]}`}
+              type="text"
+              value={formData.author}
+              onChange={onAuthorChange}
             />
           </div>
-
-          <div className={styles["side-pane"]}></div>
-          {sidebarFixed ? (
-            <div
-              style={{ position: "fixed", top: topOffset, right: "0px",zIndex: 1  }}
-            >
-              {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
-              {renderOnceSidePanel}
-            </div>
-          ) : (
-            <div style={{ marginTop: topOffset }}>
-              {renderOnceSidePanel}
-            </div>
-          )}
+          <div className={styles["horizontal"]}>
+            <label>Date: </label>
+            <DatePicker
+              className={`${styles["DatePicker"]}`}
+              selected={formData.date}
+              onChange={onDateChange}
+            />
+          </div>
         </div>
-
-        <div className={styles["footer-container"]}>
-          <Footer
-
-             
+        <div className={styles["horizontal"]}>
+          <label>Image: </label>
+          <input
+            className={styles["headline-form-input"]}
+            type="text"
+            value={formData.image}
+            onChange={onImageChange}
           />
         </div>
-      </div>
+        <input
+          type="submit"
+          value="Change Card"
+          className={styles["submit-button"]}
+        />
+      </form>
+      <TextEditor
+        value={textEditorValue}
+        setValue={setTextEditorValue}
+        onSave={saveArticle}
+        toolbarFixed={toolbarFixed}
+      />
     </div>
+  );
+
+  return (
+    <Page
+      sidebarFixTopOffset={35 + 644}
+      headline={headline}
+      mainPane={contents}
+    />
   );
 };
 
