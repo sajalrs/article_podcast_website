@@ -139,3 +139,11 @@ export const setBlogArticles = (setTo) => {
         payload: setTo
     }
 }
+
+//Header Actions
+export const setHeaderBoxRef = (setTo) => {
+    return{
+        type: 'SET_HEADER_BOX_REF',
+        payload: setTo
+    }
+}
