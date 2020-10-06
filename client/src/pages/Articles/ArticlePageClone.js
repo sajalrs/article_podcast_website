@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
-import {useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
 const ArticlePage = (props) => {
   const { id } = useParams();
@@ -56,7 +56,11 @@ const ArticlePage = (props) => {
             switch (obj.type) {
               case "paragraph":
                 return (
-                  <di className={styles["main-pane"]}v className={styles["main-pane-item"]}>
+                  <di
+                    className={styles["main-pane"]}
+                    v
+                    className={styles["main-pane-item"]}
+                  >
                     <p>{children}</p>
                   </di>
                 );
@@ -168,22 +172,25 @@ const ArticlePage = (props) => {
     });
   }, []);
 
-  const contents = (
-    <div>
-      <div className={styles["headline"]}>
-        <LargeCard
-          title={article.title}
-          author={article.author}
-          date={article.date}
-          image={article.image}
-          onClick={() => {}}
-        />
-      </div>
-      <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
+  const headline = (
+    <div className={styles["headline"]}>
+      <LargeCard
+        title={article.title}
+        author={article.author}
+        date={article.date}
+        image={article.image}
+        onClick={() => {}}
+      />
     </div>
   );
 
-  return <Page sidebarFixTopOffset={35 + 644} mainPane={contents} />;
+  const contents = (
+    <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
+  );
+
+  return (
+    <Page sidebarFixTopOffset={35 + 644} headline={headline} mainPane={contents} />
+  );
 };
 
 export default ArticlePage;
