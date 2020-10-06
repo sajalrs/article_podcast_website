@@ -1,14 +1,9 @@
 import React, { useState, useRef, useEffect, forwardRef } from "react";
 import styles from "./Footer.module.css";
-import AudioPlayer from "../AudioPlayer/AudioPlayer";
-import {useSelector, useDispatch} from "react-redux"
-import {setNavbarClicked, setSidebarClicked} from "../../redux/actions"
 import {Link} from "react-router-dom";
 const Footer = forwardRef((props, ref) => {
  
-  const sidebarClicked = useSelector(state => state.sidebar.clicked);
-  const dispatch = useDispatch();
-
+  
   return (
     <div>
       
@@ -40,7 +35,7 @@ const Footer = forwardRef((props, ref) => {
           <div className={styles["footer-link-wrapper"]}>
             <div className={styles["footer-link-items"]}>
               <h2>About Us</h2>
-              <Link onClick={() => {if(sidebarClicked){dispatch(setSidebarClicked(false))};dispatch(setNavbarClicked(false));}} to="/about">Team</Link>
+              <Link to="/about">Team</Link>
               <a href="">Contact</a>
               <a href="">Support</a>
               <a href="">Advertisements</a>
