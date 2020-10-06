@@ -10,6 +10,12 @@
     position: relative;
   }   
   
+  .content-pane-side-bar{
+    display: flex;
+    align-self: center;
+    width: 70%;
+  }
+
   
 
   .content-pane{
@@ -94,11 +100,19 @@
       width: 100%;
       /* align-items: center; */
      }
+     
+       
+  .content-pane-side-bar{
+    display: flex;
+    align-self: center;
+    width: 100%;
   }
 
-  .side-panel-inital{
-    top: 500px;
   }
+
+  /* .side-panel-inital{
+    top: 500px;
+  } */
 
   @media screen and (max-width: 550px){
     .main-pane{

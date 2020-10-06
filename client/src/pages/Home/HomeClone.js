@@ -1,11 +1,13 @@
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import Page from "../../components/Page/Page";
+import styles from "../../components/Page/Page.module.css"
 import {useSelector} from 'react-redux'
 const Home = (props) => {
   
 const articles = useSelector(state => state.blog.articles)
 const contents = articles.map((item) => 
+<div className={`${styles["main-pane-item"]}`}>
     <LargeCard
       image={item.image}
       date={item.date}
@@ -15,6 +17,7 @@ const contents = articles.map((item) =>
       contentType={item.contentType}
       link={item.link}
    />
+   </div>
 )
 return (
 
