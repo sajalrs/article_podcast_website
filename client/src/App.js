@@ -13,7 +13,7 @@ import "./App.css";
 import VideoPlayer from "./components/VideoPlayer/VideoPlayer.js";
 import TermsOfService from "./pages/Legal/TermsOfService/TermsOfServiceClone"
 import Privacy from "./pages/Legal/Privacy/PrivacyClone"
-import AboutUs from "./pages/AboutUs/AboutUs"
+import AboutUs from "./pages/AboutUs/AboutUsClone"
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import {useDispatch} from 'react-redux'
 import {setAudioPlayerRef} from './redux/actions'
