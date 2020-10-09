@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const youtubeRoute = require('./routes/youtube')
 const createRoute = require('./routes/create')
 const podcastsRoute = require('./routes/podcasts')
-const usersRoute = require('./routes/users')
+const usersRoute = require('./routes/auth')
 
 require('dotenv/config');
 app.use(bodyParser.urlencoded({extended: false}));
