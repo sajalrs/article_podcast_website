@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Article = require("../models/Articles");
+const verify = require('../verification/verifyToken')
 
-router.get("/articles", (req, res) => {
+router.get("/articles", verify, (req, res) => {
   const article = new Article({
     title: "To be edited",
     author: "Computer",
