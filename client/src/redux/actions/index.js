@@ -115,3 +115,11 @@ export const setHeaderBoxRef = (setTo) => {
         payload: setTo
     }
 }
+
+//JWT Token Actions
+export const setJWTToken = (setTo) => {
+    return{
+        type: "SET_JWT_TOKEN",
+        payload: setTo
+    }
+}
