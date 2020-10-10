@@ -60,7 +60,6 @@ const Privacy = (props) => {
 
  
   const contents =  <div
-    style={{marginTop: 30}}
     dangerouslySetInnerHTML={{__html: htmlPage}}
   ></div>
   return <Page sidebarFixTopOffset={0} mainPane={contents} />;
