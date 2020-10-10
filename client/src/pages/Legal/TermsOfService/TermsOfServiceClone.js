@@ -196,7 +196,6 @@ const TermsOfService = (props) => {
 
   const contents = (
     <div
-      style={{ marginTop: 30 }}
       dangerouslySetInnerHTML={{ __html: htmlPage }}
     ></div>
   );

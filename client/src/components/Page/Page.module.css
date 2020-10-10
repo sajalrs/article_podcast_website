@@ -1,4 +1,5 @@
 .overarching {
+
   display: grid;
   width: 100%;
   grid-auto-columns: 1fr;
@@ -6,6 +7,7 @@
 }
 
 .Page {
+
   background-color: transparent;
   height: 100%;
   width: 100%;
@@ -41,6 +43,7 @@
 }
 
 .content-pane-side-bar {
+
   display: flex;
   align-self: center;
   width: 80%;
@@ -49,7 +52,7 @@
 .content-pane {
   background-color: white;
   width: 80%;
-  height: 100%;
+  
   align-self: center;
   padding-top: 36px;
   padding-bottom: 36px;
