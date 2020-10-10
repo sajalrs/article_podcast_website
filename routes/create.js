@@ -7,7 +7,7 @@ const verify = require('../verification/verifyToken')
 
 router.get("/articles", verify, (req, res) => {
 
-  const user = User.findById(req.user._id, (err, user) => {
+  User.findById(req.user._id, (err, user) => {
     if(err){
       res.send(err)
     } else{
@@ -23,7 +23,7 @@ router.get("/articles", verify, (req, res) => {
         if (err) {
           res.send(err);
         } else {
-          res.json({data, user: user._id});
+          res.json({data});
         }
       });
     }
