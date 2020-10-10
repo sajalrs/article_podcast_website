@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
+import {useHistory} from 'react-router-dom'
 const SignUp = (props) => {
+  const history = useHistory()
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,10 +22,37 @@ const SignUp = (props) => {
     setFormData({ ...formData, password: e.target.value });
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    registerUser()
+  }
+
+  const registerUser = async () => {
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    };
+
+    const response = await fetch(`/auth/register`, requestOptions);
+    const data = await response.json();
+ 
+    if (response.status === 400) {
+      alert(data.error);
+    } else if (response.status !== 200) {
+      throw Error(data.message);
+     } else{
+      alert("New User Registered");
+      history.push('/')
+     }
+    
+  };
+
   const contents = (
     <div>
       <form
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         className={styles["headline-form"]}
       >
         <div className={styles["horizontal"]}>
