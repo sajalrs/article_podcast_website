@@ -11,6 +11,7 @@ import TermsOfService from "./pages/Legal/TermsOfService/TermsOfServiceClone";
 import Privacy from "./pages/Legal/Privacy/PrivacyClone";
 import AboutUs from "./pages/AboutUs/AboutUsClone";
 import SignUp from "./pages/SignUp/SignUp";
+import Login from "./pages/Login/Login";
 
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -106,7 +107,12 @@ const App = () => {
                 return <SignUp />;
               }}
             />
-
+            <Route
+              path="/login"
+              render={() => {
+                return <Login />;
+              }}
+            />
             <Route
               path="/"
               render={() => {
