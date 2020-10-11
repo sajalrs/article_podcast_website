@@ -3,11 +3,9 @@ import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setJWTToken } from "../../redux/actions";
 
 const Login = (props) => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -41,7 +39,6 @@ const Login = (props) => {
     } else if (response.status !== 200) {
       throw Error(data.message);
     } else {
-      dispatch(setJWTToken(data.token));
       alert("Login Successful");
       history.push("/");
     }
