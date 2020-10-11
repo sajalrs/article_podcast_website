@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Article = require("../models/Articles");
-
+const verify = require('../verification/verifyToken')
 
 router.get("/pages", (req, res) => {
   const query = Article.find({}).select('_id title author date image').sort('-date');
@@ -27,7 +27,7 @@ router.get("/", (req, res) => {
 
   });
 
-router.post("/edit", (req, res) => {
+router.post("/edit", verify, (req, res) => {
   Article.findById(req.body.id, (err, article) => {
     if(err){
       res.send(err);
