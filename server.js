@@ -7,11 +7,13 @@ const bodyParser = require('body-parser');
 const youtubeRoute = require('./routes/youtube')
 const createRoute = require('./routes/create')
 const podcastsRoute = require('./routes/podcasts')
-const usersRoute = require('./routes/auth')
+const usersRoute = require('./routes/auth');
+const cookieParser = require("cookie-parser");
 
 require('dotenv/config');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(cookieParser())
 mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}, ()=> {console.log("Connected to Database");})
 
 const port = process.env.PORT || 5000;
