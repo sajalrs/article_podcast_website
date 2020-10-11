@@ -136,7 +136,13 @@ const Edit = (props) => {
 
     const response = await fetch(`/articles/edit`, requestOptions);
     const data = await response.json();
-    if (response.status !== 200) throw Error(data.message);
+    if (response.status === 401) {
+      alert(data.error);
+    } else if (response.status !== 200) {
+      throw Error(data.message);
+    }
+
+    
     alert("Article saved");
   };
   const handleSubmit = (event) => {
