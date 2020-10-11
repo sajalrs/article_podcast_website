@@ -1,55 +1,49 @@
 const express = require("express");
 const app = express();
-const mongoose = require('mongoose');
-const articlesRoute = require('./routes/articles');
-const path = require('path');
-const bodyParser = require('body-parser');
-const youtubeRoute = require('./routes/youtube')
-const createRoute = require('./routes/create')
-const podcastsRoute = require('./routes/podcasts')
-const usersRoute = require('./routes/auth');
+const mongoose = require("mongoose");
+const articlesRoute = require("./routes/articles");
+const path = require("path");
+const bodyParser = require("body-parser");
+const youtubeRoute = require("./routes/youtube");
+const createRoute = require("./routes/create");
+const podcastsRoute = require("./routes/podcasts");
+const usersRoute = require("./routes/auth");
 const cookieParser = require("cookie-parser");
-const csrf = require('csurf')
+const csrf = require("csurf");
 
-require('dotenv/config');
-app.use(bodyParser.urlencoded({extended: false}));
+require("dotenv/config");
+const csrfProtection = csrf({cookie: true});
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cookieParser())
-mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true}, ()=> {console.log("Connected to Database");})
+app.use(cookieParser());
+app.use(csrfProtection)
+mongoose.connect(
+  process.env.MONGO_URL,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => {
+    console.log("Connected to Database");
+  }
+);
 
 const port = process.env.PORT || 5000;
 
-app.use('/articles', articlesRoute);
-app.use('/youtube', youtubeRoute);
-app.use('/create', createRoute);
-app.use('/podcasts', podcastsRoute);
-app.use('/auth', usersRoute);
+app.use("/articles", articlesRoute);
+app.use("/youtube", youtubeRoute);
+app.use("/create", createRoute);
+app.use("/podcasts", podcastsRoute);
+app.use("/auth", usersRoute);
 
-const csrfProtection = csrf({
-  cookie: true
+
+app.get("/csrf-token", (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
 });
 
-app.use(csrfProtection);
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
 
-app.get('/csrf-token', (req, res) => {
-  res.json({csrfToken: req.csrfToken()});
-})
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  
- 
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
-
 }
 
-
 app.listen(port, () => console.log(`Listening on port ${port}`));
-
-
-
-
-
-
