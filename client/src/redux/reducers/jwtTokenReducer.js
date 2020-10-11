@@ -1,7 +1,7 @@
-const jwtTokenReducer = (state={jwtToken: ""}, action) => {
+const jwtTokenReducer = (state={token: ""}, action) => {
     switch(action.type){
         case "SET_JWT_TOKEN":
-            return {...state, jwtToken: action.payload};
+            return {...state, token: action.payload};
         default: 
             return state;
     }
