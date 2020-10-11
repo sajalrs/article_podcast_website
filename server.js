@@ -18,13 +18,21 @@ mongoose.connect(process.env.MONGO_URL, {useNewUrlParser: true, useUnifiedTopolo
 
 const port = process.env.PORT || 5000;
 
-
-
 app.use('/articles', articlesRoute);
 app.use('/youtube', youtubeRoute);
 app.use('/create', createRoute);
 app.use('/podcasts', podcastsRoute);
 app.use('/auth', usersRoute);
+
+const csrfProtection = csrf({
+  cookie: true
+});
+
+app.use(csrfProtection);
+
+app.get('/csrf-token', (req, res) => {
+  res.json({csrfToken: req.csrfToken()});
+})
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
