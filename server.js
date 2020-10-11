@@ -9,6 +9,7 @@ const createRoute = require('./routes/create')
 const podcastsRoute = require('./routes/podcasts')
 const usersRoute = require('./routes/auth');
 const cookieParser = require("cookie-parser");
+const csrf = require('csurf')
 
 require('dotenv/config');
 app.use(bodyParser.urlencoded({extended: false}));
