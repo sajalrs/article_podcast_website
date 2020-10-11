@@ -140,10 +140,10 @@ const Edit = (props) => {
       alert(data.error);
     } else if (response.status !== 200) {
       throw Error(data.message);
+    }else{
+      alert("Article saved");
     }
 
-    
-    alert("Article saved");
   };
   const handleSubmit = (event) => {
     event.preventDefault();
