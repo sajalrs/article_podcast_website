@@ -3,19 +3,10 @@ import MenuItems from "./MenuItems.js";
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import FalseNineIcon from "../../Icons/FalseNineFitting";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setNavbarClicked,
-  setSidebarClicked,
-  setTopOffset,
-} from "../../redux/actions";
+import { useSelector } from "react-redux";
 
 const Navbar = (props) => {
-  // const navbarClicked = useSelector(state => state.navbar.clicked)
-  // const sidebarClicked = useSelector(state => state.sidebar.clicked)
-  // const topOffset = useSelector(state => state.sidebar.topOffset)
-  // const dispatch = useDispatch();
-
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   useEffect(() => {
     const updateDropDown = () => {
       if (window.innerWidth > 1250 && props.navbarClicked) {
@@ -70,29 +61,55 @@ const Navbar = (props) => {
                 </li>
               );
             })}
-            <li
-              key={MenuItems.length}
-              className={
-                MenuItems.length % 2 === 0
-                  ? `${styles["list-item"]} ${styles["list-item-even"]}`
-                  : `${styles["list-item"]} ${styles["list-item-odd"]}`
-              }
-            >
-              <Link
-                onClick={() => {
-                  if (props.sidebarClicked) {
-                    props.setSidebarClicked(false);
-                  }
-                  props.setNavbarClicked(false);
-                }}
-                to={"/login"}
-                className={styles["submit-btn"]}
+            {isLoggedIn ? (
+              <li
+                key={MenuItems.length}
+                className={
+                  MenuItems.length % 2 === 0
+                    ? `${styles["list-item"]} ${styles["list-item-even"]}`
+                    : `${styles["list-item"]} ${styles["list-item-odd"]}`
+                }
               >
-                <label className={styles["link-text"]}>
-                  {"Login".toUpperCase()}
-                </label>
-              </Link>
-            </li>
+                <Link
+                  onClick={() => {
+                    if (props.sidebarClicked) {
+                      props.setSidebarClicked(false);
+                    }
+                    props.setNavbarClicked(false);
+                  }}
+                  to={"/login"}
+                  className={styles["submit-btn"]}
+                >
+                  <label className={styles["link-text"]}>
+                    {"Logout".toUpperCase()}
+                  </label>
+                </Link>
+              </li>
+            ) : (
+              <li
+                key={MenuItems.length}
+                className={
+                  MenuItems.length % 2 === 0
+                    ? `${styles["list-item"]} ${styles["list-item-even"]}`
+                    : `${styles["list-item"]} ${styles["list-item-odd"]}`
+                }
+              >
+                <Link
+                  onClick={() => {
+                    if (props.sidebarClicked) {
+                      props.setSidebarClicked(false);
+                    }
+                    props.setNavbarClicked(false);
+                  }}
+                  to={"/login"}
+                  className={styles["submit-btn"]}
+                >
+                  <label className={styles["link-text"]}>
+                    {"Login".toUpperCase()}
+                  </label>
+                </Link>
+              </li>
+            )}
           </ul>
           <ul className={styles["social-links"]}>
             <li>
