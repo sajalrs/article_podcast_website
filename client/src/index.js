@@ -13,8 +13,20 @@ import {
   setAudioPlayerPodcasts,
   setVideoPlayerYoutubeVideos,
   setBlogArticles,
+  setIsLoggedIn,
 } from "./redux/actions";
-
+const isLoggedIn = () => {
+  return (dispatch) => {
+    axios.get("/auth/isloggedin").then((response) => {
+      console.log(response.status)
+      if (response.status !== 200) {
+        dispatch(setIsLoggedIn(true));
+      } else {
+        dispatch(setIsLoggedIn(false));
+      }
+    });
+  };
+};
 const fetchBlogArticles = () => {
   return (dispatch) => {
     axios
@@ -45,9 +57,9 @@ const fetchPodcasts = () => {
           return {
             index: index,
             ...item,
-            contentType: Card.ContentType["audio-internal"]
-          }
-        })
+            contentType: Card.ContentType["audio-internal"],
+          };
+        });
         dispatch(setAudioPlayerPodcasts(podcasts));
       })
       .catch((error) => {
@@ -69,7 +81,7 @@ const fetchYoutubeVideos = () => {
             image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
             link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
             date: item.date,
-            contentType: Card.ContentType["video-youtube"]
+            contentType: Card.ContentType["video-youtube"],
           };
         });
         dispatch(setVideoPlayerYoutubeVideos(curVideos));
@@ -82,6 +94,7 @@ const fetchYoutubeVideos = () => {
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
+store.dispatch(isLoggedIn());
 store.dispatch(fetchBlogArticles());
 store.dispatch(fetchPodcasts());
 store.dispatch(fetchYoutubeVideos());
