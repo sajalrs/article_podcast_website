@@ -3,10 +3,12 @@ import MenuItems from "./MenuItems.js";
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import FalseNineIcon from "../../Icons/FalseNineFitting";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {setIsLoggedIn} from "../../redux/actions"
 
 const Navbar = (props) => {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const dispatch = useDispatch();
   useEffect(() => {
     const updateDropDown = () => {
       if (window.innerWidth > 1250 && props.navbarClicked) {
@@ -72,12 +74,23 @@ const Navbar = (props) => {
               >
                 <Link
                   onClick={() => {
-                    if (props.sidebarClicked) {
-                      props.setSidebarClicked(false);
-                    }
-                    props.setNavbarClicked(false);
+                    const onLogout = async () => {
+                      const response = await fetch("/auth/logout");
+                      const body = await response.json();
+                      if (response.status !== 200) {
+                        throw Error(body.message);
+                      }
+                    };
+
+                    onLogout().then((res) => {
+                      if (props.sidebarClicked) {
+                        props.setSidebarClicked(false);
+                      }
+                      props.setNavbarClicked(false);
+                      dispatch(setIsLoggedIn(false));
+                    });
                   }}
-                  to={"/login"}
+                  to={"/"}
                   className={styles["submit-btn"]}
                 >
                   <label className={styles["link-text"]}>
