@@ -3,9 +3,10 @@ import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import {setIsLoggedIn} from '../../redux/actions'
 const Login = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -49,6 +50,7 @@ const Login = (props) => {
       throw Error(data.message);
     } else {
       alert("Login Successful");
+      dispatch(setIsLoggedIn(true))
       history.push("/");
     }
   };
