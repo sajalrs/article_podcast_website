@@ -5,9 +5,9 @@ const Article = require("../models/Articles");
 const User = require("../models/Users")
 const verify = require('../verification/verifyToken')
 
-router.get("/articles", verify, (req, res) => {
+router.get("/articles", verify, async (req, res) => {
 
-  User.findById(req.user._id, (err, user) => {
+  await User.findById(req.user._id, async(err, user) => {
     if(err){
       res.send(err)
     } else{
@@ -19,7 +19,7 @@ router.get("/articles", verify, (req, res) => {
         content: {}
       });
     
-      article.save((err, data) => {
+     await article.save((err, data) => {
         if (err) {
           res.send(err);
         } else {
