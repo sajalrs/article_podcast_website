@@ -4,8 +4,8 @@ const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 var parser = require("xml2json");
 
-router.get("/", (req, res) => {
-  fetch(`https://anchor.fm/s/333e122c/podcast/rss`)
+router.get("/", async (req, res) => {
+  await fetch(`https://anchor.fm/s/333e122c/podcast/rss`)
     .then((response) => response.text())
     .then((data) => {
         let json = JSON.parse(parser.toJson(data, {reversible: false}));

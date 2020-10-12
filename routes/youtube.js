@@ -7,9 +7,9 @@ const e = require("express");
 const { query } = require("express");
 
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const query = YoutubeLink.find({}).sort('-date');
-  query.exec((err, data) => {
+  await query.exec((err, data) => {
     if(err){
       res.send(err);
     } else {
