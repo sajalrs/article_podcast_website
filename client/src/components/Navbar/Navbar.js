@@ -4,8 +4,8 @@ import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import FalseNineIcon from "../../Icons/FalseNineFitting";
 import { useSelector, useDispatch } from "react-redux";
-import {setIsLoggedIn} from "../../redux/actions"
-
+import { setIsLoggedIn } from "../../redux/actions";
+import axios from "axios";
 const Navbar = (props) => {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const dispatch = useDispatch();
@@ -75,11 +75,15 @@ const Navbar = (props) => {
                 <Link
                   onClick={() => {
                     const onLogout = async () => {
-                      const response = await fetch("/auth/logout");
-                      const body = await response.json();
-                      if (response.status !== 200) {
-                        throw Error(body.message);
-                      }
+                      axios
+                        .get("/auth/logout")
+                        .then(async (res) => {
+                          dispatch(setIsLoggedIn(false));
+                          alert("User Logged Out");
+                        })
+                        .catch((err) => {
+                          throw Error(err);
+                        });
                     };
 
                     onLogout().then((res) => {
@@ -87,7 +91,6 @@ const Navbar = (props) => {
                         props.setSidebarClicked(false);
                       }
                       props.setNavbarClicked(false);
-                      dispatch(setIsLoggedIn(false));
                     });
                   }}
                   to={"/"}
