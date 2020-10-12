@@ -1,25 +1,27 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-
+import axios from "axios";
 const CreateArticle = () => {
-  const history = useHistory()
+  const history = useHistory();
   useEffect(() => {
     const getArticle = async () => {
-  
-      const response = await fetch("/create/articles");
-      const body = await response.json();
-      if (response.status === 401 || response.status === 400) {
-        alert(body.error);
-      } else if (response.status !== 200) {
-        throw Error(body.message);
-      }
-      return body;
+      axios
+        .get("/create/articles")
+        .then((res) => {
+          alert("Article Created");
+          return res.data;
+        })
+        .catch((err) => {
+          if (err.response.status === 401 || err.response.status === 400) {
+            alert(err.response.data.error);
+          } else if (err.response.status !== 200) {
+            throw Error(err);
+          }
+        });
     };
 
     getArticle().then((res) => {
-  
-      history.push('/');
-    
+      history.push("/");
     });
   }, []);
 
