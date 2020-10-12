@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/Users");
+const verify = require("../verification/verifyToken");
 const {
   registerValidation,
   loginValidation,
@@ -65,8 +66,16 @@ router.post("/login", async (req, res) => {
 
   const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
   // res.header('Auth-Token', token).send({token: token})
-  res.cookie("token", token, { httpOnly: true }).json({token: token});
+  res.cookie("token", token, { httpOnly: true }).json({ token: token });
   // res.send({ token: token });
+});
+
+router.post("/isloggedin", verify, (req, res) => {
+  try {
+    res.json(res.user._id);
+  } catch(err){
+    res.send(err)
+  }
 });
 
 module.exports = router;
