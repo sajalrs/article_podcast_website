@@ -6,11 +6,7 @@ const CreateArticle = () => {
   useEffect(() => {
     const getArticle = async () => {
   
-      const requestOptions = {
-        method: "GET",
-      };
-
-      const response = await fetch("/create/articles", requestOptions);
+      const response = await fetch("/create/articles");
       const body = await response.json();
       if (response.status === 401) {
         alert(body.error);
