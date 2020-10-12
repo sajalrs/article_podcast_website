@@ -115,3 +115,11 @@ export const setHeaderBoxRef = (setTo) => {
         payload: setTo
     }
 }
+
+//Login Actions
+export const setIsLoggedIn = (setTo) => {
+    return {
+        type: 'SET_IS_LOGGED_IN',
+        payload: setTo
+    }
+}
