@@ -72,9 +72,17 @@ router.post("/login", async (req, res) => {
 
 router.get("/isloggedin", verify, (req, res) => {
   try {
-    res.json({_id: req.user._id});
-  } catch(err){
-    res.send(err)
+    res.json({ _id: req.user._id });
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+router.get("/logout", verify, (req, res) => {
+  try {
+    res.cookie("token", { httpOnly: true, expires: Date.now() }).json({ token: token });
+  } catch (err) {
+    res.send(err);
   }
 });
 
