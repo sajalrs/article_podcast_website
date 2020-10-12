@@ -105,25 +105,23 @@
   transform: translateX(1000%);
 }
 .submit-btn {
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 2px;
-    padding: 5px 15px;
-    border-radius: 5px;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  padding: 5px 15px;
+  border-radius: 5px;
   border: none;
   background: var(--secondary-color);
   color: var(--font-color);
-
   transition: all 0.3s ease 0s;
   font-family: "Montserrat", sans-serif;
-
 }
 
 .submit-btn:hover {
   color: var(--font-color);
   font-weight: bold;
-  letter-spacing: 3px;
+  letter-spacing: 4px;
   -webkit-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
   -moz-box-shadow: 0px 5px 40px -10px rgba(0, 0, 0, 0.57);
   transition: all 0.3s ease 0s;
