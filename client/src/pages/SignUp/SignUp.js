@@ -28,7 +28,7 @@ const SignUp = (props) => {
     registerUser()
   }
 
-  const registerUser = async () => {
+  const registerUser = () => {
 
      const options = {
       headers: { "Content-Type": "application/json" },
