@@ -8,7 +8,7 @@ const CreateArticle = () => {
   
       const response = await fetch("/create/articles");
       const body = await response.json();
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 400) {
         alert(body.error);
       } else if (response.status !== 200) {
         throw Error(body.message);
