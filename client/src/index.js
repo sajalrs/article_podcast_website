@@ -20,9 +20,9 @@ const isLoggedIn = () => {
     axios.get("/auth/isloggedin").then((response) => {
       console.log(response.status)
       if (response.status !== 200) {
-        dispatch(setIsLoggedIn(true));
-      } else {
         dispatch(setIsLoggedIn(false));
+      } else {
+        dispatch(setIsLoggedIn(true));
       }
     });
   };
