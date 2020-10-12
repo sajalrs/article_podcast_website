@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import {useHistory} from 'react-router-dom'
+import axios from 'axios'
 const SignUp = (props) => {
   const history = useHistory()
   const [formData, setFormData] = useState({
@@ -29,32 +30,24 @@ const SignUp = (props) => {
 
   const registerUser = async () => {
 
-    const tokenResponse = await fetch('/csrf-token')
-    const token = await tokenResponse.json()
-
-    if(tokenResponse.status !== 200){
-      throw Error(token.message)
-    }
-
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-CSRF-Token": token.csrfToken  },
-      body: JSON.stringify(formData),
+     const options = {
+      headers: { "Content-Type": "application/json" },
     };
 
-    const response = await fetch(`/auth/register`, requestOptions);
-    const data = await response.json();
- 
-    if (response.status === 400) {
-      alert(data.error);
-    } else if (response.status !== 200) {
-      throw Error(data.message);
-     } else{
-      alert("New User Registered");
-      history.push('/')
-     }
-    
+     axios
+     .post("/auth/register", JSON.stringify(formData), options)
+     .then((res) => {
+       alert("New User Registered");
+       history.push('/')
+     })
+     .catch((err) => {
+       if (err.response.status === 401 || err.response.status === 400) {
+         alert(err.response.data.error);
+       } else if (err.response.status !== 200) {
+         throw Error(err);
+       }
+     });
+
   };
 
   const contents = (
