@@ -29,9 +29,17 @@ const SignUp = (props) => {
 
   const registerUser = async () => {
 
+    const tokenResponse = await fetch('/csrf-token')
+    const token = await tokenResponse.json()
+
+    if(tokenResponse.status !== 200){
+      throw Error(token.message)
+    }
+
+
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-CSRF-Token": token.csrfToken  },
       body: JSON.stringify(formData),
     };
 

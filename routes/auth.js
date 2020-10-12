@@ -70,9 +70,9 @@ router.post("/login", async (req, res) => {
   // res.send({ token: token });
 });
 
-router.post("/isloggedin", verify, (req, res) => {
+router.get("/isloggedin", verify, (req, res) => {
   try {
-    res.json(res.user._id);
+    res.json({_id: req.user._id});
   } catch(err){
     res.send(err)
   }
