@@ -16,26 +16,6 @@ import {
   setIsLoggedIn,
 } from "./redux/actions";
 
-useEffect(() => {
-  const getCSRFToken = async () => {
-    const tokenResponse = await axios.get("/csrf-token");
-    const token = await tokenResponse.data;
-
-    if (tokenResponse.status !== 200) {
-      throw Error(token.message);
-    }
-
-    return token;
-  };
-
-  getCSRFToken().then((res) => {
-    axios.defaults.headers.common = {
-      "X-CSRF-Token": res
-    }
-  });
-
-}, []);
-
 const isLoggedIn = () => {
   return async (dispatch) => {
     await axios.get("/auth/isloggedin").then((response) => {
