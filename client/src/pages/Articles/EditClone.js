@@ -6,9 +6,9 @@ import { useParams } from "react-router-dom";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from "react-datepicker";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
-
+import axios from "axios";
 const initialValue = {
   document: {
     nodes: [
@@ -48,7 +48,7 @@ const Edit = (props) => {
     date: new Date(),
     image: "",
   });
-  const headerBoxRef = useSelector(state => state.header.headerBoxRef);
+  const headerBoxRef = useSelector((state) => state.header.headerBoxRef);
   const { id } = useParams();
   const [toolbarFixed, setToolbarFix] = useState(false);
   const headlineFormRef = useRef();
@@ -74,14 +74,9 @@ const Edit = (props) => {
     });
   }, []);
   useEffect(() => {
-    const height = headerBoxRef? headerBoxRef.current.clientHeight : 380
+    const height = headerBoxRef ? headerBoxRef.current.clientHeight : 380;
     const fixToolbar = (e) => {
-      if (
-        window.scrollY >
-         2* height-
-          66 +
-          644
-      ) {
+      if (window.scrollY > 2 * height - 66 + 644) {
         setToolbarFix(true);
       } else {
         setToolbarFix(false);
@@ -125,32 +120,24 @@ const Edit = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  const saveArticle = async () => {
+  const saveArticle = () => {
     const editedArticle = { ...article, content: textEditorValue.toJSON() };
-
-    const tokenResponse = await fetch('/csrf-token')
-    const token = await tokenResponse.json()
-
-    if(tokenResponse.status !== 200){
-      throw Error(token.message)
-    }
-
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-CSRF-Token": token.csrfToken },
-      body: JSON.stringify(editedArticle),
+    const options = {
+      headers: { "Content-Type": "application/json" },
     };
 
-    const response = await fetch(`/articles/edit`, requestOptions);
-    const data = await response.json();
-    if (response.status === 401 || response.status === 400) {
-      alert(data.error);
-    } else if (response.status !== 200) {
-      throw Error(data.message);
-    }else{
-      alert("Article saved");
-    }
-
+    axios
+      .post("/articles/edit", JSON.stringify(editedArticle), options)
+      .then((res) => {
+        alert("Article saved");
+      })
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 400) {
+          alert(err.response.data.error);
+        } else if (err.response.status !== 200) {
+          throw Error(err);
+        }
+      });
   };
   const handleSubmit = (event) => {
     event.preventDefault();
