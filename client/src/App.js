@@ -36,7 +36,7 @@ const App = () => {
 
     getCSRFToken().then((res) => {
       axios.defaults.headers.common = {
-        "X-CSRF-Token": res,
+        "X-CSRF-Token": res.csrfToken,
       };
     });
   }, []);
