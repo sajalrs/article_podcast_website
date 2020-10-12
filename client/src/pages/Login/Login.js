@@ -3,8 +3,8 @@ import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {setIsLoggedIn} from '../../redux/actions'
-import axios from 'axios'
+import { setIsLoggedIn } from "../../redux/actions";
+import axios from "axios";
 
 const Login = (props) => {
   const history = useHistory();
@@ -27,27 +27,25 @@ const Login = (props) => {
     registerUser();
   };
 
-  const registerUser = async () => {
-
+  const registerUser = () => {
     const options = {
       headers: { "Content-Type": "application/json" },
     };
 
-     axios
-     .post("/auth/login", JSON.stringify(formData), options)
-     .then((res) => {
-      alert("Login Successful");
-      dispatch(setIsLoggedIn(true))
-      history.push("/");
-     })
-     .catch((err) => {
-       if (err.response.status === 401 || err.response.status === 400) {
-         alert(err.response.data.error);
-       } else if (err.response.status !== 200) {
-         throw Error(err);
-       }
-     });
-
+    axios
+      .post("/auth/login", JSON.stringify(formData), options)
+      .then((res) => {
+        alert("Login Successful");
+        dispatch(setIsLoggedIn(true));
+        history.push("/");
+      })
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 400) {
+          alert(err.response.data.error);
+        } else if (err.response.status !== 200) {
+          throw Error(err);
+        }
+      });
   };
 
   const contents = (
