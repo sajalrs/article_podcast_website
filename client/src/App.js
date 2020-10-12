@@ -12,7 +12,7 @@ import Privacy from "./pages/Legal/Privacy/PrivacyClone";
 import AboutUs from "./pages/AboutUs/AboutUsClone";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
-
+import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAudioPlayerRef } from "./redux/actions";
@@ -22,6 +22,24 @@ const App = () => {
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
 
+  useEffect(() => {
+    const getCSRFToken = async () => {
+      const tokenResponse = await axios.get("/csrf-token");
+      const token = await tokenResponse.data;
+
+      if (tokenResponse.status !== 200) {
+        throw Error(token.message);
+      }
+
+      return token;
+    };
+
+    getCSRFToken().then((res) => {
+      axios.defaults.headers.common = {
+        "X-CSRF-Token": res,
+      };
+    });
+  }, []);
   useEffect(() => {
     dispatch(setAudioPlayerRef(audioPlayerRef));
   }, [audioPlayerRef]);
