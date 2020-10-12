@@ -156,23 +156,24 @@ const ArticlePage = (props) => {
 
     const getArticle = async () => {
       const response = await axios.get(`/articles/?${id}`);
-
-      // const response = await fetch("/articles/?" + id);
       const body = await response.data;
       if (response.status !== 200) throw Error(body.message);
-
       return body;
     };
 
-    getArticle().then((res) => {
-      setArticle({
-        title: res.title,
-        author: res.author,
-        date: res.date,
-        image: res.image,
-        content: res.content ? html.serialize(res.content) : `<p></p>`,
+    getArticle()
+      .then((res) => {
+        setArticle({
+          title: res.title,
+          author: res.author,
+          date: res.date,
+          image: res.image,
+          content: res.content ? html.serialize(res.content) : `<p></p>`,
+        });
+      })
+      .catch((err) => {
+        throw Error(err);
       });
-    });
   }, []);
 
   const headline = (
