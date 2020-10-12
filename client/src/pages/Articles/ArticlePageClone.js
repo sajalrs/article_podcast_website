@@ -4,6 +4,7 @@ import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
+import axios from "axios";
 const ArticlePage = (props) => {
   const { id } = useParams();
   const [article, setArticle] = useState({
@@ -154,8 +155,10 @@ const ArticlePage = (props) => {
     const html = new Html({ rules });
 
     const getArticle = async () => {
-      const response = await fetch("/articles/?" + id);
-      const body = await response.json();
+      const response = await axios.get(`/articles/?${id}`);
+
+      // const response = await fetch("/articles/?" + id);
+      const body = await response.data;
       if (response.status !== 200) throw Error(body.message);
 
       return body;
@@ -189,7 +192,11 @@ const ArticlePage = (props) => {
   );
 
   return (
-    <Page sidebarFixTopOffset={35 + 644} headline={headline} mainPane={contents} />
+    <Page
+      sidebarFixTopOffset={35 + 644}
+      headline={headline}
+      mainPane={contents}
+    />
   );
 };
 
