@@ -16,8 +16,8 @@ import {
   setIsLoggedIn,
 } from "./redux/actions";
 const isLoggedIn = () => {
-  return (dispatch) => {
-    axios.get("/auth/isloggedin").then((response) => {
+ return async (dispatch) => {
+    await axios.get("/auth/isloggedin").then((response) => {
       console.log(response.status)
       if (response.status !== 200) {
         dispatch(setIsLoggedIn(false));
@@ -28,8 +28,8 @@ const isLoggedIn = () => {
   };
 };
 const fetchBlogArticles = () => {
-  return (dispatch) => {
-    axios
+  return async (dispatch) => {
+    await axios
       .get("/articles/pages")
       .then((response) => {
         const articles = response.data["links"].map((item, index) => {
@@ -49,8 +49,8 @@ const fetchBlogArticles = () => {
 };
 
 const fetchPodcasts = () => {
-  return (dispatch) => {
-    axios
+  return async (dispatch) => {
+    await axios
       .get("/podcasts")
       .then((response) => {
         const podcasts = response.data["items"].map((item, index) => {
@@ -69,8 +69,8 @@ const fetchPodcasts = () => {
 };
 
 const fetchYoutubeVideos = () => {
-  return (dispatch) => {
-    axios
+  return async (dispatch) => {
+    await axios
       .get("/youtube")
       .then((response) => {
         const curVideos = response.data["items"].map((item, index) => {
