@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const Article = require("../models/Articles");
 const verify = require('../verification/verifyToken')
 
-router.get("/pages", (req, res) => {
+router.get("/pages", async (req, res) => {
   const query = Article.find({}).select('_id title author date image').sort('-date');
-  query.exec((err, data) => {
+  await query.exec((err, data) => {
     if (err) {
       res.send(err);
     } else {
@@ -15,9 +15,9 @@ router.get("/pages", (req, res) => {
   });
 });
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const id = req.query.id;
-    Article.findById(id, (err, data) => {
+    await Article.findById(id, (err, data) => {
       if (err) {
         res.send(err);
       } else {
@@ -27,8 +27,8 @@ router.get("/", (req, res) => {
 
   });
 
-router.post("/edit", verify, (req, res) => {
-  Article.findById(req.body.id, (err, article) => {
+router.post("/edit", verify, async (req, res) => {
+  await Article.findById(req.body.id, (err, article) => {
     if(err){
       res.send(err);
     } else{
