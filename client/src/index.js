@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -15,10 +15,31 @@ import {
   setBlogArticles,
   setIsLoggedIn,
 } from "./redux/actions";
+
+useEffect(() => {
+  const getCSRFToken = async () => {
+    const tokenResponse = await axios.get("/csrf-token");
+    const token = await tokenResponse.data;
+
+    if (tokenResponse.status !== 200) {
+      throw Error(token.message);
+    }
+
+    return token;
+  };
+
+  getCSRFToken().then((res) => {
+    axios.defaults.headers.common = {
+      "X-CSRF-Token": res
+    }
+  });
+
+}, []);
+
 const isLoggedIn = () => {
- return async (dispatch) => {
+  return async (dispatch) => {
     await axios.get("/auth/isloggedin").then((response) => {
-      console.log(response.status)
+      console.log(response.status);
       if (response.status !== 200) {
         dispatch(setIsLoggedIn(false));
       } else {
