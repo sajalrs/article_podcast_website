@@ -14,11 +14,6 @@ const MenuItems = [
         "title": "Blog",
         "url": "/articles",
         "className": "nav-link"
-    },
-    {
-        "title": "Login",
-        "url": "/login",
-        "className": "submit-btn"
     }
 ]
 
