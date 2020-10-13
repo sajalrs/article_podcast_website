@@ -8,7 +8,7 @@ const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
   const contents = articles.map((item, index) => (
     index % 4 == 0 ? (
-      <div className={`${styles["main-pane-item"]}`}>
+      <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
         <LargeCard
           image={item.image}
           date={item.date}
