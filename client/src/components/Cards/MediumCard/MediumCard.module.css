@@ -99,8 +99,8 @@
   padding-right: 10px;
 }
 
-.card-body > p {
-  font-size: 1rem;
+.card-body > .body-content {
+  font-size: 1.1rem;
   font-weight: bold;
   color: black;
   display: flex;
@@ -131,6 +131,8 @@
       display: flex;
       flex-direction: column;
     }
+
+
 
     .card-body> h2{
       font-size: 1.2rem;
