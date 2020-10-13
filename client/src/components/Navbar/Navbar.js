@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import MenuItems from "./MenuItems.js";
 import styles from "./Navbar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import FalseNineIcon from "../../Icons/FalseNineFitting";
 import { useSelector, useDispatch } from "react-redux";
 import { setIsLoggedIn } from "../../redux/actions";
@@ -9,6 +9,7 @@ import axios from "axios";
 const Navbar = (props) => {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const dispatch = useDispatch();
+  const history =useHistory();
   useEffect(() => {
     const updateDropDown = () => {
       if (window.innerWidth > 1250 && props.navbarClicked) {
@@ -23,7 +24,16 @@ const Navbar = (props) => {
 
   return (
     <div className={styles["Navbar"]}>
-      <div className={styles["navbar-title-logo"]}>
+      <div
+        className={styles["navbar-title-logo"]}
+        onClick={() => {
+          if (props.sidebarClicked) {
+            props.setSidebarClicked(false);
+          }
+          props.setNavbarClicked(false);
+          history.push("/");
+        }}
+      >
         <FalseNineIcon width="37px" height="37px" />
         <label className={styles["navbar-title"]}>THE FALSE 9</label>
       </div>
