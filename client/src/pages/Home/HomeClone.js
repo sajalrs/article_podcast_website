@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect, useState} from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import MediumCard from "../../components/Cards/MediumCard/MediumCard"
 import Page from "../../components/Page/Page";
@@ -6,8 +6,21 @@ import styles from "../../components/Page/Page.module.css";
 import { useSelector } from "react-redux";
 const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const updateIsMobile = () => {
+      if (window.innerWidth <= 550) {
+        setIsMobile(true)
+      }
+    };
+    window.addEventListener("resize", updateIsMobile);
+    return () => {
+      window.addEventListener("resize", updateIsMobile);
+    };
+  }, []);
+  
   const contents = articles.map((item, index) => (
-    index % 4 == 0 ? (
+    index % 4 == 0 || isMobile? (
       <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
         <LargeCard
           image={item.image}
