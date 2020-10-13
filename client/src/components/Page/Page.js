@@ -26,58 +26,25 @@ const Page = (props) => {
   const contentPaneBoxRef = useRef();
   const headerBoxRef = useRef();
   const sidebarFixTopOffset = useRef(props.sidebarFixTopOffset);
-
+  const headlineBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  // useEffect(() => {
-  //   const fixNavbar = (e) => {
-  //     if (window.scrollY > headerBoxRef.current.clientHeight) {
-  //       changeNavFix(true);
-  //     } else {
-  //       changeNavFix(false);
-  //     }
-  //   };
-
-  //   const fixSidebar = (e) => {
-
-  //     if (window.scrollY > headerBoxRef.current.clientHeight + sidebarFixTopOffset.current && !sidebarFixed) {
-  //       setSidebarFixed(true);
-
-  //     } else {
-  //       if(sidebarFixed){
-  //         setSidebarFixed(false);
-
-  //       }
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", fixSidebar);
-  //   window.addEventListener("scroll", fixNavbar);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", fixSidebar);
-  //     window.removeEventListener("scroll", fixNavbar);
-
-  //   }
-  // }, []);
 
   useEffect(() => {
     const scrollEvents = (e) => {
       const curScroll = window.scrollY;
-      console.log(
-        `scroll: ${curScroll} header: ${headerBoxRef.current.clientHeight} content: ${contentPaneBoxRef.current.clientHeight} footer: ${footerBoxRef.current.clientHeight}`
-      );
 
       if (curScroll > headerBoxRef.current.clientHeight) {
         changeNavFix(true);
         if (
           curScroll >
-          headerBoxRef.current.clientHeight + props.sidebarFixTopOffset
+          headerBoxRef.current.clientHeight + sidebarFixTopOffset.current + headlineBoxRef.current.clientHeight
         ) {
           setSidebarFixed(true);
           if (
             curScroll >
+            headlineBoxRef.current.clientHeight +
             contentPaneBoxRef.current.clientHeight -
               headerBoxRef.current.clientHeight -
               footerBoxRef.current.clientHeight
@@ -104,39 +71,6 @@ const Page = (props) => {
     };
   });
 
-  // useEffect(() => {
-  //   const body = document.body,
-  //   html = document.documentElement;
-
-  // const height = Math.max(
-  //   body.scrollHeight,
-  //   body.offsetHeight,
-  //   html.clientHeight,
-  //   html.scrollHeight,
-  //   html.offsetHeight
-  // );
-  //   if(audioPlayerBoxRef.current.clientHeight !== boxHeight){
-  //     setBoxHeight(Math.max(audioPlayerBoxRef.current.clientHeight, boxHeight))
-  //   }
-  //     const fixAudioPlayer = (e) => {
-
-  //     if (
-  //       window.scrollY >
-  //       height - 2 * (footerBoxRef.current.clientHeight + boxHeight)
-  //     ) {
-  //       setAudioPlayerFixed(false);
-  //     } else {
-  //       setAudioPlayerFixed(true);
-  //     }
-
-  //   };
-
-  //   window.addEventListener("scroll", fixAudioPlayer);
-  //   return () => {
-  //     window.removeEventListener("scroll", fixAudioPlayer);
-  //   };
-  // });
-
   useEffect(() => {
     if (sidebarClicked) {
       if (navbarClicked) {
@@ -158,25 +92,6 @@ const Page = (props) => {
       }
     }
   }, [navbarClicked]);
-
-  // useEffect(() => {
-  //   const fixSidebar = (e) => {
-  //     if (window.scrollY > headerBoxRef.current.clientHeight + sidebarFixTopOffset && !sidebarFixed) {
-  //       setSidebarFixed(true);
-
-  //     } else {
-  //       if(sidebarFixed){
-  //         setSidebarFixed(false);
-
-  //       }
-  //     }
-  //   };
-
-  //   window.addEventListener("scroll", fixSidebar);
-  //   return () => {
-  //     window.removeEventListener("scroll", fixSidebar);
-  //   };
-  // });
 
   const renderOnceNavbar = (
     <Navbar
@@ -208,9 +123,12 @@ const Page = (props) => {
 
   return (
     <div className={styles["overarching"]}>
-      {props.headline ? (
-        <div className={styles["primary-color-background"]}></div>
-      ) : null}
+      
+        {props.headline ? (
+          <div className={styles["primary-color-background"]}></div>
+        ) : null}
+     
+
       <div className={styles["Page"]}>
         <Header ref={headerBoxRef} className={styles["Header"]} />
         {navFixed ? (
@@ -232,7 +150,9 @@ const Page = (props) => {
             {renderOnceNavbar}
           </div>
         )}
+        <div ref={headlineBoxRef}>
         {props.headline ? props.headline : null}
+        </div>
         <div className={styles["content-pane-side-bar"]}>
           <div ref={contentPaneBoxRef} className={styles["content-pane"]}>
             <div className={styles["main-pane"]}>{props.mainPane}</div>
