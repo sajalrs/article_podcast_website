@@ -110,9 +110,13 @@
 .main-pane-item {
   padding-top: 36px;
   padding-bottom: 36px;
-  justify-content: center;
+  justify-content: flex-start;
   display: flex;
-  
+  width: 100%;
+}
+
+.main-pane-item-centered{
+  justify-content: center;
 }
 
 .main-pane-list-item {
@@ -120,6 +124,8 @@
   display: flex;
   justify-content: center;
 }
+
+
 
 .main-pane-list-item p {
   font-size: 1.5rem;
