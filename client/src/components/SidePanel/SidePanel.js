@@ -9,7 +9,6 @@ import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "bo
 const SidePanel = (props) => {
   const cardListRef = useRef();
   const sidePanelDivRef = useRef();
-  const [titlePos, setTitlePos] = useState();
   const youtubeVideos = useSelector(state => state.videoPlayer.youtubeVideos)
   useEffect(() => {
     if(props.sidebarClicked && props.sidebarFixed){
@@ -23,9 +22,7 @@ const SidePanel = (props) => {
  
 
 
-  useEffect(() => {
-    setTitlePos(sidePanelDivRef.current.innerWidth);
-  },[])
+
  
   return (
     <div
@@ -37,10 +34,10 @@ const SidePanel = (props) => {
       }
     >
       {/* style={{right: titlePos}} */}
-      <label className={styles["side-panel-title"]}  onClick={() => {props.setSidebarClicked(!props.sidebarClicked)}}>
+      <label className={props.sidebarFixed? styles["side-panel-title"]: `${styles["side-panel-title"]} ${styles["side-panel-title-not-fixed"]} ` } onClick={() => {props.setSidebarClicked(!props.sidebarClicked)}}>
         <label className={styles["side-panel-title-text"]}>VIDEO PODCASTS{" "}</label>
         <i
-          className={props.sidebarClicked? `${styles["fas"]} ${styles["fa-chevron-up"]} fas fa-chevron-up` :`${styles["fas"]} ${styles["fa-chevron-down"]} fas fa-chevron-down`}
+          className={props.sidebarClicked? `${styles["fas"]} ${styles["fa-chevron-right"]} fas fa-chevron-right` :`${styles["fas"]} ${styles["fa-chevron-left"]} fas fa-chevron-left`}
         ></i>
       </label>
       <ul ref={cardListRef} className={props.sidebarFixed? `${styles["card-list"]} ${styles["card-list-fixed"]} `: `${styles["card-list"]} ${styles["card-list-not-fixed"]} ` } >
