@@ -11,7 +11,7 @@ const MenuItems = [
         "className": "nav-link"
     },
     {
-        "title": "Blog",
+        "title": "Articles",
         "url": "/articles",
         "className": "nav-link"
     }
