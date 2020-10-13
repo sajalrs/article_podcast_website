@@ -141,7 +141,6 @@ const Edit = (props) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    // if(!(article.title === formData.title && article.image === formData.image && article.author === formData.author)){
     setArticle({
       ...article,
       title: formData.title,
@@ -254,7 +253,7 @@ const Edit = (props) => {
 
   return (
     <Page
-      sidebarFixTopOffset={35 + 644}
+      sidebarFixTopOffset={0}
       headline={headline}
       mainPane={contents}
     />
