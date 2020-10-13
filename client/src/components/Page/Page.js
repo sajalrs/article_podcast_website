@@ -12,7 +12,7 @@ import {
 } from "body-scroll-lock";
 
 const Page = (props) => {
-  const offsetInitial = useRef(50);
+  const offsetInitial = useRef(100);
   const [topOffset, setTopOffset] = useState(offsetInitial.current);
   const [navFixed, changeNavFix] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -25,7 +25,7 @@ const Page = (props) => {
   const [navbarClicked, setNavbarClicked] = useState(false);
   const contentPaneBoxRef = useRef();
   const headerBoxRef = useRef();
-  const sidebarFixTopOffset = useRef(props.sidebarFixTopOffset);
+  const sidebarFixTopOffset = useRef(props.sidebarFixTopOffset + 85);
   const headlineBoxRef = useRef();
   useEffect(() => {
     window.scrollTo(0, 0);
