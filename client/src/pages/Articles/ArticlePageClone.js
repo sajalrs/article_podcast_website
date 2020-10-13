@@ -194,7 +194,8 @@ const ArticlePage = (props) => {
 
   return (
     <Page
-      sidebarFixTopOffset={35 + 644}
+      // sidebarFixTopOffset={35 + 644}
+      sidebarFixTopOffset={0}
       headline={headline}
       mainPane={contents}
     />
