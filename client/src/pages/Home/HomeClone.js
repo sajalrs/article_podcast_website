@@ -1,22 +1,37 @@
 import React from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
+import MediumCard from "../../components/Cards/MediumCard/MediumCard"
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useSelector } from "react-redux";
 const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
-  const contents = articles.map((item) => (
-    <div className={`${styles["main-pane-item"]}`}>
-      <LargeCard
-        image={item.image}
-        date={item.date}
-        title={item.title}
-        text={item.description}
-        author={item.author}
-        contentType={item.contentType}
-        link={item.link}
-      />
-    </div>
+  const contents = articles.map((item, index) => (
+    index % 4 == 0 ? (
+      <div className={`${styles["main-pane-item"]}`}>
+        <LargeCard
+          image={item.image}
+          date={item.date}
+          title={item.title}
+          text={item.description}
+          author={item.author}
+          contentType={item.contentType}
+          link={item.link}
+        />
+      </div>
+    ) : (
+      <div className={`${styles["main-pane-item"]}`}>
+        <MediumCard
+          image={item.image}
+          date={item.date}
+          title={item.title}
+          text={item.description}
+          author={item.author}
+          contentType={item.contentType}
+          link={item.link}
+        />
+      </div>
+    )
   ));
   return <Page sidebarFixTopOffset={0} mainPane={contents} />;
 };
