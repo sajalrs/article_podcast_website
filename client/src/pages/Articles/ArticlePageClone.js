@@ -67,7 +67,7 @@ const ArticlePage = (props) => {
                 );
               case "block-quote":
                 return (
-                  <div className={styles["main-pane-item"]}>
+                  <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
                     <blockquote>{children}</blockquote>
                   </div>
                 );
@@ -100,7 +100,7 @@ const ArticlePage = (props) => {
               case "image": {
                 const src = obj.data["src"];
                 return (
-                  <div className={styles["main-pane-item"]}>
+                  <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
                     <figure className={styles["image-container"]}>
                       <img src={src} />
                     </figure>
@@ -110,7 +110,7 @@ const ArticlePage = (props) => {
               case "figure": {
                 const src = obj.data["src"];
                 return (
-                  <div className={styles["main-pane-item"]}>
+                  <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
                     <figure className={styles["image-container"]}>
                       <img src={src} />
                       <figcaption>
