@@ -93,7 +93,8 @@ const fetchYoutubeVideos = () => {
   };
 };
 
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancer = compose;
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 store.dispatch(isLoggedIn());
 store.dispatch(fetchBlogArticles());
