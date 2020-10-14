@@ -59,15 +59,15 @@ const ImageContainer = (props) => {
 
   return props.image ? (
     <div
-      className={styles["img-container"]}
-      style={{ backgroundImage: `url('${props.image}')` }}
-      onClick={() => {
-        if (props.audioPlayerRef) {
-          props.audioPlayerRef.current.play();
-        }
-        props.onClick();
-      }}
-    >
+    className={styles["img-container"]}
+    onClick={() => {
+      if (props.audioPlayerRef) {
+        props.audioPlayerRef.current.play();
+      }
+      props.onClick();
+    }}
+  >
+     <img  src={props.image} loading="lazy"/>
       <div>
         {props.isPlayable && (
           <i
