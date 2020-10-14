@@ -124,6 +124,13 @@ export const setIsLoggedIn = (setTo) => {
     }
 }
 
+export const setUser = (setTo) => {
+    return{
+        type: 'SET_USER',
+        payload: setTo
+    }
+}
+
 //Device Actions
 export const setIsMobile = (setTo) => {
     return{
