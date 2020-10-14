@@ -193,6 +193,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding: 10px;
 }
 
 .headline-form-input{
@@ -257,6 +258,21 @@
   border-color: var(--secondary-color);
   padding-right: 35px;
 }
+
+.register-login-form-text{
+  display: flex;
+  flex-direction: column;
+}
+
+.register-login-form-text> label{
+  padding: 5px;
+}
+
+.register-login-form-text:hover{
+  cursor: pointer;;
+}
+
+
 
 /* 
   .App-header {
