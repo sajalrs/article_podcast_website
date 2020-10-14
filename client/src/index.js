@@ -19,7 +19,6 @@ import {
 const isLoggedIn = () => {
   return async (dispatch) => {
     await axios.get("/auth/isloggedin").then((response) => {
-      console.log(response.status);
       if (response.status !== 200) {
         dispatch(setIsLoggedIn(false));
       } else {
