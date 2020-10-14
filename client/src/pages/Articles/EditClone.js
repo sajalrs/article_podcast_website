@@ -148,7 +148,7 @@ const Edit = (props) => {
       date: formData.date,
       image: formData.image,
     });
-    console.log(article);
+    // console.log(article);
     // }
   };
 
