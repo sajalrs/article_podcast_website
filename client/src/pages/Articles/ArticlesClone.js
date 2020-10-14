@@ -6,21 +6,7 @@ import styles from "../../components/Page/Page.module.css";
 import { useSelector } from "react-redux";
 const Articles = (props) => {
   const articles = useSelector((state) => state.blog.articles);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 550);
-  useEffect(() => {
-    const updateIsMobile = () => {
-      if (window.innerWidth <= 550) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
-    };
-    window.addEventListener("resize", updateIsMobile);
-    return () => {
-      window.addEventListener("resize", updateIsMobile);
-    };
-  }, []);
-
+  const isMobile = useSelector((state) => state.device.isMobile);
   const contents = articles.map((item, index) =>
     isMobile ? (
       <div

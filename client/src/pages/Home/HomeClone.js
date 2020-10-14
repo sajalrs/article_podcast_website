@@ -5,7 +5,8 @@ import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useSelector } from "react-redux";
 const Home = (props) => {
-  const [articles, isMobile] = useSelector((state) => [state.blog.articles,state.device.isMobile]);
+  const articles = useSelector((state) => state.blog.articles);
+  const isMobile = useSelector((state) => state.device.isMobile);
 
   const contents = articles.map((item, index) =>
     index % 4 == 0 || isMobile ? (
