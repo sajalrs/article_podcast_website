@@ -71,7 +71,7 @@ const ImageContainer = (props) => {
         props.onClick();
       }}
     >
-      <img src={props.image} />
+      <img src={props.image} loading="lazy" />
       <div>
         {props.isPlayable && (
           <i
