@@ -49,8 +49,9 @@ const Login = (props) => {
   };
 
   const contents = (
-    <div>
-      <form onSubmit={handleSubmit} className={styles["headline-form"]}>
+    <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
+     <div className={`${styles["register-login-form"]}`}>
+     <form onSubmit={handleSubmit} className={styles["headline-form"]}>
         <div className={styles["horizontal"]}>
           <label>Email: </label>
           <input
@@ -75,6 +76,7 @@ const Login = (props) => {
           className={styles["submit-button"]}
         />
       </form>
+      </div>
     </div>
   );
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import MenuItems from "./MenuItems.js";
 import styles from "./Navbar.module.css";
 import { Link, useHistory } from "react-router-dom";
