@@ -253,15 +253,38 @@
   
   width: 100%;
   max-width: 500px;
-  padding: 20px;
+  /* padding: 20px; */
   border-style: solid solid solid solid;
   border-color: var(--secondary-color);
+
+}
+
+
+.register-login-form-padded{
+  padding-left: 0px;
   padding-right: 35px;
+  padding-bottom: 20px;
+}
+
+.register-login-form > h2{
+  margin-top: 0px;
+  padding: 20px;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--primary-color);
+  color: white;
+  border-style: none none solid none;
+  border-color: var(--secondary-color);
+  color: var(--font-color);
+  font-size: 1.5rem;
+
+  font-weight: bold;
+  letter-spacing: 3px;
 }
 
 .register-login-form-text{
   display: flex;
   flex-direction: column;
+  padding-left: 20px;
 }
 
 .register-login-form-text> label{

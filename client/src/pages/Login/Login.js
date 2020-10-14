@@ -52,6 +52,8 @@ const Login = (props) => {
   const contents = (
     <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
      <div className={`${styles["register-login-form"]}`}>
+     <h2>LOGIN</h2>
+     <div className={`${styles["register-login-form-padded"]}`}>
      <form onSubmit={handleSubmit} className={styles["headline-form"]}>
         <div className={styles["horizontal"]}>
           <label>Email: </label>
@@ -85,7 +87,7 @@ const Login = (props) => {
         <Link to={"/register"}>Don't have an account?</Link>
       </label>
       </div>
-     
+      </div> 
       </div>
     </div>
   );
