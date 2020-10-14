@@ -15,7 +15,7 @@ const Page = (props) => {
   const offsetInitial = useRef(100);
   const [topOffset, setTopOffset] = useState(offsetInitial.current);
   const [navFixed, changeNavFix] = useState(false);
-  const [isActive, setActive] = useState(false);
+  const [audioPlayerActive, setAudioPlayerActive] = useState(false);
   // const [boxHeight, setBoxHeight] = useState(202);
   const audioPlayerBoxRef = useRef();
   const [audioPlayerFixed, setAudioPlayerFixed] = useState(false);
@@ -39,13 +39,15 @@ const Page = (props) => {
         changeNavFix(true);
         if (
           curScroll >
-          headerBoxRef.current.clientHeight + sidebarFixTopOffset.current + headlineBoxRef.current.clientHeight
+          headerBoxRef.current.clientHeight +
+            sidebarFixTopOffset.current +
+            headlineBoxRef.current.clientHeight
         ) {
           setSidebarFixed(true);
           if (
             curScroll >
             headlineBoxRef.current.clientHeight +
-            contentPaneBoxRef.current.clientHeight -
+              contentPaneBoxRef.current.clientHeight -
               headerBoxRef.current.clientHeight -
               footerBoxRef.current.clientHeight
           ) {
@@ -76,6 +78,9 @@ const Page = (props) => {
       if (navbarClicked) {
         setNavbarClicked(false);
       }
+      if (audioPlayerActive) {
+        setAudioPlayerActive(false);
+      }
     } else {
       clearAllBodyScrollLocks();
     }
@@ -84,7 +89,12 @@ const Page = (props) => {
     if (navbarClicked) {
       setTopOffset(topOffset + 140);
       sidebarFixTopOffset.current += 140;
-      setSidebarClicked(false);
+      if(sidebarClicked){
+        setSidebarClicked(false);
+      }
+      if (audioPlayerActive) {
+        setAudioPlayerActive(false);
+      }
     } else {
       if (topOffset != offsetInitial.current) {
         setTopOffset(topOffset - 140);
@@ -92,6 +102,17 @@ const Page = (props) => {
       }
     }
   }, [navbarClicked]);
+  useEffect(() => {
+    if(audioPlayerActive){
+      if(sidebarClicked){
+        setSidebarClicked(false)
+      } 
+      if(navbarClicked){
+        setNavbarClicked(false)
+      }
+
+    }
+  }, [audioPlayerActive]);
 
   const renderOnceNavbar = (
     <Navbar
@@ -115,19 +136,17 @@ const Page = (props) => {
   const renderOnceAudioPlayer = (
     <AudioPlayer
       ref={audioPlayerBoxRef}
-      isActive={isActive}
-      setActive={setActive}
+      isActive={audioPlayerActive}
+      setActive={setAudioPlayerActive}
       audioRef={props.audioRef}
     />
   );
 
   return (
     <div className={styles["overarching"]}>
-      
-        {props.headline ? (
-          <div className={styles["primary-color-background"]}></div>
-        ) : null}
-     
+      {props.headline ? (
+        <div className={styles["primary-color-background"]}></div>
+      ) : null}
 
       <div className={styles["Page"]}>
         <Header ref={headerBoxRef} className={styles["Header"]} />
@@ -150,13 +169,13 @@ const Page = (props) => {
             {renderOnceNavbar}
           </div>
         )}
-        <div ref={headlineBoxRef}>
-        {props.headline ? props.headline : null}
-        </div>
+        <div ref={headlineBoxRef}>{props.headline ? props.headline : null}</div>
         <div className={styles["content-pane-side-bar"]}>
           <div ref={contentPaneBoxRef} className={styles["content-pane"]}>
             <div className={styles["main-pane"]}>{props.mainPane}</div>
-            {props.sidePane? <div className={styles["side-pane"]}>{props.sidePane}</div> : null}
+            {props.sidePane ? (
+              <div className={styles["side-pane"]}>{props.sidePane}</div>
+            ) : null}
           </div>
           <div className={styles["side-bar"]}>
             {sidebarFixed ? (
@@ -171,7 +190,7 @@ const Page = (props) => {
                 {renderOnceSidePanel}
               </div>
             ) : (
-              <div style={{ marginTop: sidebarFixTopOffset.current}}>
+              <div style={{ marginTop: sidebarFixTopOffset.current }}>
                 {renderOnceSidePanel}
               </div>
             )}
