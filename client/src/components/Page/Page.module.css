@@ -268,7 +268,8 @@
 
 .register-login-form > h2{
   margin-top: 0px;
-  padding: 20px;
+  padding: 10px;
+  padding-left: 25px;
   font-family: 'Montserrat', sans-serif;
   background-color: var(--primary-color);
   color: white;
@@ -421,7 +422,9 @@
     padding-left: 0px;
     padding-right: 0px;
   }
-
+  .register-login-form > h2{
+    padding-left: 15px;
+  }
   .main-pane-item{
     justify-content: center;
   }
