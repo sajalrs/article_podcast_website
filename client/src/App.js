@@ -16,6 +16,7 @@ import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAudioPlayerRef, setIsMobile } from "./redux/actions";
+import { get } from "mongoose";
 
 const App = () => {
   const audioPlayerRef = useRef();
@@ -40,6 +41,7 @@ const App = () => {
       };
     });
   }, []);
+
   useEffect(() => {
     dispatch(setAudioPlayerRef(audioPlayerRef));
   }, [audioPlayerRef]);
