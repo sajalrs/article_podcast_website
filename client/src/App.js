@@ -15,7 +15,7 @@ import Login from "./pages/Login/Login";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setAudioPlayerRef } from "./redux/actions";
+import { setAudioPlayerRef, setIsMobile } from "./redux/actions";
 
 const App = () => {
   const audioPlayerRef = useRef();
@@ -43,7 +43,19 @@ const App = () => {
   useEffect(() => {
     dispatch(setAudioPlayerRef(audioPlayerRef));
   }, [audioPlayerRef]);
-
+  useEffect(() => {
+    const updateIsMobile = () => {
+      if (window.innerWidth <= 550) {
+        dispatch(setIsMobile(true));
+      } else {
+        dispatch(setIsMobile(false));
+      }
+    };
+    window.addEventListener("resize", updateIsMobile);
+    return () => {
+      window.addEventListener("resize", updateIsMobile);
+    };
+  }, []);
   return (
     <div className="overarching">
       <div ref={scrollLockRef}></div>
