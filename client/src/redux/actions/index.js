@@ -123,3 +123,11 @@ export const setIsLoggedIn = (setTo) => {
         payload: setTo
     }
 }
+
+//Device Actions
+export const setIsMobile = (setTo) => {
+    return{
+        type: 'SET_IS_MOBILE',
+        payload: setTo
+    }
+}
