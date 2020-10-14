@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
+import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setIsLoggedIn } from "../../redux/actions";
@@ -76,6 +77,15 @@ const Login = (props) => {
           className={styles["submit-button"]}
         />
       </form>
+      <div className={styles["register-login-form-text"]}>
+      <label>
+        <Link to={"/"}>Forgot your password or locked out?</Link>
+      </label>
+      <label>
+        <Link to={"/register"}>Don't have an account?</Link>
+      </label>
+      </div>
+     
       </div>
     </div>
   );
