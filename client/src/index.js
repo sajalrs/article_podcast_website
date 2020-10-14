@@ -14,6 +14,7 @@ import {
   setVideoPlayerYoutubeVideos,
   setBlogArticles,
   setIsLoggedIn,
+  setUser
 } from "./redux/actions";
 
 const isLoggedIn = () => {
@@ -23,6 +24,7 @@ const isLoggedIn = () => {
         dispatch(setIsLoggedIn(false));
       } else {
         dispatch(setIsLoggedIn(true));
+        dispatch(setUser(response.data.user));
       }
     });
   };

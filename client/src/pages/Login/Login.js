@@ -4,7 +4,7 @@ import styles from "../../components/Page/Page.module.css";
 import {Link} from 'react-router-dom'
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setIsLoggedIn } from "../../redux/actions";
+import { setIsLoggedIn, setUser } from "../../redux/actions";
 import axios from "axios";
 
 const Login = (props) => {
@@ -25,10 +25,10 @@ const Login = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser();
+    loginUser();
   };
 
-  const registerUser = () => {
+  const loginUser = () => {
     const options = {
       headers: { "Content-Type": "application/json" },
     };
@@ -37,8 +37,7 @@ const Login = (props) => {
       .post("/auth/login", JSON.stringify(formData), options)
       .then((res) => {
         alert("Login Successful");
-        dispatch(setIsLoggedIn(true));
-        history.push("/");
+        isLoggedIn().then(res => history.push("/"))
       })
       .catch((err) => {
         if (err.response.status === 401 || err.response.status === 400) {
@@ -49,6 +48,16 @@ const Login = (props) => {
       });
   };
 
+  const isLoggedIn = async () => {
+    await axios.get("/auth/isloggedin").then((response) => {
+      if (response.status !== 200) {
+        dispatch(setIsLoggedIn(false));
+      } else {
+        dispatch(setIsLoggedIn(true));
+        dispatch(setUser(response.data.user));
+      }
+    });
+  }
   const contents = (
     <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
      <div className={`${styles["register-login-form"]}`}>
