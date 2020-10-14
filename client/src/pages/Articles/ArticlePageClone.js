@@ -102,7 +102,7 @@ const ArticlePage = (props) => {
                 return (
                   <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
                     <figure className={styles["image-container"]}>
-                      <img src={src} />
+                      <img src={src} loading="lazy"/>
                     </figure>
                   </div>
                 );
@@ -112,7 +112,7 @@ const ArticlePage = (props) => {
                 return (
                   <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
                     <figure className={styles["image-container"]}>
-                      <img src={src} />
+                      <img src={src} loading="lazy"/>
                       <figcaption>
                         <strong>{children}</strong>
                       </figcaption>
