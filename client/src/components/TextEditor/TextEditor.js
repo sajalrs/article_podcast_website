@@ -206,7 +206,7 @@ const TextEditor = (props) => {
         return (
           <div className={styles["main-pane-item"]}>
             <figure className={styles["image-container"]}>
-              <img src={src} />
+              <img src={src} loading="lazy" />
             </figure>
           </div>
         );
@@ -216,7 +216,7 @@ const TextEditor = (props) => {
         return (
           <div className={styles["main-pane-item"]}>
             <figure className={styles["image-container"]}>
-              <img src={src} />
+              <img src={src} loading="lazy"/>
               <figcaption>
                 <strong>{children}</strong>
               </figcaption>
