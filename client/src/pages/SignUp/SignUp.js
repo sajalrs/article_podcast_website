@@ -73,6 +73,8 @@ const SignUp = (props) => {
       className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
     >
       <div className={`${styles["register-login-form"]}`}>
+      <h2>SIGN UP</h2>
+     <div className={`${styles["register-login-form-padded"]}`}>
         <form onSubmit={handleSubmit} className={styles["headline-form"]}>
           <div className={styles["horizontal"]}>
             <label>First Name: </label>
@@ -129,6 +131,7 @@ const SignUp = (props) => {
           <label>
             <Link to={"/login"}>Already have an account?</Link>
           </label>
+        </div>
         </div>
       </div>
     </div>
