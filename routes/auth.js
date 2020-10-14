@@ -70,9 +70,18 @@ router.post("/login", async (req, res) => {
   // res.send({ token: token });
 });
 
-router.get("/isloggedin", verify, (req, res) => {
+router.get("/isloggedin", verify, async (req, res) => {
   try {
-    res.json({ _id: req.user._id });
+    const user = await User.findById(req.user._id);
+    res.json({
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      },
+    });
   } catch (err) {
     res.send(err);
   }
@@ -80,7 +89,9 @@ router.get("/isloggedin", verify, (req, res) => {
 
 router.get("/logout", verify, (req, res) => {
   try {
-    res.cookie("token", { httpOnly: true, expires: Date.now() }).json({ token: token });
+    res
+      .cookie("token", { httpOnly: true, expires: Date.now() })
+      .json({ token: token });
   } catch (err) {
     res.send(err);
   }
