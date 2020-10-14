@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
-import {useHistory} from 'react-router-dom'
-import axios from 'axios'
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
 const SignUp = (props) => {
-  const history = useHistory()
+  const history = useHistory();
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
+    reenteredPassword: "",
   });
 
-  const onNameChange = (e) => {
-    setFormData({ ...formData, name: e.target.value });
+  const onFirstNameChange = (e) => {
+    setFormData({ ...formData, firstName: e.target.value });
+  };
+
+  const onLastNameChange = (e) => {
+    setFormData({ ...formData, lastName: e.target.value });
   };
 
   const onEmailChange = (e) => {
@@ -21,74 +27,110 @@ const SignUp = (props) => {
 
   const onPasswordChange = (e) => {
     setFormData({ ...formData, password: e.target.value });
-  }
+  };
+
+  const onReenteredPasswordChange = (e) => {
+    setFormData({ ...formData, reenteredPassword: e.target.value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    registerUser()
-  }
+    e.preventDefault();
+    if (formData.password === formData.reenteredPassword) {
+      registerUser();
+    } else {
+      alert("Password and re-typed password don't match");
+    }
+  };
 
   const registerUser = () => {
+    const toPost = {
+      name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
+      email: formData.email,
+      password: formData.password,
+    };
 
-     const options = {
+    const options = {
       headers: { "Content-Type": "application/json" },
     };
 
-     axios
-     .post("/auth/register", JSON.stringify(formData), options)
-     .then((res) => {
-       alert("New User Registered");
-       history.push('/')
-     })
-     .catch((err) => {
-       if (err.response.status === 401 || err.response.status === 400) {
-         alert(err.response.data.error);
-       } else if (err.response.status !== 200) {
-         throw Error(err);
-       }
-     });
-
+    axios
+      .post("/auth/register", JSON.stringify(toPost), options)
+      .then((res) => {
+        alert("New User Registered");
+        history.push("/");
+      })
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 400) {
+          alert(err.response.data.error);
+        } else if (err.response.status !== 200) {
+          throw Error(err);
+        }
+      });
   };
 
   const contents = (
-    <div>
-      <form
-        onSubmit={handleSubmit}
-        className={styles["headline-form"]}
-      >
-        <div className={styles["horizontal"]}>
-          <label>Name: </label>
+    <div
+      className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
+    >
+      <div className={`${styles["register-login-form"]}`}>
+        <form onSubmit={handleSubmit} className={styles["headline-form"]}>
+          <div className={styles["horizontal"]}>
+            <label>First Name: </label>
+            <input
+              className={styles["headline-form-input"]}
+              type="text"
+              value={formData.firstName}
+              onChange={onFirstNameChange}
+            />
+          </div>
+          <div className={styles["horizontal"]}>
+            <label>Last Name: </label>
+            <input
+              className={styles["headline-form-input"]}
+              type="text"
+              value={formData.lastName}
+              onChange={onLastNameChange}
+            />
+          </div>
+          <div className={styles["horizontal"]}>
+            <label>Email: </label>
+            <input
+              className={styles["headline-form-input"]}
+              type="text"
+              value={formData.email}
+              onChange={onEmailChange}
+            />
+          </div>
+          <div className={styles["horizontal"]}>
+            <label>Password: </label>
+            <input
+              className={styles["headline-form-input"]}
+              type="password"
+              value={formData.password}
+              onChange={onPasswordChange}
+            />
+          </div>
+          <div className={styles["horizontal"]}>
+            <label>Re-enter Password: </label>
+            <input
+              className={styles["headline-form-input"]}
+              type="password"
+              value={formData.reenteredPassword}
+              onChange={onReenteredPasswordChange}
+            />
+          </div>
           <input
-            className={styles["headline-form-input"]}
-            type="text"
-            value={formData.name}
-            onChange={onNameChange}
+            type="submit"
+            value="Sign Up"
+            className={styles["submit-button"]}
           />
+        </form>
+        <div className={styles["register-login-form-text"]}>
+          <label>
+            <Link to={"/login"}>Already have an account?</Link>
+          </label>
         </div>
-        <div className={styles["horizontal"]}>
-          <label>Email: </label>
-          <input
-            className={styles["headline-form-input"]}
-            type="text"
-            value={formData.email}
-            onChange={onEmailChange}
-          />
-        </div>
-        <div className={styles["horizontal"]}>
-          <label>Password: </label>
-          <input
-            className={styles["headline-form-input"]}
-            type="password"
-            value={formData.password}
-            onChange={onPasswordChange}
-          />
-        </div>
-        <input
-          type="submit"
-          value="Sign Up"
-          className={styles["submit-button"]}
-        />
-      </form>
+      </div>
     </div>
   );
 
