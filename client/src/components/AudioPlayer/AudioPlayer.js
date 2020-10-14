@@ -130,6 +130,7 @@ const AudioPlayer = forwardRef((props, ref) => {
            podcasts[selected]
               .image
           }
+          loading="lazy"
         />
       </div>
       <div className={styles["player"]}>
