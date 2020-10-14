@@ -51,8 +51,8 @@
 
 .content-pane {
   background-color: white;
-  width: 80%;
-  
+  width: 100%;
+  /* justify-content: center; */
   align-self: center;
   padding-top: 36px;
   padding-bottom: 36px;
@@ -62,11 +62,14 @@
 .main-pane {
   padding-left: 36px;
   padding-right: 18px;
-  justify-content: flex-start;
+  justify-content: center;
+
   display: flex;
   flex-direction: column;
-  min-height: 1000px;
+  width: 80%;
+  min-height: 800px;
 }
+
 
 .main-pane-item li {
   padding-top: 18px;
@@ -113,6 +116,7 @@
   justify-content: flex-start;
   display: flex;
   width: 100%;
+  align-items: center;
 }
 
 .main-pane-item-centered{
@@ -141,7 +145,8 @@
 .side-pane {
   padding-right: 36px;
   padding-left: 18px;
-  align-self: flex-end;
+  align-self: flex-start;
+  width: 80%;
 }
 
 .heading {
@@ -187,6 +192,7 @@
 .headline-form{
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .headline-form-input{
@@ -242,7 +248,15 @@
   transition: all 0.3s ease 0s;
 }
 
-
+.register-login-form{
+  
+  width: 100%;
+  max-width: 500px;
+  padding: 20px;
+  border-style: solid solid solid solid;
+  border-color: var(--secondary-color);
+  padding-right: 35px;
+}
 
 /* 
   .App-header {
@@ -350,6 +364,10 @@
 @media screen and (max-width: 550px) {
   .main-pane > p {
     padding-left: 0px;
+  }
+
+  .register-login-form{
+    padding-right: 0px;
   }
 
   .main-pane {

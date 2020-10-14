@@ -156,7 +156,7 @@ const Page = (props) => {
         <div className={styles["content-pane-side-bar"]}>
           <div ref={contentPaneBoxRef} className={styles["content-pane"]}>
             <div className={styles["main-pane"]}>{props.mainPane}</div>
-            <div className={styles["side-pane"]}></div>
+            {props.sidePane? <div className={styles["side-pane"]}>{props.sidePane}</div> : null}
           </div>
           <div className={styles["side-bar"]}>
             {sidebarFixed ? (
