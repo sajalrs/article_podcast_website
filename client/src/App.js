@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {useEffect, useRef } from "react";
 import Home from "./pages/Home/HomeClone.js";
 import CreateArticle from "./pages/CreateArticle";
 import Articles from "./pages/Articles/ArticlesClone";
@@ -16,7 +16,6 @@ import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAudioPlayerRef, setIsMobile } from "./redux/actions";
-import { get } from "mongoose";
 
 const App = () => {
   const audioPlayerRef = useRef();
