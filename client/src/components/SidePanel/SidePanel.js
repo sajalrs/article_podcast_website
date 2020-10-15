@@ -42,9 +42,9 @@ const SidePanel = (props) => {
       </label>
       <ul ref={cardListRef} className={props.sidebarFixed? `${styles["card-list"]} ${styles["card-list-fixed"]} `: `${styles["card-list"]} ${styles["card-list-not-fixed"]} ` } >
         {
-        youtubeVideos.map((item) => {
+        youtubeVideos.map((item, index) => {
           return (
-            <li key={item.index}>
+            <li key={index}>
               <SmallCard
                 title={item.title}
                 image={item.image}

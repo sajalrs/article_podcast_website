@@ -15,8 +15,8 @@ function SvgF(props) {
             dx="15"
             dy="15"
             stdDeviation="0"
-            flood-color="var(--primary-color)"
-            flood-opacity="1"
+            floodColor="var(--primary-color)"
+            floodOpacity="1"
           />
         </filter>
       </defs>
