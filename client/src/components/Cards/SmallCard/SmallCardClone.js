@@ -1,8 +1,8 @@
 import React from "react";
-import styles from "./MediumCard.module.css";
+import styles from "./SmallCard.module.css";
 import {CardComponent} from "../Card"
 
-const MediumCard = (props) => {
+const SmallCard = (props) => {
  
   return (
     <CardComponent    image={props.image}
@@ -17,4 +17,4 @@ const MediumCard = (props) => {
 };
 
 
-export default MediumCard;
+export default SmallCard;

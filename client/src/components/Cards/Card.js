@@ -70,7 +70,7 @@ const CardComponent = (props) => {
         styles={props.styles}
         title={props.title}
         text={props.text}
-        date={Card.formatDate(props.date)}
+        date={props.date? Card.formatDate(props.date): null}
         author={props.author}
         onClick={onClick}
         audioPlayerRef={
@@ -119,10 +119,11 @@ const CardBody = (props) => {
       >
         {props.title}
       </h2>
+      {(props.author || props.date ) ?
       <p>
-        <span className={props.styles["author"]}>{props.author}</span>
-        <span className={props.styles["date"]}>{props.date}</span>
-      </p>
+       {(props.author) && <span className={props.styles["author"]}>{props.author}</span>}
+        {(props.date) && <span className={props.styles["date"]}>{props.date}</span>}
+      </p>: null}
       {props.text && <p className={props.styles["body-content"]}>{props.text}</p>}
     </div>
   ) : null;
