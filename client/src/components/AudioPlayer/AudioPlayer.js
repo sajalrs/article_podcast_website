@@ -67,9 +67,7 @@ const AudioPlayer = forwardRef((props, ref) => {
     audioPlayerRef.current.addEventListener("timeupdate", (e) => {
       dispatch(setAudioPlayerCurrentTime(e.target.currentTime));
     });
-    return () => {
-      audioPlayerRef.current.removeEventListener("timeupdate", () => {});
-    };}
+   }
   }, [audioPlayerRef]);
 
   const handleSliderChange = (e) => {
