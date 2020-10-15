@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./SmallCard.module.css";
-import Card from "../Card.js";
+import {Card} from "../Card.js";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { playAudio, playVideo } from "../../../redux/actions";

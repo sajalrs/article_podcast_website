@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useEffect, useRef } from "react";
 import SmallCard from "../Cards/SmallCard/SmallCard.js";
 import styles from "./SidePanel.module.css";
-import Card from "../Cards/Card.js";
+import {Card} from "../Cards/Card.js";
 import {useSelector, useDispatch} from 'react-redux'
 import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from "body-scroll-lock";
 

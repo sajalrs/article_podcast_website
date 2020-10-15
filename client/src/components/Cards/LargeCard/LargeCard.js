@@ -1,6 +1,6 @@
 import React, { useRef, forwardRef, useState, useEffect } from "react";
 import styles from "./LargeCard.module.css";
-import Card from "../Card.js";
+import {Card} from "../Card.js";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { playAudio, playVideo } from "../../../redux/actions";
