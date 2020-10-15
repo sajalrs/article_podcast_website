@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
+import LargeCard from "../../components/Cards/LargeCard/LargeCardClone.js";
 import MediumCard from "../../components/Cards/MediumCard/MediumCard";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
