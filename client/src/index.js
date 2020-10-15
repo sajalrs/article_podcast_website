@@ -7,7 +7,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import Card from "./components/Cards/Card.js";
+import {Card} from "./components/Cards/Card.js";
 import axios from "axios";
 import {
   setAudioPlayerPodcasts,
