@@ -11,6 +11,7 @@ const Home = (props) => {
   const contents = articles.map((item, index) =>
     index % 4 == 0 || isMobile ? (
       <div
+      key={index}
         className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
       >
         <LargeCard
