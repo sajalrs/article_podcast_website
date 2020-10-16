@@ -1,28 +1,39 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { render, screen} from "@testing-library/react";
 import App from "./App";
-import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "./redux/reducers";
-import thunk from "redux-thunk";
+import configureStore from 'redux-mock-store'
 import { Provider } from "react-redux";
 
-global.scrollTo = jest.fn()
+global.scrollTo = jest.fn();
+const mockStore = configureStore([]);
 
 describe("App", () => {
-  
-  const composeEnhancer = compose;
-  const store = createStore(
-    rootReducer,
-    composeEnhancer(applyMiddleware(thunk))
-  );
+  let store;
+  beforeEach(() => {
+    store = mockStore({
 
+    });
+  })
 
+  store.dispatch = jest.fn();
 
-  test("renders App component", () => {
+  test("App Component Renders", () => {
     render(
       <Provider store={store}>
         <App />
       </Provider>
     );
   });
+
+  test("Audio Player Ref Stored", () => {
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+
+    expect(store.dispatch).toHaveBeenCalledTimes(1);
+  });
+
+ 
 });

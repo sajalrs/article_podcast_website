@@ -38,9 +38,9 @@ const AudioPlayer = forwardRef((props, ref) => {
   const seekBarRef = useRef();
   useEffect(() => {
     if (audioPlayerRef && isPlaying !== wasPlaying) {
-      if (!isPlaying) {
+      if (!isPlaying && audioPlayerRef.current) {
         audioPlayerRef.current.pause();
-      } else if (isPlaying && !wasPlaying) {
+      } else if (isPlaying && !wasPlaying && audioPlayerRef.current) {
         audioPlayerRef.current.play();
       }
     }
@@ -53,7 +53,7 @@ const AudioPlayer = forwardRef((props, ref) => {
       let track = podcasts[selected]
         ? podcasts[selected].link
         : null;
-      if (track) {
+      if (track && audioPlayerRef.current) {
         if (audioPlayerRef.current.src !== track) {
           audioPlayerRef.current.src = track;
           audioPlayerRef.current.play();
@@ -63,7 +63,7 @@ const AudioPlayer = forwardRef((props, ref) => {
     }
   }, [audioPlayerRef, podcasts[selected]]);
 
-  useEffect(() => {if(audioPlayerRef){
+  useEffect(() => {if(audioPlayerRef && audioPlayerRef.current){
     audioPlayerRef.current.addEventListener("timeupdate", (e) => {
       dispatch(setAudioPlayerCurrentTime(e.target.currentTime));
     });
