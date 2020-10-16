@@ -7,23 +7,9 @@ global.scrollTo = jest.fn();
 
 describe("App", () => {
   test("App Component Renders", () => {
-    const {
-      getDispatchedActions,
-    } = renderWithRedux(<App />, {
+    renderWithRedux(<App />, {
       initialState: defaultStore
     });
-
-    console.log(getDispatchedActions())
   });
 
-
-  // test("Audio Player Ref Stored", () => {
-  //   render(
-  //     <Provider store={store}>
-  //       <App />
-  //     </Provider>
-  //   );
-
-  //   expect(store.dispatch).toHaveBeenCalledTimes(1);
-  // });
 });

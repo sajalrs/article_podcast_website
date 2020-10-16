@@ -46,7 +46,16 @@ export const defaultStore =
                 ],
           audioPlayerRef: null
       },
-        blog: {articles: []},
+        blog: {articles: [  {
+            index: 0,
+            _id: '5f608cd6bc43fe0017277139',
+            title: 'Preview of the 2020/21 La Liga season',
+            author: ' Nithanth Ravindran',
+            date: '2020-09-15T09:43:50.086Z',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/9/92/LaLiga_Santander.svg',
+            contentType: 1,
+            link: 'articles/id=5f608cd6bc43fe0017277139'
+          }]},
         device:  { isMobile: false},
         login: {isLoggedIn: false, user: null},
         videoPlayer: {
