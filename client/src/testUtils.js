@@ -1,9 +1,10 @@
 import React from 'react'
 import { render } from "@testing-library/react";
+import {BrowserRouter} from 'react-router-dom'
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store'
 
-export const renderWithRedux =(component, {initialState} = {}) => {
+export const renderWithRedux =(ui, {initialState} = {}) => {
 
     const mockStore = configureStore([]);
     const store = mockStore(initialState);
@@ -22,11 +23,43 @@ export const renderWithRedux =(component, {initialState} = {}) => {
     };
 
     return {
-        ...render(<Provider store={store}>{component}</Provider>),
+        ...render(<Provider store={store}>{ui}</Provider>),
         ...utils
     }
 
 }
+
+export const renderWithReduxAndRouter =(ui, {initialState} = {}, { route = '/' } = {}) => {
+  window.history.pushState({}, 'Test page', route)
+  const mockStore = configureStore([]);
+  const store = mockStore(initialState);
+
+  const utils = {
+      dispatch(action){
+          return store.dispatch(action);
+      },
+      
+      getDispatchedActions(){
+          return store.getActions();
+      },
+      getState(){
+          return store.getState();
+      },
+  };
+
+  return {
+      ...render(<Provider store={store}>{ui}</Provider>, {wrapper:BrowserRouter}),
+      ...utils
+  }
+
+}
+
+export const renderWithRouter = (ui, { route = '/' } = {}) => {
+  window.history.pushState({}, 'Test page', route)
+
+  return render(ui, { wrapper: BrowserRouter })
+}
+
 
 export const defaultStore = 
     {

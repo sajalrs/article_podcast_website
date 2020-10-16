@@ -190,7 +190,7 @@ const Page = (props) => {
                 {renderOnceSidePanel}
               </div>
             ) : (
-              <div style={{ marginTop: sidebarFixTopOffset.current }}>
+              <div style={{ marginTop: sidebarFixTopOffset.current || 0 }}>
                 {renderOnceSidePanel}
               </div>
             )}
