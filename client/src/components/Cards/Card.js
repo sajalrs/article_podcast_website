@@ -53,7 +53,7 @@ const CardComponent = (props) => {
     props.contentType === Card.ContentType["audio-internal"];
 
   return (
-    <article className={props.styles.card}>
+    <article className={props.styles? props.styles.card: ""}>
       <ImageContainer
         styles={props.styles}
         image={props.image}
