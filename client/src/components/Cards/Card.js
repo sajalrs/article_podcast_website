@@ -107,9 +107,9 @@ const ImageContainer = (props) => {
 };
 
 const CardBody = (props) => {
-  return props.title ? (
+  return props.title || props.author || props.date || props.text? (
     <div className={props.styles["card-body"]}>
-      <h2
+      {props.title && <h2
         onClick={() => {
           if (props.audioPlayerRef) {
             props.audioPlayerRef.current.play();
@@ -118,7 +118,7 @@ const CardBody = (props) => {
         }}
       >
         {props.title}
-      </h2>
+      </h2>}
       {(props.author || props.date ) ?
       <p>
        {(props.author) && <span className={props.styles["author"]}>{props.author}</span>}
