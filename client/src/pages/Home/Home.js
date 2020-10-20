@@ -4,6 +4,8 @@ import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useSelector } from "react-redux";
+import Comment from "../../components/Comment/Comment"
+
 const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
   const isMobile = useSelector((state) => state.device.isMobile);
@@ -11,7 +13,7 @@ const Home = (props) => {
   const contents = articles.map((item, index) =>
     index % 4 == 0 || isMobile ? (
       <div
-      key={index}
+        key={index}
         className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
       >
         <LargeCard
@@ -23,6 +25,7 @@ const Home = (props) => {
           contentType={item.contentType}
           link={item.link}
         />
+        <Comment/>
       </div>
     ) : (
       <div className={`${styles["main-pane-item"]}`}>
