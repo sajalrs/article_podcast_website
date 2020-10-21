@@ -15,6 +15,7 @@ const Home = (props) => {
       <div
         key={index}
         className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
+        style={{flexDirection: "column"}}
       >
         <LargeCard
           image={item.image}
