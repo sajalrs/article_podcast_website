@@ -58,7 +58,7 @@ const Comment = (props) => {
               );
             case "block-quote":
               return (
-                <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
+                <div className={`${styles["main-pane-item"]}`}>
                   <blockquote>{children}</blockquote>
                 </div>
               );
@@ -91,7 +91,7 @@ const Comment = (props) => {
             case "image": {
               const src = obj.data["src"];
               return (
-                <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
+                <div className={`${styles["main-pane-item"]}`}>
                   <figure className={styles["image-container"]}>
                     <img src={src} loading="lazy"/>
                   </figure>
@@ -101,7 +101,7 @@ const Comment = (props) => {
             case "figure": {
               const src = obj.data["src"];
               return (
-                <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
+                <div className={`${styles["main-pane-item"]}`}>
                   <figure className={styles["image-container"]}>
                     <img src={src} loading="lazy"/>
                     <figcaption>
@@ -153,7 +153,7 @@ const Comment = (props) => {
       (<TextEditor
         value={textEditorValue}
         setValue={setTextEditorValue}
-        onSave={() => {}}
+        onSave={() => {setIsEditable(false)}}
         toolbarFixed={false}
       />): 
   (<div dangerouslySetInnerHTML={{ __html:  html.serialize(textEditorValue) }}></div>)
