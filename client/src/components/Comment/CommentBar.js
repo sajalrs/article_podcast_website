@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import TextEditor from "../TextEditor/TextEditor";
-import { Value } from "slate";
+import React from "react";
+import Comment from "./Comment";
+
 const CommentBar = () => {
   const initialValue = {
     document: {
@@ -22,15 +22,14 @@ const CommentBar = () => {
       ],
     },
   };
-  const [textEditorValue, setTextEditorValue] = useState(Value.fromJSON(initialValue));
 
   return (
     <div>
-      <TextEditor
-        value={textEditorValue}
-        setValue={setTextEditorValue}
-        onSave={() => {}}
-        toolbarFixed={false}
+      <Comment
+        initialValue={initialValue}        
+      />
+       <Comment
+        initialValue={initialValue}        
       />
     </div>
   );
