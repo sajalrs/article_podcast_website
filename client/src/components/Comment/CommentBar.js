@@ -27,9 +27,11 @@ const CommentBar = () => {
     <div>
       <Comment
         initialValue={initialValue}        
+        isEditable={true}
       />
-       <Comment
+   <Comment
         initialValue={initialValue}        
+        isEditable={false}
       />
     </div>
   );
