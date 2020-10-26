@@ -3,26 +3,44 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { playAudio, playVideo } from "../../redux/actions";
 
-
-
 const Card = {
-    ContentType: Object.freeze({"article-internal":1, "article-external":2, "video-youtube":3, "video-external":4, "audio-internal": 5}),
-    formatDate: (dateString) => {
-        const date = new Date(dateString);
-        const monthNames = [
-          "January", "February", "March",
-          "April", "May", "June", "July",
-          "August", "September", "October",
-          "November", "December"
-        ];
-      
-        const day = date.getDate();
-        const monthIndex = date.getMonth();
-        const year = date.getFullYear();
-      
-        return day + ' ' + monthNames[monthIndex] + ', ' + year;
-      }
-}
+  ContentType: Object.freeze({
+    "article-internal": 1,
+    "article-external": 2,
+    "video-youtube": 3,
+    "video-external": 4,
+    "audio-internal": 5,
+  }),
+  formatDate: (dateString) => {
+    const date = new Date(dateString);
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const day = date.getDate();
+    const monthIndex = date.getMonth();
+    const year = date.getFullYear();
+
+    const hours = date.getHours() % 12;
+    const minutes = date.getMinutes();
+    const meridian = date.getHours() < 12 === 0 ? "AM" : "PM";
+
+    const time = `${hours}:${minutes} ${meridian}`;
+    const fullDate = day + " " + monthNames[monthIndex] + ", " + year;
+    return { date: fullDate, time: time };
+  },
+};
 
 const CardComponent = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +48,6 @@ const CardComponent = (props) => {
   const audioPlayerRef = useSelector(
     (state) => state.audioPlayer.audioPlayerRef
   );
- 
 
   const onClick = () => {
     switch (props.contentType) {
@@ -53,7 +70,7 @@ const CardComponent = (props) => {
     props.contentType === Card.ContentType["audio-internal"];
 
   return (
-    <article className={props.styles? props.styles.card: ""}>
+    <article className={props.styles ? props.styles.card : ""}>
       <ImageContainer
         styles={props.styles}
         image={props.image}
@@ -64,13 +81,12 @@ const CardComponent = (props) => {
             : null
         }
         isPlayable={isPlayable}
-   
       />
       <CardBody
         styles={props.styles}
         title={props.title}
         text={props.text}
-        date={props.date? Card.formatDate(props.date): null}
+        date={props.date ? Card.formatDate(props.date).date : null}
         author={props.author}
         onClick={onClick}
         audioPlayerRef={
@@ -107,27 +123,36 @@ const ImageContainer = (props) => {
 };
 
 const CardBody = (props) => {
-  return props.title || props.author || props.date || props.text? (
+  return props.title || props.author || props.date || props.text ? (
     <div className={props.styles["card-body"]}>
-      {props.title && <h2
-        onClick={() => {
-          if (props.audioPlayerRef) {
-            props.audioPlayerRef.current.play();
-          }
-          props.onClick();
-        }}
-      >
-        {props.title}
-      </h2>}
-      {(props.author || props.date ) ?
-      <p>
-       {(props.author) && <span className={props.styles["author"]}>{props.author}</span>}
-        {(props.date) && <span className={props.styles["date"]}>{props.date}</span>}
-      </p>: null}
-      {props.text && <p className={props.styles["body-content"]}>{props.text}</p>}
+      {props.title && (
+        <h2
+          onClick={() => {
+            if (props.audioPlayerRef) {
+              props.audioPlayerRef.current.play();
+            }
+            props.onClick();
+          }}
+        >
+          {props.title}
+        </h2>
+      )}
+      {props.author || props.date ? (
+        <p>
+          {props.author && (
+            <span className={props.styles["author"]}>{props.author}</span>
+          )}
+          {props.date && (
+            <span className={props.styles["date"]}>{props.date}</span>
+          )}
+        </p>
+      ) : null}
+      {props.text && (
+        <p className={props.styles["body-content"]}>{props.text}</p>
+      )}
     </div>
   ) : null;
 };
 
-export {CardComponent};
-export {Card};
+export { CardComponent };
+export { Card };
