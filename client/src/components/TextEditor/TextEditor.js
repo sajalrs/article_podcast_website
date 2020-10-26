@@ -81,34 +81,33 @@ const TextEditor = (props) => {
   const renderMarkButton = (type, icon) => {
     const isActive = hasMark(type);
     return (
-      <button
-        active={isActive}
+      <div
         onPointerDown={(event) => onClickMark(event, type)}
         className={
           isActive
-            ? `styles["active] styles["tooltip-icon-button"]`
+            ? `${styles["active"]} ${styles["tooltip-icon-button"]}`
             : styles["tooltip-icon-button"]
         }
       >
         <i className={icon} />
-      </button>
+      </div>
     );
   };
 
   const renderImageButton = (icon) => {
     return (
-      <button
+      <div
         className={styles["tooltip-icon-button"]}
         onPointerDown={onClickImage}
       >
         <i className={icon} />
-      </button>
+      </div>
     );
   };
 
   const renderSaveButton = (icon) => {
     return (
-      <button
+      <div
         className={styles["tooltip-icon-button"]}
         onPointerDown={
           props.onSave
@@ -117,20 +116,23 @@ const TextEditor = (props) => {
         }
       >
         <i className={icon} />
-      </button>
+      </div>
     );
   };
 
   const renderFigureButton = (icon) => {
     let isActive = hasBlock("figure");
     return (
-      <button
-        active={isActive}
-        className={styles["tooltip-icon-button"]}
+      <div
+      className={
+        isActive
+          ? `${styles["active"]} ${styles["tooltip-icon-button"]}`
+          : styles["tooltip-icon-button"]
+      }
         onPointerDown={onClickFigure}
       >
         <i className={icon} />
-      </button>
+      </div>
     );
   };
 
@@ -146,17 +148,16 @@ const TextEditor = (props) => {
     }
 
     return (
-      <button
+      <div
         className={
           isActive
-            ? `styles["active] styles["tooltip-icon-button"]`
+            ?`${styles["active"]} ${styles["tooltip-icon-button"]}`
             : styles["tooltip-icon-button"]
         }
-        active={isActive}
         onPointerDown={(event) => onClickBlock(event, type)}
       >
         <i className={icon}></i>
-      </button>
+      </div>
     );
   };
 
