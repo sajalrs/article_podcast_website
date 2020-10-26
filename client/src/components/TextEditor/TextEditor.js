@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Editor, getEventTransfer } from "slate-react";
 import { Block } from "slate";
 import styles from "./TextEditor.module.css";
@@ -6,6 +6,8 @@ import FormatToolbar from "./FormatToolbar";
 import { isKeyHotkey } from "is-hotkey";
 import imageExtensions from "image-extensions";
 import isUrl from "is-url";
+
+
 
 const schema = {
   document: {
@@ -36,6 +38,7 @@ const TextEditor = (props) => {
   const isUnderlinedHotkey = isKeyHotkey("mod+u");
   const isCodeHotkey = isKeyHotkey("mod+`");
   const isTabHotkey = isKeyHotkey("tab");
+  const bodyStyles = props.styles;
 
   const hasMark = (type) => {
     return value.activeMarks.some((mark) => mark.type === type);
@@ -163,31 +166,31 @@ const TextEditor = (props) => {
     switch (node.type) {
       case "paragraph":
         return (
-          <div className={styles["main-pane-item"]}>
+          <div className={bodyStyles["main-pane-item"]}>
             <p>{children}</p>
           </div>
         );
       case "block-quote":
         return (
-          <div className={styles["main-pane-item"]}>
+          <div className={bodyStyles["main-pane-item"]}>
             <blockquote>{children}</blockquote>
           </div>
         );
       case "bulleted-list":
         return (
-          <div className={styles["main-pane-item"]}>
+          <div className={bodyStyles["main-pane-item"]}>
             <ul>{children}</ul>
           </div>
         );
       case "heading-one":
         return (
-          <div className={styles["main-pane-item"]}>
-            <h1 className={styles["heading"]}>{children}</h1>
+          <div className={bodyStyles["main-pane-item"]}>
+            <h1 className={bodyStyles["heading"]}>{children}</h1>
           </div>
         );
       case "heading-two":
         return (
-          <div className={styles["main-pane-item"]}>
+          <div className={bodyStyles["main-pane-item"]}>
             <h2>{children}</h2>
           </div>
         );
@@ -197,15 +200,15 @@ const TextEditor = (props) => {
         );
       case "numbered-list":
         return (
-          <div className={styles["main-pane-item"]}>
+          <div className={bodyStyles["main-pane-item"]}>
             <ol>{children}</ol>
           </div>
         );
       case "image": {
         const src = node.data.get("src");
         return (
-          <div className={styles["main-pane-item"]}>
-            <figure className={styles["image-container"]}>
+          <div className={bodyStyles["main-pane-item"]}>
+            <figure className={bodyStyles["image-container"]}>
               <img src={src} loading="lazy" />
             </figure>
           </div>
@@ -214,8 +217,8 @@ const TextEditor = (props) => {
       case "figure": {
         const src = node.data.get("src");
         return (
-          <div className={styles["main-pane-item"]}>
-            <figure className={styles["image-container"]}>
+          <div className={bodyStyles["main-pane-item"]}>
+            <figure className={bodyStyles["image-container"]}>
               <img src={src} loading="lazy"/>
               <figcaption>
                 <strong>{children}</strong>

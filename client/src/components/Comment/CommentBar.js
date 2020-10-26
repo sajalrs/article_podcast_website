@@ -1,7 +1,7 @@
 import React from "react";
 import Comment from "./Comment";
 
-const CommentBar = () => {
+const CommentBar = (props) => {
   const initialValue = {
     document: {
       nodes: [
@@ -23,6 +23,7 @@ const CommentBar = () => {
     },
   };
 
+ 
   return (
     <div>
       <Comment
@@ -30,7 +31,8 @@ const CommentBar = () => {
         isEditable={true}
       />
    <Comment
-        author="Sajal"
+        author="Sajal Satyal"
+        date={Date()}
         initialValue={initialValue}        
         isEditable={false}
       />
