@@ -247,6 +247,7 @@ const Edit = (props) => {
         setValue={setTextEditorValue}
         onSave={saveArticle}
         toolbarFixed={toolbarFixed}
+        styles={styles}
       />
     </div>
   );
