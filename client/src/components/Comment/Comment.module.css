@@ -1,3 +1,7 @@
+.card-body > p{
+    display: flex;
+    flex-direction: column;
+}
 
 .card-body > p > .date {
     color: var(--secondary-color);
@@ -66,8 +70,7 @@
 @media screen and (max-width: 1350px) {
    
   
- 
-  
+
     .image-container {
       max-width: 100vw;
     }
@@ -82,7 +85,25 @@
     .main-pane-item li,
     .main-pane-item blockquote {
       padding-right: 7vw;
-    }
+    } 
 
   
   }
+
+
+@media screen and (max-width: 550px) {
+
+    .main-pane-item > p{
+        padding-right: 0px;
+    }
+
+    .card-body{
+        padding-left: 5vw;
+    }
+
+    .main-pane-item{
+        padding-left: 5vw;
+      /* justify-content: center; */
+    }
+  }
+  
