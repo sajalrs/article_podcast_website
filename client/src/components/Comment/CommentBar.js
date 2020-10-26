@@ -1,6 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 import Comment from "./Comment";
-
+import TextEditor from "../TextEditor/TextEditor";
+import { Value } from "slate";
+import styles from "./Comment.module.css";
 const CommentBar = (props) => {
   const initialValue = {
     document: {
@@ -22,19 +24,24 @@ const CommentBar = (props) => {
       ],
     },
   };
+  const [textEditorValue, setTextEditorValue] = useState(
+    Value.fromJSON(initialValue)
+  );
 
- 
+
   return (
     <div>
-      <Comment
-        initialValue={initialValue}        
-        isEditable={true}
+      <TextEditor
+        value={textEditorValue}
+        setValue={setTextEditorValue}
+        onSave={() => {}}
+        toolbarFixed={false}
+        styles={styles}
       />
-   <Comment
+      <Comment
         author="Sajal Satyal"
         date={Date()}
-        initialValue={initialValue}        
-        isEditable={false}
+        commentText={textEditorValue}
       />
     </div>
   );

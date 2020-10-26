@@ -4,8 +4,8 @@ import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
-import {getRules} from "../../components/TextEditor/TextEditor"
-import CommentBar from "../../components/Comment/CommentBar"
+import { getRules } from "../../components/TextEditor/TextEditor";
+import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
 const ArticlePage = (props) => {
   const { id } = useParams();
@@ -21,7 +21,7 @@ const ArticlePage = (props) => {
   }, []);
   useEffect(() => {
     const rules = getRules(styles);
-    const html = new Html({rules});
+    const html = new Html({ rules });
 
     const getArticle = async () => {
       const response = await axios.get(`/articles/?${id}`);
@@ -59,8 +59,10 @@ const ArticlePage = (props) => {
 
   const contents = (
     <div>
-    <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
-    <CommentBar/>
+      <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
+      <div className={styles["main-pane-item"]}>
+        <CommentBar />
+      </div>
     </div>
   );
 
