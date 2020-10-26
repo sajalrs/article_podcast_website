@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import TextEditor from "../TextEditor/TextEditor";
 import { Value } from "slate";
-import styles from "../Page/Page.module.css"
-import {rules} from "../../components/TextEditor/TextEditor"
+import styles from "./Comment.module.css"
+import styles2 from "../Page/Page.module.css"
+import {getRules} from "../../components/TextEditor/TextEditor"
 import Html from "slate-html-serializer";
 const Comment = (props) => {
   const [textEditorValue, setTextEditorValue] = useState(
@@ -11,12 +12,18 @@ const Comment = (props) => {
   const [isEditable, setIsEditable] = useState(props.isEditable)
  
   
-  const html = new Html({ rules });
+  const rules = getRules(styles2)
+  const html = new Html( {rules});
  
  
  
   return (
-    <div>
+    <div className={styles["card-body"]}>
+       {(props.author || props.date ) ?
+      <p>
+       {(props.author) && <span className={styles["author"]}>{props.author}</span>}
+        {(props.date) && <span className={styles["date"]}>{props.date}</span>}
+      </p>: null}
       {isEditable? 
       (<TextEditor
         value={textEditorValue}

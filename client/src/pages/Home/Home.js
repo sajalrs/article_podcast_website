@@ -4,7 +4,6 @@ import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useSelector } from "react-redux";
-import CommentBar from "../../components/Comment/CommentBar"
 
 const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
