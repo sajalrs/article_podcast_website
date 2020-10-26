@@ -11,7 +11,7 @@ const Comment = (props) => {
   const html = new Html({ rules });
 
   return (
-    <div>
+    <div className={styles["Comment"]}>
       <div className={styles["card-body"]}>
         {author || date ? (
           <p>
