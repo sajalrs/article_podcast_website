@@ -1,5 +1,13 @@
 .Comment{
     padding:10px;
+    border-top: solid;
+    border-color: white;
+}
+
+.card-body{
+    background-color: w;
+    border-bottom: solid;
+    border-color: white;
 }
 
 .card-body > p{
@@ -70,6 +78,16 @@
     font-family: "Montserrat", sans-serif;
     max-width: 90vw;
   }
+
+
+.heading-special{
+    font-size: 1.5rem;
+    align-self: flex-start;
+    color: var(--secondary-color);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
   
 @media screen and (max-width: 1350px) {
    
@@ -102,12 +120,16 @@
     }
 
     .card-body{
-        padding-left: 5vw;
+        padding-left: 2.5vw;
     }
 
     .main-pane-item{
-        padding-left: 5vw;
+        padding-left: 2.5vw;
       /* justify-content: center; */
+    }
+
+    .heading-special{
+        padding-left: 3vw;
     }
   }
   
