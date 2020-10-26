@@ -4,7 +4,7 @@ import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
-import {rules} from "../../components/TextEditor/TextEditor"
+import {getRules} from "../../components/TextEditor/TextEditor"
 import CommentBar from "../../components/Comment/CommentBar"
 import axios from "axios";
 const ArticlePage = (props) => {
@@ -20,7 +20,8 @@ const ArticlePage = (props) => {
     window.scrollTo(0, 0);
   }, []);
   useEffect(() => {
-    const html = new Html({ rules });
+    const rules = getRules(styles);
+    const html = new Html({rules});
 
     const getArticle = async () => {
       const response = await axios.get(`/articles/?${id}`);

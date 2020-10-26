@@ -30,6 +30,7 @@ const CommentBar = () => {
         isEditable={true}
       />
    <Comment
+        author="Sajal"
         initialValue={initialValue}        
         isEditable={false}
       />
