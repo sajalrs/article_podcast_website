@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Editor, getEventTransfer } from "slate-react";
 import { Block } from "slate";
 import styles from "./TextEditor.module.css";

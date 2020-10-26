@@ -30,7 +30,7 @@ const CommentBar = (props) => {
 
 
   return (
-    <div>
+    <div style={{backgroundColor: "#f2f2f2"}}>
       <TextEditor
         value={textEditorValue}
         setValue={setTextEditorValue}
