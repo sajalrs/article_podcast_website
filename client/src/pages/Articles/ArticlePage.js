@@ -5,6 +5,7 @@ import styles from "../../components/Page/Page.module.css";
 import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
 import {rules} from "../../components/TextEditor/TextEditor"
+import CommentBar from "../../components/Comment/CommentBar"
 import axios from "axios";
 const ArticlePage = (props) => {
   const { id } = useParams();
@@ -56,7 +57,10 @@ const ArticlePage = (props) => {
   );
 
   const contents = (
+    <div>
     <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
+    <CommentBar/>
+    </div>
   );
 
   return (
