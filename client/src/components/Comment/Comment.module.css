@@ -1,3 +1,7 @@
+.Comment{
+    padding:10px;
+}
+
 .card-body > p{
     display: flex;
     flex-direction: column;
