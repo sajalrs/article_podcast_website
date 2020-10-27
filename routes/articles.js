@@ -76,7 +76,7 @@ router.post("/postcomment", verify, async (req, res) => {
 
               try {
                 const io = req.app.get("socketio");
-                io.emit("comments changed");
+                io.emit("comments changed", { articleId: req.body.id });
               } catch (err) {
                 console.log(err);
               }
