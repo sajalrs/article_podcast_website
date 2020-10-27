@@ -1,10 +1,5 @@
 const mongoose = require("mongoose");
-
-const CommentSchema = mongoose.Schema({
-  author: String,
-  authorID: String,
-  content: Object
-}, {timestamps: true})
+const {CommentSchema} = require("./Comments") 
 
 
 const ArticleSchema = mongoose.Schema({
