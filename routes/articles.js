@@ -61,8 +61,8 @@ router.post("/postcomment", verify, async (req, res) => {
           res.send(error);
         } else {
           const comment = new Comment({
-            author: user.name,
             authorID: req.user._id,
+            author: user.name,
             content: req.body.content,
           });
     
