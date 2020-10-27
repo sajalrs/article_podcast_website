@@ -45,6 +45,27 @@ const ArticlePage = (props) => {
       });
   }, []);
 
+  const postComment = (comment) => {
+    const toPost = { ...comment, id: id.substring(3)};
+    console.log(toPost);
+    const options = {
+      headers: { "Content-Type": "application/json" },
+    };
+
+    axios
+      .post("/articles/postcomment", JSON.stringify(toPost), options)
+      .then((res) => {
+        alert("Comment Posted");
+      })
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 400) {
+          alert(err.response.data.error);
+        } else if (err.response.status !== 200) {
+          throw Error(err);
+        }
+      });
+  };
+
   const headline = (
     <div className={styles["headline"]}>
       <LargeCard
@@ -61,7 +82,7 @@ const ArticlePage = (props) => {
     <div>
       <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
       <div className={styles["main-pane-item"]}>
-        <CommentBar />
+        <CommentBar postComment={postComment}/>
       </div>
     </div>
   );
