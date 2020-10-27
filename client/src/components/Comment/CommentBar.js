@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import Comment from "./Comment";
 import TextEditor from "../TextEditor/TextEditor";
 import { Value } from "slate";
@@ -28,29 +28,39 @@ const CommentBar = (props) => {
     Value.fromJSON(initialValue)
   );
 
-    const postComment = () => {
-      props.postComment(textEditorValue);
-    }
-
+  const postComment = () => {
+    props.postComment(textEditorValue);
+  };
 
   return (
     <div>
-           
       <h1 className={styles["heading-special"]}>Comments</h1>
-      <div style={{ borderStyle: "solid solid solid solid", borderColor: "var(--secondary-color)"}}>
-      <TextEditor
-        value={textEditorValue}
-        setValue={setTextEditorValue}
-        onSave={() => {postComment()}}
-        toolbarFixed={false}
-        styles={styles}
-      />
+      <div
+        style={{
+          borderStyle: "solid solid solid solid",
+          borderColor: "var(--secondary-color)",
+        }}
+      >
+        <TextEditor
+          value={textEditorValue}
+          setValue={setTextEditorValue}
+          onSave={() => {
+            postComment();
+          }}
+          toolbarFixed={false}
+          styles={styles}
+        />
       </div>
-      <Comment
-        author="Sajal Satyal"
-        date={Date()}
-        commentText={textEditorValue}
-      />
+
+      {props.comments.map((item) => {
+        return (
+          <Comment
+            author="Sajal Satyal"
+            date={item.updatedAt}
+            commentText={item.content}
+          />
+        );
+      })}
     </div>
   );
 };
