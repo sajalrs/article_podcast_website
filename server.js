@@ -59,7 +59,10 @@ io.on("connection", (socket) => {
     io.removeAllListeners("connection");
   }
 
-  // socket.on("comments changed", () => {
-  //   console.log("comments were changed");
-  // });
+  socket.on('disconnect', ()=> {
+    socket.disconnect();
+    console.log("User Disconnected");
+  })
+
+
 });
