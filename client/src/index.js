@@ -17,7 +17,7 @@ import {
   setUser
 } from "./redux/actions";
 
-const isLoggedIn = () => {
+export const isLoggedIn = () => {
   return async (dispatch) => {
     await axios.get("/auth/isloggedin").then((response) => {
       if (response.status !== 200) {
@@ -50,7 +50,7 @@ const fetchBlogArticles = () => {
   };
 };
 
-const fetchPodcasts = () => {
+export const fetchPodcasts = () => {
   return async (dispatch) => {
     await axios
       .get("/podcasts")
