@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const Article = require("../models/Articles");
+const User = require("../models/Users");
 const { Comment } = require("../models/Comments");
 const verify = require("../verification/verifyToken");
 
@@ -56,20 +56,29 @@ router.post("/postcomment", verify, async (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      const comment = new Comment({
-        authorID: req.user._id,
-        content: req.body.content,
-      });
-
-      article.comments.push(comment);
-
-      await article.save((error, data) => {
-        if (error) {
+      await User.findById(req.user._id, async (error, user) => {
+        if(error){
           res.send(error);
         } else {
-          res.json(data);
+          const comment = new Comment({
+            author: user.name,
+            authorID: req.user._id,
+            content: req.body.content,
+          });
+    
+          article.comments.push(comment);
+    
+          await article.save((errors, data) => {
+            if (errors) {
+              res.send(errors);
+            } else {
+              res.json(data);
+            }
+          });
         }
       });
+
+   
     }
   });
 });
