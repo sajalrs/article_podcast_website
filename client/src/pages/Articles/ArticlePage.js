@@ -49,23 +49,28 @@ const ArticlePage = (props) => {
         throw Error(err);
       });
 
-    if(socket){socket.on("comments changed", () => {
-      getArticle()
-        .then((res) => {
-          setArticle({
-            title: res.title,
-            author: res.author,
-            date: res.date,
-            image: res.image,
-            content: res.content,
-            comments: res.comments,
-          });
-        })
-        .catch((err) => {
-          throw Error(err);
-        });
-    });}
-  }, []);
+    if (socket) {
+      socket.on("comments changed", (data) => {
+        if(data.articleId === id.substring(3)){
+          alert("Comments Changed");
+          getArticle()
+            .then((res) => {
+              setArticle({
+                title: res.title,
+                author: res.author,
+                date: res.date,
+                image: res.image,
+                content: res.content ? html.serialize(res.content) : `<p></p>`,
+                comments: res.comments,
+              });
+            })
+            .catch((err) => {
+              throw Error(err);
+            });
+        }
+      });
+    }
+  }, [socket]);
 
   const postComment = (comment) => {
     const toPost = { id: id.substring(3), content: comment };
