@@ -4,6 +4,7 @@ import blogReducer from './blogReducer'
 import headerReducer from './headerReducer'
 import loginReducer from './loginReducer'
 import deviceReducer from './deviceReducer'
+import socketReducer from './socketReducer'
 import {combineReducers} from 'redux';
 
 const rootReducer = combineReducers({
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   blog: blogReducer,
   login: loginReducer,
   header: headerReducer,
-  device: deviceReducer
+  device: deviceReducer,
+  network: socketReducer
 })
 
 export default rootReducer;
