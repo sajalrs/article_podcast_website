@@ -10,7 +10,14 @@ const Comment = (props) => {
   const time = fullDate.time;
   const rules = getRules(styles);
   const html = new Html({ rules });
+  const regex = RegExp(`<di.*><p>.*</p></di>`);
+  const maximized = html.serialize(props.commentText);
+  const oneNode = {...props.commentText.toJSON(), document: {...props.commentText.toJSON().document, nodes: props.commentText.toJSON().document.nodes.filter((item, index) => index === 0)}}
+  const minimized = html.serialize(oneNode);
 
+  console.log(oneNode)
+
+  const [isMinimized, setMinimized] = useState(true);
   return (
     <div className={styles["Comment"]}>
       <div className={styles["card-body"]}>
@@ -24,7 +31,12 @@ const Comment = (props) => {
       </div>
 
       <div
-        dangerouslySetInnerHTML={{ __html: html.serialize(props.commentText) }}
+        className={
+          isMinimized
+            ? `${styles["minimized"]} ${styles["comment-body"]}`
+            : styles["comment-body"]
+        }
+        dangerouslySetInnerHTML={{ __html: isMinimized? minimized : maximized}}
       ></div>
     </div>
   );
