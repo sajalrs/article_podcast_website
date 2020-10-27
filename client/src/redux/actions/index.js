@@ -138,3 +138,11 @@ export const setIsMobile = (setTo) => {
         payload: setTo
     }
 }
+
+//Socket Actions
+export const setSocket = (setTo) => {
+    return{
+        type: 'SET_SOCKET',
+        payload: setTo
+    }
+}

@@ -1,4 +1,4 @@
-const socketReducer = (state={socket: {}}, action) => {
+const socketReducer = (state={socket: null}, action) => {
     switch(action.type){
         case 'SET_SOCKET':
             return {...state, socket: action.payload}
@@ -7,4 +7,4 @@ const socketReducer = (state={socket: {}}, action) => {
     }
 }
 
-export default blogReducer
+export default socketReducer;

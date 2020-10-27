@@ -15,7 +15,7 @@ import Login from "./pages/Login/Login";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setAudioPlayerRef, setIsMobile } from "./redux/actions";
+import { setAudioPlayerRef, setIsMobile, setSocket } from "./redux/actions";
 import io from "socket.io-client"
 
 
@@ -25,13 +25,12 @@ const App = () => {
   const scrollLockRef = useRef();
 
   useEffect(() => {
-   const socket = io();
-  
-  socket.on("comments changed", () => {
-    console.log("comments were changed");
-  });
-   
+   const socket = io.connect();
+   dispatch(setSocket(socket));
 
+   return() => {
+     socket.emit('disconnect');
+   }
   }, [])
 
   useEffect(() => {

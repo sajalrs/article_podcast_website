@@ -7,12 +7,11 @@ import Html from "slate-html-serializer";
 import { getRules } from "../../components/TextEditor/TextEditor";
 import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
-import io from "socket.io-client";
-
-const socket = io('http://localhost:5000');
+import { useSelector } from "react-redux";
 
 const ArticlePage = (props) => {
   const { id } = useParams();
+  const socket = useSelector((state) => state.network.socket);
   const [article, setArticle] = useState({
     title: "",
     author: "",
@@ -23,10 +22,6 @@ const ArticlePage = (props) => {
   });
   useEffect(() => {
     window.scrollTo(0, 0);
-    const socket = io();
-    socket.on('connect', () => {
-      console.log("Connected")
-    })
   }, []);
   useEffect(() => {
     const rules = getRules(styles);
@@ -53,11 +48,27 @@ const ArticlePage = (props) => {
       .catch((err) => {
         throw Error(err);
       });
+
+    if(socket){socket.on("comments changed", () => {
+      getArticle()
+        .then((res) => {
+          setArticle({
+            title: res.title,
+            author: res.author,
+            date: res.date,
+            image: res.image,
+            content: res.content,
+            comments: res.comments,
+          });
+        })
+        .catch((err) => {
+          throw Error(err);
+        });
+    });}
   }, []);
 
   const postComment = (comment) => {
     const toPost = { id: id.substring(3), content: comment };
-    console.log(toPost);
     const options = {
       headers: { "Content-Type": "application/json" },
     };
