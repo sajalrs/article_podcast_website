@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 
 const CommentSchema = mongoose.Schema(
-  {
+  {  
     authorID: String,
+    author: String,
     content: Object,
   },
   { timestamps: true }
