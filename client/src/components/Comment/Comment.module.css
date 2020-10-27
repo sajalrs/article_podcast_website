@@ -1,7 +1,15 @@
 .Comment{
     padding:10px;
-    border-top: solid;
-    border-color: white;
+    border-style: none solid solid solid;
+    border-color: var(--secondary-color);
+}
+
+
+
+.fas{
+    color: var(--secondary-color);
+    padding-right: 20px;
+    font-size: 1.5rem;
 }
 
 .card-body{
@@ -21,20 +29,25 @@
     font-size: 1.1rem;
   }
 
-  .card-body > p > .date {
+  .date-time-ellipsis > p > .date {
     color: var(--secondary-color);
     font-weight: bold;
     font-size: 1.1rem;
   }
   
-  .card-body > p > .time {
+  .date-time-ellipsis > p > .time {
     color: var(--secondary-color);
     font-weight: bold;
     font-size: 1.1rem;
-
+    padding-left: 10px;
   }
 
 
+  .date-time-ellipsis{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
 
   .main-pane-item li {
     font-size: 1.1rem;
@@ -138,7 +151,11 @@
     }
 
     .heading-special{
-        padding-left: 3vw;
+        padding-left: 5vw;
+    }
+
+    .date-time-ellipsis{
+        padding-left: 2.5vw;
     }
   }
   
