@@ -33,6 +33,7 @@ const CommentBar = (props) => {
     <div>
            
       <h1 className={styles["heading-special"]}>Comments</h1>
+      <div style={{ borderStyle: "solid solid solid solid", borderColor: "var(--secondary-color)"}}>
       <TextEditor
         value={textEditorValue}
         setValue={setTextEditorValue}
@@ -40,7 +41,7 @@ const CommentBar = (props) => {
         toolbarFixed={false}
         styles={styles}
       />
-    
+      </div>
       <Comment
         author="Sajal Satyal"
         date={Date()}
