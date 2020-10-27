@@ -10,11 +10,12 @@ const podcastsRoute = require("./routes/podcasts");
 const usersRoute = require("./routes/auth");
 const cookieParser = require("cookie-parser");
 const csrf = require("csurf");
-const http = require('http').Server(app);
+const http = require("http").Server(app);
 const io = require("socket.io")(http);
 
 require("dotenv/config");
 const csrfProtection = csrf({ cookie: true });
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -47,10 +48,18 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-
-
 http.listen(port, () => console.log(`Listening on port ${port}`));
+app.set("socketio", io);
+let socket_id = [];
 
 io.on("connection", (socket) => {
   console.log("User Connected");
+  socket_id.push(socket.id);
+  if (socket_id[0] === socket.id) {
+    io.removeAllListeners("connection");
+  }
+
+  // socket.on("comments changed", () => {
+  //   console.log("comments were changed");
+  // });
 });
