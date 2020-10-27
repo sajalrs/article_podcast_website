@@ -15,12 +15,6 @@
     flex-direction: column;
 }
 
-.card-body > p > .date {
-    color: var(--secondary-color);
-    font-weight: bold;
-    font-size: 1.1rem;
-  }
-  
   .card-body > p > .author {
     color: var(--secondary-color);
     font-weight: bold;
@@ -102,6 +96,7 @@
     font-weight: bold;
     letter-spacing: 2px;
   }
+
   
 @media screen and (max-width: 1350px) {
    
