@@ -15,6 +15,7 @@ const ArticlePage = (props) => {
     date: "",
     images: [],
     content: `<p></p>`,
+    comments: []
   });
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -38,6 +39,7 @@ const ArticlePage = (props) => {
           date: res.date,
           image: res.image,
           content: res.content ? html.serialize(res.content) : `<p></p>`,
+          comments: res.comments
         });
       })
       .catch((err) => {
@@ -46,7 +48,7 @@ const ArticlePage = (props) => {
   }, []);
 
   const postComment = (comment) => {
-    const toPost = { ...comment, id: id.substring(3)};
+    const toPost = { id: id.substring(3), content: comment};
     console.log(toPost);
     const options = {
       headers: { "Content-Type": "application/json" },
@@ -82,7 +84,7 @@ const ArticlePage = (props) => {
     <div>
       <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
       <div className={styles["main-pane-item"]}>
-        <CommentBar postComment={postComment}/>
+        <CommentBar postComment={postComment} comments={article.comments}/>
       </div>
     </div>
   );
