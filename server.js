@@ -50,14 +50,10 @@ if (process.env.NODE_ENV === "production") {
 
 http.listen(port, () => console.log(`Listening on port ${port}`));
 app.set("socketio", io);
-let socket_id = [];
+
 
 io.on("connection", (socket) => {
   console.log("User Connected");
-  socket_id.push(socket.id);
-  if (socket_id[0] === socket.id) {
-    io.removeAllListeners("connection");
-  }
 
   socket.on('disconnect', ()=> {
     socket.disconnect();

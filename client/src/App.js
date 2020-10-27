@@ -28,11 +28,12 @@ const App = () => {
    const socket = io.connect();
    dispatch(setSocket(socket));
 
-   return() => {
+   return()=>{
      socket.emit('disconnect');
+     socket.disconnect();
    }
   }, [])
-
+  
   useEffect(() => {
     const getCSRFToken = async () => {
       const tokenResponse = await axios.get("/csrf-token");
