@@ -57,7 +57,7 @@ router.post("/postcomment", verify, async (req, res) => {
       res.send(err);
     } else {
       await User.findById(req.user._id, async (error, user) => {
-        if(error){
+        if (error) {
           res.send(error);
         } else {
           const comment = new Comment({
@@ -65,20 +65,25 @@ router.post("/postcomment", verify, async (req, res) => {
             author: user.name,
             content: req.body.content,
           });
-    
+
           article.comments.push(comment);
-    
+
           await article.save((errors, data) => {
             if (errors) {
               res.send(errors);
             } else {
               res.json(data);
+
+              try {
+                const io = req.app.get("socketio");
+                io.emit("comments changed");
+              } catch (err) {
+                console.log(err);
+              }
             }
           });
         }
       });
-
-   
     }
   });
 });

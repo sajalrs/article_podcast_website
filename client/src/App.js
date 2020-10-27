@@ -16,11 +16,23 @@ import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAudioPlayerRef, setIsMobile } from "./redux/actions";
+import io from "socket.io-client"
+
 
 const App = () => {
   const audioPlayerRef = useRef();
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
+
+  useEffect(() => {
+   const socket = io();
+  
+  socket.on("comments changed", () => {
+    console.log("comments were changed");
+  });
+   
+
+  }, [])
 
   useEffect(() => {
     const getCSRFToken = async () => {
