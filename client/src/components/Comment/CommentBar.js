@@ -28,6 +28,10 @@ const CommentBar = (props) => {
     Value.fromJSON(initialValue)
   );
 
+    const postComment = () => {
+      props.postComment(textEditorValue);
+    }
+
 
   return (
     <div>
@@ -37,7 +41,7 @@ const CommentBar = (props) => {
       <TextEditor
         value={textEditorValue}
         setValue={setTextEditorValue}
-        onSave={() => {}}
+        onSave={() => {postComment()}}
         toolbarFixed={false}
         styles={styles}
       />
