@@ -55,7 +55,7 @@ const CommentBar = (props) => {
       {props.comments.map((item) => {
         return (
           <Comment
-            author="Sajal Satyal"
+            author={item.author}
             date={item.updatedAt}
             commentText={item.content}
           />
