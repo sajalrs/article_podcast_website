@@ -11,7 +11,7 @@ const Comment = (props) => {
   const rules = getRules(styles);
   const html = new Html({ rules });
   const maximized = html.serialize(props.commentText);
-  const oneNode = {...props.commentText.toJSON(), document: {...props.commentText.toJSON().document, nodes: props.commentText.toJSON().document.nodes.filter((item, index) => index === 0)}}
+  const oneNode = {...props.commentText, document: {...props.commentText.document, nodes: props.commentText.document.nodes.filter((item, index) => index === 0)}}
   const minimized = html.serialize(oneNode);
 
   const [isMinimized, setMinimized] = useState(true);
@@ -41,7 +41,7 @@ const Comment = (props) => {
             {date && <span className={styles["date"]}>{date}</span>}
             {time && <span className={styles["time"]}>{time}</span>}
           </p>): null}
-{props.commentText.toJSON().document.nodes.length > 1 &&(<div>
+{props.commentText.document.nodes.length > 1 &&(<div>
 {isMinimized ? (
             <i
               onClick={() => setMinimized(false)}
