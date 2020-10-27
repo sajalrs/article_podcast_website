@@ -6,8 +6,6 @@ import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import AudioPlayer from "../../components/AudioPlayer/AudioPlayer";
 import {
-  disableBodyScroll,
-  enableBodyScroll,
   clearAllBodyScrollLocks,
 } from "body-scroll-lock";
 

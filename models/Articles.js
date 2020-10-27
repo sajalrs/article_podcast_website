@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
-const Comment = require("./Comments")
+
+const CommentSchema = mongoose.Schema({
+  author: String,
+  authorID: String,
+  content: Object
+}, {timestamps: true})
+
 
 const ArticleSchema = mongoose.Schema({
   title: String,
@@ -7,7 +13,7 @@ const ArticleSchema = mongoose.Schema({
   date: Object,
   image: String,
   content: Object,
-  comments: [Comment]
+  comments: [CommentSchema]
 });
 
 module.exports = mongoose.model("Articles", ArticleSchema);
