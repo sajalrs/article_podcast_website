@@ -7,6 +7,10 @@ import Html from "slate-html-serializer";
 import { getRules } from "../../components/TextEditor/TextEditor";
 import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
+import io from "socket.io-client";
+
+const socket = io('http://localhost:5000');
+
 const ArticlePage = (props) => {
   const { id } = useParams();
   const [article, setArticle] = useState({
@@ -15,10 +19,14 @@ const ArticlePage = (props) => {
     date: "",
     images: [],
     content: `<p></p>`,
-    comments: []
+    comments: [],
   });
   useEffect(() => {
     window.scrollTo(0, 0);
+    const socket = io();
+    socket.on('connect', () => {
+      console.log("Connected")
+    })
   }, []);
   useEffect(() => {
     const rules = getRules(styles);
@@ -39,7 +47,7 @@ const ArticlePage = (props) => {
           date: res.date,
           image: res.image,
           content: res.content ? html.serialize(res.content) : `<p></p>`,
-          comments: res.comments
+          comments: res.comments,
         });
       })
       .catch((err) => {
@@ -48,7 +56,7 @@ const ArticlePage = (props) => {
   }, []);
 
   const postComment = (comment) => {
-    const toPost = { id: id.substring(3), content: comment};
+    const toPost = { id: id.substring(3), content: comment };
     console.log(toPost);
     const options = {
       headers: { "Content-Type": "application/json" },
@@ -84,7 +92,7 @@ const ArticlePage = (props) => {
     <div>
       <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
       <div className={styles["main-pane-item"]}>
-        <CommentBar postComment={postComment} comments={article.comments}/>
+        <CommentBar postComment={postComment} comments={article.comments} />
       </div>
     </div>
   );
