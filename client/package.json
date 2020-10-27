@@ -23,7 +23,8 @@
     "redux-thunk": "^2.3.0",
     "slate": "^0.47.9",
     "slate-html-serializer": "^0.8.13",
-    "slate-react": "^0.22.10"
+    "slate-react": "^0.22.10",
+    "socket.io-client": "^2.3.1"
   },
   "scripts": {
     "svgr": "svgr -d src/Icons/ assets/",

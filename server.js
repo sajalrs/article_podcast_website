@@ -10,13 +10,15 @@ const podcastsRoute = require("./routes/podcasts");
 const usersRoute = require("./routes/auth");
 const cookieParser = require("cookie-parser");
 const csrf = require("csurf");
+const http = require('http').Server(app);
+const io = require("socket.io")(http);
 
 require("dotenv/config");
-const csrfProtection = csrf({cookie: true});
+const csrfProtection = csrf({ cookie: true });
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(csrfProtection)
+app.use(csrfProtection);
 mongoose.connect(
   process.env.MONGO_URL,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -33,7 +35,6 @@ app.use("/create", createRoute);
 app.use("/podcasts", podcastsRoute);
 app.use("/auth", usersRoute);
 
-
 app.get("/csrf-token", (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
 });
@@ -46,4 +47,10 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+
+
+http.listen(port, () => console.log(`Listening on port ${port}`));
+
+io.on("connection", (socket) => {
+  console.log("User Connected");
+});
