@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
@@ -52,7 +52,6 @@ const ArticlePage = (props) => {
     if (socket) {
       socket.on("comments changed", (data) => {
         if(data.articleId === id.substring(3)){
-          alert("Comments Changed");
           getArticle()
             .then((res) => {
               setArticle({
