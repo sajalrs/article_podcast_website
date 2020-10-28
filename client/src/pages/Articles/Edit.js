@@ -20,7 +20,7 @@ const initialValue = {
             object: "text",
             leaves: [
               {
-                text: "This text is editable",
+                text: "Edit text and save to post article...",
               },
             ],
           },
@@ -34,6 +34,9 @@ const Edit = (props) => {
   const [textEditorValue, setTextEditorValue] = useState(
     Value.fromJSON(initialValue)
   );
+
+  
+
   const [formData, setFormData] = useState({
     title: "To be edited",
     author: "To be edited",

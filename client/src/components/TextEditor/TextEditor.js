@@ -28,6 +28,7 @@ const schema = {
   },
 };
 
+
 const TextEditor = (props) => {
   const ref = useRef();
   const value = props.value;
@@ -422,7 +423,7 @@ const TextEditor = (props) => {
     <div className={styles["overarching"]}>
             {props.toolbarFixed ? (
             <div
-              style={{ position: "fixed", top: "66px" }}
+              style={{ position: "fixed", top: "66px", backgroundColor: "#fff" }}
             >
               {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
               {renderOnceToolbar}
@@ -436,7 +437,7 @@ const TextEditor = (props) => {
         ref={ref}
         className={styles["Editor"]}
         value={value}
-        onChange={(opts) => setValue(opts.value)}
+        onChange={(opts) => {setValue(opts.value)}}
         onKeyDown={onKeyDown}
         renderMark={renderMark}
         renderBlock={renderBlock}
