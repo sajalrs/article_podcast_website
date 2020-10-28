@@ -2,8 +2,8 @@ const Joi = require("@hapi/joi");
 
 const registerValidation = (data) => {
   const schema = Joi.object({
-    firstName: Joi.string().min(6).required(),
-    lastName: Joi.string().min(6).required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
     email: Joi.string().min(6).required().email(),
     password: Joi.string().min(6).required(),
   });
@@ -22,8 +22,8 @@ const loginValidation = (data) => {
 
 const messageValidation = (data) => {
   const schema = Joi.object({
-    firstName: Joi.string().min(6).required(),
-    lastName: Joi.string().min(6).required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
     email: Joi.string().min(6).required().email(),
     subject: Joi.string().min(6).required(),
     content: Joi.required()

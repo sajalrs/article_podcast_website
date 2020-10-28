@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const fetch = require("node-fetch");
-const mongoose = require("mongoose");
 const YoutubeLink = require("../models/YoutubeLinks");
-const e = require("express");
-const { query } = require("express");
 
 
 router.get("/", async (req, res) => {

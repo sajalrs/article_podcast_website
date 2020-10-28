@@ -35,8 +35,8 @@ const ContactUs = (props) => {
   const user = useSelector((state) => state.login.user);
   const history = useHistory();
   const [formData, setFormData] = useState({
-    firstName: isLoggedIn && user ? user.name.split(" ")[0] : "",
-    lastName: isLoggedIn && user ? user.name.split(" ")[1] : "",
+    firstName: isLoggedIn && user ? user.firstName : "",
+    lastName: isLoggedIn && user ? user.lastName : "",
     email: isLoggedIn ? user.email : "",
     subject: "",
   });
@@ -68,7 +68,8 @@ const ContactUs = (props) => {
 
   const registerUser = () => {
     const toPost = {
-      name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
       email: formData.email,
       subject: formData.subject,
       content: textEditorValue.toJSON(),
