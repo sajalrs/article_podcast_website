@@ -44,7 +44,8 @@ const SignUp = (props) => {
 
   const registerUser = () => {
     const toPost = {
-      name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
       email: formData.email,
       password: formData.password,
     };
