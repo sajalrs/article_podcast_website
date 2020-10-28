@@ -8,6 +8,7 @@ const youtubeRoute = require("./routes/youtube");
 const createRoute = require("./routes/create");
 const podcastsRoute = require("./routes/podcasts");
 const usersRoute = require("./routes/auth");
+const messagesRoute = require("./routes/messages");
 const cookieParser = require("cookie-parser");
 const csrf = require("csurf");
 const http = require("http").Server(app);
@@ -35,6 +36,7 @@ app.use("/youtube", youtubeRoute);
 app.use("/create", createRoute);
 app.use("/podcasts", podcastsRoute);
 app.use("/auth", usersRoute);
+app.use("/messages", messagesRoute);
 
 app.get("/csrf-token", (req, res) => {
   res.json({ csrfToken: req.csrfToken() });
