@@ -30,6 +30,7 @@ const initialValue = {
 
 const ContactUs = (props) => {
   const isMobile = useSelector((state) => state.device.isMobile);
+  const isDesktop = useSelector((state) => state.device.isDesktop)
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -172,13 +173,13 @@ const ContactUs = (props) => {
         style={{ flexDirection: "column" }}
       >
         <div>
-          <h1 className={styles["heading"]}>Address: </h1>
+          <h1 className={styles["heading"]}><i class="fas fa-map-marker-alt"></i> Address: </h1>
 
           <p style={{ whiteSpace: "pre-wrap", width: "min-content" }}>
             {address}
           </p>
           <div>
-            <h1 className={styles["heading"]}>Emails: </h1>
+            <h1 className={styles["heading"]}><i class="fas fa-envelope"></i> Emails: </h1>
             <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
               <h2
                 className={styles["sub-heading"]}
@@ -246,7 +247,7 @@ const ContactUs = (props) => {
               </p>
             </label>
           </div>
-          <h1 className={styles["heading"]}>Phone: </h1>
+          <h1 className={styles["heading"]}><i class="fas fa-phone"></i> Phone: </h1>
 
           <p
             style={{
@@ -259,7 +260,7 @@ const ContactUs = (props) => {
           </p>
         </div>
       </div>
-      {isMobile? sidePaneContents: null}
+      {!isDesktop? sidePaneContents: null}
     </>
   );
 
