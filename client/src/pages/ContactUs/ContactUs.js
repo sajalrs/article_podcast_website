@@ -30,11 +30,14 @@ const initialValue = {
 
 const ContactUs = (props) => {
   const isMobile = useSelector((state) => state.device.isMobile);
-  const isDesktop = useSelector((state) => state.device.isDesktop)
+  const isDesktop = useSelector((state) => state.device.isDesktop);
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const user = useSelector((state) => state.login.user)
+  
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
+    firstName: isLoggedIn && user? user.name.split(" ")[0] : "",
+    lastName: isLoggedIn && user? user.name.split(" ")[1] : "",
+    email: isLoggedIn? user.email: "",
     subject: "",
   });
 
@@ -173,14 +176,24 @@ const ContactUs = (props) => {
         style={{ flexDirection: "column" }}
       >
         <div>
-          <h1 className={styles["heading"]}><i class="fas fa-map-marker-alt"></i> Address: </h1>
+          <h1 className={styles["heading"]}>
+            <i class="fas fa-map-marker-alt"></i> Address:{" "}
+          </h1>
 
           <p style={{ whiteSpace: "pre-wrap", width: "min-content" }}>
             {address}
           </p>
           <div>
-            <h1 className={styles["heading"]}><i class="fas fa-envelope"></i> Emails: </h1>
-            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+            <h1 className={styles["heading"]}>
+              <i class="fas fa-envelope"></i> Emails:{" "}
+            </h1>
+            <label
+              style={
+                isMobile
+                  ? { display: "flex", flexDirection: "column" }
+                  : { display: "flex", flexDirection: "row" }
+              }
+            >
               <h2
                 className={styles["sub-heading"]}
                 style={{ padding: "0px", paddingRight: "10px", margin: "0px" }}
@@ -188,10 +201,16 @@ const ContactUs = (props) => {
                 General:
               </h2>
               <p style={{ padding: "0px", margin: "0px" }}>
-              thefalse9pod@gmail.com
+                thefalse9pod@gmail.com
               </p>
             </label>
-            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+            <label
+              style={
+                isMobile
+                  ? { display: "flex", flexDirection: "column" }
+                  : { display: "flex", flexDirection: "row" }
+              }
+            >
               <h2
                 className={styles["sub-heading"]}
                 style={{ padding: "0px", margin: "0px", paddingRight: "10px" }}
@@ -202,18 +221,28 @@ const ContactUs = (props) => {
                 ishanvilla@gmail.com
               </p>
             </label>
-            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+            <label
+              style={
+                isMobile
+                  ? { display: "flex", flexDirection: "column" }
+                  : { display: "flex", flexDirection: "row" }
+              }
+            >
               <h2
                 className={styles["sub-heading"]}
-                style={{ padding: "0px", margin: "0px" , paddingRight: "10px"}}
+                style={{ padding: "0px", margin: "0px", paddingRight: "10px" }}
               >
                 Susajjan Dhungana:
               </h2>
-              <p style={{ padding: "0px", margin: "0px" }}>
-                2086@nmcth.edu
-              </p>
+              <p style={{ padding: "0px", margin: "0px" }}>2086@nmcth.edu</p>
             </label>
-            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+            <label
+              style={
+                isMobile
+                  ? { display: "flex", flexDirection: "column" }
+                  : { display: "flex", flexDirection: "row" }
+              }
+            >
               <h2
                 className={styles["sub-heading"]}
                 style={{ padding: "0px", margin: "0px", paddingRight: "10px" }}
@@ -224,10 +253,16 @@ const ContactUs = (props) => {
                 ojashdangal@gmail.com
               </p>
             </label>
-            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+            <label
+              style={
+                isMobile
+                  ? { display: "flex", flexDirection: "column" }
+                  : { display: "flex", flexDirection: "row" }
+              }
+            >
               <h2
                 className={styles["sub-heading"]}
-                style={{ padding: "0px", margin: "0px" , paddingRight: "10px"}}
+                style={{ padding: "0px", margin: "0px", paddingRight: "10px" }}
               >
                 Madhu Acharya:
               </h2>
@@ -235,10 +270,16 @@ const ContactUs = (props) => {
                 madhu.acharya@gmail.com
               </p>
             </label>
-            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+            <label
+              style={
+                isMobile
+                  ? { display: "flex", flexDirection: "column" }
+                  : { display: "flex", flexDirection: "row" }
+              }
+            >
               <h2
                 className={styles["sub-heading"]}
-                style={{ padding: "0px", margin: "0px" , paddingRight: "10px"}}
+                style={{ padding: "0px", margin: "0px", paddingRight: "10px" }}
               >
                 Sajal Satyal:
               </h2>
@@ -247,7 +288,9 @@ const ContactUs = (props) => {
               </p>
             </label>
           </div>
-          <h1 className={styles["heading"]}><i class="fas fa-phone"></i> Phone: </h1>
+          <h1 className={styles["heading"]}>
+            <i class="fas fa-phone"></i> Phone:{" "}
+          </h1>
 
           <p
             style={{
@@ -260,7 +303,7 @@ const ContactUs = (props) => {
           </p>
         </div>
       </div>
-      {!isDesktop? sidePaneContents: null}
+      {!isDesktop ? sidePaneContents : null}
     </>
   );
 
