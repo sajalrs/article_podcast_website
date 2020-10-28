@@ -7,7 +7,7 @@ const {
 
 router.get("/pages", async (req, res) => {
   const query = Article.find({})
-    .select("_id name email subject createdAt updatedAt")
+    .select("_id firstName lastName email subject createdAt updatedAt")
     .sort("-createdAt");
   await query.exec((err, data) => {
     if (err) {
@@ -40,7 +40,8 @@ router.post("/create", async (req, res) => {
     }
     
     const message = new Message({
-        name: req.body.name,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         subject: req.body.subject,
         content: req.body.content,
