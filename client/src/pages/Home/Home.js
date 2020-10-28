@@ -7,10 +7,10 @@ import { useSelector } from "react-redux";
 
 const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
-  const isMobile = useSelector((state) => state.device.isMobile);
+  const screen = useSelector((state) => state.device.screen);
 
   const contents = articles.map((item, index) =>
-    index % 4 == 0 || isMobile ? (
+    index % 4 == 0 || screen === "mobile" ? (
       <div
         key={index}
         className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
@@ -24,7 +24,6 @@ const Home = (props) => {
           contentType={item.contentType}
           link={item.link}
         />
-
       </div>
     ) : (
       <div className={`${styles["main-pane-item"]}`}>
