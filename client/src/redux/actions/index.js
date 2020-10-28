@@ -139,6 +139,21 @@ export const setIsMobile = (setTo) => {
     }
 }
 
+export const setIsTablet = (setTo) => {
+    return{
+        type: 'SET_IS_TABLET',
+        payload: setTo
+    }
+}
+
+
+export const setIsDesktop = (setTo) => {
+    return{
+        type: 'SET_IS_DESKTOP',
+        payload: setTo
+    }
+}
+
 //Socket Actions
 export const setSocket = (setTo) => {
     return{
