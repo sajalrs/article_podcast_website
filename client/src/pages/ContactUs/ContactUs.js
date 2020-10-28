@@ -17,7 +17,7 @@ const initialValue = {
             object: "text",
             leaves: [
               {
-                text: "Edit text, save and press send to send message...",
+                text: "Edit text, save and press send to message us...",
               },
             ],
           },
@@ -152,7 +152,7 @@ const ContactUs = (props) => {
     </div>
   );
 
-  return <Page sidebarFixTopOffset={0} mainPane={contents} />;
+  return <Page sidebarFixTopOffset={0} sidePane={contents} />;
 };
 
 export default ContactUs;
