@@ -150,14 +150,18 @@
 }
 
 .heading {
-  align-self: flex-start;
+  color: var(--primary-color);
+  font-family: "Montserrat", sans-serif;
+}
+
+.sub-heading {
+  font-size: "1rem";
   color: var(--primary-color);
   font-family: "Montserrat", sans-serif;
 }
 
 .heading-special{
   font-size: 3rem;
-  align-self: flex-start;
   color: var(--secondary-color);
   font-family: 'Montserrat', sans-serif;
   font-weight: bold;

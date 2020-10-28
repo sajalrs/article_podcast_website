@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import { Value } from "slate";
-import styles2 from "../../components/Comment/Comment.module.css"
-import TextEditor from "../../components/TextEditor/TextEditor"
+import styles2 from "../../components/Comment/Comment.module.css";
+import TextEditor from "../../components/TextEditor/TextEditor";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const initialValue = {
@@ -28,6 +29,7 @@ const initialValue = {
 };
 
 const ContactUs = (props) => {
+  const isMobile = useSelector((state) => state.device.isMobile);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -85,7 +87,7 @@ const ContactUs = (props) => {
   //     });
   // };
 
-  const contents = (
+  const sidePaneContents = (
     <div
       className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
     >
@@ -131,9 +133,7 @@ const ContactUs = (props) => {
             </div>
 
             <TextEditor
-              value={
-                textEditorValue
-              }
+              value={textEditorValue}
               setValue={setTextEditorValue}
               onSave={() => {}}
               toolbarFixed={false}
@@ -152,7 +152,124 @@ const ContactUs = (props) => {
     </div>
   );
 
-  return <Page sidebarFixTopOffset={0} sidePane={contents} />;
+  const address =
+    "The False 9 Podcast \nBhotekoshi Marga \nChappalkarkhana \nKathmandu \n44600 \nNepal";
+
+  const phone = "+12144975731";
+  const mainPaneContents = (
+    <>
+      <div
+        className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
+        style={{ paddingBottom: "0px", paddingTop: "0px" }}
+      >
+        <h1 className={styles["heading-special"]} style={{ margin: "10px" }}>
+          Contact Us
+        </h1>
+      </div>
+
+      <div
+        className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]} `}
+        style={{ flexDirection: "column" }}
+      >
+        <div>
+          <h1 className={styles["heading"]}>Address: </h1>
+
+          <p style={{ whiteSpace: "pre-wrap", width: "min-content" }}>
+            {address}
+          </p>
+          <div>
+            <h1 className={styles["heading"]}>Emails: </h1>
+            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+              <h2
+                className={styles["sub-heading"]}
+                style={{ padding: "0px", paddingRight: "10px", margin: "0px" }}
+              >
+                General:
+              </h2>
+              <p style={{ padding: "0px", margin: "0px" }}>
+              thefalse9pod@gmail.com
+              </p>
+            </label>
+            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+              <h2
+                className={styles["sub-heading"]}
+                style={{ padding: "0px", margin: "0px", paddingRight: "10px" }}
+              >
+                Ishan Sharma:
+              </h2>
+              <p style={{ padding: "0px", margin: "0px" }}>
+                ishanvilla@gmail.com
+              </p>
+            </label>
+            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+              <h2
+                className={styles["sub-heading"]}
+                style={{ padding: "0px", margin: "0px" , paddingRight: "10px"}}
+              >
+                Susajjan Dhungana:
+              </h2>
+              <p style={{ padding: "0px", margin: "0px" }}>
+                2086@nmcth.edu
+              </p>
+            </label>
+            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+              <h2
+                className={styles["sub-heading"]}
+                style={{ padding: "0px", margin: "0px", paddingRight: "10px" }}
+              >
+                Ojash Dangal:
+              </h2>
+              <p style={{ padding: "0px", margin: "0px" }}>
+                ojashdangal@gmail.com
+              </p>
+            </label>
+            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+              <h2
+                className={styles["sub-heading"]}
+                style={{ padding: "0px", margin: "0px" , paddingRight: "10px"}}
+              >
+                Madhu Acharya:
+              </h2>
+              <p style={{ padding: "0px", margin: "0px" }}>
+                madhu.acharya@gmail.com
+              </p>
+            </label>
+            <label  style={isMobile? { display: "flex" , flexDirection: "column"}: { display: "flex", flexDirection: "row"}}>
+              <h2
+                className={styles["sub-heading"]}
+                style={{ padding: "0px", margin: "0px" , paddingRight: "10px"}}
+              >
+                Sajal Satyal:
+              </h2>
+              <p style={{ padding: "0px", margin: "0px" }}>
+                sajalsatyal@gmail.com
+              </p>
+            </label>
+          </div>
+          <h1 className={styles["heading"]}>Phone: </h1>
+
+          <p
+            style={{
+              whiteSpace: "pre-wrap",
+              width: "min-content",
+              letterSpacing: "1px",
+            }}
+          >
+            {phone}
+          </p>
+        </div>
+      </div>
+      {isMobile? sidePaneContents: null}
+    </>
+  );
+
+  return (
+    <Page
+      sidebarFixTopOffset={0}
+      mainPane={mainPaneContents}
+      sidePane={sidePaneContents}
+    />
+  );
 };
 
 export default ContactUs;
