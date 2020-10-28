@@ -36,10 +36,10 @@ const Comment = (props) => {
 
 
 <div className={styles["date-time-ellipsis"]}>
-{date || time ? (
+{props.date ? (
           <p>
-            {date && <span className={styles["date"]}>{date}</span>}
-            {time && <span className={styles["time"]}>{time}</span>}
+            <span className={styles["date"]}>{date}</span>
+            <span className={styles["time"]}>{time}</span>
           </p>): null}
 {props.commentText.document.nodes.length > 1 &&(<div>
 {isMinimized ? (
