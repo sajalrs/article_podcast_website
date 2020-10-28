@@ -36,9 +36,7 @@ const Footer = forwardRef((props, ref) => {
             <div className={styles["footer-link-items"]}>
               <h2>About Us</h2>
               <Link to="/about">Team</Link>
-              <a href="">Contact</a>
-              <a href="">Support</a>
-              <a href="">Advertisements</a>
+              <Link to="/contact">Contact Us</Link>
             </div>
             <div className={styles["footer-link-items"]}>
               <h2>Podcasts</h2>
