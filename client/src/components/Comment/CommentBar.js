@@ -61,12 +61,17 @@ const CommentBar = (props) => {
   };
 
   return (
-    <div>
+    <div style={{width: "100%"}}>
       <h1 className={styles["heading-special"]}>Comments</h1>
-    <div
-        style={{
+   <div   style={{
           borderStyle: "solid solid solid solid",
           borderColor: "var(--secondary-color)",
+          width: "100%"
+        }}>
+   <div
+        style={{
+         
+          width: "100%"
         }}
       >
         <TextEditor
@@ -89,7 +94,9 @@ const CommentBar = (props) => {
           />
         );
       })}
+      </div>
     </div>
+
   );
 };
 

@@ -423,13 +423,13 @@ const TextEditor = (props) => {
     <div className={styles["overarching"]}>
             {props.toolbarFixed ? (
             <div
-              style={{ position: "fixed", top: "66px", backgroundColor: "#fff" }}
+              style={{ position: "fixed", top: "66px", backgroundColor: "#fff", width: "100%" }}
             >
               {/* <div style={{ position: "fixed", top: "103.5px", right: "0px"}}> */}
               {renderOnceToolbar}
             </div>
           ) : (
-            <div>
+            <div style={{width: "100%"}}>
               {renderOnceToolbar}
             </div>
           )}

@@ -297,6 +297,38 @@
 }
 
 
+.contact-us-form{
+  
+  width: 100%;
+  /* padding: 20px; */
+  border-style: solid solid solid solid;
+  border-color: var(--secondary-color);
+
+}
+
+
+.contact-us-form-padded{
+  padding-left: 0px;
+  padding-right: 35px;
+  padding-bottom: 20px;
+}
+
+.contact-us-form > h2{
+  margin-top: 0px;
+  padding: 10px;
+  padding-left: 25px;
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--primary-color);
+  color: white;
+  border-style: none none solid none;
+  border-color: var(--secondary-color);
+  color: var(--font-color);
+  font-size: 1.5rem;
+
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
 
 /* 
   .App-header {

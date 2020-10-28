@@ -1,7 +1,9 @@
 .Comment{
-    padding:10px;
-    border-style: none solid solid solid;
+    width: 100%;
+    padding: 10px;
+    border-style: solid none none none;
     border-color: var(--secondary-color);
+    box-sizing: border-box;
 }
 
 
@@ -12,11 +14,6 @@
     font-size: 1.5rem;
 }
 
-.card-body{
-    background-color: w;
-    border-bottom: solid;
-    border-color: white;
-}
 
 .card-body > p{
     display: flex;
