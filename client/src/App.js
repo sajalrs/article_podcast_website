@@ -14,9 +14,10 @@ import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAudioPlayerRef, setIsMobile, setSocket } from "./redux/actions";
 import io from "socket.io-client";
+import ContactUs from "./pages/ContactUs/ContactUs.js";
 
 const App = () => {
   const audioPlayerRef = useRef();
@@ -137,6 +138,12 @@ const App = () => {
               path="/about"
               render={() => {
                 return <AboutUs />;
+              }}
+            />
+            <Route
+              path="/contact"
+              render={() => {
+                return <ContactUs />;
               }}
             />
             <Route
