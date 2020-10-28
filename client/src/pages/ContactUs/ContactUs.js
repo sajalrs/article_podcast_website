@@ -30,8 +30,7 @@ const initialValue = {
 };
 
 const ContactUs = (props) => {
-  const isMobile = useSelector((state) => state.device.isMobile);
-  const isDesktop = useSelector((state) => state.device.isDesktop);
+  const screen = useSelector((state) => state.device.screen);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const user = useSelector((state) => state.login.user);
   const history = useHistory();
@@ -192,7 +191,7 @@ const ContactUs = (props) => {
             </h1>
             <label
               style={
-                isMobile
+                screen === "mobile"
                   ? { display: "flex", flexDirection: "column" }
                   : { display: "flex", flexDirection: "row" }
               }
@@ -209,7 +208,7 @@ const ContactUs = (props) => {
             </label>
             <label
               style={
-                isMobile
+                screen === "mobile"
                   ? { display: "flex", flexDirection: "column" }
                   : { display: "flex", flexDirection: "row" }
               }
@@ -226,7 +225,7 @@ const ContactUs = (props) => {
             </label>
             <label
               style={
-                isMobile
+                screen === "mobile"
                   ? { display: "flex", flexDirection: "column" }
                   : { display: "flex", flexDirection: "row" }
               }
@@ -241,7 +240,7 @@ const ContactUs = (props) => {
             </label>
             <label
               style={
-                isMobile
+                screen === "mobile"
                   ? { display: "flex", flexDirection: "column" }
                   : { display: "flex", flexDirection: "row" }
               }
@@ -258,7 +257,7 @@ const ContactUs = (props) => {
             </label>
             <label
               style={
-                isMobile
+                screen === "mobile"
                   ? { display: "flex", flexDirection: "column" }
                   : { display: "flex", flexDirection: "row" }
               }
@@ -275,7 +274,7 @@ const ContactUs = (props) => {
             </label>
             <label
               style={
-                isMobile
+                screen === "mobile"
                   ? { display: "flex", flexDirection: "column" }
                   : { display: "flex", flexDirection: "row" }
               }
@@ -307,7 +306,7 @@ const ContactUs = (props) => {
         </div>
       </div>
       <div>
-          {!isDesktop && sidePaneContents}
+          {!(screen === "desktop") && sidePaneContents}
       </div>
     </>
   );
@@ -316,7 +315,7 @@ const ContactUs = (props) => {
     <Page
       sidebarFixTopOffset={0}
       mainPane={mainPaneContents}
-      sidePane={isDesktop ? sidePaneContents : null}
+      sidePane={screen === "desktop"? sidePaneContents : null}
     />
   );
 };

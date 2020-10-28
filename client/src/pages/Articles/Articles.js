@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import Page from "../../components/Page/Page";
@@ -6,9 +6,10 @@ import styles from "../../components/Page/Page.module.css";
 import { useSelector } from "react-redux";
 const Articles = (props) => {
   const articles = useSelector((state) => state.blog.articles);
-  const isMobile = useSelector((state) => state.device.isMobile);
+  const screen = useSelector((state) => state.device.screen);
+
   const contents = articles.map((item, index) =>
-    isMobile ? (
+    screen === "mobile" ? (
       <div
         className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
       >
