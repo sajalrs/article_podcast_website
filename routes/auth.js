@@ -14,7 +14,8 @@ router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
   if (error) {
     const toReturn = error.details[0].message
-      .replace('"name"', "Name")
+      .replace('"firstName"', "First Name")
+      .replace('"lastName"', "Last Name")
       .replace('"email"', "Email")
       .replace('"password"', "Password");
     return res.status(400).send({ error: toReturn });
@@ -29,7 +30,8 @@ router.post("/register", async (req, res) => {
   const hashPassword = await bcrypt.hash(req.body.password, salt);
 
   const user = new User({
-    name: req.body.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     password: hashPassword,
   });
@@ -76,7 +78,8 @@ router.get("/isloggedin", verify, async (req, res) => {
     res.json({
       user: {
         _id: user._id,
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,   
         email: user.email,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
