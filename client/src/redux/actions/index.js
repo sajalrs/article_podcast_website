@@ -132,24 +132,9 @@ export const setUser = (setTo) => {
 }
 
 //Device Actions
-export const setIsMobile = (setTo) => {
+export const setScreen = (setTo) => {
     return{
-        type: 'SET_IS_MOBILE',
-        payload: setTo
-    }
-}
-
-export const setIsTablet = (setTo) => {
-    return{
-        type: 'SET_IS_TABLET',
-        payload: setTo
-    }
-}
-
-
-export const setIsDesktop = (setTo) => {
-    return{
-        type: 'SET_IS_DESKTOP',
+        type: 'SET_SCREEN',
         payload: setTo
     }
 }
