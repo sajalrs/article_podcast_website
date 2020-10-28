@@ -24,6 +24,7 @@ const messageValidation = (data) => {
     name: Joi.string().min(6).required(),
     email: Joi.string().min(6).required().email(),
     subject: Joi.string().min(6).required(),
+    content: Joi.required()
   });
 
   return schema.validate(data);

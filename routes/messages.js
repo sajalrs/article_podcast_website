@@ -36,7 +36,7 @@ router.post("/create", async (req, res) => {
     //     .replace('"name"', "Name")
     //     .replace('"email"', "Email")
     //     .replace('"password"', "Password");
-      return res.status(400).send({ error: toReturn });
+      return res.status(400).send({error: error.details[0].message} );
     }
     
     const message = new Message({
