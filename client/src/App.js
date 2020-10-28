@@ -15,7 +15,7 @@ import Login from "./pages/Login/Login";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setAudioPlayerRef, setIsMobile, setSocket } from "./redux/actions";
+import { setAudioPlayerRef, setIsMobile, setIsTablet, setIsDesktop, setSocket } from "./redux/actions";
 import io from "socket.io-client";
 import ContactUs from "./pages/ContactUs/ContactUs.js";
 
@@ -58,16 +58,25 @@ const App = () => {
   }, [audioPlayerRef]);
 
   useEffect(() => {
-    const updateIsMobile = () => {
+    const updateDeviceSize = () => {
       if (window.innerWidth <= 550) {
         dispatch(setIsMobile(true));
-      } else {
+        dispatch(setIsTablet(false));
+        dispatch(setIsDesktop(false));
+        
+      } else if(window.innerWidth > 550 && window.innerWidth <= 1350){
         dispatch(setIsMobile(false));
+        dispatch(setIsTablet(true));
+        dispatch(setIsDesktop(false));
+      } else if(window.innerWidth > 1350){
+        dispatch(setIsMobile(false));
+        dispatch(setIsTablet(false));
+        dispatch(setIsDesktop(true));
       }
     };
-    window.addEventListener("resize", updateIsMobile);
+    window.addEventListener("resize", updateDeviceSize);
     return () => {
-      window.addEventListener("resize", updateIsMobile);
+      window.addEventListener("resize", updateDeviceSize);
     };
   }, []);
   return (
