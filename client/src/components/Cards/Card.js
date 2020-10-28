@@ -32,8 +32,10 @@ const Card = {
     const monthIndex = date.getMonth();
     const year = date.getFullYear();
 
-    const hours = date.getHours() % 12;
-    const minutes = date.getMinutes();
+    let hours = date.getHours() % 12;
+    hours = hours === 0 ? 12 : hours;
+    let minutes = date.getMinutes();
+    minutes = minutes < 10 ? '0'+minutes: minutes;
     const meridian = date.getHours() < 12 === 0 ? "AM" : "PM";
 
     const time = `${hours}:${minutes} ${meridian}`;

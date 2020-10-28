@@ -66,7 +66,7 @@ router.post("/postcomment", verify, async (req, res) => {
             content: req.body.content,
           });
 
-          article.comments.push(comment);
+          article.comments.unshift(comment);
 
           await article.save((errors, data) => {
             if (errors) {
