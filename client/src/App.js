@@ -17,9 +17,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setAudioPlayerRef,
-  setIsMobile,
-  setIsTablet,
-  setIsDesktop,
+  setScreen,
   setSocket,
 } from "./redux/actions";
 import io from "socket.io-client";
@@ -29,9 +27,7 @@ const App = () => {
   const audioPlayerRef = useRef();
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
-  const isMobile = useSelector((state) => state.device.isMobile);
-  const isTablet = useSelector((state) => state.device.isTablet);
-  const isDesktop = useSelector((state) => state.device.isDesktop);
+  const screen = useSelector((state) => state.device.screen);
 
   useEffect(() => {
     const socket = io.connect();
@@ -69,34 +65,16 @@ const App = () => {
   useEffect(() => {
     const updateDeviceSize = () => {
       if (window.innerWidth <= 550) {
-        if (!isMobile) {
-          dispatch(setIsMobile(true));
-        }
-        if (isTablet) {
-          dispatch(setIsTablet(false));
-        }
-        if (isDesktop) {
-          dispatch(setIsDesktop(false));
+        if(screen !== "mobile"){
+          dispatch(setScreen("mobile"))
         }
       } else if (window.innerWidth > 550 && window.innerWidth <= 1350) {
-        if (isMobile) {
-          dispatch(setIsMobile(false));
-        }
-        if (!isTablet) {
-          dispatch(setIsTablet(true));
-        }
-        if (isDesktop) {
-          dispatch(setIsDesktop(false));
+        if(screen !== "tablet"){
+          dispatch(setScreen("tablet"))
         }
       } else if (window.innerWidth > 1350) {
-        if (isMobile) {
-          dispatch(setIsMobile(false));
-        }
-        if (isTablet) {
-          dispatch(setIsTablet(false));
-        }
-        if (!isDesktop) {
-          dispatch(setIsDesktop(true));
+        if(screen !== "desktop"){
+          dispatch(setScreen("desktop"))
         }
       }
     };
