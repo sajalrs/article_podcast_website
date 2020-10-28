@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Message = require("../models/Messages");
+const {
+    messageValidation
+  } = require("../validation/validation");
 
 router.get("/pages", async (req, res) => {
   const query = Article.find({})
@@ -27,6 +30,15 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/create", async (req, res) => {
+    const { error } = messageValidation(req.body);
+    if (error) {
+    //   const toReturn = error.details[0].message
+    //     .replace('"name"', "Name")
+    //     .replace('"email"', "Email")
+    //     .replace('"password"', "Password");
+      return res.status(400).send({ error: toReturn });
+    }
+    
     const message = new Message({
         name: req.body.name,
         email: req.body.email,
