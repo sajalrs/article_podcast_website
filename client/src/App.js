@@ -1,4 +1,4 @@
-import React, {useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Home from "./pages/Home/Home.js";
 import CreateArticle from "./pages/CreateArticle";
 import Articles from "./pages/Articles/Articles";
@@ -14,10 +14,9 @@ import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import { setAudioPlayerRef, setIsMobile, setSocket } from "./redux/actions";
-import io from "socket.io-client"
-
+import io from "socket.io-client";
 
 const App = () => {
   const audioPlayerRef = useRef();
@@ -25,15 +24,15 @@ const App = () => {
   const scrollLockRef = useRef();
 
   useEffect(() => {
-   const socket = io.connect();
-   dispatch(setSocket(socket));
+    const socket = io.connect();
+    dispatch(setSocket(socket));
 
-   return()=>{
-     socket.emit('disconnect');
-     socket.disconnect();
-   }
-  }, [])
-  
+    return () => {
+      socket.emit("disconnect");
+      socket.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     const getCSRFToken = async () => {
       const tokenResponse = await axios.get("/csrf-token");

@@ -3,6 +3,8 @@ import Comment from "./Comment";
 import TextEditor from "../TextEditor/TextEditor";
 import { Value } from "slate";
 import styles from "./Comment.module.css";
+
+
 const CommentBar = (props) => {
   const initialValue = {
     document: {
@@ -15,7 +17,7 @@ const CommentBar = (props) => {
               object: "text",
               leaves: [
                 {
-                  text: "This text is editable",
+                  text: "Edit text and save to post comment...",
                 },
               ],
             },
@@ -24,9 +26,11 @@ const CommentBar = (props) => {
       ],
     },
   };
+
   const [textEditorValue, setTextEditorValue] = useState(
     Value.fromJSON(initialValue)
   );
+
 
   const postComment = () => {
     props.postComment(textEditorValue);
