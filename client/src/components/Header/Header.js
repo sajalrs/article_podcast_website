@@ -8,14 +8,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {setHeaderBoxRef} from "../../redux/actions"
 
 const Header = forwardRef((props, ref) => {
-  const isMobile = useSelector((state) => state.device.isMobile);
-  const isTablet = useSelector((state) => state.device.isTablet);
-  const isDesktop = useSelector((state) => state.device.isDesktop);
+  const screen = useSelector((state) => state.device.screen);
   const dispatch = useDispatch();
   useEffect(()=> {
-    console.log("Set Header Box Ref")
     dispatch(setHeaderBoxRef(ref))
-  }, [isMobile, isTablet, isDesktop])
+  }, [screen])
   return (
     <header ref={ref}>
       <div className={styles["header"]}>
