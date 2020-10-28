@@ -14,8 +14,14 @@ import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setAudioPlayerRef, setIsMobile, setIsTablet, setIsDesktop, setSocket } from "./redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setAudioPlayerRef,
+  setIsMobile,
+  setIsTablet,
+  setIsDesktop,
+  setSocket,
+} from "./redux/actions";
 import io from "socket.io-client";
 import ContactUs from "./pages/ContactUs/ContactUs.js";
 
@@ -23,6 +29,9 @@ const App = () => {
   const audioPlayerRef = useRef();
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
+  const isMobile = useSelector((state) => state.device.isMobile);
+  const isTablet = useSelector((state) => state.device.isTablet);
+  const isDesktop = useSelector((state) => state.device.isDesktop);
 
   useEffect(() => {
     const socket = io.connect();
@@ -60,18 +69,35 @@ const App = () => {
   useEffect(() => {
     const updateDeviceSize = () => {
       if (window.innerWidth <= 550) {
-        dispatch(setIsMobile(true));
-        dispatch(setIsTablet(false));
-        dispatch(setIsDesktop(false));
-        
-      } else if(window.innerWidth > 550 && window.innerWidth <= 1350){
-        dispatch(setIsMobile(false));
-        dispatch(setIsTablet(true));
-        dispatch(setIsDesktop(false));
-      } else if(window.innerWidth > 1350){
-        dispatch(setIsMobile(false));
-        dispatch(setIsTablet(false));
-        dispatch(setIsDesktop(true));
+        if (!isMobile) {
+          dispatch(setIsMobile(true));
+        }
+        if (isTablet) {
+          dispatch(setIsTablet(false));
+        }
+        if (isDesktop) {
+          dispatch(setIsDesktop(false));
+        }
+      } else if (window.innerWidth > 550 && window.innerWidth <= 1350) {
+        if (isMobile) {
+          dispatch(setIsMobile(false));
+        }
+        if (!isTablet) {
+          dispatch(setIsTablet(true));
+        }
+        if (isDesktop) {
+          dispatch(setIsDesktop(false));
+        }
+      } else if (window.innerWidth > 1350) {
+        if (isMobile) {
+          dispatch(setIsMobile(false));
+        }
+        if (isTablet) {
+          dispatch(setIsTablet(false));
+        }
+        if (!isDesktop) {
+          dispatch(setIsDesktop(true));
+        }
       }
     };
     window.addEventListener("resize", updateDeviceSize);

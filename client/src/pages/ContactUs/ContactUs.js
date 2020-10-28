@@ -6,6 +6,7 @@ import styles2 from "../../components/Comment/Comment.module.css";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const initialValue = {
   document: {
@@ -32,12 +33,12 @@ const ContactUs = (props) => {
   const isMobile = useSelector((state) => state.device.isMobile);
   const isDesktop = useSelector((state) => state.device.isDesktop);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const user = useSelector((state) => state.login.user)
-  
+  const user = useSelector((state) => state.login.user);
+  const history = useHistory();
   const [formData, setFormData] = useState({
-    firstName: isLoggedIn && user? user.name.split(" ")[0] : "",
-    lastName: isLoggedIn && user? user.name.split(" ")[1] : "",
-    email: isLoggedIn? user.email: "",
+    firstName: isLoggedIn && user ? user.name.split(" ")[0] : "",
+    lastName: isLoggedIn && user ? user.name.split(" ")[1] : "",
+    email: isLoggedIn ? user.email : "",
     subject: "",
   });
 
@@ -63,33 +64,35 @@ const ContactUs = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    registerUser();
   };
 
-  // const registerUser = () => {
-  //   const toPost = {
-  //     name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
-  //     email: formData.email,
-  //     password: formData.password,
-  //   };
+  const registerUser = () => {
+    const toPost = {
+      name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
+      email: formData.email,
+      subject: formData.subject,
+      content: textEditorValue.toJSON(),
+    };
 
-  //   const options = {
-  //     headers: { "Content-Type": "application/json" },
-  //   };
+    const options = {
+      headers: { "Content-Type": "application/json" },
+    };
 
-  //   axios
-  //     .post("/auth/register", JSON.stringify(toPost), options)
-  //     .then((res) => {
-  //       alert("New User Registered");
-  //       history.push("/");
-  //     })
-  //     .catch((err) => {
-  //       if (err.response.status === 401 || err.response.status === 400) {
-  //         alert(err.response.data.error);
-  //       } else if (err.response.status !== 200) {
-  //         throw Error(err);
-  //       }
-  //     });
-  // };
+    axios
+      .post("/messages/create", JSON.stringify(toPost), options)
+      .then((res) => {
+        alert("Message Sent");
+        history.push("/");
+      })
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 400) {
+          alert(err.response.data.error);
+        } else if (err.response.status !== 200) {
+          throw Error(err);
+        }
+      });
+  };
 
   const sidePaneContents = (
     <div
@@ -303,7 +306,9 @@ const ContactUs = (props) => {
           </p>
         </div>
       </div>
-      {!isDesktop ? sidePaneContents : null}
+      <div>
+          {!isDesktop && sidePaneContents}
+      </div>
     </>
   );
 
@@ -311,7 +316,7 @@ const ContactUs = (props) => {
     <Page
       sidebarFixTopOffset={0}
       mainPane={mainPaneContents}
-      sidePane={sidePaneContents}
+      sidePane={isDesktop ? sidePaneContents : null}
     />
   );
 };

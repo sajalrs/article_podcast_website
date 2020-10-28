@@ -26,7 +26,7 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.post("/create", verify, async (req, res) => {
+router.post("/create", async (req, res) => {
     const message = new Message({
         name: req.body.name,
         email: req.body.email,
