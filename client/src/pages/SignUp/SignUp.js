@@ -11,6 +11,7 @@ const SignUp = (props) => {
     email: "",
     password: "",
     reenteredPassword: "",
+    isSubscribed: false,
   });
 
   const onFirstNameChange = (e) => {
@@ -32,6 +33,11 @@ const SignUp = (props) => {
   const onReenteredPasswordChange = (e) => {
     setFormData({ ...formData, reenteredPassword: e.target.value });
   };
+
+  const onIsSubscribedChange = () => {
+    setFormData({ ...formData, isSubscribed: !formData.isSubscribed });
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,65 +80,86 @@ const SignUp = (props) => {
       className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
     >
       <div className={`${styles["register-login-form"]}`}>
-      <h2>SIGN UP</h2>
-     <div className={`${styles["register-login-form-padded"]}`}>
-        <form onSubmit={handleSubmit} className={styles["headline-form"]}>
-          <div className={styles["horizontal"]}>
-            <label>First Name: </label>
+        <h2>SIGN UP</h2>
+        <div className={`${styles["register-login-form-padded"]}`}>
+          <form onSubmit={handleSubmit} className={styles["headline-form"]}>
+            <div className={styles["horizontal"]}>
+              <label>First Name: </label>
+              <input
+                className={styles["headline-form-input"]}
+                type="text"
+                value={formData.firstName}
+                onChange={onFirstNameChange}
+              />
+            </div>
+            <div className={styles["horizontal"]}>
+              <label>Last Name: </label>
+              <input
+                className={styles["headline-form-input"]}
+                type="text"
+                value={formData.lastName}
+                onChange={onLastNameChange}
+              />
+            </div>
+            <div className={styles["horizontal"]}>
+              <label>Email: </label>
+              <input
+                className={styles["headline-form-input"]}
+                type="text"
+                value={formData.email}
+                onChange={onEmailChange}
+              />
+            </div>
+            <div className={styles["horizontal"]}>
+              <label>Password: </label>
+              <input
+                className={styles["headline-form-input"]}
+                type="password"
+                value={formData.password}
+                onChange={onPasswordChange}
+              />
+            </div>
+            <div className={styles["horizontal"]}>
+              <label>Re-enter Password: </label>
+              <input
+                className={styles["headline-form-input"]}
+                type="password"
+                value={formData.reenteredPassword}
+                onChange={onReenteredPasswordChange}
+              />
+            </div>
+
+            <div className={styles["horizontal"]}>
+              <label for="subscribe">
+                Subscribe to Newsletter:{" "}
+                <input
+                  className={styles["headline-form-checkbox"]}
+                  id="subscribe"
+                  type="checkbox"
+                  checked={formData.isSubscribed}
+                  onChange={onIsSubscribedChange}
+                />
+              </label>
+            </div>
+
             <input
-              className={styles["headline-form-input"]}
-              type="text"
-              value={formData.firstName}
-              onChange={onFirstNameChange}
+              type="submit"
+              value="Sign Up"
+              className={styles["submit-button"]}
             />
+          </form>
+          <div className={styles["register-login-form-text"]}>
+            <label>
+              <Link to={"/login"}>Already have an account?</Link>
+            </label>
+            <label>
+              <Link to={"/legal/termsofservice"}>Terms and Conditions</Link>
+            </label>
+            <label>
+              <Link to={"/legal/privacy"}>Privacy Statement</Link>
+            </label>
+            
           </div>
-          <div className={styles["horizontal"]}>
-            <label>Last Name: </label>
-            <input
-              className={styles["headline-form-input"]}
-              type="text"
-              value={formData.lastName}
-              onChange={onLastNameChange}
-            />
-          </div>
-          <div className={styles["horizontal"]}>
-            <label>Email: </label>
-            <input
-              className={styles["headline-form-input"]}
-              type="text"
-              value={formData.email}
-              onChange={onEmailChange}
-            />
-          </div>
-          <div className={styles["horizontal"]}>
-            <label>Password: </label>
-            <input
-              className={styles["headline-form-input"]}
-              type="password"
-              value={formData.password}
-              onChange={onPasswordChange}
-            />
-          </div>
-          <div className={styles["horizontal"]}>
-            <label>Re-enter Password: </label>
-            <input
-              className={styles["headline-form-input"]}
-              type="password"
-              value={formData.reenteredPassword}
-              onChange={onReenteredPasswordChange}
-            />
-          </div>
-          <input
-            type="submit"
-            value="Sign Up"
-            className={styles["submit-button"]}
-          />
-        </form>
-        <div className={styles["register-login-form-text"]}>
-          <label>
-            <Link to={"/login"}>Already have an account?</Link>
-          </label>
-        </div>
         </div>
       </div>
     </div>
