@@ -34,6 +34,8 @@ router.post("/register", async (req, res) => {
     lastName: req.body.lastName,
     email: req.body.email,
     password: hashPassword,
+    isModerator: false,
+    isSubscribed: req.body.isSubscribed || false
   });
 
   try {
@@ -81,6 +83,8 @@ router.get("/isloggedin", verify, async (req, res) => {
         firstName: user.firstName,
         lastName: user.lastName,   
         email: user.email,
+        isModerator: user.isModerator,
+        isSubscribed: user.isSubscribed,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
       },
