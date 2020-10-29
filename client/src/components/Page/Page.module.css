@@ -316,6 +316,7 @@
 .contact-us-form{
   
   width: 100%;
+  max-width: 100vw;
   /* padding: 20px; */
   border-style: solid solid solid solid;
   border-color: var(--secondary-color);
@@ -340,7 +341,7 @@
   border-color: var(--secondary-color);
   color: var(--font-color);
   font-size: 1.5rem;
-
+ 
   font-weight: bold;
   letter-spacing: 3px;
 }
