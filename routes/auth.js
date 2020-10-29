@@ -35,7 +35,7 @@ router.post("/register", async (req, res) => {
     email: req.body.email,
     password: hashPassword,
     isModerator: false,
-    isSubscribed: req.body.isSubscribed || false
+    isSubscribed: req.body.isSubscribed || false,
   });
 
   try {
@@ -74,6 +74,23 @@ router.post("/login", async (req, res) => {
   // res.send({ token: token });
 });
 
+router.post("/subscribe", verify, async (req, res) => {
+  await User.findById(req.user._id, async (err, user) => {
+    if (err) {
+      res.send(err);
+    } else {
+      user.isSubscribed = req.body.isSubscribed;
+      await user.save((error, data) => {
+        if (error) {
+          res.send(error);
+        } else {
+          res.json(data);
+        }
+      });
+    }
+  });
+});
+
 router.get("/isloggedin", verify, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -81,7 +98,7 @@ router.get("/isloggedin", verify, async (req, res) => {
       user: {
         _id: user._id,
         firstName: user.firstName,
-        lastName: user.lastName,   
+        lastName: user.lastName,
         email: user.email,
         isModerator: user.isModerator,
         isSubscribed: user.isSubscribed,
