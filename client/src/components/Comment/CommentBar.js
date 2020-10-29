@@ -70,7 +70,6 @@ const CommentBar = (props) => {
         }}>
    <div
         style={{
-         
           width: "100%"
         }}
       >

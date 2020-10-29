@@ -35,8 +35,6 @@ const Edit = (props) => {
     Value.fromJSON(initialValue)
   );
 
-  
-
   const [formData, setFormData] = useState({
     title: "To be edited",
     author: "To be edited",
@@ -256,11 +254,7 @@ const Edit = (props) => {
   );
 
   return (
-    <Page
-      sidebarFixTopOffset={0}
-      headline={headline}
-      mainPane={contents}
-    />
+    <Page sidebarFixTopOffset={0} headline={headline} mainPane={contents} />
   );
 };
 
