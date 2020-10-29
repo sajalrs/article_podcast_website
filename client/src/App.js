@@ -15,11 +15,7 @@ import Login from "./pages/Login/Login";
 import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setAudioPlayerRef,
-  setScreen,
-  setSocket,
-} from "./redux/actions";
+import { setAudioPlayerRef, setScreen, setSocket } from "./redux/actions";
 import io from "socket.io-client";
 import ContactUs from "./pages/ContactUs/ContactUs.js";
 
@@ -65,16 +61,16 @@ const App = () => {
   useEffect(() => {
     const updateDeviceSize = () => {
       if (window.innerWidth <= 550) {
-        if(screen !== "mobile"){
-          dispatch(setScreen("mobile"))
+        if (screen !== "mobile") {
+          dispatch(setScreen("mobile"));
         }
       } else if (window.innerWidth > 550 && window.innerWidth <= 1350) {
-        if(screen !== "tablet"){
-          dispatch(setScreen("tablet"))
+        if (screen !== "tablet") {
+          dispatch(setScreen("tablet"));
         }
       } else if (window.innerWidth > 1350) {
-        if(screen !== "desktop"){
-          dispatch(setScreen("desktop"))
+        if (screen !== "desktop") {
+          dispatch(setScreen("desktop"));
         }
       }
     };
@@ -154,30 +150,42 @@ const App = () => {
               }}
             />
             <Route
+              exact
               path="/contact"
               render={() => {
                 return <ContactUs />;
               }}
             />
             <Route
+             exact
               path="/create/articles"
               render={() => {
                 return <CreateArticle />;
               }}
             />
             <Route
+             exact
               path="/register"
               render={() => {
                 return <SignUp />;
               }}
             />
             <Route
+             exact
               path="/login"
               render={() => {
                 return <Login />;
               }}
             />
             <Route
+             exact
+              path="/login/email=:email"
+              render={() => {
+                return <Login />;
+              }}
+            />
+            <Route
+             exact
               path="/"
               render={() => {
                 return <div>404</div>;
