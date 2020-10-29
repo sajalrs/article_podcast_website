@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "../../redux/actions";
@@ -11,23 +11,52 @@ const Login = (props) => {
   const { email } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const isLoggedInGlobal = useSelector((state) => state.login.isLoggedIn)
-
+  const isLoggedInGlobal = useSelector((state) => state.login.isLoggedIn);
+  const userGlobal = useSelector((state) => state.login.user);
   useEffect(() => {
-    if(isLoggedInGlobal){
-      alert("You are already logged in")
-      history.push('/')
+    if (isLoggedInGlobal && formData.password === "") {
+      if (email) {
+        subscribeNewsletter().then(() => {
+          if (userGlobal && !userGlobal.isSubscribed) {
+            dispatch(setUser({ ...userGlobal, isSubscribed: true }));
+          }
+        });
+      } else {
+        alert("You are already logged in");
+      }
+      history.push("/");
     }
-  }, [isLoggedInGlobal])
+  }, [isLoggedInGlobal]);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  useEffect(() => {
-    setFormData({ ...formData, email: email});
-  }, [email])
+  const subscribeNewsletter = async () => {
+    const toPost = { isSubscribed: true };
+    const options = {
+      headers: { "Content-Type": "application/json" },
+    };
 
+    await axios
+      .post("/auth/subscribe", JSON.stringify(toPost), options)
+      .then((res) => {
+        alert("Subscribed to newsletter");
+      })
+      .catch((err) => {
+        if (err.response.status === 401 || err.response.status === 400) {
+          alert(err.response.data.error);
+        } else if (err.response.status !== 200) {
+          throw Error(err);
+        }
+      });
+  };
+
+  useEffect(() => {
+    if (email) {
+      setFormData({ ...formData, email: email });
+    }
+  }, [email]);
 
   const onEmailChange = (e) => {
     setFormData({ ...formData, email: e.target.value });
@@ -51,7 +80,17 @@ const Login = (props) => {
       .post("/auth/login", JSON.stringify(formData), options)
       .then((res) => {
         alert("Login Successful");
-        isLoggedIn().then(res => history.push("/"))
+
+        isLoggedIn().then(() => {
+          if (email && userGlobal && !userGlobal.isSubscribed) {
+            subscribeNewsletter().then(() => {
+              if (userGlobal && !userGlobal.isSubscribed) {
+                dispatch(setUser({ ...userGlobal, isSubscribed: true }));
+              }
+            });
+          }
+          history.push("/");
+        });
       })
       .catch((err) => {
         if (err.response.status === 401 || err.response.status === 400) {
@@ -71,46 +110,48 @@ const Login = (props) => {
         dispatch(setUser(response.data.user));
       }
     });
-  }
+  };
   const contents = (
-    <div className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}>
-     <div className={`${styles["register-login-form"]}`}>
-     <h2>LOGIN</h2>
-     <div className={`${styles["register-login-form-padded"]}`}>
-     <form onSubmit={handleSubmit} className={styles["headline-form"]}>
-        <div className={styles["horizontal"]}>
-          <label>Email: </label>
-          <input
-            className={styles["headline-form-input"]}
-            type="text"
-            value={formData.email}
-            onChange={onEmailChange}
-          />
+    <div
+      className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
+    >
+      <div className={`${styles["register-login-form"]}`}>
+        <h2>LOGIN</h2>
+        <div className={`${styles["register-login-form-padded"]}`}>
+          <form onSubmit={handleSubmit} className={styles["headline-form"]}>
+            <div className={styles["horizontal"]}>
+              <label>Email: </label>
+              <input
+                className={styles["headline-form-input"]}
+                type="text"
+                value={formData.email}
+                onChange={onEmailChange}
+              />
+            </div>
+            <div className={styles["horizontal"]}>
+              <label>Password: </label>
+              <input
+                className={styles["headline-form-input"]}
+                type="password"
+                value={formData.password}
+                onChange={onPasswordChange}
+              />
+            </div>
+            <input
+              type="submit"
+              value="Login"
+              className={styles["submit-button"]}
+            />
+          </form>
+          <div className={styles["register-login-form-text"]}>
+            <label>
+              <Link to={"/"}>Forgot your password or locked out?</Link>
+            </label>
+            <label>
+              <Link to={"/register"}>Don't have an account?</Link>
+            </label>
+          </div>
         </div>
-        <div className={styles["horizontal"]}>
-          <label>Password: </label>
-          <input
-            className={styles["headline-form-input"]}
-            type="password"
-            value={formData.password}
-            onChange={onPasswordChange}
-          />
-        </div>
-        <input
-          type="submit"
-          value="Login"
-          className={styles["submit-button"]}
-        />
-      </form>
-      <div className={styles["register-login-form-text"]}>
-      <label>
-        <Link to={"/"}>Forgot your password or locked out?</Link>
-      </label>
-      <label>
-        <Link to={"/register"}>Don't have an account?</Link>
-      </label>
-      </div>
-      </div> 
       </div>
     </div>
   );
