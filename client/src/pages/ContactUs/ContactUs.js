@@ -162,7 +162,7 @@ const ContactUs = (props) => {
   const address =
     "The False 9 Podcast \nBhotekoshi Marga \nChappalkarkhana \nKathmandu \n44600 \nNepal";
 
-  const phone = "+12144975731";
+  const phone = "+12144975731\n+9779841360410";
   const mainPaneContents = (
     <>
       <div
