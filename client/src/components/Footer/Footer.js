@@ -1,34 +1,59 @@
-import React, { useState, useRef, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import styles from "./Footer.module.css";
-import {Link} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 const Footer = forwardRef((props, ref) => {
- 
-  
+  const history = useHistory();
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const user = useSelector((state) => state.login.user);
+  const [emailInput, setEmailInput] = useState();
+  useEffect(() => {
+    if (isLoggedIn && user && user.email) {
+      setEmailInput(user.email);
+    }
+  }, [isLoggedIn, user]);
+
+  const onEmailChange = (e) => {
+    setEmailInput(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    history.push("/login");
+  };
+
   return (
     <div>
-      
-
       <div ref={ref} className={styles["footer-container"]}>
         <section className={styles["footer-subscription"]}>
-          <p className={styles["footer-subscription-heading"]}>
-            Join our weekly newsletter
-          </p>
+          {isLoggedIn && user && user.isSubscribed ? (
+            <p className={styles["footer-subscription-heading"]}>
+              You are subscribed to our newsletter
+            </p>
+          ) : (
+            <>
+              <p className={styles["footer-subscription-heading"]}>
+                Join our newsletter
+              </p>
 
-          <div className={styles["input-area"]}>
-            <form>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email"
-                className={styles["footer-input"]}
-              />
-              <input
-                type="submit"
-                className={styles["submit-btn"]}
-                value="Subscribe"
-              />
-            </form>
-          </div>
+              <div className={styles["input-area"]}>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    value={emailInput}
+                    onChange={onEmailChange}
+                    placeholder="Enter your email"
+                    className={styles["footer-input"]}
+                  />
+                  <input
+                    type="submit"
+                    className={styles["submit-btn"]}
+                    value="Subscribe"
+                  />
+                </form>
+              </div>
+            </>
+          )}
         </section>
 
         <div className={styles["footer-links"]}>
@@ -67,7 +92,9 @@ const Footer = forwardRef((props, ref) => {
           <div className={styles["footer-link-wrapper"]}>
             <div className={styles["footer-link-items"]}>
               <h2>Social</h2>
-              <a href="https://www.facebook.com/False9Podcast" target="_blank" >Facebook</a>
+              <a href="https://www.facebook.com/False9Podcast" target="_blank">
+                Facebook
+              </a>
               <a href="https://twitter.com/TFalse9podcast" target="_blank">
                 Twitter
               </a>
@@ -87,7 +114,7 @@ const Footer = forwardRef((props, ref) => {
             <div className={styles["footer-link-items"]}>
               <h2>Legal</h2>
               <Link to="/legal/privacy">Privacy</Link>
-             
+
               <Link to="/legal/termsofservice">Terms of Service</Link>
             </div>
           </div>
@@ -99,7 +126,11 @@ const Footer = forwardRef((props, ref) => {
         <section className={styles["social-media"]}>
           <div className={styles["social-media-wrap"]}>
             <div className={styles["social-icons"]}>
-              <a href="https://www.facebook.com/False9Podcast" target='_blank' className={styles["social-icon-link"]}>
+              <a
+                href="https://www.facebook.com/False9Podcast"
+                target="_blank"
+                className={styles["social-icon-link"]}
+              >
                 <i
                   className={`${styles["fab"]} ${styles["fa-facebook-f"]} fab fa-facebook-f`}
                 />
@@ -112,7 +143,7 @@ const Footer = forwardRef((props, ref) => {
                 <i
                   className={`${styles["fab"]} ${styles["fa-twitter"]} fab fa-twitter`}
                 />
-              </a>  
+              </a>
               <a
                 href="https://www.youtube.com/channel/UCV2Y62okiOmoXzYIh_xAcGw"
                 target="_blank"
