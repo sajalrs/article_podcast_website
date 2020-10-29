@@ -6,6 +6,7 @@ const registerValidation = (data) => {
     lastName: Joi.string().required(),
     email: Joi.string().min(6).required().email(),
     password: Joi.string().min(6).required(),
+    isSubscribed: Joi.boolean()
   });
 
   return schema.validate(data);
@@ -26,7 +27,7 @@ const messageValidation = (data) => {
     lastName: Joi.string().required(),
     email: Joi.string().min(6).required().email(),
     subject: Joi.string().min(6).required(),
-    content: Joi.required()
+    content: Joi.required(),
   });
 
   return schema.validate(data);
