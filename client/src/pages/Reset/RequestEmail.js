@@ -68,7 +68,7 @@ const RequestEmail = (props) => {
           </form>
           <div className={styles["register-login-form-text"]}>
             <label>
-              Enter your email to request a password reset link
+              Enter your email to receive a password reset link
             </label>
             <label>
             <Link to={"/login"}>Back to Login Page</Link>

@@ -145,7 +145,7 @@ const Login = (props) => {
           </form>
           <div className={styles["register-login-form-text"]}>
             <label>
-              <Link to={"/"}>Forgot your password or locked out?</Link>
+              <Link to={"/forgotpassword"}>Forgot your password or locked out?</Link>
             </label>
             <label>
               <Link to={"/register"}>Don't have an account?</Link>
