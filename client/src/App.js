@@ -187,7 +187,7 @@ const App = () => {
             />
             <Route
               exact
-              path="/reset/email"
+              path="/forgotpassword"
               render={() => {
                 return <RequestEmail />;
               }}
