@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAudioPlayerRef, setScreen, setSocket } from "./redux/actions";
 import io from "socket.io-client";
 import ContactUs from "./pages/ContactUs/ContactUs.js";
+import RequestEmail from "./pages/Reset/RequestEmail.js";
 
 const App = () => {
   const audioPlayerRef = useRef();
@@ -157,35 +158,42 @@ const App = () => {
               }}
             />
             <Route
-             exact
+              exact
               path="/create/articles"
               render={() => {
                 return <CreateArticle />;
               }}
             />
             <Route
-             exact
+              exact
               path="/register"
               render={() => {
                 return <SignUp />;
               }}
             />
             <Route
-             exact
+              exact
               path="/login"
               render={() => {
                 return <Login />;
               }}
             />
             <Route
-             exact
+              exact
               path="/login/email=:email"
               render={() => {
                 return <Login />;
               }}
             />
             <Route
-             exact
+              exact
+              path="/reset/email"
+              render={() => {
+                return <RequestEmail />;
+              }}
+            />
+            <Route
+              exact
               path="/"
               render={() => {
                 return <div>404</div>;
