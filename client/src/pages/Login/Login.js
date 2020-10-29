@@ -2,26 +2,32 @@ import React, { useState, useEffect } from "react";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import {Link} from 'react-router-dom'
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "../../redux/actions";
 import axios from "axios";
 
 const Login = (props) => {
+  const { email } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
   const isLoggedInGlobal = useSelector((state) => state.login.isLoggedIn)
+
   useEffect(() => {
     if(isLoggedInGlobal){
       alert("You are already logged in")
       history.push('/')
     }
   }, [isLoggedInGlobal])
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    setFormData({ ...formData, email: email});
+  }, [email])
+
 
   const onEmailChange = (e) => {
     setFormData({ ...formData, email: e.target.value });

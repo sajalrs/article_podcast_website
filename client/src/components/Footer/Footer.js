@@ -19,7 +19,7 @@ const Footer = forwardRef((props, ref) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    history.push("/login");
+    history.push(`login/email=${emailInput}`);
   };
 
   return (
