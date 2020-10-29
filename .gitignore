@@ -1,6 +1,4 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-/client/src/components/TextEditor/TextEditorQuill.js
-/client/src/components/TextEditor/TextEditorWorking.js
 .env
 
 
