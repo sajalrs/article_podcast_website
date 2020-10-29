@@ -5,6 +5,7 @@ const verify = require("../verification/verifyToken");
 const {
   registerValidation,
   loginValidation,
+  resetPasswordValidation
 } = require("../validation/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -73,6 +74,27 @@ router.post("/login", async (req, res) => {
   res.cookie("token", token, { httpOnly: true }).json({ token: token });
   // res.send({ token: token });
 });
+
+router.post("/passwordreset", async (req, res) => {
+  const { error } = resetPasswordValidation(req.body);
+  if (error) {
+    const toReturn = error.details[0].message
+      .replace('"email"', "Email")
+    return res.status(400).send({ error: toReturn });
+  }
+
+  await User.findOne({ email: req.body.email }, (err, user) => {
+    if(err){
+      res.send({error: "Cannot find user with given email"})
+    } else{
+      console.log("Success");
+    }
+  })
+
+
+
+})
+
 
 router.post("/subscribe", verify, async (req, res) => {
   await User.findById(req.user._id, async (err, user) => {
