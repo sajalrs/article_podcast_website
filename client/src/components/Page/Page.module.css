@@ -215,6 +215,18 @@
   background-color: rgb(250,250,250);
 }
 
+.headline-form-checkbox{
+  padding: 8px 10px;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  margin-bottom: 16px;
+  border: 1px solid black;
+  width: 25px;
+  height: 25px;
+  background-color: rgb(250,250,250);
+}
+
 
 
 .horizontal{
