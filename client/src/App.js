@@ -19,6 +19,7 @@ import { setAudioPlayerRef, setScreen, setSocket } from "./redux/actions";
 import io from "socket.io-client";
 import ContactUs from "./pages/ContactUs/ContactUs.js";
 import RequestEmail from "./pages/Reset/RequestEmail.js";
+import NewPassword from "./pages/Reset/NewPassword.js";
 
 const App = () => {
   const audioPlayerRef = useRef();
@@ -192,6 +193,14 @@ const App = () => {
                 return <RequestEmail />;
               }}
             />
+             <Route
+              exact
+              path="/resetpassword/:token+"
+              render={() => {
+                return <NewPassword />;
+              }}
+            />
+            
             <Route
               exact
               path="/"
