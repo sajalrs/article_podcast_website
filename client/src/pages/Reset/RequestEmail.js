@@ -28,9 +28,9 @@ const RequestEmail = (props) => {
     };
 
     axios
-      .post("/auth/passwordreset", JSON.stringify(toPost), options)
+      .post("/auth/forgotpassword", JSON.stringify(toPost), options)
       .then((res) => {
-        alert("Email Address sent");
+        alert("Password reset link sent to email");
         history.push("/");
       })
       .catch((err) => {

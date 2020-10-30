@@ -77,7 +77,7 @@ router.post("/login", async (req, res) => {
   // res.send({ token: token });
 });
 
-router.post("/passwordreset", async (req, res) => {
+router.post("/forgotpassword", async (req, res) => {
   const { error } = resetPasswordValidation(req.body);
   if (error) {
     const toReturn = error.details[0].message.replace('"email"', "Email");
