@@ -105,13 +105,15 @@ router.post("/forgotpassword", async (req, res) => {
           pass: process.env.PASSWORD,
         },
         tls: {
-          ciphers: 'SSLv3'
+          ciphers: "SSLv3",
         },
         requireTLS: true,
       });
 
-      const passwordResetLink = (process.env.NODE_ENV === "production") ? `localhost:3000/resetpassword/${user._id}/${token}`: `thefalseninepodcast.com/resetpassword/${user._id}/${token}`;  
-      
+      const passwordResetLink =
+        process.env.NODE_ENV === "production"
+          ? `thefalseninepodcast.com/resetpassword/${user._id}/${token}`
+          : `localhost:3000/resetpassword/${user._id}/${token}`;
 
       const mailOptions = {
         from: `The False 9 Podcast <${process.env.EMAIL}>`,
@@ -119,7 +121,6 @@ router.post("/forgotpassword", async (req, res) => {
         subject: "Password Reset Link",
         text: `Password Reset Link: ${passwordResetLink}`,
       };
-
 
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
@@ -130,21 +131,37 @@ router.post("/forgotpassword", async (req, res) => {
           res.json({ message: "Mail sent" });
         }
       });
-
-      // console.log(jwt.verify(token, secret));
     }
   });
 });
 
-router.post('/resetpassword', async (req, res) => {
+router.post("/resetpassword", async (req, res) => {
   await User.findById(req.body.id, async (err, user) => {
-    if(err){
+    if (err) {
       res.send(err);
     } else {
-      console.log(user);
+      const secret = `${user.password}-${user.updatedAt}`;
+
+      try {
+        const verified = jwt.verify(req.body.token, secret);
+        if (verified) {
+          const salt = await bcrypt.genSalt(10);
+          const hashPassword = await bcrypt.hash(req.body.password, salt);
+          user.password = hashPassword;
+          await user.save((error, data) => {
+            if (error) {
+              res.send(error);
+            } else {
+              res.json(data);
+            }
+          });
+        }
+      } catch (err) {
+        res.status(400).send({ error: "Invalid Token" });
+      }
     }
-  })
-})
+  });
+});
 
 router.post("/subscribe", verify, async (req, res) => {
   await User.findById(req.user._id, async (err, user) => {

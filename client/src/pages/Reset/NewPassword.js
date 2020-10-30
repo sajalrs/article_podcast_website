@@ -43,7 +43,7 @@ const NewPassword = (props) => {
     axios
       .post("/auth/resetpassword", JSON.stringify(toPost), options)
       .then((res) => {
-        alert("Password Reset");
+        alert("Password changed successfully");
         history.push("/");
       })
       .catch((err) => {
@@ -65,7 +65,7 @@ const NewPassword = (props) => {
           <form onSubmit={handleSubmit} className={styles["headline-form"]}>
          
             <div className={styles["horizontal"]}>
-              <label>Password: </label>
+              <label>New Password: </label>
               <input
                 className={styles["headline-form-input"]}
                 type="password"
