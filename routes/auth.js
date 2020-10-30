@@ -136,6 +136,16 @@ router.post("/forgotpassword", async (req, res) => {
   });
 });
 
+router.post('/resetpassword', async (req, res) => {
+  await User.findById(req.body.id, async (err, user) => {
+    if(err){
+      res.send(err);
+    } else {
+      console.log(user);
+    }
+  })
+})
+
 router.post("/subscribe", verify, async (req, res) => {
   await User.findById(req.user._id, async (err, user) => {
     if (err) {
