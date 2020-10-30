@@ -2,10 +2,12 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/Users");
 const verify = require("../verification/verifyToken");
+const nodemailer = require("nodemailer");
+require("dotenv/config");
 const {
   registerValidation,
   loginValidation,
-  resetPasswordValidation
+  resetPasswordValidation,
 } = require("../validation/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -78,23 +80,61 @@ router.post("/login", async (req, res) => {
 router.post("/passwordreset", async (req, res) => {
   const { error } = resetPasswordValidation(req.body);
   if (error) {
-    const toReturn = error.details[0].message
-      .replace('"email"', "Email")
+    const toReturn = error.details[0].message.replace('"email"', "Email");
     return res.status(400).send({ error: toReturn });
   }
 
-  await User.findOne({ email: req.body.email }, (err, user) => {
-    if(err){
-      res.send({error: "Cannot find user with given email"})
-    } else{
-      console.log("Success");
+  await User.findOne({ email: req.body.email }, async (err, user) => {
+    if (err || !user) {
+      if (err) {
+        res.send(err);
+      } else if (!user) {
+        res
+          .status(400)
+          .send({ error: "Cannot find account matching given email" });
+      }
+    } else {
+      const secret = `${user.password}-${user.updatedAt}`;
+      const token = jwt.sign({ id: user._id, email: user.email }, secret);
+      const transporter = nodemailer.createTransport({
+        host: "smtp.office365.com",
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD,
+        },
+        tls: {
+          ciphers: 'SSLv3'
+        },
+        requireTLS: true,
+      });
+
+      const passwordResetLink = (process.env.NODE_ENV === "production") ? `localhost:3000/resetpassword/${user._id}/${token}`: `thefalseninepodcast.com/resetpassword/${user._id}/${token}`;  
+      
+
+      const mailOptions = {
+        from: `The False 9 Podcast <${process.env.EMAIL}>`,
+        to: user.email,
+        subject: "Password Reset Link",
+        text: `Password Reset Link: ${passwordResetLink}`,
+      };
+
+
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          res.status(400).send({ error: error });
+        } else {
+          console.log("Email sent: " + info.response);
+          res.json({ message: "Mail sent" });
+        }
+      });
+
+      // console.log(jwt.verify(token, secret));
     }
-  })
-
-
-
-})
-
+  });
+});
 
 router.post("/subscribe", verify, async (req, res) => {
   await User.findById(req.user._id, async (err, user) => {

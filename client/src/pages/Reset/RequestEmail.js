@@ -28,7 +28,7 @@ const RequestEmail = (props) => {
     };
 
     axios
-      .post("/auth/register", JSON.stringify(toPost), options)
+      .post("/auth/passwordreset", JSON.stringify(toPost), options)
       .then((res) => {
         alert("Email Address sent");
         history.push("/");
