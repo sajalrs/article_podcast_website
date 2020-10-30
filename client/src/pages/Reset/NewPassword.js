@@ -31,6 +31,8 @@ const NewPassword = (props) => {
 
   const resetPassword = () => {
     const toPost = {
+      id: id,
+      token: token,  
       password: formData.password,
     };
 
@@ -39,9 +41,9 @@ const NewPassword = (props) => {
     };
 
     axios
-      .post("/auth/register", JSON.stringify(toPost), options)
+      .post("/auth/resetpassword", JSON.stringify(toPost), options)
       .then((res) => {
-        alert("New User Registered");
+        alert("Password Reset");
         history.push("/");
       })
       .catch((err) => {
