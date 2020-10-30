@@ -5,7 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 const NewPassword = (props) => {
   const history = useHistory();
-  const {token} = useParams();
+  const {id, token} = useParams();
   const [formData, setFormData] = useState({
     password: "",
     reenteredPassword: "",

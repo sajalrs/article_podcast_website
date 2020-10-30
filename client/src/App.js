@@ -195,7 +195,7 @@ const App = () => {
             />
              <Route
               exact
-              path="/resetpassword/:token+"
+              path="/resetpassword/:id/:token"
               render={() => {
                 return <NewPassword />;
               }}
