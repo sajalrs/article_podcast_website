@@ -204,7 +204,7 @@ const ContactUs = (props) => {
                 General:
               </h2>
               <p style={{ padding: "0px", margin: "0px" }}>
-                thefalse9pod@gmail.com
+                email@thefalseninepodcast.com
               </p>
             </label>
             <label
@@ -301,7 +301,7 @@ const ContactUs = (props) => {
               width: "min-content",
               letterSpacing: "1px",
             }}
-          >
+          >           
             {phone}
           </p>
         </div>
