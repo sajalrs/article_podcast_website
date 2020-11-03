@@ -98,7 +98,7 @@ router.post("/forgotpassword", async (req, res) => {
       const token = jwt.sign({ id: user._id, email: user.email }, secret);
       const passwordResetLink =
         process.env.NODE_ENV === "production"
-          ? `thefalseninepodcast.com/resetpassword/${user._id}/${token}`
+          ? `www.thefalseninepodcast.com/resetpassword/${user._id}/${token}`
           : `localhost:3000/resetpassword/${user._id}/${token}`;
 
       const msg = {
