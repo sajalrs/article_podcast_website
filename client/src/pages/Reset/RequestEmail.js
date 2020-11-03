@@ -47,7 +47,7 @@ const RequestEmail = (props) => {
       className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
     >
       <div className={`${styles["register-login-form"]}`}>
-        <h2>EMAIL</h2>
+        <h2>PASSWORD RESET</h2>
         <div className={`${styles["register-login-form-padded"]}`}>
           <form onSubmit={handleSubmit} className={styles["headline-form"]}>
             <div className={styles["horizontal"]}>
@@ -66,8 +66,8 @@ const RequestEmail = (props) => {
               className={styles["submit-button"]}
             />
           </form>
-          <div className={styles["register-login-form-text"]}>
-            <label>
+          <div className={styles["register-login-form-text"]} style={{color: "#072339"}}>
+            <label >
               Enter your email to receive a password reset link
             </label>
             <label>
