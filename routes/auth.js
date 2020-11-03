@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/Users");
 const verify = require("../verification/verifyToken");
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
 require("dotenv/config");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const {
   registerValidation,
   loginValidation,
@@ -11,7 +12,6 @@ const {
 } = require("../validation/validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { response } = require("express");
 
 router.post("/register", async (req, res) => {
   const { error } = registerValidation(req.body);
@@ -96,41 +96,28 @@ router.post("/forgotpassword", async (req, res) => {
     } else {
       const secret = `${user.password}-${user.updatedAt}`;
       const token = jwt.sign({ id: user._id, email: user.email }, secret);
-      const transporter = nodemailer.createTransport({
-        host: "smtp.office365.com",
-        port: 587,
-        secure: false,
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASSWORD,
-        },
-        tls: {
-          ciphers: "SSLv3",
-        },
-        requireTLS: true,
-      });
-
       const passwordResetLink =
         process.env.NODE_ENV === "production"
           ? `thefalseninepodcast.com/resetpassword/${user._id}/${token}`
           : `localhost:3000/resetpassword/${user._id}/${token}`;
 
-      const mailOptions = {
+      const msg = {
         from: `The False 9 Podcast <${process.env.EMAIL}>`,
         to: user.email,
         subject: "Password Reset Link",
         text: `Password Reset Link: ${passwordResetLink}`,
       };
 
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log(error);
-          res.status(400).send({ error: error });
-        } else {
-          console.log("Email sent: " + info.response);
+      sgMail
+        .send(msg)
+        .then(() => {
+          console.log("Email sent");
           res.json({ message: "Mail sent" });
-        }
-      });
+        })
+        .catch((error) => {
+          console.error(error);
+          res.status(400).send({ error: error });
+        });
     }
   });
 });
