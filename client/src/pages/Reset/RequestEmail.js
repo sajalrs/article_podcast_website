@@ -59,7 +59,11 @@ const RequestEmail = (props) => {
                 onChange={onEmailChange}
               />
             </div>
-
+            <div className={styles["horizontal"]} style={{justifyContent: "center"}}>
+              <label style={{color: "var(--primary-color)", fontSize: "1rem"}}>
+              Enter your email to receive a password reset link
+              </label>
+            </div>
             <input
               type="submit"
               value="Request"
@@ -67,9 +71,6 @@ const RequestEmail = (props) => {
             />
           </form>
           <div className={styles["register-login-form-text"]} style={{color: "#072339"}}>
-            <label >
-              Enter your email to receive a password reset link
-            </label>
             <label>
             <Link to={"/login"}>Back to Login Page</Link>
             </label>
