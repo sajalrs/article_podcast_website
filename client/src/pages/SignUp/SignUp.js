@@ -142,6 +142,12 @@ const SignUp = (props) => {
               </label>
             </div>
 
+            <div className={styles["horizontal"]}>
+              <label for="subscribe" style={{color: "var(--primary-color)", fontSize: "1rem", textAlign: "center"}}>
+                By signing up you indicate that you have read and accept our terms and conditions
+              </label>
+            </div>
+
             <input
               type="submit"
               value="Sign Up"
