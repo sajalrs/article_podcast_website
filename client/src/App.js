@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import Home from "./pages/Home/Home.js";
-import CreateArticle from "./pages/CreateArticle";
 import Articles from "./pages/Articles/Articles";
 import Podcasts from "./pages/Podcasts/Podcasts";
 import ArticlePage from "./pages/Articles/ArticlePage.js";
@@ -156,13 +155,6 @@ const App = () => {
               path="/contact"
               render={() => {
                 return <ContactUs />;
-              }}
-            />
-            <Route
-              exact
-              path="/create/articles"
-              render={() => {
-                return <CreateArticle />;
               }}
             />
             <Route
