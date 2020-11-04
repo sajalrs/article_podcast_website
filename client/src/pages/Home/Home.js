@@ -10,6 +10,7 @@ import axios from "axios";
 const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
   const screen = useSelector((state) => state.device.screen);
+  const loggedIn = useSelector((state) => state.login.isLoggedIn);
   const history = useHistory();
 
   const getArticle = async () => {
@@ -89,7 +90,7 @@ const Home = (props) => {
 
   const contents = (
     <>
-      {toolbar}
+      {loggedIn? toolbar : null}
       {list}
     </>
   );
