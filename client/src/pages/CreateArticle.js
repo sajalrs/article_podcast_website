@@ -8,21 +8,23 @@ const CreateArticle = () => {
       axios
         .get("/create/articles")
         .then((res) => {
-          alert("Article Created");
-          return res.data;
+          alert(
+            "Article template created. Template needs to be edited and submitted for moderator approval."
+          );
+          console.log(res.data);
+          history.push(`articles/id=${res.data.data["_id"]}`);
         })
         .catch((err) => {
-          if (err.response.status === 401 || err.response.status === 400) {
+          if (err.response && (err.response.status === 401 || err.response.status === 400)) {
             alert(err.response.data.error);
-          } else if (err.response.status !== 200) {
+          } else  {
             throw Error(err);
           }
+          history.push("/");
         });
     };
 
-    getArticle().then((res) => {
-      history.push("/");
-    });
+    getArticle();
   }, []);
 
   return <div>200</div>;

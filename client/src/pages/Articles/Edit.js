@@ -75,7 +75,7 @@ const Edit = (props) => {
     });
   }, []);
   useEffect(() => {
-    const height = headerBoxRef ? headerBoxRef.current.clientHeight : 380;
+    const height = headerBoxRef && headerBoxRef.current ? headerBoxRef.current.clientHeight : 380;
     const fixToolbar = (e) => {
       if (window.scrollY > 2 * height - 66 + 644) {
         setToolbarFix(true);
