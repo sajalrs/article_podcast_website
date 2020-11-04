@@ -20,7 +20,7 @@ const initialValue = {
             object: "text",
             leaves: [
               {
-                text: "Edit text and save to post article...",
+                text: "Edit text and save to submit for moderator approval...",
               },
             ],
           },
@@ -130,7 +130,7 @@ const Edit = (props) => {
     axios
       .post("/articles/edit", JSON.stringify(editedArticle), options)
       .then((res) => {
-        alert("Article saved");
+        alert("Article submitted for moderator approval");
       })
       .catch((err) => {
         if (err.response.status === 401 || err.response.status === 400) {
