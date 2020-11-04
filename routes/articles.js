@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/edit", verify, async (req, res) => {
-  await Article.findById(req.body.articleId, async (err, article) => {
+  await Article.findById(req.body.id, async (err, article) => {
     if (err) {
       res.send(err);
     } else {
