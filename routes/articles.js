@@ -64,7 +64,8 @@ router.post("/edit", verify, async (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      if(!user || (!user.isModerator && user._id !== article.authorId)){
+      
+      if(!user || (!user.isModerator && !user._id.equals(article.authorId))){
         res
         .status(401)
         .send({ error: "User not authorized to edit file" });
