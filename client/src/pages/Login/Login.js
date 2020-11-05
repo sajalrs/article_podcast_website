@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "../../redux/actions";
+import { fetchBlogArticles } from "../../index";
 import axios from "axios";
 
 const Login = (props) => {
@@ -110,6 +111,7 @@ const Login = (props) => {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));
         socket && socket.emit("join", { _id: response.data.user._id });
+        dispatch(fetchBlogArticles());
       }
     });
   };

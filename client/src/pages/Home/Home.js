@@ -71,9 +71,7 @@ const Home = (props) => {
           text={item.description}
           author={item.author}
           isApproved={item.isApproved}
-          isEditable={
-            user && (user.isModerator || user._id === item.authorId)
-          }
+          isEditable={user && (user.isModerator || user._id === item.authorId)}
           contentType={item.contentType}
           link={item.link}
         />
@@ -87,9 +85,7 @@ const Home = (props) => {
           text={item.description}
           author={item.author}
           isApproved={item.isApproved}
-          isEditable={
-            user && (user.isModerator || user._id === item.authorId)
-          }
+          isEditable={user && (user.isModerator || user._id === item.authorId)}
           contentType={item.contentType}
           link={item.link}
         />

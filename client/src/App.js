@@ -14,7 +14,7 @@ import Login from "./pages/Login/Login";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAudioPlayerRef, setScreen, setSocket } from "./redux/actions";
-// import io from "socket.io-client";
+import {fetchBlogArticles} from "./index"
 import ContactUs from "./pages/ContactUs/ContactUs.js";
 import RequestEmail from "./pages/Reset/RequestEmail.js";
 import NewPassword from "./pages/Reset/NewPassword.js";
@@ -24,56 +24,25 @@ const App = () => {
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
   const screen = useSelector((state) => state.device.screen);
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const user = useSelector((state) => state.login.user);
   const socket = useSelector((state) => state.network.socket);
-  // useEffect(() => {
-  //   const socket = io.connect();
-  //   dispatch(setSocket(socket));
 
-  //   return () => {
-  //     socket.emit("disconnect");
-  //     socket.disconnect();
-  //     dispatch(setSocket(null));
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   if (socket) {
-  //     if (isLoggedIn) {
-  //       if (user) {
-  //         socket && user && socket.emit("join", { _id: user._id });
-  //       }
-  //     }
-  //   }
-  // }, [socket, isLoggedIn]);
 
   useEffect(() => {
     if (socket) {
-      socket.on("logged out", (data) => {
-        alert(data.msg);
+      socket.on("logged out", () => {
+        dispatch(fetchBlogArticles());
       });
     }
   }, [socket]);
 
-  // useEffect(() => {
-  //   const getCSRFToken = async () => {
-  //     const tokenResponse = await axios.get("/csrf-token");
-  //     const token = await tokenResponse.data;
+  useEffect(() => {
+    if (socket) {
+      socket.on("join", () => {
+        dispatch(fetchBlogArticles());
+      });
+    }
+  }, [socket]);
 
-  //     if (tokenResponse.status !== 200) {
-  //       throw Error(token.message);
-  //     }
-
-  //     return token;
-  //   };
-
-  //   getCSRFToken().then((res) => {
-  //     axios.defaults.headers.common = {
-  //       "X-CSRF-Token": res.csrfToken,
-  //     };
-  //   });
-  // }, []);
 
   useEffect(() => {
     dispatch(setAudioPlayerRef(audioPlayerRef));
