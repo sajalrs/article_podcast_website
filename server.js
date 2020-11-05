@@ -57,6 +57,10 @@ app.set("socketio", io);
 io.on("connection", (socket) => {
   console.log("User Connected");
 
+  socket.on('join', data => {
+    socket.join(data._id)
+  })
+
   socket.on('disconnect', ()=> {
     socket.disconnect();
     console.log("User Disconnected");
