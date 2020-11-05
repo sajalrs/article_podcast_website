@@ -110,7 +110,7 @@ const Login = (props) => {
       } else {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));
-        socket && socket.emit("join", { _id: response.data.user._id });
+        socket && socket.emit("join", { _id: response.data.user._id, tokenCreated: response.data.user.created });
         dispatch(fetchBlogArticles());
       }
     });
