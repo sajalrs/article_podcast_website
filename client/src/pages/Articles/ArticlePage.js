@@ -8,7 +8,7 @@ import { getRules } from "../../components/TextEditor/TextEditor";
 import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import {Card} from "../../components/Cards/Card"
+import { Card } from "../../components/Cards/Card";
 const ArticlePage = (props) => {
   const { id } = useParams();
   const socket = useSelector((state) => state.network.socket);
@@ -95,15 +95,19 @@ const ArticlePage = (props) => {
       });
   };
 
+  const isEditable =
+    user && (user.isModerator || user._id === article.authorId);
+  const isPendingApproval = !article.isApproved;
+
   const headline = (
-    <div className={styles["headline"]}>
+    <div className={styles["headline"]} style={(isEditable || isPendingApproval) ? {marginTop: "36px"} : {marginTop: "0px"}} >
       <LargeCard
         title={article.title}
         author={article.author}
         date={article.date}
         isApproved={article.isApproved}
         contentType={Card.ContentType["article-internal"]}
-        link= {`${id}`}
+        link={`${id}`}
         isEditable={user && (user.isModerator || user._id === article.authorId)}
         image={article.image}
         onClick={() => {}}
