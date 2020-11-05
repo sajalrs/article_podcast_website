@@ -26,7 +26,7 @@ const App = () => {
   const screen = useSelector((state) => state.device.screen);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const user = useSelector((state) => state.login.user);
-  const socketGlobal = useSelector((state) => state.network.socket);
+  const socket = useSelector((state) => state.network.socket);
   // useEffect(() => {
   //   const socket = io.connect();
   //   dispatch(setSocket(socket));
@@ -38,23 +38,23 @@ const App = () => {
   //   };
   // }, []);
 
-  useEffect(() => {
-    if (socketGlobal) {
-      if (isLoggedIn) {
-        if (user) {
-          socketGlobal && user && socketGlobal.emit("join", { _id: user._id });
-        }
-      }
-    }
-  }, [socketGlobal, isLoggedIn]);
+  // useEffect(() => {
+  //   if (socket) {
+  //     if (isLoggedIn) {
+  //       if (user) {
+  //         socket && user && socket.emit("join", { _id: user._id });
+  //       }
+  //     }
+  //   }
+  // }, [socket, isLoggedIn]);
 
   useEffect(() => {
-    if (socketGlobal) {
-      socketGlobal.on("logged out", (data) => {
+    if (socket) {
+      socket.on("logged out", (data) => {
         alert(data.msg);
       });
     }
-  }, [socketGlobal]);
+  }, [socket]);
 
   // useEffect(() => {
   //   const getCSRFToken = async () => {
