@@ -188,8 +188,10 @@ const Edit = (props) => {
     });
   };
 
+  const isPendingApproval = !article.isApproved;
+
   const headline = (
-    <div className={styles["headline"]}>
+    <div className={styles["headline"]} style={(isPendingApproval) ? {marginTop: "36px"} : {marginTop: "0px"}} >
       <LargeCard
         title={article.title}
         author={article.author}

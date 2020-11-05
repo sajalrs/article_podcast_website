@@ -86,7 +86,8 @@ const CardComponent = (props) => {
   const audioPlayerRef = useSelector(
     (state) => state.audioPlayer.audioPlayerRef
   );
-
+  const isEditable = props.isEditable;
+  const isPendingApproval = props.contentType === Card.ContentType["article-internal"] && !props.isApproved;
   const edit = () => {
     history.push(`${props.link}/edit`);
   };
@@ -113,9 +114,9 @@ const CardComponent = (props) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        {props.isEditable && editButton(edit)}
-        {props.contentType === Card.ContentType["article-internal"] && !props.isApproved && pendingApproval}
+      <div style={{ display: "flex", flexDirection: "row"}}>
+        {isEditable && editButton(edit)}
+        {isPendingApproval && pendingApproval}
       </div>
 
       <article className={props.styles ? props.styles.card : ""}>
