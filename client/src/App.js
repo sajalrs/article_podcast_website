@@ -13,8 +13,8 @@ import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setAudioPlayerRef, setScreen, setSocket } from "./redux/actions";
-import {fetchBlogArticles} from "./index"
+import { setAudioPlayerRef, setScreen, setUser } from "./redux/actions";
+import { fetchBlogArticles } from "./index";
 import ContactUs from "./pages/ContactUs/ContactUs.js";
 import RequestEmail from "./pages/Reset/RequestEmail.js";
 import NewPassword from "./pages/Reset/NewPassword.js";
@@ -26,23 +26,14 @@ const App = () => {
   const screen = useSelector((state) => state.device.screen);
   const socket = useSelector((state) => state.network.socket);
 
-
   useEffect(() => {
     if (socket) {
       socket.on("logged out", () => {
         dispatch(fetchBlogArticles());
+        dispatch(setUser(null));
       });
     }
   }, [socket]);
-
-  useEffect(() => {
-    if (socket) {
-      socket.on("join", () => {
-        dispatch(fetchBlogArticles());
-      });
-    }
-  }, [socket]);
-
 
   useEffect(() => {
     dispatch(setAudioPlayerRef(audioPlayerRef));
