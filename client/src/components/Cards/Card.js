@@ -115,7 +115,7 @@ const CardComponent = (props) => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex", flexDirection: "row" }}>
         {props.isEditable && editButton(edit)}
-        {!props.isApproved && pendingApproval}
+        {props.contentType === Card.ContentType["article-internal"] && !props.isApproved && pendingApproval}
       </div>
 
       <article className={props.styles ? props.styles.card : ""}>

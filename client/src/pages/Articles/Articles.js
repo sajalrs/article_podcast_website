@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 const Articles = (props) => {
   const articles = useSelector((state) => state.blog.articles);
   const screen = useSelector((state) => state.device.screen);
+  const user = useSelector((state) => state.login.user);
   const loggedIn = useSelector((state) => state.login.isLoggedIn);
   const history = useHistory();
 
@@ -68,6 +69,8 @@ const Articles = (props) => {
           title={item.title}
           text={item.description}
           author={item.author}
+          isApproved={item.isApproved}
+          isEditable={user && (user.isModerator || user._id === item.authorId)}
           contentType={item.contentType}
           link={item.link}
         />
@@ -80,6 +83,8 @@ const Articles = (props) => {
           title={item.title}
           text={item.description}
           author={item.author}
+          isApproved={item.isApproved}
+          isEditable={user && (user.isModerator || user._id === item.authorId)}
           contentType={item.contentType}
           link={item.link}
         />
