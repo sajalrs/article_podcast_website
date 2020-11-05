@@ -28,7 +28,6 @@ const getSocket = () => {
       if (response.status !== 200) {
         dispatch(setIsLoggedIn(false));
       } else {
-
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));   
         socket.emit("join", { _id: response.data.user._id });
@@ -51,7 +50,7 @@ const getCSRFToken = () => {
   };
 };
 
-const fetchBlogArticles = () => {
+export const fetchBlogArticles = () => {
   return async (dispatch) => {
     await axios
       .get("/articles/pages")
