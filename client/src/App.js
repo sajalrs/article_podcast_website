@@ -36,24 +36,24 @@ const App = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const getCSRFToken = async () => {
-      const tokenResponse = await axios.get("/csrf-token");
-      const token = await tokenResponse.data;
+  // useEffect(() => {
+  //   const getCSRFToken = async () => {
+  //     const tokenResponse = await axios.get("/csrf-token");
+  //     const token = await tokenResponse.data;
 
-      if (tokenResponse.status !== 200) {
-        throw Error(token.message);
-      }
+  //     if (tokenResponse.status !== 200) {
+  //       throw Error(token.message);
+  //     }
 
-      return token;
-    };
+  //     return token;
+  //   };
 
-    getCSRFToken().then((res) => {
-      axios.defaults.headers.common = {
-        "X-CSRF-Token": res.csrfToken,
-      };
-    });
-  }, []);
+  //   getCSRFToken().then((res) => {
+  //     axios.defaults.headers.common = {
+  //       "X-CSRF-Token": res.csrfToken,
+  //     };
+  //   });
+  // }, []);
 
   useEffect(() => {
     dispatch(setAudioPlayerRef(audioPlayerRef));

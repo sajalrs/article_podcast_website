@@ -7,14 +7,14 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import {Card} from "./components/Cards/Card.js";
+import { Card } from "./components/Cards/Card.js";
 import axios from "axios";
 import {
   setAudioPlayerPodcasts,
   setVideoPlayerYoutubeVideos,
   setBlogArticles,
   setIsLoggedIn,
-  setUser
+  setUser,
 } from "./redux/actions";
 
 export const isLoggedIn = () => {
@@ -29,6 +29,20 @@ export const isLoggedIn = () => {
     });
   };
 };
+const getCSRFToken = () => {
+  return async () => {
+    await axios.get("/csrf-token").then((token, err) => {
+      if (err) {
+        throw Error(token.data.message);
+      } else {
+        axios.defaults.headers.common = {
+          "X-CSRF-Token": token.data.csrfToken,
+        };
+      }
+    });
+  };
+};
+
 const fetchBlogArticles = () => {
   return async (dispatch) => {
     await axios
@@ -97,6 +111,7 @@ const fetchYoutubeVideos = () => {
 // const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const composeEnhancer = compose;
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
+store.dispatch(getCSRFToken());
 store.dispatch(isLoggedIn());
 store.dispatch(fetchBlogArticles());
 store.dispatch(fetchPodcasts());
