@@ -20,8 +20,6 @@ router.get("/pages", async (req, res) => {
   }
 
   let query;
-  
-
   if (user) {
     if (user.isModerator) {
       query = Article.find({})
@@ -72,6 +70,7 @@ router.post("/edit", verify, async (req, res) => {
       article.date = req.body.date;
       article.image = req.body.image;
       article.content = req.body.content;
+      article.authorId = req.user._id;
       article.isApproved = false;
       await article.save((error, data) => {
         if (error) {
