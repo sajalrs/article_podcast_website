@@ -2,52 +2,42 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { playAudio, playVideo } from "../../redux/actions";
-import styles from "../../components/Page/Page.module.css"
+import styles from "../../components/Page/Page.module.css";
 
 const editButton = (onClick) => (
-  <div
-    style={{ paddingTop: "0px", paddingBottom: "0px", margin: "10px" }}
-   
-  >
+  <div style={{ paddingTop: "0px", paddingBottom: "0px", margin: "10px" }}>
     <div
       className={`${styles["submit-button"]}`}
       onClick={() => onClick()}
-      style={{padding: "10px"}}
+      style={{ padding: "10px" }}
     >
-      <label style={{ paddingRight: "0px", paddingLeft: "0px", fontSize: "0.95rem" }}>
-        EDIT{" "}
-        <i
-          className={`fas fa-edit`}
-          style={{ fontSize: "0.9rem"}}
-        />
+      <label
+        style={{ paddingRight: "0px", paddingLeft: "0px", fontSize: "0.95rem" }}
+      >
+        EDIT <i className={`fas fa-edit`} style={{ fontSize: "0.9rem" }} />
       </label>
     </div>
   </div>
 );
-
-
 
 const pendingApproval = (
-  <div
-    style={{ paddingTop: "0px", paddingBottom: "0px", margin: "10px" }}
-   
-  >
+  <div style={{ paddingTop: "0px", paddingBottom: "0px", margin: "10px" }}>
     <div
       className={`${styles["submit-button"]}`}
-      onClick={() => {alert("Please wait for article to be approved by moderator")}}
-      style={{padding: "10px"}}
+      onClick={() => {
+        alert("Please wait for article to be approved by moderator");
+      }}
+      style={{ padding: "10px" }}
     >
-      <label style={{ paddingRight: "0px", paddingLeft: "0px", fontSize: "0.95rem" }}>
+      <label
+        style={{ paddingRight: "0px", paddingLeft: "0px", fontSize: "0.95rem" }}
+      >
         PENDING APPROVAL{" "}
-        <i
-          className={`fas fa-hourglass-half`}
-          style={{ fontSize: "0.9rem"}}
-        />
+        <i className={`fas fa-hourglass-half`} style={{ fontSize: "0.9rem" }} />
       </label>
     </div>
   </div>
 );
-
 
 const Card = {
   ContentType: Object.freeze({
@@ -81,7 +71,7 @@ const Card = {
     let hours = date.getHours() % 12;
     hours = hours === 0 ? 12 : hours;
     let minutes = date.getMinutes();
-    minutes = minutes < 10 ? '0'+minutes: minutes;
+    minutes = minutes < 10 ? "0" + minutes : minutes;
     const meridian = date.getHours() < 12 === 0 ? "AM" : "PM";
 
     const time = `${hours}:${minutes} ${meridian}`;
@@ -99,9 +89,7 @@ const CardComponent = (props) => {
 
   const edit = () => {
     history.push(`${props.link}/edit`);
-
-  }
-
+  };
 
   const onClick = () => {
     switch (props.contentType) {
@@ -124,38 +112,38 @@ const CardComponent = (props) => {
     props.contentType === Card.ContentType["audio-internal"];
 
   return (
-    <div style={{display: "flex", flexDirection: "column"}}>
-    <div style={{display: "flex", flexDirection: "row"}}>
-      {props.isEditable && editButton(edit)}
-      {!props.isApproved && pendingApproval}
-    </div>
-   
-    <article className={props.styles ? props.styles.card : ""}>
-      <ImageContainer
-        styles={props.styles}
-        image={props.image}
-        onClick={onClick}
-        audioPlayerRef={
-          props.contentType === Card.ContentType["audio-internal"]
-            ? audioPlayerRef
-            : null
-        }
-        isPlayable={isPlayable}
-      />
-      <CardBody
-        styles={props.styles}
-        title={props.title}
-        text={props.text}
-        date={props.date ? Card.formatDate(props.date).date : null}
-        author={props.author}
-        onClick={onClick}
-        audioPlayerRef={
-          props.contentType === Card.ContentType["audio-internal"]
-            ? audioPlayerRef
-            : null
-        }
-      />
-    </article>
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        {!props.isEditable && editButton(edit)}
+        {!props.isApproved && pendingApproval}
+      </div>
+
+      <article className={props.styles ? props.styles.card : ""}>
+        <ImageContainer
+          styles={props.styles}
+          image={props.image}
+          onClick={onClick}
+          audioPlayerRef={
+            props.contentType === Card.ContentType["audio-internal"]
+              ? audioPlayerRef
+              : null
+          }
+          isPlayable={isPlayable}
+        />
+        <CardBody
+          styles={props.styles}
+          title={props.title}
+          text={props.text}
+          date={props.date ? Card.formatDate(props.date).date : null}
+          author={props.author}
+          onClick={onClick}
+          audioPlayerRef={
+            props.contentType === Card.ContentType["audio-internal"]
+              ? audioPlayerRef
+              : null
+          }
+        />
+      </article>
     </div>
   );
 };
