@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import {Card} from "../../components/Cards/Card"
 const initialValue = {
   document: {
     nodes: [
@@ -49,6 +50,7 @@ const Edit = (props) => {
     author: "",
     date: new Date(),
     image: "",
+    isApproved: false,
   });
   const headerBoxRef = useSelector((state) => state.header.headerBoxRef);
   const { id } = useParams();
@@ -70,13 +72,17 @@ const Edit = (props) => {
         author: res.author,
         date: res.date,
         image: res.image,
+        isApproved: res.isApproved,
       });
 
       if (res.content) setTextEditorValue(Value.fromJSON(res.content));
     });
   }, []);
   useEffect(() => {
-    const height = headerBoxRef && headerBoxRef.current ? headerBoxRef.current.clientHeight : 380;
+    const height =
+      headerBoxRef && headerBoxRef.current
+        ? headerBoxRef.current.clientHeight
+        : 380;
     const fixToolbar = (e) => {
       if (window.scrollY > 2 * height - 66 + 644) {
         setToolbarFix(true);
@@ -188,6 +194,8 @@ const Edit = (props) => {
         title={article.title}
         author={article.author}
         date={article.date}
+        isApproved={article.isApproved}
+        contentType={Card.ContentType["article-internal"]}
         image={article.image}
         onClick={() => {}}
       />
