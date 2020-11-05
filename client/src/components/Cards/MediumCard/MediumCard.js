@@ -11,6 +11,7 @@ const MediumCard = (props) => {
     text={props.description}
     author={props.author}
     isApproved={props.isApproved}
+    isEditable={props.isEditable}
     contentType={props.contentType}
     link={props.link}
     styles={styles}/>
