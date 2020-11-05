@@ -11,11 +11,10 @@ import Privacy from "./pages/Legal/Privacy/Privacy";
 import AboutUs from "./pages/AboutUs/AboutUsClone";
 import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
-import axios from "axios";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setAudioPlayerRef, setScreen, setSocket } from "./redux/actions";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import ContactUs from "./pages/ContactUs/ContactUs.js";
 import RequestEmail from "./pages/Reset/RequestEmail.js";
 import NewPassword from "./pages/Reset/NewPassword.js";
@@ -28,16 +27,16 @@ const App = () => {
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const user = useSelector((state) => state.login.user);
   const socketGlobal = useSelector((state) => state.network.socket);
-  useEffect(() => {
-    const socket = io.connect();
-    dispatch(setSocket(socket));
+  // useEffect(() => {
+  //   const socket = io.connect();
+  //   dispatch(setSocket(socket));
 
-    return () => {
-      socket.emit("disconnect");
-      socket.disconnect();
-      dispatch(setSocket(null));
-    };
-  }, []);
+  //   return () => {
+  //     socket.emit("disconnect");
+  //     socket.disconnect();
+  //     dispatch(setSocket(null));
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (socketGlobal) {
@@ -45,9 +44,17 @@ const App = () => {
         if (user) {
           socketGlobal && user && socketGlobal.emit("join", { _id: user._id });
         }
-      } 
+      }
     }
   }, [socketGlobal, isLoggedIn]);
+
+  useEffect(() => {
+    if (socketGlobal) {
+      socketGlobal.on("logged out", (data) => {
+        alert(data.msg);
+      });
+    }
+  }, [socketGlobal]);
 
   // useEffect(() => {
   //   const getCSRFToken = async () => {
