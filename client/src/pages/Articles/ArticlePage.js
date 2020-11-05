@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
@@ -8,16 +8,18 @@ import { getRules } from "../../components/TextEditor/TextEditor";
 import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
 import { useSelector } from "react-redux";
-
+import {Card} from "../../components/Cards/Card"
 const ArticlePage = (props) => {
   const { id } = useParams();
   const socket = useSelector((state) => state.network.socket);
+  const user = useSelector((state) => state.login.user);
   const [article, setArticle] = useState({
     title: "",
     author: "",
     date: "",
     images: [],
     content: `<p></p>`,
+    isApproved: false,
     comments: [],
   });
   useEffect(() => {
@@ -41,6 +43,7 @@ const ArticlePage = (props) => {
           author: res.author,
           date: res.date,
           image: res.image,
+          isApproved: res.isApproved,
           content: res.content ? html.serialize(res.content) : `<p></p>`,
           comments: res.comments,
         });
@@ -51,7 +54,7 @@ const ArticlePage = (props) => {
 
     if (socket) {
       socket.on("comments changed", (data) => {
-        if(data.articleId === id.substring(3)){
+        if (data.articleId === id.substring(3)) {
           getArticle()
             .then((res) => {
               setArticle({
@@ -59,6 +62,7 @@ const ArticlePage = (props) => {
                 author: res.author,
                 date: res.date,
                 image: res.image,
+                isApproved: res.isApproved,
                 content: res.content ? html.serialize(res.content) : `<p></p>`,
                 comments: res.comments,
               });
@@ -97,6 +101,10 @@ const ArticlePage = (props) => {
         title={article.title}
         author={article.author}
         date={article.date}
+        isApproved={article.isApproved}
+        contentType={Card.ContentType["article-internal"]}
+        link= {`${id}`}
+        isEditable={user && (user.isModerator || user._id === article.authorId)}
         image={article.image}
         onClick={() => {}}
       />
