@@ -20,6 +20,8 @@ router.get("/pages", async (req, res) => {
 
 router.get("/", async (req, res) => {
   const id = req.query.id;
+  const query = Article.findById(id).where(approved)
+
   await Article.findById(id, (err, data) => {
     if (err) {
       res.send(err);
@@ -39,7 +41,7 @@ router.post("/edit", verify, async (req, res) => {
       article.date = req.body.date;
       article.image = req.body.image;
       article.content = req.body.content;
-
+      article.isApproved = false;
       await article.save((error, data) => {
         if (error) {
           res.send(error);
