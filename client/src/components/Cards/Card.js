@@ -114,7 +114,7 @@ const CardComponent = (props) => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex", flexDirection: "row" }}>
-        {!props.isEditable && editButton(edit)}
+        {props.isEditable && editButton(edit)}
         {!props.isApproved && pendingApproval}
       </div>
 
