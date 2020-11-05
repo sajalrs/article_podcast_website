@@ -4,13 +4,35 @@ const Article = require("../models/Articles");
 const User = require("../models/Users");
 const { Comment } = require("../models/Comments");
 const verify = require("../verification/verifyToken");
+const jwt = require("jsonwebtoken");
 
 router.get("/pages", async (req, res) => {
-  const query = Article.find({})
-    .where("isApproved")
-    .equals(true)
-    .select("_id title author date image")
-    .sort("-date");
+  let isModerator;
+  const token = req.cookies.token;
+  if (token) {
+    try {
+      const verified = jwt.verify(token, process.env.TOKEN_SECRET);
+      req.user = verified;
+      const user = await User.findById(verified._id);
+      isModerator = user.isModerator;
+    } catch (err) {
+      isModerator = false;
+    }
+  }
+
+  let query;
+  if (isModerator) {
+    query = Article.find({})
+      .select("_id title author date image")
+      .sort("-date");
+  } else {
+    query = Article.find({})
+      .where("isApproved")
+      .equals(true)
+      .select("_id title author date image")
+      .sort("-date");
+  }
+
   await query.exec((err, data) => {
     if (err) {
       res.send(err);
