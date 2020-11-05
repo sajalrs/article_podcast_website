@@ -13,6 +13,7 @@ const Login = (props) => {
   const dispatch = useDispatch();
   const isLoggedInGlobal = useSelector((state) => state.login.isLoggedIn);
   const userGlobal = useSelector((state) => state.login.user);
+  const socket = useSelector((state) => state.network.socket);
   useEffect(() => {
     if (isLoggedInGlobal && formData.password === "") {
       if (email) {
@@ -108,6 +109,7 @@ const Login = (props) => {
       } else {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));
+        socket && socket.emit("join", { _id: response.data.user._id });
       }
     });
   };
@@ -145,7 +147,9 @@ const Login = (props) => {
           </form>
           <div className={styles["register-login-form-text"]}>
             <label>
-              <Link to={"/forgotpassword"}>Forgot your password or locked out?</Link>
+              <Link to={"/forgotpassword"}>
+                Forgot your password or locked out?
+              </Link>
             </label>
             <label>
               <Link to={"/register"}>Don't have an account?</Link>
