@@ -59,6 +59,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/edit", verify, async (req, res) => {
+  const user = await User.findById(req.user._id);
   await Article.findById(req.body.id, async (err, article) => {
     if (err) {
       res.send(err);
@@ -69,7 +70,7 @@ router.post("/edit", verify, async (req, res) => {
       article.image = req.body.image;
       article.content = req.body.content;
       article.authorId = req.user._id;
-      article.isApproved = false;
+      article.isApproved = user && user.isModerator;
       await article.save((error, data) => {
         if (error) {
           res.send(error);
