@@ -194,6 +194,7 @@ router.get("/logout", verify, (req, res) => {
       io.sockets
         .in(req.user._id)
         .emit("logged out", { msg: "User logged out" });
+      console.log("User left room");
     } catch (error) {
       console.log(error);
     }

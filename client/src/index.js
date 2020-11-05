@@ -8,27 +8,35 @@ import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
 import { Card } from "./components/Cards/Card.js";
+import io from "socket.io-client";
 import axios from "axios";
 import {
   setAudioPlayerPodcasts,
   setVideoPlayerYoutubeVideos,
   setBlogArticles,
   setIsLoggedIn,
+  setSocket,
   setUser,
 } from "./redux/actions";
 
-export const isLoggedIn = () => {
+
+const getSocket = () => {
   return async (dispatch) => {
+    const socket = io.connect();
+    dispatch(setSocket(socket));
     await axios.get("/auth/isloggedin").then((response) => {
       if (response.status !== 200) {
         dispatch(setIsLoggedIn(false));
       } else {
+
         dispatch(setIsLoggedIn(true));
-        dispatch(setUser(response.data.user));
+        dispatch(setUser(response.data.user));   
+        socket.emit("join", { _id: response.data.user._id });
       }
     });
-  };
-};
+  }
+}
+
 const getCSRFToken = () => {
   return async () => {
     await axios.get("/csrf-token").then((token, err) => {
@@ -112,7 +120,7 @@ const fetchYoutubeVideos = () => {
 const composeEnhancer = compose;
 const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 store.dispatch(getCSRFToken());
-store.dispatch(isLoggedIn());
+store.dispatch(getSocket());
 store.dispatch(fetchBlogArticles());
 store.dispatch(fetchPodcasts());
 store.dispatch(fetchYoutubeVideos());
