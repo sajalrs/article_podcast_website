@@ -26,7 +26,8 @@ const App = () => {
   const scrollLockRef = useRef();
   const screen = useSelector((state) => state.device.screen);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const socketGlobal = useSelector((state) => state.network.socket)
+  const user = useSelector((state) => state.login.user);
+  const socketGlobal = useSelector((state) => state.network.socket);
   useEffect(() => {
     const socket = io.connect();
     dispatch(setSocket(socket));
@@ -38,13 +39,15 @@ const App = () => {
     };
   }, []);
 
-  useEffect(()=> {
-    if(socketGlobal){
-      if(isLoggedIn){
-
-      }
+  useEffect(() => {
+    if (socketGlobal) {
+      if (isLoggedIn) {
+        if (user) {
+          socketGlobal && user && socketGlobal.emit("join", { _id: user._id });
+        }
+      } 
     }
-  },[])
+  }, [socketGlobal, isLoggedIn]);
 
   // useEffect(() => {
   //   const getCSRFToken = async () => {
