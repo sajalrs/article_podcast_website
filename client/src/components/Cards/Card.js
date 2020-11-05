@@ -126,8 +126,8 @@ const CardComponent = (props) => {
   return (
     <div style={{display: "flex", flexDirection: "column"}}>
     <div style={{display: "flex", flexDirection: "row"}}>
-      {editButton(edit)}
-      {pendingApproval}
+      {props.isEditable && editButton(edit)}
+      {!props.isApproved && pendingApproval}
     </div>
    
     <article className={props.styles ? props.styles.card : ""}>
