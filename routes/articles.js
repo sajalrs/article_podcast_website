@@ -7,24 +7,33 @@ const verify = require("../verification/verifyToken");
 const jwt = require("jsonwebtoken");
 
 router.get("/pages", async (req, res) => {
-  let isModerator;
+  let user;
   const token = req.cookies.token;
   if (token) {
     try {
       const verified = jwt.verify(token, process.env.TOKEN_SECRET);
       req.user = verified;
-      const user = await User.findById(verified._id);
-      isModerator = user.isModerator;
+      user = await User.findById(verified._id);
     } catch (err) {
-      isModerator = false;
+      console.log(err);
     }
   }
 
   let query;
-  if (isModerator) {
-    query = Article.find({})
+  
+
+  if (user) {
+    if (user.isModerator) {
+      query = Article.find({})
+        .select("_id title author date image")
+        .sort("-date");
+    } else{
+      query = Article.find({})
+      .where("isApproved")
+      .equals(true)
       .select("_id title author date image")
       .sort("-date");
+    }
   } else {
     query = Article.find({})
       .where("isApproved")
