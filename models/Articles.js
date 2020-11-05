@@ -8,6 +8,7 @@ const ArticleSchema = mongoose.Schema({
   date: Object,
   image: String,
   content: Object,
+  isApproved: Boolean,
   comments: [CommentSchema]
 });
 
