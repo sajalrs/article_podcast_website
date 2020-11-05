@@ -2,6 +2,52 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { playAudio, playVideo } from "../../redux/actions";
+import styles from "../../components/Page/Page.module.css"
+
+const editButton = (onClick) => (
+  <div
+    style={{ paddingTop: "0px", paddingBottom: "0px", margin: "10px" }}
+   
+  >
+    <div
+      className={`${styles["submit-button"]}`}
+      onClick={() => onClick()}
+      style={{padding: "10px"}}
+    >
+      <label style={{ paddingRight: "0px", paddingLeft: "0px", fontSize: "0.95rem" }}>
+        EDIT{" "}
+        <i
+          className={`fas fa-edit`}
+          style={{ fontSize: "0.9rem"}}
+        />
+      </label>
+    </div>
+  </div>
+);
+
+
+
+const pendingApproval = (
+  <div
+    style={{ paddingTop: "0px", paddingBottom: "0px", margin: "10px" }}
+   
+  >
+    <div
+      className={`${styles["submit-button"]}`}
+      onClick={() => {alert("Please wait for article to be approved by moderator")}}
+      style={{padding: "10px"}}
+    >
+      <label style={{ paddingRight: "0px", paddingLeft: "0px", fontSize: "0.95rem" }}>
+        PENDING APPROVAL{" "}
+        <i
+          className={`fas fa-hourglass-half`}
+          style={{ fontSize: "0.9rem"}}
+        />
+      </label>
+    </div>
+  </div>
+);
+
 
 const Card = {
   ContentType: Object.freeze({
@@ -51,6 +97,12 @@ const CardComponent = (props) => {
     (state) => state.audioPlayer.audioPlayerRef
   );
 
+  const edit = () => {
+    history.push(`${props.link}/edit`);
+
+  }
+
+
   const onClick = () => {
     switch (props.contentType) {
       case Card.ContentType["article-internal"]:
@@ -72,6 +124,12 @@ const CardComponent = (props) => {
     props.contentType === Card.ContentType["audio-internal"];
 
   return (
+    <div style={{display: "flex", flexDirection: "column"}}>
+    <div style={{display: "flex", flexDirection: "row"}}>
+      {editButton(edit)}
+      {pendingApproval}
+    </div>
+   
     <article className={props.styles ? props.styles.card : ""}>
       <ImageContainer
         styles={props.styles}
@@ -98,6 +156,7 @@ const CardComponent = (props) => {
         }
       />
     </article>
+    </div>
   );
 };
 
