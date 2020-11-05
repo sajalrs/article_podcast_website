@@ -5,6 +5,7 @@ const {CommentSchema} = require("./Comments")
 const ArticleSchema = mongoose.Schema({
   title: String,
   author: String,
+  authorId: String,
   date: Object,
   image: String,
   content: Object,
