@@ -7,6 +7,8 @@ const verify = require("../verification/verifyToken");
 
 router.get("/pages", async (req, res) => {
   const query = Article.find({})
+    .where("isApproved")
+    .equals(true)
     .select("_id title author date image")
     .sort("-date");
   await query.exec((err, data) => {
@@ -20,8 +22,6 @@ router.get("/pages", async (req, res) => {
 
 router.get("/", async (req, res) => {
   const id = req.query.id;
-  const query = Article.findById(id).where(approved)
-
   await Article.findById(id, (err, data) => {
     if (err) {
       res.send(err);
