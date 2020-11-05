@@ -33,7 +33,7 @@ const getCSRFToken = () => {
   return async () => {
     await axios.get("/csrf-token").then((token, err) => {
       if (err) {
-        throw Error(token.data.message);
+        console.log(err.message);
       } else {
         axios.defaults.headers.common = {
           "X-CSRF-Token": token.data.csrfToken,
