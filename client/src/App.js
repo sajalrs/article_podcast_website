@@ -25,7 +25,8 @@ const App = () => {
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
   const screen = useSelector((state) => state.device.screen);
-
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const socketGlobal = useSelector((state) => state.network.socket)
   useEffect(() => {
     const socket = io.connect();
     dispatch(setSocket(socket));
@@ -33,8 +34,17 @@ const App = () => {
     return () => {
       socket.emit("disconnect");
       socket.disconnect();
+      dispatch(setSocket(null));
     };
   }, []);
+
+  useEffect(()=> {
+    if(socketGlobal){
+      if(isLoggedIn){
+
+      }
+    }
+  },[])
 
   // useEffect(() => {
   //   const getCSRFToken = async () => {
@@ -185,14 +195,14 @@ const App = () => {
                 return <RequestEmail />;
               }}
             />
-             <Route
+            <Route
               exact
               path="/resetpassword/:id/:token"
               render={() => {
                 return <NewPassword />;
               }}
             />
-            
+
             <Route
               exact
               path="/"
