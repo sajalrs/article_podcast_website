@@ -11,6 +11,7 @@ const Home = (props) => {
   const articles = useSelector((state) => state.blog.articles);
   const screen = useSelector((state) => state.device.screen);
   const loggedIn = useSelector((state) => state.login.isLoggedIn);
+  const user = useSelector((state) => state.login.user);
   const history = useHistory();
 
   const getArticle = async () => {
@@ -24,7 +25,10 @@ const Home = (props) => {
         history.push(`articles/id=${res.data.data["_id"]}/edit`);
       })
       .catch((err) => {
-        if (err.response && (err.response.status === 401 || err.response.status === 400)) {
+        if (
+          err.response &&
+          (err.response.status === 401 || err.response.status === 400)
+        ) {
           alert(err.response.data.error);
         } else if (err.response.status !== 200) {
           throw Error(err);
@@ -67,6 +71,9 @@ const Home = (props) => {
           text={item.description}
           author={item.author}
           isApproved={item.isApproved}
+          isEditable={
+            user && (user.isModerator || user._id === item.authorId)
+          }
           contentType={item.contentType}
           link={item.link}
         />
@@ -80,6 +87,9 @@ const Home = (props) => {
           text={item.description}
           author={item.author}
           isApproved={item.isApproved}
+          isEditable={
+            user && (user.isModerator || user._id === item.authorId)
+          }
           contentType={item.contentType}
           link={item.link}
         />
@@ -89,7 +99,7 @@ const Home = (props) => {
 
   const contents = (
     <>
-      {loggedIn? toolbar : null}
+      {loggedIn ? toolbar : null}
       {list}
     </>
   );
