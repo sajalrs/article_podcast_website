@@ -72,7 +72,7 @@ router.post("/login", async (req, res) => {
       .send({ error: "The email or password is incorrect" });
 
   const token = jwt.sign(
-    { _id: user._id, created: new Date() },
+    { _id: user._id, tokenCreated: new Date() },
     process.env.TOKEN_SECRET
   );
   // res.header('Auth-Token', token).send({token: token})
@@ -183,7 +183,7 @@ router.get("/isloggedin", verify, async (req, res) => {
         isSubscribed: user.isSubscribed,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
-        tokenCreated: req.user.created,
+        tokenCreated: req.user.tokenCreated,
       },
     });
   } catch (err) {
@@ -196,7 +196,7 @@ router.get("/logout", verify, (req, res) => {
     try {
       const io = req.app.get("socketio");
       io.sockets
-        .in(req.user._id)
+        .in(`${req.user._id}.${req.user.tokenCreated}`)
         .emit("logged out", { msg: "User logged out" });
       console.log("User left room");
     } catch (error) {
