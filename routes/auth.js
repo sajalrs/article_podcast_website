@@ -189,6 +189,14 @@ router.get("/isloggedin", verify, async (req, res) => {
 
 router.get("/logout", verify, (req, res) => {
   try {
+    try {
+      const io = req.app.get("socketio");
+      io.sockets
+        .in(req.user._id)
+        .emit("logged out", { msg: "User logged out" });
+    } catch (error) {
+      console.log(error);
+    }
     res
       .cookie("token", { httpOnly: true, expires: Date.now() })
       .json({ token: token });
