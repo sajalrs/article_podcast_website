@@ -23,18 +23,18 @@ router.get("/pages", async (req, res) => {
   if (user) {
     if (user.isModerator) {
       query = Article.find({})
-        .select("_id title author date image")
+        .select("_id title author date image authorId isApproved")
         .sort("-date");
     } else{
       query = Article.find({$or:[{"isApproved": true}, {"authorId": user._id}]})
-      .select("_id title author date image")
+      .select("_id title author date image authorId isApproved")
       .sort("-date");
     }
   } else {
     query = Article.find({})
       .where("isApproved")
       .equals(true)
-      .select("_id title author date image")
+      .select("_id title author date image authorId isApproved")
       .sort("-date");
   }
 
@@ -64,7 +64,6 @@ router.post("/edit", verify, async (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      
       if(!user || (!user.isModerator && !user._id.equals(article.authorId))){
         res
         .status(401)
