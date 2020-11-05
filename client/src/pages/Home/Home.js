@@ -33,9 +33,6 @@ const Home = (props) => {
   };
 
   const toolbar = (
-    
-
-
     <div
       style={{ paddingTop: "0px", paddingBottom: "0px" }}
       className={`${styles["main-pane-item"]}`}
@@ -69,6 +66,7 @@ const Home = (props) => {
           title={item.title}
           text={item.description}
           author={item.author}
+          isApproved={item.isApproved}
           contentType={item.contentType}
           link={item.link}
         />
@@ -81,6 +79,7 @@ const Home = (props) => {
           title={item.title}
           text={item.description}
           author={item.author}
+          isApproved={item.isApproved}
           contentType={item.contentType}
           link={item.link}
         />

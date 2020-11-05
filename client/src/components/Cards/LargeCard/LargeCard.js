@@ -10,6 +10,7 @@ const LargeCard = (props) => {
     title={props.title}
     text={props.description}
     author={props.author}
+    isApproved={props.isApproved}
     contentType={props.contentType}
     link={props.link}
     styles={styles}/>
