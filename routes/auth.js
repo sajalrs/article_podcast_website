@@ -71,7 +71,10 @@ router.post("/login", async (req, res) => {
       .status(400)
       .send({ error: "The email or password is incorrect" });
 
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+  const token = jwt.sign(
+    { _id: user._id, created: new Date() },
+    process.env.TOKEN_SECRET
+  );
   // res.header('Auth-Token', token).send({token: token})
   res.cookie("token", token, { httpOnly: true }).json({ token: token });
   // res.send({ token: token });
@@ -180,6 +183,7 @@ router.get("/isloggedin", verify, async (req, res) => {
         isSubscribed: user.isSubscribed,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
+        tokenCreated: req.user.created,
       },
     });
   } catch (err) {
