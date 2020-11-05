@@ -58,7 +58,7 @@ io.on("connection", (socket) => {
   console.log("User Connected");
 
   socket.on('join', data => {
-    socket.join(data._id)
+    socket.join(`${data._id}.${data.tokenCreated}`)
     console.log("User joined room");
   })
 

@@ -30,7 +30,7 @@ const getSocket = () => {
       } else {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));   
-        socket.emit("join", { _id: response.data.user._id, tokenCreated: response.data.user.created });
+        socket.emit("join", { _id: response.data.user._id, tokenCreated: response.data.user.tokenCreated });
       }
     });
   }
