@@ -26,9 +26,7 @@ router.get("/pages", async (req, res) => {
         .select("_id title author date image")
         .sort("-date");
     } else{
-      query = Article.find({})
-      .where("isApproved")
-      .equals(true)
+      query = Article.find({$or:[{"isApproved": true}, {"authorId": user._id}]})
       .select("_id title author date image")
       .sort("-date");
     }
