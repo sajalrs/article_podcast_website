@@ -64,7 +64,7 @@ const SignUp = (props) => {
       .post("/auth/register", JSON.stringify(toPost), options)
       .then((res) => {
         alert("New User Registered");
-        history.push("/");
+        history.push("/login");
       })
       .catch((err) => {
         if (err.response.status === 401 || err.response.status === 400) {
