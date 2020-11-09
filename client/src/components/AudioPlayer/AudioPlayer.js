@@ -3,19 +3,18 @@ import {useSelector, useDispatch} from 'react-redux'
 import {setAudioPlayerIsPlaying, setAudioPlayerCurrentTime, setAudioPlayerSelected} from '../../redux/actions'
 import styles from "./AudioPlayer.module.css";
 const AudioPlayer = forwardRef((props, ref) => {
-  // const [selectedTrack, setSelectedTrack] = useState({
-  //   title: "False Nine Podcast #17 Champions League RO16 first leg review",
-  //   by: "Ishan Sharma, Susajjan Dhungana and Ojash Dangal",
-  //   link:
-  //     "https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a",
-  //   duration: 0,
-  //   date: "Sat, 12 Sep 2020 08:42:34 GMT",
-  //   currentTime: 0
-  // });
-  // const [player, setPlayer] = useState("paused");
   const podcasts = useSelector(state => state.audioPlayer.podcasts) 
+  //selected refers to the currently playing audio track.
+  //It is global set to allow clicks and links to change tracks
   const selected = useSelector(state => state.audioPlayer.selected)
+  
+  //audioPLayerRef is initialized to an html5 audio element in the
+  //App.js file and the reference is stored in the global redux
+  //store. This was done for the player to hold its data between
+  //page redirects.This is supposedly bad as only serializable
+  // data should be kept in store but it does the job for now.
   const audioPlayerRef = useSelector(state => state.audioPlayer.audioPlayerRef)
+  
   const prevTrack = usePrevious(
     podcasts[selected]
   ) || {
@@ -27,15 +26,20 @@ const AudioPlayer = forwardRef((props, ref) => {
     image:
       "https://d3t3ozftmdmh3i.cloudfront.net/production/podcast_uploaded_nologo/8497059/8497059-1599895849523-cbb8b2f53d641.jpg",
   };
+
   const isPlaying = useSelector(state => state.audioPlayer.isPlaying);
   const currentTime = useSelector(state => state.audioPlayer.currentTime);
   
-  
+  //React redux useDispatch() hook
   const dispatch = useDispatch();
   const wasPlaying = usePrevious(isPlaying);
+
+  //Don't need setDuration can probably get rid of. If it ain't broke....
   const [duration, setDuration] = useState(2172.892);
   
+  //seekbar shows the time elapsed in the song
   const seekBarRef = useRef();
+ 
   useEffect(() => {
     if (audioPlayerRef && isPlaying !== wasPlaying) {
       if (!isPlaying && audioPlayerRef.current) {
@@ -45,6 +49,7 @@ const AudioPlayer = forwardRef((props, ref) => {
       }
     }
   }, [isPlaying, audioPlayerRef]);
+
 
   useEffect(() => {
     if (
@@ -95,6 +100,8 @@ const AudioPlayer = forwardRef((props, ref) => {
     }
   };
 
+  //Useful custom hook which stores the previous value of a
+  //variable
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -134,6 +141,11 @@ const AudioPlayer = forwardRef((props, ref) => {
       <div className={styles["player"]}>
         <div className={styles["minimized"]}>
           {!props.isActive && <div id={styles["bars"]}>
+        
+          {/Animation similar to old windows media player/}
+          {/which is displayed when podcast is playing and/}
+          {/player is maximized/}
+          
           <div className={isPlaying ? styles["bar"] : styles["bar-paused"]}></div>
             <div className={isPlaying ? styles["bar"] : styles["bar-paused"]}></div>
             <div className={isPlaying === "playing" ? styles["bar"] : styles["bar-paused"]}></div>
@@ -156,7 +168,8 @@ const AudioPlayer = forwardRef((props, ref) => {
           >
             {podcasts[selected].title.toUpperCase()}
           </div>
-
+          {/isActive refers to whether audioplayer is minimized/}
+          {/While minimized only playing animation and title appears/}
           {props.isActive ? (
             <i
               onClick={() => props.setActive(false)}
@@ -190,11 +203,15 @@ const AudioPlayer = forwardRef((props, ref) => {
             )}
             {audioPlayerRef && isPlaying && (
               <i
+                //Use effect automatically handles changes in redux
+                //state hook to pause the audio player
                 onClick={() => dispatch(setAudioPlayerIsPlaying(false))}
                 className={`${styles["pause-button"]} ${styles["far"]} ${styles["fa-pause-circle"]} far fa-pause-circle`}
               ></i>
             )}
             <i
+              //On ios devices apparently users must explicitly press
+              //play and audio player can't play through callbacks hence this
               onClick={() => {audioPlayerRef.current.play();forwardPodcasts()}}
               className={`${styles["forward-button"]} ${styles["fas"]} ${styles["fa-step-forward"]} fas fa-step-forward`}
             ></i>
@@ -212,8 +229,6 @@ const AudioPlayer = forwardRef((props, ref) => {
           </div>
         </div>
       </div>
-
-      {/*https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a  */}
     </div>
   );
 });
