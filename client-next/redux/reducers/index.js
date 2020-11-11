@@ -4,9 +4,9 @@ import blogReducer from './blogReducer'
 import headerReducer from './headerReducer'
 import loginReducer from './loginReducer'
 import dynamic from 'next/dynamic'
-const deviceReducer = dynamic(import('./deviceReducer'),{ssr: false})
 import socketReducer from './socketReducer'
 import {combineReducers} from 'redux';
+const deviceReducer = dynamic(import('./deviceReducer'),{ssr: false})
 
 const rootReducer = combineReducers({
   audioPlayer: audioPlayerReducer,

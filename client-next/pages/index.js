@@ -1,140 +1,105 @@
-import React, { useEffect } from "react";
-import ReactDOM from "react-dom";
-// import "./index.css";
-import App from "./_app";
-// import * as serviceWorker from "./serviceWorker";
-import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "../redux/reducers";
-import thunk from "redux-thunk";
-import { Provider } from "react-redux";
-import { Card } from "../components/Cards/Card.js";
-import io from "socket.io-client";
+import React from "react";
+import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
+import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
+import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import axios from "axios";
-import {
-  setAudioPlayerPodcasts,
-  setVideoPlayerYoutubeVideos,
-  setBlogArticles,
-  setIsLoggedIn,
-  setSocket,
-  setUser,
-} from "../redux/actions";
 
+const Home = (props) => {
+  const articles = useSelector((state) => state.blog.articles);
+  const screen = useSelector((state) => state.device.screen);
+  const loggedIn = useSelector((state) => state.login.isLoggedIn);
+  const user = useSelector((state) => state.login.user);
+  const history = useHistory();
 
-const getSocket = () => {
-  return async (dispatch) => {
-    const socket = io.connect();
-    dispatch(setSocket(socket));
-    await axios.get("/auth/isloggedin").then((response) => {
-      if (response.status !== 200) {
-        dispatch(setIsLoggedIn(false));
-      } else {
-        dispatch(setIsLoggedIn(true));
-        dispatch(setUser(response.data.user));   
-        socket.emit("join", { _id: response.data.user._id, tokenCreated: response.data.user.tokenCreated });
-      }
-    });
-  }
-}
-
-const getCSRFToken = () => {
-  return async () => {
-    await axios.get("/csrf-token").then((token, err) => {
-      if (err) {
-        console.log(err.message);
-      } else {
-        axios.defaults.headers.common = {
-          "X-CSRF-Token": token.data.csrfToken,
-        };
-      }
-    });
-  };
-};
-
-export const fetchBlogArticles = () => {
-  return async (dispatch) => {
-    await axios
-      .get("/articles/pages")
-      .then((response) => {
-        const articles = response.data["links"].map((item, index) => {
-          return {
-            index: index,
-            ...item,
-            contentType: Card.ContentType["article-internal"],
-            link: `articles/id=${item["_id"]}`,
-          };
-        });
-        dispatch(setBlogArticles(articles));
+  const getArticle = async () => {
+    axios
+      .get("/create/articles")
+      .then((res) => {
+        alert(
+          "Article template created. Template needs to be edited and submitted for moderator approval."
+        );
+        console.log(res.data);
+        history.push(`articles/id=${res.data.data["_id"]}/edit`);
       })
-      .catch((error) => {
-        console.log(error.message);
+      .catch((err) => {
+        if (
+          err.response &&
+          (err.response.status === 401 || err.response.status === 400)
+        ) {
+          alert(err.response.data.error);
+        } else if (err.response.status !== 200) {
+          throw Error(err);
+        }
       });
   };
+
+  const toolbar = (
+    <div
+      style={{ paddingTop: "0px", paddingBottom: "0px" }}
+      className={`${styles["main-pane-item"]}`}
+    >
+      <div
+        className={`${styles["submit-button"]}`}
+        onClick={() => {
+          getArticle();
+        }}
+      >
+        <label style={{ paddingRight: "0px", paddingLeft: "0px" }}>
+          CREATE NEW ARTICLE{" "}
+          <i
+            className={`fas fa-plus`}
+            style={{ fontSize: "1rem", paddingLeft: "5px" }}
+          />
+        </label>
+      </div>
+    </div>
+  );
+
+  const list = articles.map((item, index) =>
+    index % 4 == 0 || screen === "mobile" ? (
+      <div
+        key={index}
+        className={`${styles["main-pane-item"]} ${styles["main-pane-item-centered"]}`}
+      >
+        <LargeCard
+          image={item.image}
+          date={item.date}
+          title={item.title}
+          text={item.description}
+          author={item.author}
+          isApproved={item.isApproved}
+          isEditable={user && (user.isModerator || user._id === item.authorId)}
+          contentType={item.contentType}
+          link={item.link}
+        />
+      </div>
+    ) : (
+      <div className={`${styles["main-pane-item"]}`}>
+        <MediumCard
+          image={item.image}
+          date={item.date}
+          title={item.title}
+          text={item.description}
+          author={item.author}
+          isApproved={item.isApproved}
+          isEditable={user && (user.isModerator || user._id === item.authorId)}
+          contentType={item.contentType}
+          link={item.link}
+        />
+      </div>
+    )
+  );
+
+  const contents = (
+    <>
+      {loggedIn ? toolbar : null}
+      {list}
+    </>
+  );
+  return <Page sidebarFixTopOffset={0} mainPane={contents} />;
 };
 
-export const fetchPodcasts = () => {
-  return async (dispatch) => {
-    await axios
-      .get("/podcasts")
-      .then((response) => {
-        const podcasts = response.data["items"].map((item, index) => {
-          return {
-            index: index,
-            ...item,
-            contentType: Card.ContentType["audio-internal"],
-          };
-        });
-        dispatch(setAudioPlayerPodcasts(podcasts));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-};
-
-const fetchYoutubeVideos = () => {
-  return async (dispatch) => {
-    await axios
-      .get("/youtube")
-      .then((response) => {
-        const curVideos = response.data["items"].map((item, index) => {
-          return {
-            index: index,
-            id: item.id,
-            title: item.title,
-            image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
-            link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
-            date: item.date,
-            contentType: Card.ContentType["video-youtube"],
-          };
-        });
-        dispatch(setVideoPlayerYoutubeVideos(curVideos));
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-};
-
-// const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const composeEnhancer = compose;
-const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
-store.dispatch(getCSRFToken());
-store.dispatch(getSocket());
-store.dispatch(fetchBlogArticles());
-store.dispatch(fetchPodcasts());
-store.dispatch(fetchYoutubeVideos());
-
-ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>,
-
-  document.getElementById("root")
-);
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+export default Home;
