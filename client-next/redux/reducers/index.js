@@ -3,7 +3,8 @@ import videoPlayerReducer from './videoPlayerReducer'
 import blogReducer from './blogReducer'
 import headerReducer from './headerReducer'
 import loginReducer from './loginReducer'
-import deviceReducer from './deviceReducer'
+import dynamic from 'next/dynamic'
+const deviceReducer = dynamic(import('./deviceReducer'),{ssr: false})
 import socketReducer from './socketReducer'
 import {combineReducers} from 'redux';
 
