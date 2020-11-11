@@ -1,0 +1,124 @@
+.card {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.img-container {
+  max-height: 416px;
+  max-width: 740px;
+  /* min-width: 540px; */
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+}
+
+.img-container> img{
+  max-height: 416px;
+  max-width: 740px;
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.img-container>div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+
+.img-container:hover {
+  cursor: pointer;
+}
+
+.img-container:hover > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+ 
+}
+
+.img-container:hover > div > .fa-play-circle {
+  color: var(--secondary-color);
+}
+
+.fa-play-circle {
+  align-self: center;
+  font-size: 6rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  background-color: white;
+  padding: 2px;
+  border-radius: 50%;
+ 
+}
+
+
+.card-body {
+  padding-bottom: 18px;
+  padding-left: 36px;
+  padding-right: 36px;
+  padding-top: 18px;
+  width: 100%;
+  /* background-color: #026670; */
+  background-color: var(--primary-color);
+  color:  var(--font-color);
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1px;
+  font-size: 1.5rem;
+  box-sizing: border-box;
+  max-width: 740px;
+}
+
+.card-body > h2:hover {
+  color: #b1b1b1;
+  cursor: pointer;
+}
+
+.card-body > p > .date {
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-size: 1.5rem;
+  
+}
+
+.card-body > p > .author {
+  color: var(--secondary-color);
+  font-weight: bold;
+  font-size: 1.5rem;
+  padding-right: 10px;
+ 
+}
+
+
+
+.card-body > p {
+  font-size: 1rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+
+

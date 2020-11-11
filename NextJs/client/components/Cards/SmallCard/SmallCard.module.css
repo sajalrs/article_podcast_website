@@ -1,0 +1,76 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.img-container {
+  max-height: 216px;
+  max-width: 288px;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+}
+
+.img-container> img{
+  height: 216px;
+  width: 288px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.img-container>div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.img-container:hover {
+  cursor: pointer;
+}
+
+.img-container:hover > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+}
+
+.img-container:hover > div > .fa-play-circle {
+  color: var(--secondary-color);
+}
+
+.card-body {
+  color: black;
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 1px;
+}
+
+.card-body > h2 {
+  font-size: 1rem;
+}
+
+.fa-play-circle {
+  align-self: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  background-color: white;
+  padding: 1px;
+  border-radius: 50%;
+}
