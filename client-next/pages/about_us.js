@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../../components/Page/Page";
-import styles from "../../components/Page/Page.module.css";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
 
 const AboutUs = (props) => {
   

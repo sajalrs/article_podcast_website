@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Page from "../../components/Page/Page";
-import styles from "../../components/Page/Page.module.css";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
 import { Value } from "slate";
-import styles2 from "../../components/Comment/Comment.module.css";
-import TextEditor from "../../components/TextEditor/TextEditor";
+import styles2 from "../components/Comment/Comment.module.css";
+import TextEditor from "../components/TextEditor/TextEditor";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useHistory } from "react-router-dom";

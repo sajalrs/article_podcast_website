@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+// import "./index.css";
+import App from "./_app";
+// import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, compose } from "redux";
-import rootReducer from "./redux/reducers";
+import rootReducer from "../redux/reducers";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { Card } from "./components/Cards/Card.js";
+import { Card } from "../components/Cards/Card.js";
 import io from "socket.io-client";
 import axios from "axios";
 import {
@@ -17,7 +17,7 @@ import {
   setIsLoggedIn,
   setSocket,
   setUser,
-} from "./redux/actions";
+} from "../redux/actions";
 
 
 const getSocket = () => {

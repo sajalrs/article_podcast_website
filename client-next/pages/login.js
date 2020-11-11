@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Page from "../../components/Page/Page";
-import styles from "../../components/Page/Page.module.css";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
 import { Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsLoggedIn, setUser } from "../../redux/actions";
-import { fetchBlogArticles } from "../../index";
+import { setIsLoggedIn, setUser } from "../redux/actions";
+import { fetchBlogArticles } from "./index";
 import axios from "axios";
 
 const Login = (props) => {

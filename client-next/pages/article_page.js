@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
-import Page from "../../components/Page/Page";
-import styles from "../../components/Page/Page.module.css";
+import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
 import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
-import { getRules } from "../../components/TextEditor/TextEditor";
-import CommentBar from "../../components/Comment/CommentBar";
+import { getRules } from "../components/TextEditor/TextEditor";
+import CommentBar from "../components/Comment/CommentBar";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Card } from "../../components/Cards/Card";
+import { Card } from "../components/Cards/Card";
 const ArticlePage = (props) => {
   const { id } = useParams();
   const socket = useSelector((state) => state.network.socket);

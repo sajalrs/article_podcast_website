@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
-import Page from "../../components/Page/Page";
-import styles from "../../components/Page/Page.module.css";
+import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
 import { useParams } from "react-router-dom";
-import TextEditor from "../../components/TextEditor/TextEditor";
+import TextEditor from "../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import {Card} from "../../components/Cards/Card"
+import {Card} from "../components/Cards/Card"
 const initialValue = {
   document: {
     nodes: [

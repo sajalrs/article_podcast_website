@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Page from "../../components/Page/Page";
-import styles from "../../components/Page/Page.module.css";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 const NewPassword = (props) => {

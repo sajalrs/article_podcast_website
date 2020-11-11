@@ -1,8 +1,8 @@
 import React from "react";
-import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
-import MediumCard from "../../components/Cards/MediumCard/MediumCard.js";
-import Page from "../../components/Page/Page";
-import styles from "../../components/Page/Page.module.css";
+import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
+import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
+import Page from "../components/Page/Page";
+import styles from "../components/Page/Page.module.css";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
