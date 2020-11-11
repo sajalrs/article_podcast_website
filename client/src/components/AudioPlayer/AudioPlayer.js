@@ -142,9 +142,9 @@ const AudioPlayer = forwardRef((props, ref) => {
         <div className={styles["minimized"]}>
           {!props.isActive && <div id={styles["bars"]}>
         
-          {/Animation similar to old windows media player/}
-          {/which is displayed when podcast is playing and/}
-          {/player is maximized/}
+          {/*Animation similar to old windows media player
+          which is displayed when podcast is playing and
+        player is maximized*/}
           
           <div className={isPlaying ? styles["bar"] : styles["bar-paused"]}></div>
             <div className={isPlaying ? styles["bar"] : styles["bar-paused"]}></div>
@@ -168,8 +168,8 @@ const AudioPlayer = forwardRef((props, ref) => {
           >
             {podcasts[selected].title.toUpperCase()}
           </div>
-          {/isActive refers to whether audioplayer is minimized/}
-          {/While minimized only playing animation and title appears/}
+          {/*isActive refers to whether audioplayer is minimized/}
+          {/While minimized only playing animation and title appears*/}
           {props.isActive ? (
             <i
               onClick={() => props.setActive(false)}
