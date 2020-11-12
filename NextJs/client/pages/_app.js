@@ -71,7 +71,7 @@ export const fetchBlogArticles = () => {
 export const fetchPodcasts = () => {
   return async (dispatch) => {
     await axios
-      .get("/podcasts")
+      .get("api/podcasts")
       .then((response) => {
         const podcasts = response.data["items"].map((item, index) => {
           return {
@@ -91,7 +91,7 @@ export const fetchPodcasts = () => {
 const fetchYoutubeVideos = () => {
   return async (dispatch) => {
     await axios
-      .get("/youtube")
+      .get("api/youtube")
       .then((response) => {
         const curVideos = response.data["items"].map((item, index) => {
           return {

@@ -1,5 +1,6 @@
 import connectDb from "../middlewares/dbMiddleware.js";
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
+
 
 let Article;
 try {
