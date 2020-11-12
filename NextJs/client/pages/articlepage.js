@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
 import { getRules } from "../components/TextEditor/TextEditor";
 import CommentBar from "../components/Comment/CommentBar";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { Card } from "../components/Cards/Card";
+import { useRouter } from "next/router";
 const ArticlePage = (props) => {
-  const { id } = useParams();
+  const router = useRouter();
+  const { id } = router.query;
   const socket = useSelector((state) => state.network.socket);
   const user = useSelector((state) => state.login.user);
   const [article, setArticle] = useState({
@@ -30,7 +32,7 @@ const ArticlePage = (props) => {
     const html = new Html({ rules });
 
     const getArticle = async () => {
-      const response = await axios.get(`/articles/?${id}`);
+      const response = await axios.get(`api/articles/page?${id}`);
       const body = await response.data;
       if (response.status !== 200) throw Error(body.message);
       return body;
@@ -100,7 +102,14 @@ const ArticlePage = (props) => {
   const isPendingApproval = !article.isApproved;
 
   const headline = (
-    <div className={styles["headline"]} style={(isEditable || isPendingApproval) ? {marginTop: "36px"} : {marginTop: "0px"}} >
+    <div
+      className={styles["headline"]}
+      style={
+        isEditable || isPendingApproval
+          ? { marginTop: "36px" }
+          : { marginTop: "0px" }
+      }
+    >
       <LargeCard
         title={article.title}
         author={article.author}

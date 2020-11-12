@@ -9,7 +9,7 @@ const CommentSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Comment = mongoose.model("Comments", CommentSchema);
+module.exports = mongoose.model("Comments", CommentSchema);
 
-exports.CommentSchema = CommentSchema;
-exports.Comment = Comment;
+// exports.CommentSchema = CommentSchema;
+// exports.Comment = Comment;

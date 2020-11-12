@@ -1,5 +1,14 @@
 const mongoose = require("mongoose");
-const {CommentSchema} = require("./Comments") 
+// require("../models/Comments");
+// const {CommentSchema} = require("./Comments")
+// const CommentSchema = require("./Comments").schema
+let CommentSchema
+try{
+  CommentSchema = mongoose.model("Comments").schema;
+} catch{ 
+  CommentSchema = require("../models/Comments").schema;
+}
+
 
 
 const ArticleSchema = mongoose.Schema({
@@ -10,7 +19,7 @@ const ArticleSchema = mongoose.Schema({
   image: String,
   content: Object,
   isApproved: Boolean,
-  comments: [CommentSchema]
+  comments: [CommentSchema],
 });
 
 module.exports = mongoose.model("Articles", ArticleSchema);

@@ -1,7 +1,20 @@
-import connectDb from '../middlewares/dbMiddleware.js'
-const Article = require("../models/Articles");
-const User = require("../models/Users");
-const { Comment } = require("../models/Comments");
+import connectDb from "../middlewares/dbMiddleware.js";
+import mongoose from "mongoose";
+let Article;
+try {
+  Article = mongoose.model("Articles");
+} catch {
+  Article = require("../models/Articles");
+}
+
+let User;
+try {
+  User = mongoose.model("Users");
+} catch {
+  User = require("../models/Users");
+}
+
+// const { Comment } = require("../models/Comments");
 // const verify = require("../verification/verifyToken");
 // const jwt = require("jsonwebtoken");
 const handler = async (req, res) => {
@@ -23,10 +36,12 @@ const handler = async (req, res) => {
       query = Article.find({})
         .select("_id title author date image authorId isApproved")
         .sort("-date");
-    } else{
-      query = Article.find({$or:[{"isApproved": true}, {"authorId": user._id}]})
-      .select("_id title author date image authorId isApproved")
-      .sort("-date");
+    } else {
+      query = Article.find({
+        $or: [{ isApproved: true }, { authorId: user._id }],
+      })
+        .select("_id title author date image authorId isApproved")
+        .sort("-date");
     }
   } else {
     query = Article.find({})
@@ -43,5 +58,5 @@ const handler = async (req, res) => {
       res.json({ links: data });
     }
   });
-}
+};
 export default connectDb(handler);
