@@ -3,7 +3,8 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer.js";
 import { useDispatch, useSelector } from "react-redux";
 import { setAudioPlayerRef, setScreen, setUser } from "../../redux/actions";
 import { fetchBlogArticles } from "../../pages/_app";
-import styles from "./App.module.css"
+import Head from "next/head";
+import styles from "./App.module.css";
 
 const AppGlobal = (props) => {
   const audioPlayerRef = useRef();
@@ -48,6 +49,54 @@ const AppGlobal = (props) => {
   }, []);
   return (
     <div className={styles["overarching"]}>
+      <Head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+          name="description"
+          content="Football has been the number one sport in the world, and it is the same case for Nepal. People here are passionate about the game and are always eager to watch it. However, what our football scenario lacks is people who analyze this beautiful game. This podcast is for all the people who would love to understand and learn more about football. This podcast includes 3 guys doing what they do every day, talking about the game they saw yesterday or within the week. This isn't some classy high production scripted show, this is just us talking casually about the thing we love the most, football. Every week we choose a topic which is football related and dive deep into it and try to make it understandable and clear to the audience. We also briefly discuss the major fixtures being played all across Europe and most important of all, we'll talk about Nepali football. This is the false 9 podcast where football is cut wide open."
+        />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+          integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
+          crossorigin="anonymous"
+        />
+        {/* <script
+          data-ad-client="ca-pub-5436897490138523"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        ></script> */}
+
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+        <title>The False 9 Podcast</title>
+      </Head>
       <div ref={scrollLockRef}></div>
       <VideoPlayer scrollLockRef={scrollLockRef} />
 
@@ -57,9 +106,7 @@ const AppGlobal = (props) => {
         type="audio/mpeg"
         data-testid="html5-audio"
       />
-      <div className={styles["App"]}>
-        {props.children}
-      </div>
+      <div className={styles["App"]}>{props.children}</div>
     </div>
   );
 };
