@@ -10,16 +10,16 @@ const AppGlobal = (props) => {
   const dispatch = useDispatch();
   const scrollLockRef = useRef();
   const screen = useSelector((state) => state.device.screen);
-  const socket = useSelector((state) => state.network.socket);
+  // const socket = useSelector((state) => state.network.socket);
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("logged out", () => {
-        dispatch(fetchBlogArticles());
-        dispatch(setUser(null));
-      });
-    }
-  }, [socket]);
+  // useEffect(() => {
+  //   if (socket) {
+  //     socket.on("logged out", () => {
+  //       dispatch(fetchBlogArticles());
+  //       dispatch(setUser(null));
+  //     });
+  //   }
+  // }, [socket]);
 
   useEffect(() => {
     dispatch(setAudioPlayerRef(audioPlayerRef));

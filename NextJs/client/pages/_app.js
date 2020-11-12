@@ -14,43 +14,43 @@ import {
 } from "../redux/actions";
 import AppGlobal from "../components/App/App";
 
-const getSocket = () => {
-  return async (dispatch) => {
-    const socket = io.connect();
-    dispatch(setSocket(socket));
-    await axios.get("/auth/isloggedin").then((response) => {
-      if (response.status !== 200) {
-        dispatch(setIsLoggedIn(false));
-      } else {
-        dispatch(setIsLoggedIn(true));
-        dispatch(setUser(response.data.user));
-        socket.emit("join", {
-          _id: response.data.user._id,
-          tokenCreated: response.data.user.tokenCreated,
-        });
-      }
-    });
-  };
-};
+// const getSocket = () => {
+//   return async (dispatch) => {
+//     const socket = io.connect();
+//     dispatch(setSocket(socket));
+//     await axios.get("/auth/isloggedin").then((response) => {
+//       if (response.status !== 200) {
+//         dispatch(setIsLoggedIn(false));
+//       } else {
+//         dispatch(setIsLoggedIn(true));
+//         dispatch(setUser(response.data.user));
+//         socket.emit("join", {
+//           _id: response.data.user._id,
+//           tokenCreated: response.data.user.tokenCreated,
+//         });
+//       }
+//     });
+//   };
+// };
 
-const getCSRFToken = () => {
-  return async () => {
-    await axios.get("/csrf-token").then((token, err) => {
-      if (err) {
-        console.log(err.message);
-      } else {
-        axios.defaults.headers.common = {
-          "X-CSRF-Token": token.data.csrfToken,
-        };
-      }
-    });
-  };
-};
+// const getCSRFToken = () => {
+//   return async () => {
+//     await axios.get("/csrf-token").then((token, err) => {
+//       if (err) {
+//         console.log(err.message);
+//       } else {
+//         axios.defaults.headers.common = {
+//           "X-CSRF-Token": token.data.csrfToken,
+//         };
+//       }
+//     });
+//   };
+// };
 
 export const fetchBlogArticles = () => {
   return async (dispatch) => {
     await axios
-      .get("/articles/pages")
+      .get("api/articles/pages")
       .then((response) => {
         const articles = response.data["links"].map((item, index) => {
           return {
@@ -114,8 +114,8 @@ const fetchYoutubeVideos = () => {
 
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
-  store.dispatch(getCSRFToken());
-  store.dispatch(getSocket());
+  // store.dispatch(getCSRFToken());
+  // store.dispatch(getSocket());
   store.dispatch(fetchBlogArticles());
   store.dispatch(fetchPodcasts());
   store.dispatch(fetchYoutubeVideos());
