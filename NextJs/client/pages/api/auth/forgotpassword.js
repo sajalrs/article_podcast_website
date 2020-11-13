@@ -3,13 +3,11 @@ import verify from "../verification/verifyToken.js";
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 require("dotenv/config");
-const { resetPasswordValidation } = require("../validation/validation");
 const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const {
-  resetPasswordValidation,
+  resetPasswordValidation
 } = require("../validation/validation");
-
 
 let User;
 try {
