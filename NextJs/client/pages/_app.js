@@ -9,29 +9,28 @@ import {
   setVideoPlayerYoutubeVideos,
   setBlogArticles,
   setIsLoggedIn,
-  setSocket,
   setUser,
 } from "../redux/actions";
 import AppGlobal from "../components/App/App";
 
-// const getSocket = () => {
-//   return async (dispatch) => {
-//     const socket = io.connect();
-//     dispatch(setSocket(socket));
-//     await axios.get("/auth/isloggedin").then((response) => {
-//       if (response.status !== 200) {
-//         dispatch(setIsLoggedIn(false));
-//       } else {
-//         dispatch(setIsLoggedIn(true));
-//         dispatch(setUser(response.data.user));
-//         socket.emit("join", {
-//           _id: response.data.user._id,
-//           tokenCreated: response.data.user.tokenCreated,
-//         });
-//       }
-//     });
-//   };
-// };
+const getSocket = () => {
+  return async (dispatch) => {
+    // const socket = io.connect();
+    // dispatch(setSocket(socket));
+    try {
+      await axios.get("api/auth/isloggedin").then((response, err) => {
+        dispatch(setIsLoggedIn(true));
+        dispatch(setUser(response.data.user));
+        // socket.emit("join", {
+        //   _id: response.data.user._id,
+        //   tokenCreated: response.data.user.tokenCreated,
+        // });
+      });
+    } catch {
+      dispatch(setIsLoggedIn(false));
+    }
+  };
+};
 
 // const getCSRFToken = () => {
 //   return async () => {
@@ -115,7 +114,7 @@ const fetchYoutubeVideos = () => {
 export default function App({ Component, pageProps }) {
   const store = useStore(pageProps.initialReduxState);
   // store.dispatch(getCSRFToken());
-  // store.dispatch(getSocket());
+  store.dispatch(getSocket());
   store.dispatch(fetchBlogArticles());
   store.dispatch(fetchPodcasts());
   store.dispatch(fetchYoutubeVideos());

@@ -90,10 +90,11 @@ const Navbar = (props) => {
                     onClick={() => {
                       const onLogout = async () => {
                         axios
-                          .get("/auth/logout")
+                          .get("api/auth/logout")
                           .then(async (res) => {
                             dispatch(setIsLoggedIn(false));
                             alert("User Logged Out");
+                            history.reload();
                           })
                           .catch((err) => {
                             throw Error(err);

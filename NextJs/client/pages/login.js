@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-import { Link } from "react-router-dom";
-import { useHistory, useParams } from "react-router-dom";
+// import { Link } from "react-router-dom";
+// import { useHistory, useParams } from "react-router-dom";
+import {useRouter} from "next/router"
+import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "../redux/actions";
 import { fetchBlogArticles } from "./_app.js";
 import axios from "axios";
 
 const Login = (props) => {
-  const { email } = useParams();
-  const history = useHistory();
+  const history = useRouter();
+  const { email } = history.query;
+
   const dispatch = useDispatch();
   const isLoggedInGlobal = useSelector((state) => state.login.isLoggedIn);
   const userGlobal = useSelector((state) => state.login.user);
-  const socket = useSelector((state) => state.network.socket);
+  // const socket = useSelector((state) => state.network.socket);
   useEffect(() => {
     if (isLoggedInGlobal && formData.password === "") {
       if (email) {
@@ -41,7 +44,7 @@ const Login = (props) => {
     };
 
     await axios
-      .post("/auth/subscribe", JSON.stringify(toPost), options)
+      .post("api/auth/subscribe", JSON.stringify(toPost), options)
       .then((res) => {
         alert("Subscribed to newsletter");
       })
@@ -79,7 +82,7 @@ const Login = (props) => {
     };
 
     axios
-      .post("/auth/login", JSON.stringify(formData), options)
+      .post("/api/auth/login", JSON.stringify(formData), options)
       .then((res) => {
         alert("Login Successful");
 
@@ -104,13 +107,13 @@ const Login = (props) => {
   };
 
   const isLoggedIn = async () => {
-    await axios.get("/auth/isloggedin").then((response) => {
+    await axios.get("/api/auth/isloggedin").then((response) => {
       if (response.status !== 200) {
         dispatch(setIsLoggedIn(false));
       } else {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));
-        socket && socket.emit("join", { _id: response.data.user._id, tokenCreated: response.data.user.tokenCreated });
+        // socket && socket.emit("join", { _id: response.data.user._id, tokenCreated: response.data.user.tokenCreated });
         dispatch(fetchBlogArticles());
       }
     });
@@ -149,12 +152,15 @@ const Login = (props) => {
           </form>
           <div className={styles["register-login-form-text"]}>
             <label>
-              <Link to={"/forgotpassword"}>
+              <Link href={"/forgotpassword"}><a>
                 Forgot your password or locked out?
+                </a>
               </Link>
             </label>
             <label>
-              <Link to={"/register"}>Don't have an account?</Link>
+              <a>
+              <Link href={"/register"}>Don't have an account?</Link>
+              </a>
             </label>
           </div>
         </div>
