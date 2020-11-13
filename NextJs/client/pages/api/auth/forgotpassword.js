@@ -1,5 +1,4 @@
 import connectDb from "../middlewares/dbMiddleware.js";
-import verify from "../verification/verifyToken.js";
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 require("dotenv/config");
@@ -61,4 +60,4 @@ const handler = async (req, res) => {
     });
 };
 
-export default verify(connectDb(handler));
+export default connectDb(handler);
