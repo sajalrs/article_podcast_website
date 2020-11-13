@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLoggedIn, setUser } from "../redux/actions";
-import { fetchBlogArticles } from "./index";
+import { fetchBlogArticles } from "./_app.js";
 import axios from "axios";
 
 const Login = (props) => {
