@@ -4,7 +4,7 @@ const Message = require("../client/pages/api/models/Messages");
 const { messageValidation } = require("../validation/validation");
 
 router.get("/pages", async (req, res) => {
-  const query = Message.find({})
+  const query = Article.find({})
     .sort("-createdAt");
   await query.exec((err, data) => {
     if (err) {
