@@ -2,8 +2,6 @@ import connectDb from "../middlewares/dbMiddleware.js";
 import verify from "../verification/verifyToken.js";
 const mongoose = require("mongoose");
 require("dotenv/config");
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const { registerValidation } = require("../validation/validation");
 const bcrypt = require("bcryptjs");
 let User;
