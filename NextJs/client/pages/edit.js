@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import {Card} from "../components/Cards/Card"
+import { useRouter } from "next/router";
 const initialValue = {
   document: {
     nodes: [
@@ -53,12 +54,13 @@ const Edit = (props) => {
     isApproved: false,
   });
   const headerBoxRef = useSelector((state) => state.header.headerBoxRef);
-  const { id } = useParams();
+  // const { id } = useParams();
+  const { id } = router.query;
   const [toolbarFixed, setToolbarFix] = useState(false);
   const headlineFormRef = useRef();
   useEffect(() => {
     const getArticle = async () => {
-      const response = await fetch("/articles?" + id);
+      const response = await fetch("api/articles/page?" + id);
       const body = await response.json();
       if (response.status !== 200) throw Error(body.message);
 
@@ -135,7 +137,7 @@ const Edit = (props) => {
     };
 
     axios
-      .post("/articles/edit", JSON.stringify(editedArticle), options)
+      .post("api/articles/edit", JSON.stringify(editedArticle), options)
       .then((res) => {
         alert("Changes saved and submitted for moderator approval");
       })

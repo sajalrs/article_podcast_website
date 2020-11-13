@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 const ArticlePage = (props) => {
   const router = useRouter();
   const { id } = router.query;
-  const socket = useSelector((state) => state.network.socket);
+  // const socket = useSelector((state) => state.network.socket);
   const user = useSelector((state) => state.login.user);
   const [article, setArticle] = useState({
     title: "",
@@ -54,27 +54,27 @@ const ArticlePage = (props) => {
         throw Error(err);
       });
 
-    if (socket) {
-      socket.on("comments changed", (data) => {
-        if (data.articleId === id.substring(3)) {
-          getArticle()
-            .then((res) => {
-              setArticle({
-                title: res.title,
-                author: res.author,
-                date: res.date,
-                image: res.image,
-                isApproved: res.isApproved,
-                content: res.content ? html.serialize(res.content) : `<p></p>`,
-                comments: res.comments,
-              });
-            })
-            .catch((err) => {
-              throw Error(err);
-            });
-        }
-      });
-    }
+    // if (socket) {
+    //   socket.on("comments changed", (data) => {
+    //     if (data.articleId === id.substring(3)) {
+    //       getArticle()
+    //         .then((res) => {
+    //           setArticle({
+    //             title: res.title,
+    //             author: res.author,
+    //             date: res.date,
+    //             image: res.image,
+    //             isApproved: res.isApproved,
+    //             content: res.content ? html.serialize(res.content) : `<p></p>`,
+    //             comments: res.comments,
+    //           });
+    //         })
+    //         .catch((err) => {
+    //           throw Error(err);
+    //         });
+    //     }
+    //   });
+    // }
   }, [socket]);
 
   const postComment = (comment) => {
