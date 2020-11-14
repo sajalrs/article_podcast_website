@@ -1,8 +1,7 @@
-import { Provider } from "react-redux";
-import { useStore } from "../redux/store";
 import React from "react";
 import { Card } from "../components/Cards/Card.js";
-import io from "socket.io-client";
+import App from "next/app";
+import { wrapper } from "../redux/store";
 import axios from "axios";
 import {
   setAudioPlayerPodcasts,
@@ -18,7 +17,7 @@ const getSocket = () => {
     // const socket = io.connect();
     // dispatch(setSocket(socket));
     try {
-      await axios.get("/api/auth/isloggedin").then((response, err) => {
+      await axios.get("http://localhost:3000/api/auth/isloggedin").then((response, err) => {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));
         // socket.emit("join", {
@@ -49,7 +48,7 @@ const getSocket = () => {
 export const fetchBlogArticles = () => {
   return async (dispatch) => {
     await axios
-      .get("/api/articles/pages")
+      .get("http://localhost:3000/api/articles/pages")
       .then((response) => {
         const articles = response.data["links"].map((item, index) => {
           return {
@@ -70,7 +69,7 @@ export const fetchBlogArticles = () => {
 export const fetchPodcasts = () => {
   return async (dispatch) => {
     await axios
-      .get("/api/podcasts")
+      .get("http://localhost:3000/api/podcasts")
       .then((response) => {
         const podcasts = response.data["items"].map((item, index) => {
           return {
@@ -90,7 +89,7 @@ export const fetchPodcasts = () => {
 const fetchYoutubeVideos = () => {
   return async (dispatch) => {
     await axios
-      .get("/api/youtube")
+      .get("http://localhost:3000/api/youtube")
       .then((response) => {
         const curVideos = response.data["items"].map((item, index) => {
           return {
@@ -111,19 +110,47 @@ const fetchYoutubeVideos = () => {
   };
 };
 
-export default function App({ Component, pageProps }) {
-  const store = useStore(pageProps.initialReduxState);
-  // store.dispatch(getCSRFToken());
-  store.dispatch(getSocket());
-  store.dispatch(fetchBlogArticles());
-  store.dispatch(fetchPodcasts());
-  store.dispatch(fetchYoutubeVideos());
+// export default function App({ Component, pageProps }) {
+//   const store = useStore(pageProps.initialReduxState);
+//   // store.dispatch(getCSRFToken());
 
-  return (
-    <Provider store={store}>
+//   return (
+//     <Provider store={store}>
+//       <AppGlobal>
+//         <Component {...pageProps} />
+//       </AppGlobal>
+//     </Provider>
+//   );
+// }
+
+class MyApp extends App {
+  static getInitialProps = async ({ Component, ctx }) => {
+    await ctx.store.dispatch(getSocket());
+    await ctx.store.dispatch(fetchBlogArticles());
+    await ctx.store.dispatch(fetchPodcasts());
+    await ctx.store.dispatch(fetchYoutubeVideos());
+
+    return {
+      pageProps: {
+        // Call page-level getInitialProps
+        ...(Component.getInitialProps
+          ? await Component.getInitialProps(ctx)
+          : {}),
+        // Some custom thing for all pages
+        pathname: ctx.pathname,
+      },
+    };
+  };
+
+  render() {
+    const { Component, pageProps } = this.props;
+
+    return (
       <AppGlobal>
         <Component {...pageProps} />
       </AppGlobal>
-    </Provider>
-  );
+    );
+  }
 }
+
+export default wrapper.withRedux(MyApp);
