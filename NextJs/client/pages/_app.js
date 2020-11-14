@@ -18,7 +18,7 @@ const getSocket = () => {
     // const socket = io.connect();
     // dispatch(setSocket(socket));
     try {
-      await axios.get("api/auth/isloggedin").then((response, err) => {
+      await axios.get("/api/auth/isloggedin").then((response, err) => {
         dispatch(setIsLoggedIn(true));
         dispatch(setUser(response.data.user));
         // socket.emit("join", {
@@ -49,7 +49,7 @@ const getSocket = () => {
 export const fetchBlogArticles = () => {
   return async (dispatch) => {
     await axios
-      .get("api/articles/pages")
+      .get("/api/articles/pages")
       .then((response) => {
         const articles = response.data["links"].map((item, index) => {
           return {
@@ -70,7 +70,7 @@ export const fetchBlogArticles = () => {
 export const fetchPodcasts = () => {
   return async (dispatch) => {
     await axios
-      .get("api/podcasts")
+      .get("/api/podcasts")
       .then((response) => {
         const podcasts = response.data["items"].map((item, index) => {
           return {
@@ -90,7 +90,7 @@ export const fetchPodcasts = () => {
 const fetchYoutubeVideos = () => {
   return async (dispatch) => {
     await axios
-      .get("api/youtube")
+      .get("/api/youtube")
       .then((response) => {
         const curVideos = response.data["items"].map((item, index) => {
           return {

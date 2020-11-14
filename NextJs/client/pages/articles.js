@@ -16,7 +16,7 @@ const Articles = (props) => {
 
   const getArticle = async () => {
     axios
-      .get("api/create/articles")
+      .get("/api/create/articles")
       .then((res) => {
         alert(
           "Article template created. Template needs to be edited and submitted for moderator approval."

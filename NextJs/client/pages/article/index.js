@@ -32,7 +32,7 @@ const ArticlePage = (props) => {
     const html = new Html({ rules });
 
     const getArticle = async () => {
-      const response = await axios.get(`api/articles/page?id=${id}`);
+      const response = await axios.get(`/api/articles/page?id=${id}`);
       const body = await response.data;
       if (response.status !== 200) throw Error(body.message);
       return body;
@@ -85,7 +85,7 @@ const ArticlePage = (props) => {
     };
 
     axios
-      .post("api/articles/postcomment", JSON.stringify(toPost), options)
+      .post("/api/articles/postcomment", JSON.stringify(toPost), options)
       .then((res) => {
         alert("Comment Posted");
       })
