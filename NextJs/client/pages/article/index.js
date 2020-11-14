@@ -117,7 +117,7 @@ const ArticlePage = (props) => {
         date={article.date}
         isApproved={article.isApproved}
         contentType={Card.ContentType["article-internal"]}
-        link={`${id}`}
+        link={`article?id=${id}`}
         isEditable={user && (user.isModerator || user._id === article.authorId)}
         image={article.image}
         onClick={() => {}}

@@ -62,8 +62,8 @@ const Footer = forwardRef((props, ref) => {
           <div className={styles["footer-link-wrapper"]}>
             <div className={styles["footer-link-items"]}>
               <h2>About Us</h2>
-              <Link href="/about">Team</Link>
-              <Link href="/contact">Contact Us</Link>
+              <Link href="/aboutus">Team</Link>
+              <Link href="/contactus">Contact Us</Link>
             </div>
             <div className={styles["footer-link-items"]}>
               <h2>Podcasts</h2>
