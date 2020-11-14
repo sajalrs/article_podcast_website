@@ -84,7 +84,7 @@ const CommentBar = (props) => {
         />
       </div>
 
-      {props.comments.map((item) => {
+      {props.comments && props.comments.map((item) => {
         return (
           <Comment
             author={item.author}

@@ -56,7 +56,7 @@ const ArticlePage = (props) => {
 
     // if (socket) {
     //   socket.on("comments changed", (data) => {
-    //     if (data.articleId === id.substring(3)) {
+    //     if (data.articleId === id.yar(3)) {
     //       getArticle()
     //         .then((res) => {
     //           setArticle({
@@ -79,7 +79,7 @@ const ArticlePage = (props) => {
     }, [])
 
   const postComment = (comment) => {
-    const toPost = { id: id.substring(3), content: comment };
+    const toPost = { id: id.toString(), content: comment };
     const options = {
       headers: { "Content-Type": "application/json" },
     };

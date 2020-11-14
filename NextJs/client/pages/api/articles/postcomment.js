@@ -11,16 +11,16 @@ try {
 
 let User;
 try {
-  Article = mongoose.model("Users");
+  User = mongoose.model("Users");
 } catch {
-  Article = require("../models/Users");
+  User = require("../models/Users");
 }
 
 let Comment;
 try {
   Comment = mongoose.model("Comments");
 } catch {
-  Article = require("../models/Comments");
+  Comment = require("../models/Comments");
 }
 
 const handler = async (req, res) => {
