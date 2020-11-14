@@ -25,6 +25,7 @@ const Home = (props) => {
         history.push(`/edit?id=id=${item["_id"]}`);
       })
       .catch((err) => {
+        
         if (
           err.response &&
           (err.response.status === 401 || err.response.status === 400)
