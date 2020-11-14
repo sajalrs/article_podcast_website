@@ -82,7 +82,7 @@ const Login = (props) => {
     };
 
     axios
-      .post("/api/auth/login", JSON.stringify(formData), options)
+      .post("api/auth/login", JSON.stringify(formData), options)
       .then((res) => {
         alert("Login Successful");
 
@@ -107,7 +107,7 @@ const Login = (props) => {
   };
 
   const isLoggedIn = async () => {
-    await axios.get("/api/auth/isloggedin").then((response) => {
+    await axios.get("api/auth/isloggedin").then((response) => {
       if (response.status !== 200) {
         dispatch(setIsLoggedIn(false));
       } else {

@@ -61,7 +61,7 @@ const SignUp = (props) => {
     };
 
     axios
-      .post("/auth/register", JSON.stringify(toPost), options)
+      .post("api/auth/register", JSON.stringify(toPost), options)
       .then((res) => {
         alert("New User Registered");
         history.push("/login");

@@ -16,6 +16,13 @@ try {
   Article = require("../models/Users");
 }
 
+let Comment;
+try {
+  Comment = mongoose.model("Comments");
+} catch {
+  Article = require("../models/Comments");
+}
+
 const handler = async (req, res) => {
     await Article.findById(req.body.id, async (err, article) => {
         if (err) {

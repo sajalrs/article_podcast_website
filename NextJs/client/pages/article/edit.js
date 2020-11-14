@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
-import Page from "../components/Page/Page";
-import styles from "../components/Page/Page.module.css";
-import { useParams } from "react-router-dom";
-import TextEditor from "../components/TextEditor/TextEditor";
+import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
+import Page from "../../components/Page/Page";
+import styles from "../../components/Page/Page.module.css";
+import TextEditor from "../../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from "react-datepicker";
 import { useSelector } from "react-redux";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import {Card} from "../components/Cards/Card"
+import { Card } from "../../components/Cards/Card";
 import { useRouter } from "next/router";
 const initialValue = {
   document: {
@@ -55,15 +54,15 @@ const Edit = (props) => {
   });
   const headerBoxRef = useSelector((state) => state.header.headerBoxRef);
   // const { id } = useParams();
-  const { id } = router.query;
+  const router = useRouter();
+  let { id } = router.query;
   const [toolbarFixed, setToolbarFix] = useState(false);
   const headlineFormRef = useRef();
   useEffect(() => {
     const getArticle = async () => {
-      const response = await fetch("api/articles/page?" + id);
-      const body = await response.json();
+      const response = await axios.get(`/api/articles/page?id=${id}`);
+      const body = await response.data;
       if (response.status !== 200) throw Error(body.message);
-
       return body;
     };
 
@@ -130,6 +129,7 @@ const Edit = (props) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   const saveArticle = () => {
     const editedArticle = { ...article, content: textEditorValue.toJSON() };
     const options = {
@@ -137,7 +137,7 @@ const Edit = (props) => {
     };
 
     axios
-      .post("api/articles/edit", JSON.stringify(editedArticle), options)
+      .post("/api/articles/edit", JSON.stringify(editedArticle), options)
       .then((res) => {
         alert("Changes saved and submitted for moderator approval");
       })
@@ -193,7 +193,10 @@ const Edit = (props) => {
   const isPendingApproval = !article.isApproved;
 
   const headline = (
-    <div className={styles["headline"]} style={(isPendingApproval) ? {marginTop: "36px"} : {marginTop: "0px"}} >
+    <div
+      className={styles["headline"]}
+      style={isPendingApproval ? { marginTop: "36px" } : { marginTop: "0px" }}
+    >
       <LargeCard
         title={article.title}
         author={article.author}

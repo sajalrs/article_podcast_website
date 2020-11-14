@@ -8,6 +8,15 @@ try {
 } catch {
   Article = require("../models/Articles");
 }
+
+
+let User;
+try {
+  User = mongoose.model("Users");
+} catch {
+  User = require("../models/Users");
+}
+
 const handler = async (req, res) => {
     const user = await User.findById(req.user._id);
     await Article.findById(req.body.id, async (err, article) => {

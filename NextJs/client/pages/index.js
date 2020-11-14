@@ -16,13 +16,13 @@ const Home = (props) => {
 
   const getArticle = async () => {
     axios
-      .get("/create/articles")
+      .get("api/create/articles")
       .then((res) => {
         alert(
           "Article template created. Template needs to be edited and submitted for moderator approval."
         );
         console.log(res.data);
-        history.push(`articles/id=${res.data.data["_id"]}/edit`);
+        history.push(`/edit?id=id=${item["_id"]}`);
       })
       .catch((err) => {
         if (

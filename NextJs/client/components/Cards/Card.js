@@ -89,7 +89,7 @@ const CardComponent = (props) => {
   const isEditable = props.isEditable;
   const isPendingApproval = props.contentType === Card.ContentType["article-internal"] && !props.isApproved;
   const edit = () => {
-    history.push(`${props.link}/edit`);
+    history.push(`${props.link}`.replace("article", "article/edit"));
   };
 
   const onClick = () => {

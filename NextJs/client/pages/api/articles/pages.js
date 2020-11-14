@@ -1,5 +1,6 @@
 import connectDb from "../middlewares/dbMiddleware.js";
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 let Article;
 try {
   Article = mongoose.model("Articles");
@@ -16,7 +17,7 @@ try {
 
 // const { Comment } = require("../models/Comments");
 // const verify = require("../verification/verifyToken");
-// const jwt = require("jsonwebtoken");
+
 const handler = async (req, res) => {
   let user;
   const token = req.cookies.token;

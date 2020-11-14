@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
-import Page from "../components/Page/Page";
-import styles from "../components/Page/Page.module.css";
+import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
+import Page from "../../components/Page/Page";
+import styles from "../../components/Page/Page.module.css";
 // import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
-import { getRules } from "../components/TextEditor/TextEditor";
-import CommentBar from "../components/Comment/CommentBar";
+import { getRules } from "../../components/TextEditor/TextEditor";
+import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Card } from "../components/Cards/Card";
+import { Card } from "../../components/Cards/Card.js";
 import { useRouter } from "next/router";
 const ArticlePage = (props) => {
   const router = useRouter();
@@ -32,7 +32,7 @@ const ArticlePage = (props) => {
     const html = new Html({ rules });
 
     const getArticle = async () => {
-      const response = await axios.get(`api/articles/page?${id}`);
+      const response = await axios.get(`api/articles/page?id=${id}`);
       const body = await response.data;
       if (response.status !== 200) throw Error(body.message);
       return body;
@@ -75,7 +75,8 @@ const ArticlePage = (props) => {
     //     }
     //   });
     // }
-  }, [socket]);
+  // }, [socket]);
+    }, [])
 
   const postComment = (comment) => {
     const toPost = { id: id.substring(3), content: comment };
@@ -84,7 +85,7 @@ const ArticlePage = (props) => {
     };
 
     axios
-      .post("/articles/postcomment", JSON.stringify(toPost), options)
+      .post("api/articles/postcomment", JSON.stringify(toPost), options)
       .then((res) => {
         alert("Comment Posted");
       })

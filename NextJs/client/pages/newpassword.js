@@ -41,7 +41,7 @@ const NewPassword = (props) => {
     };
 
     axios
-      .post("/auth/resetpassword", JSON.stringify(toPost), options)
+      .post("api/auth/resetpassword", JSON.stringify(toPost), options)
       .then((res) => {
         alert("Password changed successfully");
         history.push("/");
