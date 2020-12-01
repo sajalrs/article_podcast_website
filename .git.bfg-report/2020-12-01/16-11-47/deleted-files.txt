@@ -1,0 +1,2 @@
+9ad75e4ff335dd6436200bd620dbe3c0eadf7e2c 436 next.config.js
+8d37a2a060f67d51983943df0e19fa78b64eb37b 436 next.config.js
