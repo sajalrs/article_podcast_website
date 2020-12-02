@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.js";
 import Head from "next/head";
 import styles from "./App.module.css";
