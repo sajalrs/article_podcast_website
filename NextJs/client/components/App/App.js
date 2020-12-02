@@ -1,44 +1,49 @@
 import React, { useEffect, useRef } from "react";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.js";
-import { useDispatch, useSelector } from "react-redux";
-import { setAudioPlayerRef, setScreen, setUser } from "../../redux/actions";
-import { fetchBlogArticles } from "../../pages/_app";
 import Head from "next/head";
 import styles from "./App.module.css";
+import { AudioPlayerContext} from "../../contexts/audioPlayerContext";
+import { DeviceContext} from "../../contexts/deviceContext";
 
 const AppGlobal = (props) => {
   const audioPlayerRef = useRef();
-  const dispatch = useDispatch();
   const scrollLockRef = useRef();
-  const screen = useSelector((state) => state.device.screen);
-  // const socket = useSelector((state) => state.network.socket);
+  const [audioPlayerState, audioPlayerDispatch] = useContext(AudioPlayerContext);
+  const [deviceState, deviceDispatch] = useContext(DeviceContext);
+ 
+  const screen = deviceState.screen;
 
-  // useEffect(() => {
-  //   if (socket) {
-  //     socket.on("logged out", () => {
-  //       dispatch(fetchBlogArticles());
-  //       dispatch(setUser(null));
-  //     });
-  //   }
-  // }, [socket]);
+const setAudioPlayerRef = (setTo) => {
+    audioPlayerDispatch( {
+        type: 'SET_AUDIOPLAYER_REF',
+        payload: setTo
+    })
+}
+
+const setScreen = (setTo) => {
+  deviceDispatch({
+      type: 'SET_SCREEN',
+      payload: setTo
+  })
+}
 
   useEffect(() => {
-    dispatch(setAudioPlayerRef(audioPlayerRef));
+    audioPlayerDispatch(setAudioPlayerRef(audioPlayerRef));
   }, [audioPlayerRef]);
 
   useEffect(() => {
     const updateDeviceSize = () => {
       if (window.innerWidth <= 550) {
         if (screen !== "mobile") {
-          dispatch(setScreen("mobile"));
+          deviceDispatch(setScreen("mobile"));
         }
       } else if (window.innerWidth > 550 && window.innerWidth <= 1350) {
         if (screen !== "tablet") {
-          dispatch(setScreen("tablet"));
+          deviceDispatch(setScreen("tablet"));
         }
       } else if (window.innerWidth > 1350) {
         if (screen !== "desktop") {
-          dispatch(setScreen("desktop"));
+          deviceDispatch(setScreen("desktop"));
         }
       }
     };
@@ -48,6 +53,8 @@ const AppGlobal = (props) => {
     };
   }, []);
   return (
+
+     
     <div className={styles["overarching"]}>
       <Head>
         <meta charset="utf-8" />
@@ -108,6 +115,8 @@ const AppGlobal = (props) => {
       />
       <div className={styles["App"]}>{props.children}</div>
     </div>
+
+    
   );
 };
 

@@ -11,7 +11,8 @@ import {
   setUser,
 } from "../redux/actions";
 import AppGlobal from "../components/App/App";
-
+import { AudioPlayerContextProvider } from "../../contexts/audioPlayerContext";
+import { DeviceContextProvider } from "../../contexts/DeviceContext";
 const getSocket = () => {
   return async (dispatch) => {
     // const socket = io.connect();
@@ -146,9 +147,13 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
+      <DeviceContextProvider>
+      <AudioPlayerContextProvider>
       <AppGlobal>
         <Component {...pageProps} />
       </AppGlobal>
+      </AudioPlayerContextProvider>
+    </DeviceContextProvider> 
     );
   }
 }
