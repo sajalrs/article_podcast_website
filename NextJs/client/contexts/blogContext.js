@@ -2,9 +2,6 @@ import React, { useReducer, createContext } from "react";
 
 export const BlogContext = createContext();
 
-const initialState = {
-    articles = []
-};
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -16,7 +13,7 @@ const reducer = (state, action) => {
 };
 
 export const BlogContextProvider = props => {
-    const [state, dispatch] =  useReducer(reducer, initialState);
+    const [state, dispatch] =  useReducer(reducer, props.initialState);
 
     return(
         <BlogContext.Provider value={[state, dispatch]}>
