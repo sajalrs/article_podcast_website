@@ -1,16 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import MenuItems from "./MenuItems.js";
 import styles from "./Navbar.module.css";
-// import { Link, useHistory } from "react-router-dom";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import FalseNineIcon from "../../Icons/FalseNineFitting";
-import { useSelector, useDispatch } from "react-redux";
-import { setIsLoggedIn } from "../../redux/actions";
+import { LoginContext } from "../../contexts/reducers/loginContext";
+import { setIsLoggedInAction } from "../../contexts/actions";
+
 import axios from "axios";
 const Navbar = (props) => {
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const dispatch = useDispatch();
+  const [loginState, loginDispatch] = useContext(LoginContext);
+  const isLoggedIn = loginState.isLoggedIn;
+  const setIsLoggedIn = setTo = loginDispatch(setIsLoggedInAction(setTo));
   const history = useRouter();
   useEffect(() => {
     const updateDropDown = () => {
@@ -92,7 +93,7 @@ const Navbar = (props) => {
                         axios
                           .get("api/auth/logout")
                           .then(async (res) => {
-                            dispatch(setIsLoggedIn(false));
+                            setIsLoggedIn(false);
                             alert("User Logged Out");
                             history.reload();
                           })
