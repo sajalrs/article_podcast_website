@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import { useRouter } from "next/router";
-import { playAudioAction, playVideoAction } from "../../contexts/actions;
+import { playAudioAction, playVideoAction } from "../../contexts/actions";
 import {AudioPlayerContext} from "../../contexts/reducers/audioPlayerContext"
 import {VideoPlayerContext} from "../../contexts/reducers/videoPlayerContext"
 import styles from "../../components/Page/Page.module.css";

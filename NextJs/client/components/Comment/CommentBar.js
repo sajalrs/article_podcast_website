@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Comment from "./Comment";
 import TextEditor from "../TextEditor/TextEditor";
 import { Value } from "slate";
-import {useSelector} from "react-redux"
+import { LoginContext } from "../../contexts/reducers/loginContext";
 import styles from "./Comment.module.css";
 
 const initialValue = {
@@ -47,55 +47,55 @@ const loginWarning = {
   },
 };
 
-
-
 const CommentBar = (props) => {
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
+  const [loginState, loginDispatch] = useContext(LoginContext);
+  const isLoggedIn = loginState.isLoggedIn;
   const [textEditorValue, setTextEditorValue] = useState(
     Value.fromJSON(initialValue)
   );
-
 
   const postComment = () => {
     props.postComment(textEditorValue);
   };
 
   return (
-    <div style={{width: "100%"}}>
+    <div style={{ width: "100%" }}>
       <h1 className={styles["heading-special"]}>Comments</h1>
-   <div   style={{
+      <div
+        style={{
           borderStyle: "solid solid solid solid",
           borderColor: "var(--secondary-color)",
-          width: "100%"
-        }}>
-   <div
-        style={{
-          width: "100%"
+          width: "100%",
         }}
       >
-        <TextEditor
-          value={isLoggedIn? textEditorValue : Value.fromJSON(loginWarning)}
-          setValue={isLoggedIn ? setTextEditorValue : () => {}}
-          onSave={() => {
-            postComment();
+        <div
+          style={{
+            width: "100%",
           }}
-          toolbarFixed={false}
-          styles={styles}
-        />
-      </div>
-
-      {props.comments && props.comments.map((item) => {
-        return (
-          <Comment
-            author={item.author}
-            date={item.updatedAt}
-            commentText={item.content}
+        >
+          <TextEditor
+            value={isLoggedIn ? textEditorValue : Value.fromJSON(loginWarning)}
+            setValue={isLoggedIn ? setTextEditorValue : () => {}}
+            onSave={() => {
+              postComment();
+            }}
+            toolbarFixed={false}
+            styles={styles}
           />
-        );
-      })}
+        </div>
+
+        {props.comments &&
+          props.comments.map((item) => {
+            return (
+              <Comment
+                author={item.author}
+                date={item.updatedAt}
+                commentText={item.content}
+              />
+            );
+          })}
       </div>
     </div>
-
   );
 };
 
