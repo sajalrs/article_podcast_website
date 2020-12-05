@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useContext } from "react";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.js";
 import Head from "next/head";
 import styles from "./App.module.css";
-import { AudioPlayerContext} from "../../contexts/audioPlayerContext";
-import { DeviceContext} from "../../contexts/deviceContext";
+import { AudioPlayerContext} from "../../contexts/reducers/audioPlayerContext";
+import { DeviceContext} from "../../contexts/reducers/deviceContext";
 
 const AppGlobal = (props) => {
   const audioPlayerRef = useRef();

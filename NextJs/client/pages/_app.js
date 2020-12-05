@@ -3,12 +3,12 @@ import { Card } from "../components/Cards/Card.js";
 import App from "next/app";
 import axios from "axios";
 import AppGlobal from "../components/App/App";
-import { AudioPlayerContextProvider } from "../../contexts/audioPlayerContext";
-import { BlogContextProvider } from "../../contexts/blogContext";
-import { DeviceContextProvider } from "../../contexts/deviceContext";
-import { HeaderContextProvider } from "../../contexts/headerContext";
-import { LoginContextProvider } from "../../contexts/loginContext";
-import { VideoPlayerContextProvider } from "../../contexts/headerContext";
+import { AudioPlayerContextProvider } from "../../contexts/reducers/audioPlayerContext";
+import { BlogContextProvider } from "../../contexts/reducers/blogContext";
+import { DeviceContextProvider } from "../../contexts/reducers/deviceContext";
+import { HeaderContextProvider } from "../../contexts/reducers/headerContext";
+import { LoginContextProvider } from "../../contexts/reducers/loginContext";
+import { VideoPlayerContextProvider } from "../../contexts/reducers/headerContext";
 
 const MyApp = ({ Component, pageProps }) => {
   const {
