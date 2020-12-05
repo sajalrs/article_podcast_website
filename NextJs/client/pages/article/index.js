@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
@@ -7,14 +7,15 @@ import Html from "slate-html-serializer";
 import { getRules } from "../../components/TextEditor/TextEditor";
 import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { LoginContext } from "../../contexts/reducers/loginContext";
 import { Card } from "../../components/Cards/Card.js";
 import { useRouter } from "next/router";
 const ArticlePage = (props) => {
   const router = useRouter();
   const { id } = router.query;
   // const socket = useSelector((state) => state.network.socket);
-  const user = useSelector((state) => state.login.user);
+  const [loginState, loginDispatch] = useContext(LoginContext);
+  const user = loginState.user;
   const [article, setArticle] = useState({
     title: "",
     author: "",
@@ -75,8 +76,8 @@ const ArticlePage = (props) => {
     //     }
     //   });
     // }
-  // }, [socket]);
-    }, [])
+    // }, [socket]);
+  }, []);
 
   const postComment = (comment) => {
     const toPost = { id: id.toString(), content: comment };
