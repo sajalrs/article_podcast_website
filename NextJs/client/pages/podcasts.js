@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-import { useSelector } from "react-redux";
+import { AudioPlayerContext } from "../contexts/reducers/audioPlayerContext";
 const Podcasts = (props) => {
-  const podcasts = useSelector((state) => state.audioPlayer.podcasts);
+  const [audioPlayerState, audioPlayerDispatch] = useContext(
+    AudioPlayerContext
+  );
+  const podcasts = audioPlayerState.podcasts;
   const contents = podcasts.map((item) => (
     <div className={`${styles["main-pane-item"]}`}>
       <MediumCard
