@@ -1,7 +1,8 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, {useContext} from "react";
 import { useRouter } from "next/router";
-import { playAudio, playVideo } from "../../redux/actions";
+import { playAudioAction, playVideoAction } from "../../contexts/actions;
+import {AudioPlayerContext} from "../../contexts/reducers/audioPlayerContext"
+import {VideoPlayerContext} from "../../contexts/reducers/videoPlayerContext"
 import styles from "../../components/Page/Page.module.css";
 
 const editButton = (onClick) => (
@@ -81,11 +82,12 @@ const Card = {
 };
 
 const CardComponent = (props) => {
-  const dispatch = useDispatch();
   const history = useRouter();
-  const audioPlayerRef = useSelector(
-    (state) => state.audioPlayer.audioPlayerRef
-  );
+  const [audioPlayerState, audioPlayerDispatch] = useContext(AudioPlayerContext);
+  const [videoPlayerState, videoPlayerDispatch] = useContext(VideoPlayerContext);
+  const audioPlayerRef = audioPlayerState.audioPlayerRef;
+  const playAudio = setTo => audioPlayerDispatch(playAudioAction(setTo));
+  const playVideo = setTo => videoPlayerDispatch(playVideoAction(setTo));
   const isEditable = props.isEditable;
   const isPendingApproval = props.contentType === Card.ContentType["article-internal"] && !props.isApproved;
   const edit = () => {
@@ -98,10 +100,10 @@ const CardComponent = (props) => {
         history.push(props.link);
         break;
       case Card.ContentType["audio-internal"]:
-        dispatch(playAudio(props.index));
+       playAudio(props.index);
         break;
       case Card.ContentType["video-youtube"]:
-        dispatch(playVideo(props.link));
+      playVideo(props.link);
         break;
       default:
     }
