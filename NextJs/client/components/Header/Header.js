@@ -1,15 +1,20 @@
-import React, { useEffect, useState, useRef, forwardRef } from "react";
+import React, { useEffect, forwardRef, useContext } from "react";
 import styles from "./Header.module.css";
 import FIcon from "../../Icons/F";
 import NineIcon from "../../Icons/Nine";
-import { useDispatch, useSelector } from "react-redux";
-import { setHeaderBoxRef } from "../../redux/actions";
+import { HeaderContext } from "../../contexts/reducers/headerContext";
+import { DeviceContext } from "../../contexts/reducers/deviceContext";
+import { setHeaderBoxRefAction } from "../../contexts/actions";
 
 const Header = forwardRef((props, ref) => {
-  const screen = useSelector((state) => state.device.screen);
-  const dispatch = useDispatch();
+  const [headerState, headerDispatch] = useContext(HeaderContext);
+  const [deviceState, deviceDispatch] = useContext(DeviceContext);
+
+  const screen = deviceState.screen;
+  const setHeaderBoxRef = (setTo) => headerDispatch(setHeaderBoxRefAction);
+
   useEffect(() => {
-    dispatch(setHeaderBoxRef(ref));
+    setHeaderBoxRef(ref);
   }, [screen]);
   return (
     <header ref={ref}>
