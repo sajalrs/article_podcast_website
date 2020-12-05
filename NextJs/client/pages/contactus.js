@@ -4,7 +4,8 @@ import styles from "../components/Page/Page.module.css";
 import { Value } from "slate";
 import styles2 from "../components/Comment/Comment.module.css";
 import TextEditor from "../components/TextEditor/TextEditor";
-import { useSelector } from "react-redux";
+import {DeviceContext} from "../contexts/reducers/deviceContext";
+import {LoginContext} from "../contexts/reducers/loginContext"
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
@@ -30,9 +31,11 @@ const initialValue = {
 };
 
 const ContactUs = (props) => {
-  const screen = useSelector((state) => state.device.screen);
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const user = useSelector((state) => state.login.user);
+  const [deviceState, deviceDispatch] = useContext(DeviceContext);
+  const [loginState, loginDispatch] = useContext(LoginContext);
+  const screen = deviceState.screen;
+  const isLoggedIn = loginState.isLoggedIn;
+  const user = loginState.user;
   const history = useHistory();
   const [formData, setFormData] = useState({
     firstName: isLoggedIn && user ? user.firstName : "",
