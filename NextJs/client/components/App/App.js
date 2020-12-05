@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useContext } from "react";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.js";
 import Head from "next/head";
 import styles from "./App.module.css";
+import {setAudioPlayerRefAction, setScreenAction} from "../../contexts/actions"
 import { AudioPlayerContext} from "../../contexts/reducers/audioPlayerContext";
 import { DeviceContext} from "../../contexts/reducers/deviceContext";
 
@@ -14,17 +15,11 @@ const AppGlobal = (props) => {
   const screen = deviceState.screen;
 
 const setAudioPlayerRef = (setTo) => {
-    audioPlayerDispatch( {
-        type: 'SET_AUDIOPLAYER_REF',
-        payload: setTo
-    })
+    audioPlayerDispatch(setAudioPlayerRefAction(setTo))
 }
 
 const setScreen = (setTo) => {
-  deviceDispatch({
-      type: 'SET_SCREEN',
-      payload: setTo
-  })
+  deviceDispatch(setScreenAction(setTo));
 }
 
   useEffect(() => {
