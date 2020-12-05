@@ -1,13 +1,13 @@
 import React, { useState, useEffect, forwardRef } from "react";
 import styles from "./Footer.module.css";
-import { useSelector } from "react-redux";
-// import { Link, useHistory } from "react-router-dom";
+import {LoginContext} from "../../contexts/reducers/loginContext";
 import Link from "next/link";
 import { useRouter } from "next/router";
 const Footer = forwardRef((props, ref) => {
   const history = useRouter();
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const user = useSelector((state) => state.login.user);
+  const [loginState, loginDispatch] = useContext(LoginContext);
+  const isLoggedIn = loginState.isLoggedIn;
+  const user = loginState.user;
   const [emailInput, setEmailInput] = useState();
   useEffect(() => {
     if (isLoggedIn && user && user.email) {
