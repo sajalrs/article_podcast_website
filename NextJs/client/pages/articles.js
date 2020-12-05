@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-import { useSelector } from "react-redux";
+import {BlogContext} from "../contexts/reducers/blogContext";
+import {DeviceContext} from "../contexts/reducers/deviceContext";
+import {LoginContext} from "../contexts/reducers/loginContext";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 const Articles = (props) => {
-  const articles = useSelector((state) => state.blog.articles);
-  const screen = useSelector((state) => state.device.screen);
-  const user = useSelector((state) => state.login.user);
-  const loggedIn = useSelector((state) => state.login.isLoggedIn);
+  const [blogState, blogDispatch] = useContext(BlogContext);
+  const [deviceState, deviceDispatch] = useContext(DeviceContext);
+  const [loginState, loginDispatch] = useContext(LoginContext);
+
+  const articles = blogState.articles;
+  const screen = deviceState.screen;
+  const user = loginState.user;
+  const loggedIn = loginState.isLoggedIn;
   const history = useHistory();
 
   const getArticle = async () => {
