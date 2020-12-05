@@ -3,27 +3,28 @@ import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
 // import { Link } from "react-router-dom";
 // import { useHistory, useParams } from "react-router-dom";
-import {useRouter} from "next/router"
+import { useRouter } from "next/router";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { setIsLoggedIn, setUser } from "../redux/actions";
-import { fetchBlogArticles } from "./_app.js";
+import { LoginContext } from "../contexts/reducers/loginContext";
+import { setIsLoggedInAction, setUserAction } from "../redux/actions";
+// import { fetchBlogArticles } from "./_app.js";
 import axios from "axios";
 
 const Login = (props) => {
   const history = useRouter();
   const { email } = history.query;
-
-  const dispatch = useDispatch();
-  const isLoggedInGlobal = useSelector((state) => state.login.isLoggedIn);
-  const userGlobal = useSelector((state) => state.login.user);
+  const [loginState, loginDispatch] = useContext(LoginContext);
+  const isLoggedInGlobal = loginState.isLoggedIn;
+  const userGlobal = loginState.user;
+  const setIsLoggedIn = (setTo) => loginDispatch(setIsLoggedInAction(setTo));
+  const setUser = (setTo) => loginDispatch(setUserAction(setTo));
   // const socket = useSelector((state) => state.network.socket);
   useEffect(() => {
     if (isLoggedInGlobal && formData.password === "") {
       if (email) {
         subscribeNewsletter().then(() => {
           if (userGlobal && !userGlobal.isSubscribed) {
-            dispatch(setUser({ ...userGlobal, isSubscribed: true }));
+            setUser({ ...userGlobal, isSubscribed: true });
           }
         });
       } else {
@@ -90,7 +91,7 @@ const Login = (props) => {
           if (email && userGlobal && !userGlobal.isSubscribed) {
             subscribeNewsletter().then(() => {
               if (userGlobal && !userGlobal.isSubscribed) {
-                dispatch(setUser({ ...userGlobal, isSubscribed: true }));
+                setUser({ ...userGlobal, isSubscribed: true });
               }
             });
           }
@@ -109,12 +110,12 @@ const Login = (props) => {
   const isLoggedIn = async () => {
     await axios.get("/api/auth/isloggedin").then((response) => {
       if (response.status !== 200) {
-        dispatch(setIsLoggedIn(false));
+        setIsLoggedIn(false);
       } else {
-        dispatch(setIsLoggedIn(true));
-        dispatch(setUser(response.data.user));
+        setIsLoggedIn(true);
+        setUser(response.data.user);
         // socket && socket.emit("join", { _id: response.data.user._id, tokenCreated: response.data.user.tokenCreated });
-        dispatch(fetchBlogArticles());
+        // fetchBlogArticles();
       }
     });
   };
@@ -152,14 +153,13 @@ const Login = (props) => {
           </form>
           <div className={styles["register-login-form-text"]}>
             <label>
-              <Link href={"/forgotpassword"}><a>
-                Forgot your password or locked out?
-                </a>
+              <Link href={"/forgotpassword"}>
+                <a>Forgot your password or locked out?</a>
               </Link>
             </label>
             <label>
               <a>
-              <Link href={"/register"}>Don't have an account?</Link>
+                <Link href={"/register"}>Don't have an account?</Link>
               </a>
             </label>
           </div>
