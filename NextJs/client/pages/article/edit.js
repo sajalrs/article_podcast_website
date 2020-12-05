@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
 import TextEditor from "../../components/TextEditor/TextEditor";
 import { Value } from "slate";
 import DatePicker from "react-datepicker";
-import { useSelector } from "react-redux";
+import { HeaderContext } from "../../contexts/reducers/headerContext";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { Card } from "../../components/Cards/Card";
@@ -52,7 +52,8 @@ const Edit = (props) => {
     image: "",
     isApproved: false,
   });
-  const headerBoxRef = useSelector((state) => state.header.headerBoxRef);
+  const [headerState, headerDispatch] = useContext(HeaderContext);
+  const headerBoxRef = headerState.headerBoxRef;
   // const { id } = useParams();
   const router = useRouter();
   let { id } = router.query;
