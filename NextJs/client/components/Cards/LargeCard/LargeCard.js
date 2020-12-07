@@ -5,7 +5,9 @@ import {CardComponent} from "../Card"
 const LargeCard = (props) => {
  
   return (
-    <CardComponent    image={props.image}
+    <CardComponent    
+    image={props.image}
+    index={props.index}
     date={props.date}
     title={props.title}
     text={props.description}
