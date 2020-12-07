@@ -2,28 +2,39 @@ import React, { useEffect, useRef, useContext } from "react";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.js";
 import Head from "next/head";
 import styles from "./App.module.css";
-import {setAudioPlayerRefAction, setScreenAction} from "../../contexts/actions"
-import { AudioPlayerContext} from "../../contexts/reducers/audioPlayerContext";
-import { DeviceContext} from "../../contexts/reducers/deviceContext";
+import {
+  setAudioPlayerRefAction,
+  setScreenAction,
+} from "../../contexts/actions";
+import { AudioPlayerContext } from "../../contexts/reducers/audioPlayerContext";
+import { DeviceContext } from "../../contexts/reducers/deviceContext";
 
 const AppGlobal = (props) => {
   const audioPlayerRef = useRef();
   const scrollLockRef = useRef();
-  const [audioPlayerState, audioPlayerDispatch] = useContext(AudioPlayerContext);
+  const [audioPlayerState, audioPlayerDispatch] = useContext(
+    AudioPlayerContext
+  );
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
- 
+
   const screen = deviceState.screen;
 
-const setAudioPlayerRef = (setTo) => {
-    audioPlayerDispatch(setAudioPlayerRefAction(setTo))
-}
+  const setAudioPlayerRef = (setTo) => {
+    audioPlayerDispatch({
+      type: "SET_AUDIOPLAYER_REF",
+      payload: setTo,
+    });
+  };
 
-const setScreen = (setTo) => {
-  deviceDispatch(setScreenAction(setTo));
-}
+  const setScreen = (setTo) => {
+    deviceDispatch({
+      type: "SET_SCREEN",
+      payload: setTo,
+    });
+  };
 
   useEffect(() => {
-    audioPlayerDispatch(setAudioPlayerRef(audioPlayerRef));
+   setAudioPlayerRef(audioPlayerRef);
   }, [audioPlayerRef]);
 
   useEffect(() => {
@@ -48,8 +59,6 @@ const setScreen = (setTo) => {
     };
   }, []);
   return (
-
-     
     <div className={styles["overarching"]}>
       <Head>
         <meta charset="utf-8" />
@@ -110,8 +119,6 @@ const setScreen = (setTo) => {
       />
       <div className={styles["App"]}>{props.children}</div>
     </div>
-
-    
   );
 };
 

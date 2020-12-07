@@ -3,7 +3,7 @@ import React, { useReducer, createContext } from "react";
 export const AudioPlayerContext = createContext();
 
 const reducer = (state, action) => {
-  switch (action.type) {
+  switch(action.type){
     case "SET_AUDIOPLAYER_IS_PLAYING":
       return { ...state, isPlaying: action.payload };
     case "SET_AUDIOPLAYER_CURRENT_TIME":
@@ -16,18 +16,18 @@ const reducer = (state, action) => {
       return { ...state, audioPlayerRef: action.payload };
     case "PLAY_AUDIO":
       return { ...state, selected: action.payload, isPlaying: true };
-    default:
-      return state;
+
   }
+
 };
 
-export const AudioPlayerContextProvider = props => {
-    const [state, dispatch] =  useReducer(reducer, props.initialState);
+export const AudioPlayerContextProvider = (props) => {
+  console.log(props);
+  const [state, dispatch] = useReducer(reducer, props.initialState);
 
-    return(
-        <AudioPlayerContext.Provider value={[state, dispatch]}>
-            {props.children}
-        </AudioPlayerContext.Provider>
-        
-    )
-}
+  return (
+    <AudioPlayerContext.Provider value={[state, dispatch]}>
+      {props.children}
+    </AudioPlayerContext.Provider>
+  );
+};

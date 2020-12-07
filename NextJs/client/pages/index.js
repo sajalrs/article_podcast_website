@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import Page from "../components/Page/Page";

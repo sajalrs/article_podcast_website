@@ -11,7 +11,7 @@ import axios from "axios";
 const Navbar = (props) => {
   const [loginState, loginDispatch] = useContext(LoginContext);
   const isLoggedIn = loginState.isLoggedIn;
-  const setIsLoggedIn = setTo = loginDispatch(setIsLoggedInAction(setTo));
+  const setIsLoggedIn = setTo => loginDispatch(setIsLoggedInAction(setTo));
   const history = useRouter();
   useEffect(() => {
     const updateDropDown = () => {

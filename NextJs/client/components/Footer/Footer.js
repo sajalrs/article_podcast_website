@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef, useContext } from "react";
 import styles from "./Footer.module.css";
 import {LoginContext} from "../../contexts/reducers/loginContext";
 import Link from "next/link";

@@ -1,8 +1,8 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/router";
 import { playAudioAction, playVideoAction } from "../../contexts/actions";
-import {AudioPlayerContext} from "../../contexts/reducers/audioPlayerContext"
-import {VideoPlayerContext} from "../../contexts/reducers/videoPlayerContext"
+import { AudioPlayerContext } from "../../contexts/reducers/audioPlayerContext";
+import { VideoPlayerContext } from "../../contexts/reducers/videoPlayerContext";
 import styles from "../../components/Page/Page.module.css";
 
 const editButton = (onClick) => (
@@ -83,13 +83,27 @@ const Card = {
 
 const CardComponent = (props) => {
   const history = useRouter();
-  const [audioPlayerState, audioPlayerDispatch] = useContext(AudioPlayerContext);
-  const [videoPlayerState, videoPlayerDispatch] = useContext(VideoPlayerContext);
+  const [audioPlayerState, audioPlayerDispatch] = useContext(
+    AudioPlayerContext
+  );
+  const [videoPlayerState, videoPlayerDispatch] = useContext(
+    VideoPlayerContext
+  );
   const audioPlayerRef = audioPlayerState.audioPlayerRef;
-  const playAudio = setTo => audioPlayerDispatch(playAudioAction(setTo));
-  const playVideo = setTo => videoPlayerDispatch(playVideoAction(setTo));
+  const playAudio = (setTo) =>
+    audioPlayerDispatch({
+      type: "PLAY_AUDIO",
+      payload: setTo,
+    });
+  const playVideo = (setTo) =>
+    videoPlayerDispatch({
+      type: "PLAY_VIDEO",
+      payload: setTo,
+    });
   const isEditable = props.isEditable;
-  const isPendingApproval = props.contentType === Card.ContentType["article-internal"] && !props.isApproved;
+  const isPendingApproval =
+    props.contentType === Card.ContentType["article-internal"] &&
+    !props.isApproved;
   const edit = () => {
     history.push(`${props.link}`.replace("article", "article/edit"));
   };
@@ -100,10 +114,10 @@ const CardComponent = (props) => {
         history.push(props.link);
         break;
       case Card.ContentType["audio-internal"]:
-       playAudio(props.index);
+        playAudio(props.index);
         break;
       case Card.ContentType["video-youtube"]:
-      playVideo(props.link);
+        playVideo(props.link);
         break;
       default:
     }
@@ -116,7 +130,7 @@ const CardComponent = (props) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ display: "flex", flexDirection: "row"}}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
         {isEditable && editButton(edit)}
         {isPendingApproval && pendingApproval}
       </div>

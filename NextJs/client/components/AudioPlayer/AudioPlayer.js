@@ -43,16 +43,25 @@ const AudioPlayer = forwardRef((props, ref) => {
   //React redux useDispatch() hook
   const wasPlaying = usePrevious(isPlaying);
   const setAudioPlayerIsPlaying = (setTo) => {
-    audioPlayerDispatch(setAudioPlayerIsPlayingAction(setTo));
+    audioPlayerDispatch({
+      type: "SET_AUDIOPLAYER_IS_PLAYING",
+      payload: setTo,
+    });
   };
 
   const setAudioPlayerCurrentTime = (setTo) => {
-    audioPlayerDispatch(setAudioPlayerCurrentTimeAction(setTo));
-  }
+    audioPlayerDispatch({
+      type: "SET_AUDIOPLAYER_CURRENT_TIME",
+      payload: setTo,
+    });
+  };
 
   const setAudioPlayerSelected = (setTo) => {
-    audioPlayerDispatch(setAudioPlayerSelectedAction(setTo));
-  }
+    audioPlayerDispatch({
+      type: "SET_AUDIOPLAYER_SELECTED",
+      payload: setTo,
+    });
+  };
 
   //Don't need setDuration can probably get rid of. If it ain't broke....
   const [duration, setDuration] = useState(2172.892);
