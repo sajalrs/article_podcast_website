@@ -10,22 +10,17 @@ import { HeaderContextProvider } from "../contexts/reducers/headerContext";
 import { LoginContextProvider } from "../contexts/reducers/loginContext";
 import { VideoPlayerContextProvider } from "../contexts/reducers/videoPlayerContext";
 
+
 const MyApp = ({ Component, pageProps }) => {
-  const {
-    audioPlayerInitialState,
-    blogInitialState,
-    loginInitialState,
-    videoPlayerInitialState,
-  } = pageProps;
- 
+
   return (
-    <AudioPlayerContextProvider initialState={audioPlayerInitialState}>
-      <BlogContextProvider initialState={blogInitialState}>
+    <AudioPlayerContextProvider initialState={pageProps.audioPlayerInitialState}>
+      <BlogContextProvider initialState={pageProps.blogInitialState}>
         <DeviceContextProvider>
           <HeaderContextProvider>
-            <LoginContextProvider initialState={loginInitialState}>
+            <LoginContextProvider initialState={pageProps.loginInitialState}>
               <VideoPlayerContextProvider
-                initialState={videoPlayerInitialState}
+                initialState={pageProps.videoPlayerInitialState}
               >
                 <AppGlobal>
                   <Component {...pageProps} />
@@ -41,10 +36,9 @@ const MyApp = ({ Component, pageProps }) => {
 
 MyApp.getInitialProps = async (ctx) => {
   const appProps = await App.getInitialProps(ctx);
-
   let user;
   try {
-    await axios.get("/api/auth/isloggedin").then((response, err) => {
+    await axios.get("http://localhost:3000/api/auth/isloggedin").then((response, err) => {
       user = response.data.user;
     });
   } catch {
@@ -59,7 +53,7 @@ MyApp.getInitialProps = async (ctx) => {
   let articles = [];
 
   axios
-    .get("/api/articles/pages")
+    .get("http://localhost:3000/api/articles/pages")
     .then((response) => {
       articles = response.data["links"].map((item, index) => {
         return {
@@ -120,7 +114,7 @@ MyApp.getInitialProps = async (ctx) => {
 
   const curVideos = [];
   await axios
-    .get("/api/youtube")
+    .get("http://localhost:3000/api/youtube")
     .then((response) => {
       curVideos = response.data["items"].map((item, index) => {
         return {

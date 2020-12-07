@@ -16,13 +16,13 @@ const reducer = (state, action) => {
       return { ...state, audioPlayerRef: action.payload };
     case "PLAY_AUDIO":
       return { ...state, selected: action.payload, isPlaying: true };
-
+    default:
+      return state;
   }
 
 };
 
 export const AudioPlayerContextProvider = (props) => {
-  console.log(props);
   const [state, dispatch] = useReducer(reducer, props.initialState);
 
   return (
