@@ -5,10 +5,12 @@ import styles from "./App.module.css";
 import {
   setAudioPlayerRefAction,
   setScreenAction,
+  setIsLoggedInAction,
+  setUserAction
 } from "../../contexts/actions";
 import { AudioPlayerContext } from "../../contexts/reducers/audioPlayerContext";
 import { DeviceContext } from "../../contexts/reducers/deviceContext";
-
+import {LoginContext} from "../../contexts/reducers/loginContext"
 const AppGlobal = (props) => {
   //TO DO: Pressing on the right card doesn't play the right audio
   const audioPlayerRef = useRef();
@@ -17,6 +19,7 @@ const AppGlobal = (props) => {
     AudioPlayerContext
   );
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
+  const [loginState, loginDispatch] = useContext(LoginContext);
 
   const screen = deviceState.screen;
 
@@ -28,9 +31,32 @@ const AppGlobal = (props) => {
     deviceDispatch(setScreenAction(setTo));
   };
 
+  const setIsLoggedIn = (setTo) => {
+    loginDispatch(setIsLoggedInAction(setTo));
+  }
+
+  const setUser = (setTo) => {
+    loginDispatch(setUserAction(setTo));
+  }
+
   useEffect(() => {
    setAudioPlayerRef(audioPlayerRef);
   }, [audioPlayerRef]);
+
+
+  useEffect(async () => {
+    let user;
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/isloggedin");
+      const json = await res.json();
+      user = json.user;
+    } catch {
+      user = null;
+    }
+
+    setIsLoggedIn(user);
+    setUser(user);
+  }, [])
 
   useEffect(() => {
     const updateDeviceSize = () => {

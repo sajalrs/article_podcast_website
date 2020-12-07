@@ -36,18 +36,10 @@ const MyApp = ({ Component, pageProps }) => {
 
 MyApp.getInitialProps = async (ctx) => {
   const appProps = await App.getInitialProps(ctx);
-  let user;
-  try {
-    const res = await fetch("http://localhost:3000/api/auth/isloggedin");
-    const json = await res.json();
-    user = json.user;
-  } catch {
-    user = null;
-  }
 
   appProps.pageProps.loginInitialState = {
-    isLoggedIn: user,
-    user: user,
+    isLoggedIn: false,
+    user: null,
   };
 
   let articles = [];

@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .env
-/NextJs
-# /NextJs/client/next.config.js
+# /NextJs
+/NextJs/client/next.config.js
 
 # dependencies
 /node_modules
