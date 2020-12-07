@@ -4,7 +4,6 @@ import App from "next/app";
 import axios from "axios";
 import AppGlobal from "../components/App/App";
 import { AudioPlayerContextProvider } from "../contexts/reducers/audioPlayerContext";
-import { BlogContextProvider } from "../contexts/reducers/blogContext";
 import { DeviceContextProvider } from "../contexts/reducers/deviceContext";
 import { HeaderContextProvider } from "../contexts/reducers/headerContext";
 import { LoginContextProvider } from "../contexts/reducers/loginContext";
@@ -15,8 +14,7 @@ const MyApp = ({ Component, pageProps }) => {
     <AudioPlayerContextProvider
       initialState={pageProps.audioPlayerInitialState}
     >
-      <BlogContextProvider initialState={pageProps.blogInitialState}>
-        <DeviceContextProvider>
+         <DeviceContextProvider>
           <HeaderContextProvider>
             <LoginContextProvider initialState={pageProps.loginInitialState}>
               <VideoPlayerContextProvider
@@ -29,7 +27,6 @@ const MyApp = ({ Component, pageProps }) => {
             </LoginContextProvider>
           </HeaderContextProvider>
         </DeviceContextProvider>
-      </BlogContextProvider>
     </AudioPlayerContextProvider>
   );
 };
@@ -40,27 +37,6 @@ MyApp.getInitialProps = async (ctx) => {
   appProps.pageProps.loginInitialState = {
     isLoggedIn: false,
     user: null,
-  };
-
-  let articles = [];
-
-  try {
-    const res = await fetch("http://localhost:3000/api/articles/pages");
-    const json = await res.json();
-    articles = json["links"].map((item, index) => {
-      return {
-        index: index,
-        ...item,
-        contentType: Card.ContentType["article-internal"],
-        link: `/article?id=${item["_id"]}`,
-      };
-    });
-  } catch(error) {
-    console.log(error.message);
-  }
-
-  appProps.pageProps.blogInitialState = {
-    articles: articles,
   };
 
   let podcasts = [

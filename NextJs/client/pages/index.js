@@ -4,7 +4,6 @@ import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
 import { useHistory } from "react-router-dom";
-import { BlogContext } from "../contexts/reducers/blogContext";
 import { DeviceContext } from "../contexts/reducers/deviceContext";
 import { LoginContext } from "../contexts/reducers/loginContext";
 import axios from "axios";
