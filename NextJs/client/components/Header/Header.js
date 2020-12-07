@@ -11,10 +11,7 @@ const Header = forwardRef((props, ref) => {
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
 
   const screen = deviceState.screen;
-  const setHeaderBoxRef = (setTo) => headerDispatch({
-    type: 'SET_HEADER_BOX_REF',
-    payload: setTo
-});
+  const setHeaderBoxRef = (setTo) => headerDispatch(setHeaderBoxRefAction(setTo));
 
   useEffect(() => {
     setHeaderBoxRef(ref);

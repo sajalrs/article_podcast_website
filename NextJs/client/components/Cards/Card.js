@@ -91,10 +91,7 @@ const CardComponent = (props) => {
   );
   const audioPlayerRef = audioPlayerState.audioPlayerRef;
   const playAudio = (setTo) =>
-    audioPlayerDispatch({
-      type: "PLAY_AUDIO",
-      payload: setTo,
-    });
+    audioPlayerDispatch(playAudioAction(setTo));
   const playVideo = (setTo) =>
     videoPlayerDispatch(playVideoAction(setTo));
   const isEditable = props.isEditable;

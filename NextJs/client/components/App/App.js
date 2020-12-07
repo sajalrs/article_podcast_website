@@ -20,17 +20,11 @@ const AppGlobal = (props) => {
   const screen = deviceState.screen;
 
   const setAudioPlayerRef = (setTo) => {
-    audioPlayerDispatch({
-      type: "SET_AUDIOPLAYER_REF",
-      payload: setTo,
-    });
+    audioPlayerDispatch(setAudioPlayerRefAction(setTo));
   };
 
   const setScreen = (setTo) => {
-    deviceDispatch({
-      type: "SET_SCREEN",
-      payload: setTo,
-    });
+    deviceDispatch(setScreenAction(setTo));
   };
 
   useEffect(() => {
