@@ -1,20 +1,20 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
 import { useHistory } from "react-router-dom";
-import {BlogContext} from "../contexts/reducers/blogContext";
-import {DeviceContext} from "../contexts/reducers/deviceContext";
-import {LoginContext} from "../contexts/reducers/loginContext";
+import { BlogContext } from "../contexts/reducers/blogContext";
+import { DeviceContext } from "../contexts/reducers/deviceContext";
+import { LoginContext } from "../contexts/reducers/loginContext";
 import axios from "axios";
+import { Card } from "../components/Cards/Card";
 
 const Home = (props) => {
-  const [blogState, blogDispatch] = useContext(BlogContext);
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
-  
-  const articles = blogState.articles;
+
+  const articles = props.articles;
   const screen = deviceState.screen;
   const loggedIn = loginState.isLoggedIn;
   const user = loginState.user;
@@ -31,7 +31,6 @@ const Home = (props) => {
         history.push(`/edit?id=id=${item["_id"]}`);
       })
       .catch((err) => {
-        
         if (
           err.response &&
           (err.response.status === 401 || err.response.status === 400)
@@ -108,5 +107,24 @@ const Home = (props) => {
   );
   return <Page sidebarFixTopOffset={0} mainPane={contents} />;
 };
+
+export async function getServerSideProps(context) {
+  const res = await fetch("http://localhost:3000/api/articles/pages");
+  const json = await res.json();
+  let articles = json["links"].map((item, index) => {
+    return {
+      index: index,
+      ...item,
+      contentType: Card.ContentType["article-internal"],
+      link: `/article?id=${item["_id"]}`,
+    };
+  });
+
+  return {
+    props: {
+      articles,
+    },
+  };
+}
 
 export default Home;
