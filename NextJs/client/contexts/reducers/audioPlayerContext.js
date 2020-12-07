@@ -24,7 +24,6 @@ const reducer = (state, action) => {
 
 export const AudioPlayerContextProvider = (props) => {
   const [state, dispatch] = useReducer(reducer, props.initialState);
-
   return (
     <AudioPlayerContext.Provider value={[state, dispatch]}>
       {props.children}

@@ -10,11 +10,11 @@ import { HeaderContextProvider } from "../contexts/reducers/headerContext";
 import { LoginContextProvider } from "../contexts/reducers/loginContext";
 import { VideoPlayerContextProvider } from "../contexts/reducers/videoPlayerContext";
 
-
 const MyApp = ({ Component, pageProps }) => {
-
   return (
-    <AudioPlayerContextProvider initialState={pageProps.audioPlayerInitialState}>
+    <AudioPlayerContextProvider
+      initialState={pageProps.audioPlayerInitialState}
+    >
       <BlogContextProvider initialState={pageProps.blogInitialState}>
         <DeviceContextProvider>
           <HeaderContextProvider>
@@ -38,35 +38,34 @@ MyApp.getInitialProps = async (ctx) => {
   const appProps = await App.getInitialProps(ctx);
   let user;
   try {
-    await axios.get("http://localhost:3000/api/auth/isloggedin").then((response, err) => {
-      user = response.data.user;
-    });
+    const res = await fetch("http://localhost:3000/api/auth/isloggedin");
+    const json = await res.json();
+    user = json.user;
   } catch {
     user = null;
   }
 
   appProps.pageProps.loginInitialState = {
-    isLoggedIn: user != null,
+    isLoggedIn: user,
     user: user,
   };
 
   let articles = [];
 
-  axios
-    .get("http://localhost:3000/api/articles/pages")
-    .then((response) => {
-      articles = response.data["links"].map((item, index) => {
-        return {
-          index: index,
-          ...item,
-          contentType: Card.ContentType["article-internal"],
-          link: `/article?id=${item["_id"]}`,
-        };
-      });
-    })
-    .catch((error) => {
-      console.log(error.message);
+  try {
+    const res = await fetch("http://localhost:3000/api/articles/pages");
+    const json = await res.json();
+    articles = json["links"].map((item, index) => {
+      return {
+        index: index,
+        ...item,
+        contentType: Card.ContentType["article-internal"],
+        link: `/article?id=${item["_id"]}`,
+      };
     });
+  } catch(error) {
+    console.log(error.message);
+  }
 
   appProps.pageProps.blogInitialState = {
     articles: articles,
@@ -86,23 +85,19 @@ MyApp.getInitialProps = async (ctx) => {
     },
   ];
 
-  await axios
-    .get("/api/podcasts")
-    .then((response) => {
-      podcasts = response.data["items"].map((item, index) => {
-        return {
-          index: index,
-          ...item,
-          contentType: Card.ContentType["audio-internal"],
-        };
-      });
-    })
-    .catch((error) => {
-      console.log(error.message);
+  try {
+    const res = await fetch("http://localhost:3000/api/podcasts");
+    const json = await res.json();
+    podcasts = json["items"].map((item, index) => {
+      return {
+        index: index,
+        ...item,
+        contentType: Card.ContentType["audio-internal"],
+      };
     });
-
-
-
+  } catch {
+    console.log(error.message);
+  }
 
   appProps.pageProps.audioPlayerInitialState = {
     selected: 0,
@@ -112,25 +107,26 @@ MyApp.getInitialProps = async (ctx) => {
     audioPlayerRef: null,
   };
 
-  const curVideos = [];
-  await axios
-    .get("http://localhost:3000/api/youtube")
-    .then((response) => {
-      curVideos = response.data["items"].map((item, index) => {
-        return {
-          index: index,
-          id: item.id,
-          title: item.title,
-          image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
-          link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
-          date: item.date,
-          contentType: Card.ContentType["video-youtube"],
-        };
-      });
-    })
-    .catch((error) => {
-      console.log(error.message);
+  let curVideos = [];
+
+
+  try {
+    const res = await fetch("http://localhost:3000/api/youtube");
+    const json = await res.json();
+    curVideos = json["items"].map((item, index) => {
+      return {
+        index: index,
+        id: item.id,
+        title: item.title,
+        image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
+        link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
+        date: item.date,
+        contentType: Card.ContentType["video-youtube"],
+  };
     });
+  } catch {
+    console.log(error.message);
+  }
 
   appProps.pageProps.videoPlayerInitialState = {
     selected:

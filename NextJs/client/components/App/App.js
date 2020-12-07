@@ -41,15 +41,15 @@ const AppGlobal = (props) => {
     const updateDeviceSize = () => {
       if (window.innerWidth <= 550) {
         if (screen !== "mobile") {
-          deviceDispatch(setScreen("mobile"));
+          setScreen("mobile");
         }
       } else if (window.innerWidth > 550 && window.innerWidth <= 1350) {
         if (screen !== "tablet") {
-          deviceDispatch(setScreen("tablet"));
+          setScreen("tablet");
         }
       } else if (window.innerWidth > 1350) {
         if (screen !== "desktop") {
-          deviceDispatch(setScreen("desktop"));
+          setScreen("desktop");
         }
       }
     };

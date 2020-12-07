@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
 // import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import styles from "../components/Page/Page.module.css";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { LoginContext } from "../contexts/reducers/loginContext";
-import { setIsLoggedInAction, setUserAction } from "../redux/actions";
+import { setIsLoggedInAction, setUserAction } from "../contexts/actions";
 // import { fetchBlogArticles } from "./_app.js";
 import axios from "axios";
 

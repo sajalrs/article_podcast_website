@@ -8,7 +8,7 @@ const VideoPlayer = (props) => {
     VideoPlayerContext
   );
   const isPlaying = videoPlayerState.isPlaying;
-  const closeVideo = () => videoPlayerDispatch(closeVideoAction);
+  const closeVideo = () => videoPlayerDispatch(closeVideoAction());
   useEffect(() => {
     if (isPlaying) {
       disableBodyScroll(props.scrollLockRef.current);

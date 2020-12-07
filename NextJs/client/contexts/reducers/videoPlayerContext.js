@@ -5,13 +5,13 @@ export const VideoPlayerContext = createContext();
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_VIDEOPLAYER_SELECTED":
-      return { ...state, selected: actions.payload };
+      return { ...state, selected: action.payload };
     case "SET_VIDEOPLAYER_IS_PLAYING":
-      return { ...state, isPlaying: actions.payload };
+      return { ...state, isPlaying: action.payload };
     case "SET_VIDEOPLAYER_YOUTUBE_VIDEOS":
-      return { ...state, youtubeVideos: actions.payload };
+      return { ...state, youtubeVideos: action.payload };
     case "PLAY_VIDEO":
-      return { ...state, selected: actions.payload, isPlaying: true };
+      return { ...state, selected: action.payload, isPlaying: true };
     default:
       return state;
   }

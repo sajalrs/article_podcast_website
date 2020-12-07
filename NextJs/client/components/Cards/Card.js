@@ -96,10 +96,7 @@ const CardComponent = (props) => {
       payload: setTo,
     });
   const playVideo = (setTo) =>
-    videoPlayerDispatch({
-      type: "PLAY_VIDEO",
-      payload: setTo,
-    });
+    videoPlayerDispatch(playVideoAction(setTo));
   const isEditable = props.isEditable;
   const isPendingApproval =
     props.contentType === Card.ContentType["article-internal"] &&
