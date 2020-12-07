@@ -10,6 +10,7 @@ import { AudioPlayerContext } from "../../contexts/reducers/audioPlayerContext";
 import { DeviceContext } from "../../contexts/reducers/deviceContext";
 
 const AppGlobal = (props) => {
+  //TO DO: Pressing on the right card doesn't play the right audio
   const audioPlayerRef = useRef();
   const scrollLockRef = useRef();
   const [audioPlayerState, audioPlayerDispatch] = useContext(

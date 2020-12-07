@@ -7,6 +7,7 @@ const MediumCard = (props) => {
   return (
     <CardComponent    image={props.image}
     date={props.date}
+    index={props.index}
     title={props.title}
     text={props.description}
     author={props.author}

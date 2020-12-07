@@ -8,6 +8,7 @@ const SmallCard = (props) => {
     <CardComponent    image={props.image}
     date={props.date}
     title={props.title}
+    index={props.index}
     text={props.description}
     author={props.author}
     isApproved={props.isApproved}

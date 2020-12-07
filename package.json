@@ -7,7 +7,6 @@
     "next-client": "cd client-next && yarn start",
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "next-dev":  "concurrently --kill-others-on-fail \"yarn server\" \"yarn next-client\"",
     "start": "node server.js",
     "testClient": "cd client && yarn test",
     "test": "yarn testClient",

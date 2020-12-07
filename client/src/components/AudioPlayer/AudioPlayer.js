@@ -50,7 +50,6 @@ const AudioPlayer = forwardRef((props, ref) => {
     }
   }, [isPlaying, audioPlayerRef]);
 
-
   useEffect(() => {
     if (
       audioPlayerRef && podcasts[selected].title != prevTrack.title
