@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import Page from "../components/Page/Page";
@@ -8,17 +8,19 @@ import { DeviceContext } from "../contexts/reducers/deviceContext";
 import { LoginContext } from "../contexts/reducers/loginContext";
 import axios from "axios";
 import { Card } from "../components/Cards/Card";
+import { useRouter } from "next/router";
 
 const Home = (props) => {
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
   const [articles, setArticles] = useState(props.articles);
+  const history = useRouter();
   const screen = deviceState.screen;
   const loggedIn = loginState.isLoggedIn;
   const user = loginState.user;
   useEffect(() => {
     const getArticles = async () => {
-      if(loggedIn){
+      if (loggedIn) {
         const res = await fetch("http://localhost:3000/api/articles/pages");
         const json = await res.json();
         const toReturn = json["links"].map((item, index) => {
@@ -31,12 +33,10 @@ const Home = (props) => {
         });
         setArticles(toReturn);
       }
-    }
+    };
 
     getArticles();
-  }, [])
-  
-  const history = useHistory();
+  }, [loggedIn]);
 
   const getArticle = async () => {
     axios
@@ -45,17 +45,23 @@ const Home = (props) => {
         alert(
           "Article template created. Template needs to be edited and submitted for moderator approval."
         );
-        console.log(res.data);
-        history.push(`/edit?id=id=${item["_id"]}`);
+   
+        setTimeout(() => {
+          history.push(`/article/edit?id=id=${res.data["_id"]}`);
+        }, 5000);
+       
       })
       .catch((err) => {
-        if (
-          err.response &&
-          (err.response.status === 401 || err.response.status === 400)
-        ) {
-          alert(err.response.data.error);
-        } else if (err.response.status !== 200) {
-          throw Error(err);
+        if (err.response && err.response.status) {
+          if (err.response.status === 401 || err.response.status === 400) {
+            if(err.response.data){
+              alert(err.response.data.error);
+            }
+          } else if (err.response.status !== 200) {
+            throw Error(err);
+          }
+        } else {
+          console.log(err);
         }
       });
   };

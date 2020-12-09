@@ -13,12 +13,33 @@ const Articles = (props) => {
   // const [blogState, blogDispatch] = useContext(BlogContext);
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
-
-  const articles = props.articles;
+  const [articles, setArticles] = useState(props.articles);
   const screen = deviceState.screen;
   const user = loginState.user;
   const loggedIn = loginState.isLoggedIn;
   const history = useHistory();
+
+  useEffect(() => {
+    const getArticles = async () => {
+      if(loggedIn){
+        const res = await fetch("http://localhost:3000/api/articles/pages");
+        const json = await res.json();
+        const toReturn = json["links"].map((item, index) => {
+          return {
+            index: index,
+            ...item,
+            contentType: Card.ContentType["article-internal"],
+            link: `/article?id=${item["_id"]}`,
+          };
+        });
+        setArticles(toReturn);
+      }
+    }
+
+    getArticles();
+  }, [loggedIn])
+
+
 
   const getArticle = async () => {
     axios
