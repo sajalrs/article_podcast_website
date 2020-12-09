@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState} from "react";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import Page from "../components/Page/Page";
@@ -12,11 +12,30 @@ import { Card } from "../components/Cards/Card";
 const Home = (props) => {
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
-
-  const articles = props.articles;
+  const [articles, setArticles] = useState(props.articles);
   const screen = deviceState.screen;
   const loggedIn = loginState.isLoggedIn;
   const user = loginState.user;
+  useEffect(() => {
+    const getArticles = async () => {
+      if(loggedIn){
+        const res = await fetch("http://localhost:3000/api/articles/pages");
+        const json = await res.json();
+        const toReturn = json["links"].map((item, index) => {
+          return {
+            index: index,
+            ...item,
+            contentType: Card.ContentType["article-internal"],
+            link: `/article?id=${item["_id"]}`,
+          };
+        });
+        setArticles(toReturn);
+      }
+    }
+
+    getArticles();
+  }, [])
+  
   const history = useHistory();
 
   const getArticle = async () => {
