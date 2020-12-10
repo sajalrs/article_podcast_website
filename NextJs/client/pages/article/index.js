@@ -16,67 +16,9 @@ const ArticlePage = (props) => {
   // const socket = useSelector((state) => state.network.socket);
   const [loginState, loginDispatch] = useContext(LoginContext);
   const user = loginState.user;
-  const [article, setArticle] = useState({
-    title: "",
-    author: "",
-    date: "",
-    images: [],
-    content: `<p></p>`,
-    isApproved: false,
-    comments: [],
-  });
+  const [article, setArticle] = useState(props.article);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-  useEffect(() => {
-    const rules = getRules(styles);
-    const html = new Html({ rules });
-
-    const getArticle = async () => {
-      const response = await axios.get(`/api/articles/page?id=${id}`);
-      const body = await response.data;
-      if (response.status !== 200) throw Error(body.message);
-      return body;
-    };
-
-    getArticle()
-      .then((res) => {
-        setArticle({
-          title: res.title,
-          author: res.author,
-          date: res.date,
-          image: res.image,
-          isApproved: res.isApproved,
-          content: res.content ? html.serialize(res.content) : `<p></p>`,
-          comments: res.comments,
-        });
-      })
-      .catch((err) => {
-        throw Error(err);
-      });
-
-    // if (socket) {
-    //   socket.on("comments changed", (data) => {
-    //     if (data.articleId === id.yar(3)) {
-    //       getArticle()
-    //         .then((res) => {
-    //           setArticle({
-    //             title: res.title,
-    //             author: res.author,
-    //             date: res.date,
-    //             image: res.image,
-    //             isApproved: res.isApproved,
-    //             content: res.content ? html.serialize(res.content) : `<p></p>`,
-    //             comments: res.comments,
-    //           });
-    //         })
-    //         .catch((err) => {
-    //           throw Error(err);
-    //         });
-    //     }
-    //   });
-    // }
-    // }, [socket]);
   }, []);
 
   const postComment = (comment) => {
@@ -144,5 +86,30 @@ const ArticlePage = (props) => {
     />
   );
 };
+
+
+export async function getServerSideProps({ query }) {
+  const rules = getRules(styles);
+  const html = new Html({ rules });
+
+  const res = await fetch(`http://localhost:3000/api/articles/page?id=${query.id}`);
+  const json = await res.json();
+  const article = {
+        title: json.title,
+        author: json.author,
+        date: json.date,
+        image: json.image,
+        isApproved: json.isApproved,
+        content: json.content ? html.serialize(json.content) : `<p></p>`,
+        comments: json.comments,
+  }
+
+  return {
+    props: {
+      article,
+    },
+  };
+}
+
 
 export default ArticlePage;

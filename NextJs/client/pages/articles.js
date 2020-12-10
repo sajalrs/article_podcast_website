@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 import {Card} from "../components/Cards/Card";
 
 const Articles = (props) => {
-  // const [blogState, blogDispatch] = useContext(BlogContext);
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
   const [articles, setArticles] = useState(props.articles);
