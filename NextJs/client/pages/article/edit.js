@@ -9,7 +9,6 @@ import { HeaderContext } from "../../contexts/reducers/headerContext";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { Card } from "../../components/Cards/Card";
-import { useRouter } from "next/router";
 const initialValue = {
   document: {
     nodes: [
@@ -47,9 +46,6 @@ const Edit = (props) => {
   const [article, setArticle] = useState(props.article);
   const [headerState, headerDispatch] = useContext(HeaderContext);
   const headerBoxRef = headerState.headerBoxRef;
-  // const { id } = useParams();
-  const router = useRouter();
-  let { id } = router.query;
   const [toolbarFixed, setToolbarFix] = useState(false);
   const headlineFormRef = useRef();
   useEffect(() => {
@@ -111,7 +107,6 @@ const Edit = (props) => {
     const options = {
       headers: { "Content-Type": "application/json" },
     };
-
     axios
       .post("/api/articles/edit", JSON.stringify(editedArticle), options)
       .then((res) => {
@@ -254,12 +249,13 @@ export async function getServerSideProps({ query }) {
   const res = await fetch(`http://localhost:3000/api/articles/page?id=${query.id}`);
   const json = await res.json();
   const article = {
+        id: json._id,
         title: json.title,
         author: json.author,
         date: json.date,
         image: json.image,
         isApproved: json.isApproved,
-        content: json.content,
+        content: json.content || initialValue,
         comments: json.comments,
   }
 
