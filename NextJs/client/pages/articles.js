@@ -6,7 +6,7 @@ import styles from "../components/Page/Page.module.css";
 import { DeviceContext } from "../contexts/reducers/deviceContext";
 import { LoginContext } from "../contexts/reducers/loginContext";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 import {Card} from "../components/Cards/Card";
 
 const Articles = (props) => {
@@ -17,7 +17,7 @@ const Articles = (props) => {
   const screen = deviceState.screen;
   const user = loginState.user;
   const loggedIn = loginState.isLoggedIn;
-  const history = useHistory();
+  const history = useRouter();
 
   useEffect(() => {
     const getArticles = async () => {
@@ -48,17 +48,19 @@ const Articles = (props) => {
         alert(
           "Article template created. Template needs to be edited and submitted for moderator approval."
         );
-        console.log(res.data);
-        history.push(`articles/id=${res.data.data["_id"]}/edit`);
+        history.push(`article/edit?id=${res.data["_id"]}`);
       })
       .catch((err) => {
-        if (
-          err.response &&
-          (err.response.status === 401 || err.response.status === 400)
-        ) {
-          alert(err.response.data.error);
-        } else if (err.response.status !== 200) {
-          throw Error(err);
+        if (err.response && err.response.status) {
+          if (err.response.status === 401 || err.response.status === 400) {
+            if(err.response.data){
+              alert(err.response.data.error);
+            }
+          } else if (err.response.status !== 200) {
+            throw Error(err);
+          }
+        } else {
+          console.log(err);
         }
       });
   };
