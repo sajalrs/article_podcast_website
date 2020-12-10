@@ -45,10 +45,9 @@ const Home = (props) => {
         alert(
           "Article template created. Template needs to be edited and submitted for moderator approval."
         );
-   
-        setTimeout(() => {
-          history.push(`/article/edit?id=id=${res.data["_id"]}`);
-        }, 5000);
+          console.log(res);
+          history.push(`/article/edit?id=${res.data["_id"]}`);
+
        
       })
       .catch((err) => {
