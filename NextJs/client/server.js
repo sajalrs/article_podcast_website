@@ -9,10 +9,18 @@ const nextHandler = nextApp.getRequestHandler();
 
 let port = 3000;
 
+app.set("socketio", io);
 io.on("connect", (socket) => {
-  socket.emit("now", {
-    message: "zeit",
-  });
+    console.log("User Connected");
+    socket.on('join', data => {
+      socket.join(`${data._id}.${data.tokenCreated}`)
+      console.log("User joined room");
+    })
+  
+    socket.on('disconnect', ()=> {
+      socket.disconnect();
+      console.log("User Disconnected");
+    })
 });
 
 nextApp.prepare().then(() => {
