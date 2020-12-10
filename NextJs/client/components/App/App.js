@@ -59,6 +59,27 @@ const AppGlobal = (props) => {
   }, [])
 
   useEffect(() => {
+    const updateDeviceSizeInitially = () => {
+      if (window.innerWidth <= 550) {
+        if (screen !== "mobile") {
+          setScreen("mobile");
+        }
+      } else if (window.innerWidth > 550 && window.innerWidth <= 1350) {
+        if (screen !== "tablet") {
+          setScreen("tablet");
+        }
+      } else if (window.innerWidth > 1350) {
+        if (screen !== "desktop") {
+          setScreen("desktop");
+        }
+      }
+    };
+
+    updateDeviceSizeInitially();
+
+  }, []);
+
+  useEffect(() => {
     const updateDeviceSize = () => {
       if (window.innerWidth <= 550) {
         if (screen !== "mobile") {

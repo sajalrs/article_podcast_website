@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
 import { Value } from "slate";

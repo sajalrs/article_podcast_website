@@ -3,12 +3,7 @@ import React, { useReducer, createContext } from "react";
 export const DeviceContext = createContext();
 
 const initialState = {
-  screen: "desktop",
-  // window.innerWidth <= 550
-  //   ? "mobile"
-  //   : window.innerWidth > 550 && window.innerWidth <= 1350
-  //   ? "tablet"
-  //   : "desktop",
+  screen: "",
 };
 const reducer = (state, action) => {
   switch (action.type) {
