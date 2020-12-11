@@ -121,8 +121,8 @@ const AppGlobal = (props) => {
     };
   }, []);
   return (
-    <div className={styles["overarching"]}>
-      <Head>
+    <>
+          <Head>
         <meta charset="utf-8" />
         <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -170,6 +170,13 @@ const AppGlobal = (props) => {
 
         <title>The False 9 Podcast</title>
       </Head>
+      <style jsx global>{`
+         body{
+             margin: 0px;
+             padding: 0px;
+         }
+        `}</style>
+    <div className={styles["overarching"]}>
       <div ref={scrollLockRef}></div>
       <VideoPlayer scrollLockRef={scrollLockRef} />
 
@@ -181,6 +188,7 @@ const AppGlobal = (props) => {
       />
       <div className={styles["App"]}>{props.children}</div>
     </div>
+    </>
   );
 };
 
