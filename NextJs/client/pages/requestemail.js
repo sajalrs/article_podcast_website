@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-import { Link, useHistory } from "react-router-dom";
+// import { Link, useHistory } from "react-router-dom";
+import {useRouter} from 'next/router'
+import Link from 'next/link'
 import axios from "axios";
 const RequestEmail = (props) => {
-  const history = useHistory();
+  const history = useRouter();
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -72,7 +74,7 @@ const RequestEmail = (props) => {
           </form>
           <div className={styles["register-login-form-text"]} style={{color: "#072339"}}>
             <label>
-            <Link to={"/login"}>Back to Login Page</Link>
+            <Link href={"/login"}>Back to Login Page</Link>
             </label>
           </div>
         </div>
