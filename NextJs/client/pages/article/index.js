@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
 import LargeCard from "../../components/Cards/LargeCard/LargeCard.js";
+
 import Page from "../../components/Page/Page";
 import styles from "../../components/Page/Page.module.css";
-// import { useParams } from "react-router-dom";
 import Html from "slate-html-serializer";
 import { getRules } from "../../components/TextEditor/TextEditor";
 import CommentBar from "../../components/Comment/CommentBar";
 import axios from "axios";
 import { LoginContext } from "../../contexts/reducers/loginContext";
+import { SocketContext } from "../../contexts/reducers/socketContext";
 import { Card } from "../../components/Cards/Card.js";
 import { useRouter } from "next/router";
 const ArticlePage = (props) => {
@@ -15,11 +16,40 @@ const ArticlePage = (props) => {
   const { id } = router.query;
   // const socket = useSelector((state) => state.network.socket);
   const [loginState, loginDispatch] = useContext(LoginContext);
+  const [socketState, socketDispatch] = useContext(SocketContext);
+  const socket = socketState.socket;
   const user = loginState.user;
   const [article, setArticle] = useState(props.article);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    const getArticle = async () => {
+      const res = await fetch(
+        `/api/articles/page?id=${id}`
+      );
+      const json = await res.json();
+      const fetchedArticle = {
+        ...article,
+        comments: json.comments,
+      };
+      setArticle(fetchedArticle);
+    };
+
+    if (socket) {
+      socket.on("comments changed", (data) => {
+        console.log("Comments changed");
+        if (data.articleId === id) {
+          try {
+            getArticle();
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      });
+    }
+  }, [socket]);
 
   const postComment = (comment) => {
     const toPost = { id: id.toString(), content: comment };
@@ -87,22 +117,23 @@ const ArticlePage = (props) => {
   );
 };
 
-
 export async function getServerSideProps({ query }) {
   const rules = getRules(styles);
   const html = new Html({ rules });
 
-  const res = await fetch(`http://localhost:3000/api/articles/page?id=${query.id}`);
+  const res = await fetch(
+    `http://localhost:3000/api/articles/page?id=${query.id}`
+  );
   const json = await res.json();
   const article = {
-        title: json.title,
-        author: json.author,
-        date: json.date,
-        image: json.image,
-        isApproved: json.isApproved,
-        content: json.content ? html.serialize(json.content) : `<p></p>`,
-        comments: json.comments,
-  }
+    title: json.title,
+    author: json.author,
+    date: json.date,
+    image: json.image,
+    isApproved: json.isApproved,
+    content: json.content ? html.serialize(json.content) : `<p></p>`,
+    comments: json.comments,
+  };
 
   return {
     props: {
@@ -110,6 +141,5 @@ export async function getServerSideProps({ query }) {
     },
   };
 }
-
 
 export default ArticlePage;

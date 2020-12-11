@@ -8,25 +8,28 @@ import { DeviceContextProvider } from "../contexts/reducers/deviceContext";
 import { HeaderContextProvider } from "../contexts/reducers/headerContext";
 import { LoginContextProvider } from "../contexts/reducers/loginContext";
 import { VideoPlayerContextProvider } from "../contexts/reducers/videoPlayerContext";
+import { SocketContextProvider } from "../contexts/reducers/socketContext";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
     <AudioPlayerContextProvider
       initialState={pageProps.audioPlayerInitialState}
     >
-         <DeviceContextProvider>
-          <HeaderContextProvider>
-            <LoginContextProvider initialState={pageProps.loginInitialState}>
-              <VideoPlayerContextProvider
-                initialState={pageProps.videoPlayerInitialState}
-              >
+      <DeviceContextProvider>
+        <HeaderContextProvider>
+          <LoginContextProvider initialState={pageProps.loginInitialState}>
+            <VideoPlayerContextProvider
+              initialState={pageProps.videoPlayerInitialState}
+            >
+              <SocketContextProvider>
                 <AppGlobal>
                   <Component {...pageProps} />
                 </AppGlobal>
-              </VideoPlayerContextProvider>
-            </LoginContextProvider>
-          </HeaderContextProvider>
-        </DeviceContextProvider>
+              </SocketContextProvider>
+            </VideoPlayerContextProvider>
+          </LoginContextProvider>
+        </HeaderContextProvider>
+      </DeviceContextProvider>
     </AudioPlayerContextProvider>
   );
 };
@@ -54,7 +57,7 @@ MyApp.getInitialProps = async (ctx) => {
   ];
 
   try {
-    const res = await fetch("http://localhost:3000/api/podcasts");
+    const res = await fetch("/api/podcasts");
     const json = await res.json();
     podcasts = json["items"].map((item, index) => {
       return {
@@ -63,7 +66,7 @@ MyApp.getInitialProps = async (ctx) => {
         contentType: Card.ContentType["audio-internal"],
       };
     });
-  } catch {
+  } catch (error){
     console.log(error.message);
   }
 
@@ -77,9 +80,8 @@ MyApp.getInitialProps = async (ctx) => {
 
   let curVideos = [];
 
-
   try {
-    const res = await fetch("http://localhost:3000/api/youtube");
+    const res = await fetch("/api/youtube");
     const json = await res.json();
     curVideos = json["items"].map((item, index) => {
       return {
@@ -90,9 +92,9 @@ MyApp.getInitialProps = async (ctx) => {
         link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
         date: item.date,
         contentType: Card.ContentType["video-youtube"],
-  };
+      };
     });
-  } catch {
+  } catch(error) {
     console.log(error.message);
   }
 

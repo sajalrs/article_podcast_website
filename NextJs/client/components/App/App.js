@@ -2,15 +2,18 @@ import React, { useEffect, useRef, useContext } from "react";
 import VideoPlayer from "../VideoPlayer/VideoPlayer.js";
 import Head from "next/head";
 import styles from "./App.module.css";
+import io from "socket.io-client";
 import {
   setAudioPlayerRefAction,
   setScreenAction,
   setIsLoggedInAction,
-  setUserAction
+  setUserAction,
+  setSocketAction,
 } from "../../contexts/actions";
 import { AudioPlayerContext } from "../../contexts/reducers/audioPlayerContext";
 import { DeviceContext } from "../../contexts/reducers/deviceContext";
-import {LoginContext} from "../../contexts/reducers/loginContext"
+import { LoginContext } from "../../contexts/reducers/loginContext";
+import { SocketContext } from "../../contexts/reducers/socketContext";
 const AppGlobal = (props) => {
   //TO DO: Pressing on the right card doesn't play the right audio
   const audioPlayerRef = useRef();
@@ -20,7 +23,7 @@ const AppGlobal = (props) => {
   );
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
-
+  const [socketState, socketDispatch] = useContext(SocketContext);
   const screen = deviceState.screen;
 
   const setAudioPlayerRef = (setTo) => {
@@ -33,30 +36,48 @@ const AppGlobal = (props) => {
 
   const setIsLoggedIn = (setTo) => {
     loginDispatch(setIsLoggedInAction(setTo));
-  }
+  };
 
   const setUser = (setTo) => {
     loginDispatch(setUserAction(setTo));
-  }
+  };
+
+  const setSocket = (setTo) => {
+    socketDispatch(setSocketAction(setTo));
+  };
 
   useEffect(() => {
-   setAudioPlayerRef(audioPlayerRef);
+    setAudioPlayerRef(audioPlayerRef);
   }, [audioPlayerRef]);
 
+  useEffect(() => {
+    const getSocket = async () => {
+      const socket = io.connect();
+      setSocket(socket);
+      let user;
+      try {
+        const res = await fetch("http://localhost:3000/api/auth/isloggedin");
+        const json = await res.json();
+        user = json.user;
+      } catch {
+        user = null;
+      }
 
-  useEffect(async () => {
-    let user;
-    try {
-      const res = await fetch("http://localhost:3000/api/auth/isloggedin");
-      const json = await res.json();
-      user = json.user;
-    } catch {
-      user = null;
-    }
+      if (!user) {
+        setIsLoggedIn(false);
+      } else {
+        setIsLoggedIn(user);
+        setUser(user);
 
-    setIsLoggedIn(user);
-    setUser(user);
-  }, [])
+        socket.emit("join", {
+          _id: user._id,
+          tokenCreated: user.tokenCreated,
+        });
+      }
+    };
+
+    getSocket();
+  }, []);
 
   useEffect(() => {
     const updateDeviceSizeInitially = () => {
@@ -76,7 +97,6 @@ const AppGlobal = (props) => {
     };
 
     updateDeviceSizeInitially();
-
   }, []);
 
   useEffect(() => {

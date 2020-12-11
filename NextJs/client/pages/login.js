@@ -50,11 +50,16 @@ const Login = (props) => {
         alert("Subscribed to newsletter");
       })
       .catch((err) => {
-        if (err.response.status === 401 || err.response.status === 400) {
-          alert(err.response.data.error);
-        } else if (err.response.status !== 200) {
-          throw Error(err);
+        if(err.response && err.response.status){
+          if (err.response.status === 401 || err.response.status === 400) {
+            alert(err.response.data.error);
+          } else if (err.response.status !== 200) {
+            throw Error(err);
+          }
+        } else {
+          console.log(err);
         }
+     
       });
   };
 
@@ -99,10 +104,14 @@ const Login = (props) => {
         });
       })
       .catch((err) => {
-        if (err.response.status === 401 || err.response.status === 400) {
-          alert(err.response.data.error);
-        } else if (err.response.status !== 200) {
-          throw Error(err);
+        if(err.response && err.response.status){
+          if (err.response.status === 401 || err.response.status === 400) {
+            alert(err.response.data.error);
+          } else if (err.response.status !== 200) {
+            throw Error(err);
+          }
+        } else {
+          console.log(err);
         }
       });
   };

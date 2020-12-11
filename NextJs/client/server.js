@@ -2,14 +2,12 @@ const app = require("express")();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 const next = require("next");
-
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
-const nextHandler = nextApp.getRequestHandler();
 
+const nextHandler = nextApp.getRequestHandler();
 let port = 3000;
 
-app.set("socketio", io);
 io.on("connect", (socket) => {
     console.log("User Connected");
     socket.on('join', data => {
@@ -21,12 +19,17 @@ io.on("connect", (socket) => {
       socket.disconnect();
       console.log("User Disconnected");
     })
+
+
 });
 
 nextApp.prepare().then(() => {
-  app.get("*", (req, res) => {
+  app.set('socket-io', io);  
+  app.all("*", (req, res) => {
+    // req = {...req, socket: io};  
     return nextHandler(req, res);
   });
+
 
   server.listen(port, (err) => {
     if (err) throw err;

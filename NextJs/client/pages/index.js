@@ -20,7 +20,7 @@ const Home = (props) => {
   useEffect(() => {
     const getArticles = async () => {
       if (loggedIn) {
-        const res = await fetch("http://localhost:3000/api/articles/pages");
+        const res = await fetch("/api/articles/pages");
         const json = await res.json();
         const toReturn = json["links"].map((item, index) => {
           return {

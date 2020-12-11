@@ -46,12 +46,12 @@ const handler = async (req, res) => {
                 } else {
                   res.json(data);
     
-                //   try {
-                //     const io = req.app.get("socketio");
-                //     io.emit("comments changed", { articleId: req.body.id });
-                //   } catch (err) {
-                //     console.log(err);
-                //   }
+                  try {
+                    const io = req.app.get("socket-io");
+                    io.emit("comments changed", { articleId: req.body.id });
+                  } catch (err) {
+                    console.log(err);
+                  }
                 }
               });
             }
