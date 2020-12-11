@@ -132,7 +132,7 @@ const Articles = (props) => {
 
 export async function getServerSideProps(context) {
 
-    const res = await fetch("http://localhost:3000/api/articles/pages");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/articles/pages`);
     const json = await res.json();
     let articles = json["links"].map((item, index) => {
       return {

@@ -57,7 +57,7 @@ MyApp.getInitialProps = async (ctx) => {
   ];
 
   try {
-    const res = await fetch("http://localhost:3000/api/podcasts");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/podcasts`);
     const json = await res.json();
     podcasts = json["items"].map((item, index) => {
       return {
@@ -81,7 +81,7 @@ MyApp.getInitialProps = async (ctx) => {
   let curVideos = [];
 
   try {
-    const res = await fetch("http://localhost:3000/api/youtube");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/youtube`);
     const json = await res.json();
     curVideos = json["items"].map((item, index) => {
       return {

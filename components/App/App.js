@@ -56,7 +56,7 @@ const AppGlobal = (props) => {
       setSocket(socket);
       let user;
       try {
-        const res = await fetch("http://localhost:3000/api/auth/isloggedin");
+        const res = await fetch("/api/auth/isloggedin");
         const json = await res.json();
         user = json.user;
       } catch {

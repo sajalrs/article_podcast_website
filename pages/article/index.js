@@ -122,7 +122,7 @@ export async function getServerSideProps({ query }) {
   const html = new Html({ rules });
 
   const res = await fetch(
-    `http://localhost:3000/api/articles/page?id=${query.id}`
+    `${process.env.NEXT_PUBLIC_DOMAIN}/api/articles/page?id=${query.id}`
   );
   const json = await res.json();
   const article = {
