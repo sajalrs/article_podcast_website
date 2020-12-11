@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-import { Link, useHistory } from "react-router-dom";
+// import { Link, useHistory } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import axios from "axios";
 const SignUp = (props) => {
-  const history = useHistory();
+  const history = useRouter();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -37,7 +39,6 @@ const SignUp = (props) => {
   const onIsSubscribedChange = () => {
     setFormData({ ...formData, isSubscribed: !formData.isSubscribed });
   };
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -143,8 +144,15 @@ const SignUp = (props) => {
             </div>
 
             <div className={styles["horizontal"]}>
-              <label style={{color: "var(--primary-color)", fontSize: "1rem", textAlign: "center"}}>
-                By signing up you indicate that you have read and accept our terms and conditions
+              <label
+                style={{
+                  color: "var(--primary-color)",
+                  fontSize: "1rem",
+                  textAlign: "center",
+                }}
+              >
+                By signing up you indicate that you have read and accept our
+                terms and conditions
               </label>
             </div>
 
@@ -156,15 +164,14 @@ const SignUp = (props) => {
           </form>
           <div className={styles["register-login-form-text"]}>
             <label>
-              <Link to={"/login"}>Already have an account?</Link>
+              <Link href={"/login"}><a>Already have an account?</a></Link>
             </label>
             <label>
-              <Link to={"/legal/termsofservice"}>Terms and Conditions</Link>
+              <Link href={"/legal/termsofservice"}>Terms and Conditions</Link>
             </label>
             <label>
-              <Link to={"/legal/privacy"}>Privacy Statement</Link>
+              <Link href={"/legal/privacy"}>Privacy Statement</Link>
             </label>
-            
           </div>
         </div>
       </div>
