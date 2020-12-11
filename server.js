@@ -1,71 +1,38 @@
-const express = require("express");
-const app = express();
-const mongoose = require("mongoose");
-const articlesRoute = require("./routes/articles");
-const path = require("path");
-const bodyParser = require("body-parser");
-const youtubeRoute = require("./routes/youtube");
-const createRoute = require("./routes/create");
-const podcastsRoute = require("./routes/podcasts");
-const usersRoute = require("./routes/auth");
-const messagesRoute = require("./routes/messages");
-const cookieParser = require("cookie-parser");
-const csrf = require("csurf");
-const http = require("http").Server(app);
-const io = require("socket.io")(http);
+const app = require("express")();
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+const next = require("next");
+const dev = process.env.NODE_ENV !== "production";
+const nextApp = next({ dev });
 
-require("dotenv/config");
-const csrfProtection = csrf({ cookie: true });
+const nextHandler = nextApp.getRequestHandler();
+let port = 3000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(csrfProtection);
-mongoose.connect(
-  process.env.MONGO_URL,
-  { useNewUrlParser: true, useUnifiedTopology: true },
-  () => {
-    console.log("Connected to Database");
-  }
-);
+io.on("connect", (socket) => {
+    console.log("User Connected");
+    socket.on('join', data => {
+      socket.join(`${data._id}.${data.tokenCreated}`)
+      console.log("User joined room");
+    })
+  
+    socket.on('disconnect', ()=> {
+      socket.disconnect();
+      console.log("User Disconnected");
+    })
 
-const port = process.env.PORT || 5000;
 
-app.use("/articles", articlesRoute);
-app.use("/youtube", youtubeRoute);
-app.use("/create", createRoute);
-app.use("/podcasts", podcastsRoute);
-app.use("/auth", usersRoute);
-app.use("/messages", messagesRoute);
-
-app.get("/csrf-token", (req, res) => {
-  res.json({ csrfToken: req.csrfToken() });
 });
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+nextApp.prepare().then(() => {
+  app.set('socket-io', io);  
+  app.all("*", (req, res) => {
+    // req = {...req, socket: io};  
+    return nextHandler(req, res);
   });
-}
-
-http.listen(port, () => console.log(`Listening on port ${port}`));
-app.set("socketio", io);
 
 
-io.on("connection", (socket) => {
-  console.log("User Connected");
-
-  socket.on('join', data => {
-    socket.join(`${data._id}.${data.tokenCreated}`)
-    console.log("User joined room");
-  })
-
-  socket.on('disconnect', ()=> {
-    socket.disconnect();
-    console.log("User Disconnected");
-  })
-
-
+  server.listen(port, (err) => {
+    if (err) throw err;
+    console.log(`Ready on http://localhost:${port}`);
+  });
 });
