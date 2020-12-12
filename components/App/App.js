@@ -160,11 +160,7 @@ const AppGlobal = (props) => {
           integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
           crossorigin="anonymous"
         />
-        {/* <script
-          data-ad-client="ca-pub-5436897490138523"
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
-        ></script> */}
+        <script data-ad-client="ca-pub-5436897490138523" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
