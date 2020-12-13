@@ -4,10 +4,10 @@ import styles from "../components/Page/Page.module.css";
 import { Value } from "slate";
 import styles2 from "../components/Comment/Comment.module.css";
 import TextEditor from "../components/TextEditor/TextEditor";
-import {DeviceContext} from "../contexts/reducers/deviceContext";
-import {LoginContext} from "../contexts/reducers/loginContext"
+import { DeviceContext } from "../contexts/reducers/deviceContext";
+import { LoginContext } from "../contexts/reducers/loginContext";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 
 const initialValue = {
   document: {
@@ -36,7 +36,7 @@ const ContactUs = (props) => {
   const screen = deviceState.screen;
   const isLoggedIn = loginState.isLoggedIn;
   const user = loginState.user;
-  const history = useHistory();
+  const history = useRouter();
   const [formData, setFormData] = useState({
     firstName: isLoggedIn && user ? user.firstName : "",
     lastName: isLoggedIn && user ? user.lastName : "",
@@ -304,14 +304,12 @@ const ContactUs = (props) => {
               width: "min-content",
               letterSpacing: "1px",
             }}
-          >           
+          >
             {phone}
           </p>
         </div>
       </div>
-      <div>
-          {!(screen === "desktop") && sidePaneContents}
-      </div>
+      <div>{!(screen === "desktop") && sidePaneContents}</div>
     </>
   );
 
@@ -319,7 +317,7 @@ const ContactUs = (props) => {
     <Page
       sidebarFixTopOffset={0}
       mainPane={mainPaneContents}
-      sidePane={screen === "desktop"? sidePaneContents : null}
+      sidePane={screen === "desktop" ? sidePaneContents : null}
     />
   );
 };
