@@ -8,6 +8,10 @@ export const typeDefs = gql`
     date: String!
   }
   
+  type AuthData {
+    token: String!
+  }
+
   type Podcast{
       title: String!
       by: String!
@@ -20,6 +24,7 @@ export const typeDefs = gql`
   type Query {
     youtubeLinks: [YoutubeLink!]!
     podcasts: [Podcast!]!
+    login(email: String!, password: String!): AuthData!
   }
 `;
 
