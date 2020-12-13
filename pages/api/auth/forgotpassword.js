@@ -37,7 +37,7 @@ const handler = async (req, res) => {
         const passwordResetLink =
           process.env.NODE_ENV === "production"
             ? `www.thefalseninepodcast.com/resetpassword/${user._id}/${token}`
-            : `localhost:3000/resetpassword/${user._id}/${token}`;
+            : `localhost:3000/resetpassword?id=${user._id}&token=${token}`;
   
         const msg = {
           from: `The False 9 Podcast <${process.env.EMAIL}>`,

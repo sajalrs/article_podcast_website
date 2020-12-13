@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-import { useParams, useHistory } from "react-router-dom";
+import { useRouter } from "next/router";
 import axios from "axios";
 const NewPassword = (props) => {
-  const history = useHistory();
-  const {id, token} = useParams();
+  const history = useRouter();
+  const { id, token } = history.query;
   const [formData, setFormData] = useState({
     password: "",
     reenteredPassword: "",
   });
 
-  
   const onPasswordChange = (e) => {
     setFormData({ ...formData, password: e.target.value });
   };
@@ -32,7 +31,7 @@ const NewPassword = (props) => {
   const resetPassword = () => {
     const toPost = {
       id: id,
-      token: token,  
+      token: token,
       password: formData.password,
     };
 
@@ -63,7 +62,6 @@ const NewPassword = (props) => {
         <h2>RESET PASSWORD</h2>
         <div className={`${styles["register-login-form-padded"]}`}>
           <form onSubmit={handleSubmit} className={styles["headline-form"]}>
-         
             <div className={styles["horizontal"]}>
               <label>New Password: </label>
               <input
@@ -82,7 +80,6 @@ const NewPassword = (props) => {
                 onChange={onReenteredPasswordChange}
               />
             </div>
-
 
             <input
               type="submit"
