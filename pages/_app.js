@@ -2,12 +2,29 @@ import React from "react";
 import { Card } from "../components/Cards/Card.js";
 import App from "next/app";
 import AppGlobal from "../components/App/App";
+import Router from "next/router";
+import NProgress from "nprogress";
+import "../styles/loadingscreenspinner.css";
 import { AudioPlayerContextProvider } from "../contexts/reducers/audioPlayerContext";
 import { DeviceContextProvider } from "../contexts/reducers/deviceContext";
 import { HeaderContextProvider } from "../contexts/reducers/headerContext";
 import { LoginContextProvider } from "../contexts/reducers/loginContext";
 import { VideoPlayerContextProvider } from "../contexts/reducers/videoPlayerContext";
 import { SocketContextProvider } from "../contexts/reducers/socketContext";
+
+NProgress.configure({ showSpinner: true });
+
+Router.onRouteChangeStart = () => {
+  NProgress.start();
+};
+
+Router.onRouteChangeComplete = () => {
+  NProgress.done();
+};
+
+Router.onRouteChangeError = () => {
+  NProgress.done();
+};
 
 const MyApp = ({ Component, pageProps }) => {
   return (
@@ -65,7 +82,7 @@ MyApp.getInitialProps = async (ctx) => {
         contentType: Card.ContentType["audio-internal"],
       };
     });
-  } catch (error){
+  } catch (error) {
     console.log(error.message);
   }
 
@@ -93,7 +110,7 @@ MyApp.getInitialProps = async (ctx) => {
         contentType: Card.ContentType["video-youtube"],
       };
     });
-  } catch(error) {
+  } catch (error) {
     console.log(error.message);
   }
 

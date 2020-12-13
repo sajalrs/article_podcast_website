@@ -121,7 +121,7 @@ const AppGlobal = (props) => {
   }, []);
   return (
     <>
-          <Head>
+      <Head>
         <meta charset="utf-8" />
         <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -159,30 +159,40 @@ const AppGlobal = (props) => {
           integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc"
           crossorigin="anonymous"
         />
-        <script data-ad-client="ca-pub-5436897490138523" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
+        <script
+          data-ad-client="ca-pub-5436897490138523"
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+        ></script>
+        
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        {/* <script src='nprogress.js'></script>
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="/static/css/nprogress.css"
+        /> */}
 
         <title>The False 9 Podcast</title>
       </Head>
       <style jsx global>{`
-         body{
-             margin: 0px;
-             padding: 0px;
-         }
-        `}</style>
-    <div className={styles["overarching"]}>
-      <div ref={scrollLockRef}></div>
-      <VideoPlayer scrollLockRef={scrollLockRef} />
+        body {
+          margin: 0px;
+          padding: 0px;
+        }
+      `}</style>
+      <div className={styles["overarching"]}>
+        <div ref={scrollLockRef}></div>
+        <VideoPlayer scrollLockRef={scrollLockRef} />
 
-      <audio
-        ref={audioPlayerRef}
-        src="https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a"
-        type="audio/mpeg"
-        data-testid="html5-audio"
-      />
-      <div className={styles["App"]}>{props.children}</div>
-    </div>
+        <audio
+          ref={audioPlayerRef}
+          src="https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a"
+          type="audio/mpeg"
+          data-testid="html5-audio"
+        />
+        <div className={styles["App"]}>{props.children}</div>
+      </div>
     </>
   );
 };
