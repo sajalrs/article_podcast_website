@@ -4,6 +4,7 @@ const io = require("socket.io")(server);
 const next = require("next");
 const dev = process.env.NODE_ENV !== "production";
 const nextApp = next({ dev });
+
 require("dotenv/config");
 const nextHandler = nextApp.getRequestHandler();
 let port = process.env.PORT || 3000;
