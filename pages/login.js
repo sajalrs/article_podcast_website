@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-// import { Link } from "react-router-dom";
-// import { useHistory, useParams } from "react-router-dom";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { LoginContext } from "../contexts/reducers/loginContext";
 import { setIsLoggedInAction, setUserAction } from "../contexts/actions";
-// import { fetchBlogArticles } from "./_app.js";
 import axios from "axios";
 
 const Login = (props) => {
@@ -167,9 +164,7 @@ const Login = (props) => {
               </Link>
             </label>
             <label>
-              <a>
-                <Link href={"/signup"}>Don't have an account?</Link>
-              </a>
+                <Link href={"/signup"}><a>Don't have an account?</a></Link>
             </label>
           </div>
         </div>

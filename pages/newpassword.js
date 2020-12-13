@@ -90,11 +90,6 @@ const NewPassword = (props) => {
               className={styles["submit-button"]}
             />
           </form>
-          {/* <div className={styles["register-login-form-text"]}>
-            <label>
-              <Link to={"/login"}>Already have an account?</Link>
-            </label>
-          </div> */}
         </div>
       </div>
     </div>

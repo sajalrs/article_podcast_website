@@ -1,7 +1,6 @@
 import React from "react";
 import { Card } from "../components/Cards/Card.js";
 import App from "next/app";
-import axios from "axios";
 import AppGlobal from "../components/App/App";
 import { AudioPlayerContextProvider } from "../contexts/reducers/audioPlayerContext";
 import { DeviceContextProvider } from "../contexts/reducers/deviceContext";

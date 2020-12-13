@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Page from "../components/Page/Page";
 import styles from "../components/Page/Page.module.css";
-// import { Link, useHistory } from "react-router-dom";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
@@ -167,10 +166,10 @@ const SignUp = (props) => {
               <Link href={"/login"}><a>Already have an account?</a></Link>
             </label>
             <label>
-              <Link href={"/legal/termsofservice"}>Terms and Conditions</Link>
+              <Link href={"/legal/termsofservice"}><a>Terms and Conditions</a></Link>
             </label>
             <label>
-              <Link href={"/legal/privacy"}>Privacy Statement</Link>
+              <Link href={"/legal/privacy"}><a>Privacy Statement</a></Link>
             </label>
           </div>
         </div>
