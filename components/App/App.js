@@ -164,14 +164,23 @@ const AppGlobal = (props) => {
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
         ></script>
-        
+
         <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-        {/* <script src='nprogress.js'></script>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="/static/css/nprogress.css"
-        /> */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-E1NSJ68BBT"
+        />
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-E1NSJ68BBT');
+        `,
+          }}
+        />
 
         <title>The False 9 Podcast</title>
       </Head>
