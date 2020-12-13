@@ -36,7 +36,7 @@ const handler = async (req, res) => {
         const token = jwt.sign({ id: user._id, email: user.email }, secret);
         const passwordResetLink =
           process.env.NODE_ENV === "production"
-            ? `www.thefalseninepodcast.com/resetpassword/${user._id}/${token}`
+            ? `www.thefalseninepodcast.com/resetpassword?id=${user._id}&token=${token}`
             : `localhost:3000/resetpassword?id=${user._id}&token=${token}`;
   
         const msg = {
