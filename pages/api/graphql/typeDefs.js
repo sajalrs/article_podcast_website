@@ -7,15 +7,20 @@ export const typeDefs = gql`
     id: String!
     date: String!
   }
+  
+  type Podcast{
+      _id: ID!
+      title: String!
+      by: String!
+      link: String!
+      data: String!
+      image: String!
+      description: String!
+  }
 
   type Query {
-    youtubeLinks: [YoutubeLink!]!,
-    hello: String!
+    youtubeLinks: [YoutubeLink!]!
+    podcasts: [Podcast!]!
   }
 `;
 
-// export const typeDefs = gql`
-//   type Query {
-//     hello: String!
-//   }
-// `;
