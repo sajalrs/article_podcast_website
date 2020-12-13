@@ -47,4 +47,4 @@ const handler = async (req, res) => {
   }
 };
 
-export default verify(connectDb(handler));
+export default connectDb(handler);
