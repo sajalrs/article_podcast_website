@@ -9,7 +9,6 @@ export const typeDefs = gql`
   }
   
   type Podcast{
-      _id: ID!
       title: String!
       by: String!
       link: String!
