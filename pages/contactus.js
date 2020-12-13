@@ -66,10 +66,10 @@ const ContactUs = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser();
+    sendMessage();
   };
 
-  const registerUser = () => {
+  const sendMessage = () => {
     const toPost = {
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -83,7 +83,7 @@ const ContactUs = (props) => {
     };
 
     axios
-      .post("/messages/create", JSON.stringify(toPost), options)
+      .post("api/messages/create", JSON.stringify(toPost), options)
       .then((res) => {
         alert("Message Sent");
         history.push("/");
@@ -145,7 +145,7 @@ const ContactUs = (props) => {
             <TextEditor
               value={textEditorValue}
               setValue={setTextEditorValue}
-              onSave={() => {}}
+              onSave={() => {sendMessage()}}
               toolbarFixed={false}
               styles={styles2}
             />

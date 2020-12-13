@@ -9,6 +9,7 @@ import { HeaderContext } from "../../contexts/reducers/headerContext";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { Card } from "../../components/Cards/Card";
+//TO Both Moderators and posters get same message when saving. Needs to change
 const initialValue = {
   document: {
     nodes: [

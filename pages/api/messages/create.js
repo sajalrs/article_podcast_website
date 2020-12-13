@@ -1,5 +1,6 @@
 import connectDb from "../middlewares/dbMiddleware.js";
 const { messageValidation } = require("../validation/validation");
+const mongoose = require("mongoose");
 let Message;
 try {
   Message = mongoose.model("Messages");
