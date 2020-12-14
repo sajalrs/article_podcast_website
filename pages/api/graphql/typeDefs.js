@@ -39,6 +39,7 @@ export const typeDefs = gql`
     isLoggedIn: User
     login(email: String!, password: String!): AuthData!
     logout: Boolean!
+    forgotPassword(email: String!): Boolean! 
   }
 
   type Mutation {

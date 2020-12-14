@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 var parser = require("xml2json");
-import { serialize } from "cookie";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+require("dotenv/config");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const {
   loginValidation,
   registerValidation,
+  resetPasswordValidation,
 } = require("../validation/validation");
 
 let YoutubeLink;
@@ -102,6 +105,50 @@ export const resolvers = {
       } catch {
         return false;
       }
+      return true;
+    },
+
+    forgotPassword: async (parent, args, ctx) => {
+      const { error } = resetPasswordValidation(args);
+      if (error) {
+        const toReturn = error.details[0].message.replace('"email"', "Email");
+        throw Error(toReturn);
+      }
+
+      await User.findOne({ email: args.email }, async (err, user) => {
+        if (err || !user) {
+          if (err) {
+            throw Error(err.message);
+          } else if (!user) {
+            throw Error("Cannot find account matching given email");
+          }
+        } else {
+          const secret = `${user.password}-${user.updatedAt}`;
+          const token = jwt.sign({ id: user._id, email: user.email }, secret);
+          const passwordResetLink =
+            process.env.NODE_ENV === "production"
+              ? `www.thefalseninepodcast.com/resetpassword?id=${user._id}&token=${token}`
+              : `localhost:3000/resetpassword?id=${user._id}&token=${token}`;
+
+          const msg = {
+            from: `The False 9 Podcast <${process.env.EMAIL}>`,
+            to: user.email,
+            subject: "Password Reset Link",
+            text: `Password Reset Link: ${passwordResetLink}`,
+          };
+
+          sgMail
+            .send(msg)
+            .then(() => {
+              console.log("Email sent");
+            })
+            .catch((error) => {
+              console.error(error);
+              throw Error(error.message);
+            });
+          
+        }
+      });
       return true;
     },
   },
