@@ -45,7 +45,7 @@ export const resolvers = {
         }),
 
     isLoggedIn: async (_, args, ctx) => {
-      const {authData} = ctx;
+      const { authData } = ctx;
       if (!authData) {
         throw Error("Please login to proceed");
       }
@@ -86,6 +86,21 @@ export const resolvers = {
       });
       return { token: token };
     },
-  },
 
+    logout: (_, args, ctx) => {
+      try{
+        const { cookie } = ctx;
+      cookie("token", "deleted", {
+        path: "/",
+        httpOnly: true,
+        maxAge: 0,
+        sameSite: "strict",
+      });
+    }
+    catch{
+      return false;
+    }
+      return true;
+    },
+  },
 };

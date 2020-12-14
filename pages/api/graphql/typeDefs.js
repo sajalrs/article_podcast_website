@@ -7,7 +7,7 @@ export const typeDefs = gql`
     id: String!
     date: String!
   }
-  
+
   type AuthData {
     token: String!
   }
@@ -24,13 +24,13 @@ export const typeDefs = gql`
     updatedAt: String!
   }
 
-  type Podcast{
-      title: String!
-      by: String!
-      link: String!
-      data: String!
-      image: String!
-      description: String!
+  type Podcast {
+    title: String!
+    by: String!
+    link: String!
+    data: String!
+    image: String!
+    description: String!
   }
 
   type Query {
@@ -38,7 +38,6 @@ export const typeDefs = gql`
     podcasts: [Podcast!]!
     isLoggedIn: User
     login(email: String!, password: String!): AuthData!
+    logout: Boolean!
   }
-
 `;
-
