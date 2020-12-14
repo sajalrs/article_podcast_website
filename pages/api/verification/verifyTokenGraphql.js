@@ -3,15 +3,14 @@ const jwt = require("jsonwebtoken");
 const verify = (handler) => async (req, res) => {
   const token = req.cookies.token;
   if (!token) {
-    req.isAuth = false;
+    req.authData = null;
     return handler(req, res);
   }
   try {
     const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-    req.isAuth = true;
-    req.user = verified;
+    req.authData = verified;
   } catch (err) {
-    throw Error("Invalid token");
+    req.authData = null;
   }
   return handler(req, res);
 };

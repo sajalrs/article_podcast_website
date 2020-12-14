@@ -36,8 +36,9 @@ export const typeDefs = gql`
   type Query {
     youtubeLinks: [YoutubeLink!]!
     podcasts: [Podcast!]!
-    login(email: String!, password: String!): AuthData!
     isLoggedIn: User
+    login(email: String!, password: String!): AuthData!
   }
+
 `;
 

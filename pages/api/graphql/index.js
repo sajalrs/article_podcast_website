@@ -3,11 +3,20 @@ require("dotenv/config");
 import { typeDefs } from "./typeDefs";
 import { resolvers } from "./resolvers";
 import connectDb from "../middlewares/dbMiddleware.js";
-import verify from "../verification/verifyTokenGraphql"
+import withCookies from "../middlewares/cookiesMiddleware";
+import verify from "../verification/verifyTokenGraphql";
+
+const context = (ctx) => {
+  return {
+    cookie: ctx.res.cookie,
+    authData: ctx.req.authData
+  };
+};
+
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async ({ req, res }) => ({ req, res }),
+  context,
 });
 
 export const config = {
@@ -16,4 +25,6 @@ export const config = {
   },
 };
 
-export default connectDb(verify(apolloServer.createHandler({ path: "/api/graphql" })));
+export default withCookies(
+  connectDb(verify(apolloServer.createHandler({ path: "/api/graphql" })))
+);

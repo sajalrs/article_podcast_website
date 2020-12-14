@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 var parser = require("xml2json");
+import { serialize } from "cookie";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { loginValidation } = require("../validation/validation");
@@ -43,7 +44,21 @@ export const resolvers = {
           });
         }),
 
-    login: async (_, args, { req, res }) => {
+    isLoggedIn: async (_, args, ctx) => {
+      const {authData} = ctx;
+      if (!authData) {
+        throw Error("Please login to proceed");
+      }
+
+      try {
+        const user = await User.findById(authData._id);
+        return user;
+      } catch (err) {
+        throw Error(err.message);
+      }
+    },
+
+    login: async (_, args, ctx) => {
       const { error } = loginValidation(args);
       if (error) {
         const toReturn = error.details[0].message
@@ -51,6 +66,7 @@ export const resolvers = {
           .replace('"password"', "Password");
         throw Error(toReturn);
       }
+      const { cookie } = ctx;
       const { email, password } = args;
       const user = await User.findOne({ email: email });
 
@@ -63,13 +79,13 @@ export const resolvers = {
         { _id: user._id, tokenCreated: new Date() },
         process.env.TOKEN_SECRET
       );
-  
-      res.cookie("token", token, {
+      cookie("token", token, {
+        path: "/",
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24 * 7,
+        sameSite: "strict",
       });
       return { token: token };
     },
   },
+
 };

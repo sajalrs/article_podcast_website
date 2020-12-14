@@ -8,6 +8,7 @@ const connectDb = (handler) => async (req, res) => {
     useFindAndModify: true,
     useCreateIndex: true,
   });
+
   return handler(req, res);
 };
 
