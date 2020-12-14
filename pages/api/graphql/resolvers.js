@@ -47,7 +47,7 @@ export const resolvers = {
           });
         }),
 
-    isLoggedIn: async (_, args, ctx) => {
+    isLoggedIn: async (parent, args, ctx) => {
       const { authData } = ctx;
       if (!authData) {
         throw Error("Please login to proceed");
@@ -61,7 +61,7 @@ export const resolvers = {
       }
     },
 
-    login: async (_, args, ctx) => {
+    login: async (parent, args, ctx) => {
       const { error } = loginValidation(args);
       if (error) {
         const toReturn = error.details[0].message
@@ -90,7 +90,7 @@ export const resolvers = {
       return { token: token };
     },
 
-    logout: (_, args, ctx) => {
+    logout: (parent, args, ctx) => {
       try {
         const { cookie } = ctx;
         cookie("token", "deleted", {
@@ -107,7 +107,7 @@ export const resolvers = {
   },
 
   Mutation: {
-    register: async (_, args, ctx) => {
+    register: async (parent, args, ctx) => {
       const { error } = registerValidation(args);
       if (error) {
         const toReturn = error.details[0].message
@@ -120,27 +120,41 @@ export const resolvers = {
 
       const emailExists = await User.findOne({ email: args.email });
 
-      if (emailExists)
-      throw Error("Email already exists");
-  
-    const salt = await bcrypt.genSalt(10);
-    const hashPassword = await bcrypt.hash(args.password, salt);
-  
-    const user = new User({
-      firstName: args.firstName,
-      lastName: args.lastName,
-      email: args.email,
-      password: hashPassword,
-      isModerator: false,
-      isSubscribed: args.isSubscribed || false,
-    });
-  
-    try {
-      const savedUser = await user.save();
-      return savedUser;
-    } catch (err) {
-      throw Error(err.message);
-    }
+      if (emailExists) throw Error("Email already exists");
+
+      const salt = await bcrypt.genSalt(10);
+      const hashPassword = await bcrypt.hash(args.password, salt);
+
+      const user = new User({
+        firstName: args.firstName,
+        lastName: args.lastName,
+        email: args.email,
+        password: hashPassword,
+        isModerator: false,
+        isSubscribed: args.isSubscribed || false,
+      });
+
+      try {
+        const savedUser = await user.save();
+        return savedUser;
+      } catch (err) {
+        throw Error(err.message);
+      }
+    },
+
+    subscribe: async (parent, args, ctx) => {
+      const { authData } = ctx;
+      if (!authData) {
+        throw Error("Please login to proceed");
+      }
+
+      try {
+        const user = await User.findById(authData._id);
+        user.isSubscribed = args.isSubscribed;
+        return await user.save();
+      } catch (err) {
+        throw Error(err.message);
+      }
     },
   },
 };

@@ -49,5 +49,7 @@ export const typeDefs = gql`
       password: String!
       isSubscribed: Boolean
     ): User!
+
+    subscribe (isSubscribed: Boolean!): User!
   }
 `;
