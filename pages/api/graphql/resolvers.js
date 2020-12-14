@@ -4,7 +4,10 @@ var parser = require("xml2json");
 import { serialize } from "cookie";
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { loginValidation } = require("../validation/validation");
+const {
+  loginValidation,
+  registerValidation,
+} = require("../validation/validation");
 
 let YoutubeLink;
 try {
@@ -88,19 +91,56 @@ export const resolvers = {
     },
 
     logout: (_, args, ctx) => {
-      try{
+      try {
         const { cookie } = ctx;
-      cookie("token", "deleted", {
-        path: "/",
-        httpOnly: true,
-        maxAge: 0,
-        sameSite: "strict",
-      });
-    }
-    catch{
-      return false;
-    }
+        cookie("token", "deleted", {
+          path: "/",
+          httpOnly: true,
+          maxAge: 0,
+          sameSite: "strict",
+        });
+      } catch {
+        return false;
+      }
       return true;
+    },
+  },
+
+  Mutation: {
+    register: async (_, args, ctx) => {
+      const { error } = registerValidation(args);
+      if (error) {
+        const toReturn = error.details[0].message
+          .replace('"firstName"', "First Name")
+          .replace('"lastName"', "Last Name")
+          .replace('"email"', "Email")
+          .replace('"password"', "Password");
+        throw Error(toReturn);
+      }
+
+      const emailExists = await User.findOne({ email: args.email });
+
+      if (emailExists)
+      throw Error("Email already exists");
+  
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(args.password, salt);
+  
+    const user = new User({
+      firstName: args.firstName,
+      lastName: args.lastName,
+      email: args.email,
+      password: hashPassword,
+      isModerator: false,
+      isSubscribed: args.isSubscribed || false,
+    });
+  
+    try {
+      const savedUser = await user.save();
+      return savedUser;
+    } catch (err) {
+      throw Error(err.message);
+    }
     },
   },
 };
