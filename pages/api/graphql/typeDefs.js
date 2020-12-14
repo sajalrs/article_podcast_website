@@ -40,4 +40,14 @@ export const typeDefs = gql`
     login(email: String!, password: String!): AuthData!
     logout: Boolean!
   }
+
+  type Mutation {
+    register(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+      isSubscribed: Boolean
+    ): User!
+  }
 `;
