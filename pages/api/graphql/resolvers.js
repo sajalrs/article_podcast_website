@@ -146,7 +146,6 @@ export const resolvers = {
               console.error(error);
               throw Error(error.message);
             });
-          
         }
       });
       return true;
@@ -202,6 +201,24 @@ export const resolvers = {
       } catch (err) {
         throw Error(err.message);
       }
+    },
+
+    resetPassword: async (parent, args, ctx) => {
+      let savedUser;
+      try {
+        const user = await User.findById(args._id);
+        const secret = `${user.password}-${user.updatedAt}`;
+        const verified = jwt.verify(args.token, secret);
+        if (verified) {
+          const salt = await bcrypt.genSalt(10);
+          const hashPassword = await bcrypt.hash(args.password, salt);
+          user.password = hashPassword;
+          savedUser = await user.save();
+        }
+      } catch (err) {
+        throw Error(err.message);
+      }
+      return savedUser;
     },
   },
 };

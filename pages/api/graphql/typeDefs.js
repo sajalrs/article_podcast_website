@@ -39,7 +39,7 @@ export const typeDefs = gql`
     isLoggedIn: User
     login(email: String!, password: String!): AuthData!
     logout: Boolean!
-    forgotPassword(email: String!): Boolean! 
+    forgotPassword(email: String!): Boolean!
   }
 
   type Mutation {
@@ -50,7 +50,7 @@ export const typeDefs = gql`
       password: String!
       isSubscribed: Boolean
     ): User!
-
-    subscribe (isSubscribed: Boolean!): User!
+    subscribe(isSubscribed: Boolean!): User!
+    resetPassword(_id: String!, token: String!, password: String!): User
   }
 `;
