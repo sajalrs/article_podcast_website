@@ -10,6 +10,7 @@ const {
   loginValidation,
   registerValidation,
   resetPasswordValidation,
+  messageValidation,
 } = require("../validation/validation");
 
 let YoutubeLink;
@@ -38,6 +39,13 @@ try {
   Comment = mongoose.model("Comments");
 } catch {
   Comment = require("../models/Comments");
+}
+
+let Message;
+try {
+  Message = mongoose.model("Messages");
+} catch {
+  Message = require("../models/Messages");
 }
 
 export const resolvers = {
@@ -241,6 +249,44 @@ export const resolvers = {
         })),
       };
     },
+
+    messages: async () => {
+      const query = Message.find({}).sort("-createdAt");
+      let messages;
+      try {
+        messages = await query.exec();
+      } catch (err) {
+        throw Error(err);
+      }
+
+      return messages.map((message) => ({
+        _id: message._id,
+        firstName: message.firstName,
+        lastName: message.lastName,
+        email: message.email,
+        subject: message.subject,
+        content: JSON.stringify(message.content),
+      }))
+    },
+
+    message: async (parent, args, ctx) => {
+      const _id = args._id;
+      let message;
+      try {
+        message =  await Message.findById(_id)
+      } catch (err) {
+        throw Error(err);
+      }
+
+      return {
+        _id: message._id,
+        firstName: message.firstName,
+        lastName: message.lastName,
+        email: message.email,
+        subject: message.subject,
+        content: JSON.stringify(message.content),
+      }
+    },
   },
 
   Mutation: {
@@ -439,6 +485,41 @@ export const resolvers = {
           createdAt: comment.createdAt,
           updatedAt: comment.updatedAt,
         })),
+      };
+    },
+
+    createMessage: async (parent, args, ctx) => {
+      const { error } = messageValidation(args);
+      if (error) {
+        const toReturn = error.details[0].message
+          .replace('"firstName"', "First Name")
+          .replace('"lastName"', "Last Name")
+          .replace('"email"', "Email")
+          .replace('"subject"', "Subject");
+        throw Error(toReturn);
+      }
+
+      let savedMessage;
+      try {
+        const message = new Message({
+          firstName: args.firstName,
+          lastName: args.lastName,
+          email: args.email,
+          subject: args.subject,
+          content: args.content? JSON.parse(args.content) : {},
+        });
+
+        savedMessage = await message.save();
+      } catch (err) {
+        throw Error(err.message);
+      }
+      return {
+        _id: savedMessage._id,
+        firstName: savedMessage.firstName,
+        lastName: savedMessage.lastName,
+        email: savedMessage.email,
+        subject: savedMessage.subject,
+        content: JSON.stringify(savedMessage.content),
       };
     },
   },

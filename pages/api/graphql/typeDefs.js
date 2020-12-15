@@ -49,20 +49,30 @@ export const typeDefs = gql`
     authorId: String!
     date: String!
     image: String!
-    content: String!
+    content: String
     isApproved: Boolean!
     comments: [Comment]!
   }
 
+  type Message {
+    _id: ID!
+    firstName: String!
+    lastName: String!
+    subject: String!
+    content: String
+  }
+
   type Query {
-    youtubeLinks: [YoutubeLink!]!
-    podcasts: [Podcast!]!
+    youtubeLinks: [YoutubeLink!]
+    podcasts: [Podcast!]
     isLoggedIn: User
     login(email: String!, password: String!): AuthData!
     logout: Boolean!
     forgotPassword(email: String!): Boolean!
-    articles: [Article!]!
-    article(_id: String): Article!
+    articles: [Article!]
+    article(_id: String!): Article
+    messages: [Message!]
+    message(_id: String!): Message
   }
 
   type Mutation {
@@ -74,9 +84,23 @@ export const typeDefs = gql`
       isSubscribed: Boolean
     ): User!
     subscribe(isSubscribed: Boolean!): User!
-    resetPassword(_id: String!, token: String!, password: String!): User!
+    resetPassword(_id: String!, token: String!, password: String!): User
     createArticle: Article!
-    editArticle(_id: String!, title: String, author: String, date: String, image: String, content: String): Article!
-    postComment(_id: String!, content: String): Article!
+    editArticle(
+      _id: String!
+      title: String
+      author: String
+      date: String
+      image: String
+      content: String
+    ): Article
+    postComment(_id: String!, content: String): Article
+    createMessage(
+      firstName: String!
+      lastName: String!
+      email: String!
+      subject: String!
+      content: String
+    ): Message!
   }
 `;
