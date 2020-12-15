@@ -205,6 +205,18 @@ export const resolvers = {
         throw Error(err.message);
       }
     },
+
+    article: async (parent, args, ctx) => {
+      const id = args._id;
+      let article
+      try{
+        article = await Article.findById(id)
+    
+      } catch(err) {
+        throw Error(err)
+      }
+      return article;
+    }
   },
 
   Mutation: {

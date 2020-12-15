@@ -61,6 +61,7 @@ export const typeDefs = gql`
     logout: Boolean!
     forgotPassword(email: String!): Boolean!
     articles: [Article!]!
+    article(_id: String): Article!
   }
 
   type Mutation {
