@@ -28,7 +28,7 @@ export const typeDefs = gql`
     title: String!
     by: String!
     link: String!
-    data: String!
+    date: String!
     image: String!
     description: String!
   }

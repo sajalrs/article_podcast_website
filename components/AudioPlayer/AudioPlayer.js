@@ -12,11 +12,55 @@ import {
   setAudioPlayerSelectedAction,
 } from "../../contexts/actions";
 import styles from "./AudioPlayer.module.css";
+import { gql, NetworkStatus, useQuery } from "@apollo/client";
+
+export const ALL_PODCASTS_QUERY = gql`
+  query AllPodcastsQuery {
+    podcasts {
+      title
+      by
+      link
+      date
+      image
+      description
+    }
+  }
+`;
+
 const AudioPlayer = forwardRef((props, ref) => {
   const [audioPlayerState, audioPlayerDispatch] = useContext(
     AudioPlayerContext
   );
-  const podcasts = audioPlayerState.podcasts;
+  // const podcasts = audioPlayerState.podcasts;
+  const {
+    loading,
+    error,
+    data,
+
+    networkStatus,
+  } = useQuery(ALL_PODCASTS_QUERY, { notifyOnNetworkStatusChange: true });
+
+  const loadingMorePodcasts = networkStatus === NetworkStatus.fetchMore;
+
+  let podcasts;
+  if (loading && !loadingMorePodcasts) {
+    podcasts = [
+      {
+        title: "False Nine Podcast #17 Champions League RO16 first leg review",
+        by: "Ishan Sharma, Susajjan Dhungana and Ojash Dangal",
+        link:
+          "https://anchor.fm/s/333e122c/podcast/play/19475297/sponsor/a3205tm/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2020-09-12%2F9ca05751732f6a1351863756bdfb662b.m4a",
+        date: "Sat, 12 Sep 2020 08:42:34 GMT",
+        image:
+          "https://d3t3ozftmdmh3i.cloudfront.net/production/podcast_uploaded_nologo/8497059/8497059-1599895849523-cbb8b2f53d641.jpg",
+        description:
+          "In this episode, Ishan, Ojash and Susajjan review the first leg ties of the Champions league Round of 16 first leg.\n\n",
+      },
+    ];
+  } else {
+    podcasts = data.podcasts;
+  }
+
   //selected refers to the currently playing audio track.
   //It is global set to allow clicks and links to change tracks
   const selected = audioPlayerState.selected;

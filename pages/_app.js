@@ -11,7 +11,13 @@ import { HeaderContextProvider } from "../contexts/reducers/headerContext";
 import { LoginContextProvider } from "../contexts/reducers/loginContext";
 import { VideoPlayerContextProvider } from "../contexts/reducers/videoPlayerContext";
 import { SocketContextProvider } from "../contexts/reducers/socketContext";
-
+import { ApolloProvider } from "@apollo/client";
+import {
+  useApollo,
+  initializeApollo,
+  addApolloState,
+} from "../lib/apolloClient";
+import { ALL_PODCASTS_QUERY } from "../components/AudioPlayer/AudioPlayer";
 NProgress.configure({ showSpinner: true });
 
 Router.onRouteChangeStart = () => {
@@ -27,30 +33,35 @@ Router.onRouteChangeError = () => {
 };
 
 const MyApp = ({ Component, pageProps }) => {
+  const apolloClient = useApollo(pageProps);
   return (
-    <AudioPlayerContextProvider
-      initialState={pageProps.audioPlayerInitialState}
-    >
-      <DeviceContextProvider>
-        <HeaderContextProvider>
-          <LoginContextProvider initialState={pageProps.loginInitialState}>
-            <VideoPlayerContextProvider
-              initialState={pageProps.videoPlayerInitialState}
-            >
-              <SocketContextProvider>
-                <AppGlobal>
-                  <Component {...pageProps} />
-                </AppGlobal>
-              </SocketContextProvider>
-            </VideoPlayerContextProvider>
-          </LoginContextProvider>
-        </HeaderContextProvider>
-      </DeviceContextProvider>
-    </AudioPlayerContextProvider>
+    <ApolloProvider client={apolloClient}>
+      <AudioPlayerContextProvider
+        initialState={pageProps.audioPlayerInitialState}
+      >
+        <DeviceContextProvider>
+          <HeaderContextProvider>
+            <LoginContextProvider initialState={pageProps.loginInitialState}>
+              <VideoPlayerContextProvider
+                initialState={pageProps.videoPlayerInitialState}
+              >
+                <SocketContextProvider>
+                  <AppGlobal>
+                    <Component {...pageProps} />
+                  </AppGlobal>
+                </SocketContextProvider>
+              </VideoPlayerContextProvider>
+            </LoginContextProvider>
+          </HeaderContextProvider>
+        </DeviceContextProvider>
+      </AudioPlayerContextProvider>
+    </ApolloProvider>
   );
 };
 
 MyApp.getInitialProps = async (ctx) => {
+  const apolloClient = initializeApollo();
+
   const appProps = await App.getInitialProps(ctx);
 
   appProps.pageProps.loginInitialState = {
@@ -121,7 +132,11 @@ MyApp.getInitialProps = async (ctx) => {
     youtubeVideos: curVideos,
   };
 
-  return { ...appProps };
+  await apolloClient.query({
+    query: ALL_PODCASTS_QUERY,
+  });
+
+  return addApolloState(apolloClient, { ...appProps });
 };
 
 export default MyApp;
