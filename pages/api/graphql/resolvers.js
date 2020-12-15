@@ -26,6 +26,13 @@ try {
   User = require("../models/Users");
 }
 
+let Article;
+try {
+  Article = mongoose.model("Articles");
+} catch {
+  Article = require("../models/Articles");
+}
+
 export const resolvers = {
   Query: {
     youtubeLinks: async () => await YoutubeLink.find({}).sort("-date"),
@@ -149,6 +156,54 @@ export const resolvers = {
         }
       });
       return true;
+    },
+
+    articles: async (parent, args, ctx) => {
+      let user;
+      const { authData } = ctx;
+      if (authData) {
+        try {
+          user = await User.findById(authData._id);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+
+      let query;
+      if (user) {
+        if (user.isModerator) {
+          query = Article.find({}).sort("-date");
+        } else {
+          query = Article.find({
+            $or: [{ isApproved: true }, { authorId: user._id }],
+          }).sort("-date");
+        }
+      } else {
+        query = Article.find({}).where("isApproved").equals(true).sort("-date");
+      }
+      try {
+        const data = await query.exec();
+        const toReturn = data.map((article) => ({
+          _id: article._id,
+          title: article.title,
+          author: article.author,
+          authorId: article.authorId,
+          date: article.date,
+          image: article.image,
+          content: JSON.stringify(article.content),
+          comments: article.comments.map((comment) => ({
+            _id: comment._id,
+            authorId: comment.authorID,
+            author: comment.author,
+            content: JSON.stringify(comment.content),
+            createdAt: comment.createdAt,
+            updatedAt: comment.updatedAt,
+          })),
+        }));
+        return toReturn;
+      } catch (err) {
+        throw Error(err.message);
+      }
     },
   },
 

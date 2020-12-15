@@ -33,6 +33,26 @@ export const typeDefs = gql`
     description: String!
   }
 
+  type Comment {
+    _id: ID!
+    authorId: String!
+    author: String!
+    content: String!
+    createdAt: String!
+    updatedAt: String!
+  }
+
+  type Article {
+    _id: ID!
+    title: String!
+    author: String!
+    authorId: String!
+    date: String!
+    image: String!
+    content: String!
+    comments: [Comment]!
+  }
+
   type Query {
     youtubeLinks: [YoutubeLink!]!
     podcasts: [Podcast!]!
@@ -40,6 +60,7 @@ export const typeDefs = gql`
     login(email: String!, password: String!): AuthData!
     logout: Boolean!
     forgotPassword(email: String!): Boolean!
+    articles: [Article!]!
   }
 
   type Mutation {
