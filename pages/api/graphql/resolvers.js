@@ -314,5 +314,34 @@ export const resolvers = {
       }
       return savedArticle;
     },
+
+    editArticle: async (parent, args, ctx) => {
+      const { authData } = ctx;
+      if (!authData) {
+        throw Error("Please login to proceed");
+      }
+      let editedArticle;
+      try {
+        const user = await User.findById(authData._id);
+        const article = await Article.findById(args._id);
+        if (
+          !user ||
+          (!user.isModerator && !user._id.equals(article.authorId))
+        ) {
+          throw Error("User not authorized to edit file");
+        } else {
+          article.title = args.title || article.title;
+          article.author = args.author || article.author;
+          article.date = args.date || article.date;
+          article.image = args.image || article.image;
+          article.content = args.content || article.content;
+          article.isApproved = user.isModerator;
+          editedArticle = await article.save();
+        }
+      } catch (err) {
+        throw Error(err.message);
+      }
+      return editedArticle;
+    },
   },
 };

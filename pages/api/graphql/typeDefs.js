@@ -76,5 +76,6 @@ export const typeDefs = gql`
     subscribe(isSubscribed: Boolean!): User!
     resetPassword(_id: String!, token: String!, password: String!): User!
     createArticle: Article!
+    editArticle(_id: String!, title: String, author: String, date: String, image: String, content: String): Article!
   }
 `;
