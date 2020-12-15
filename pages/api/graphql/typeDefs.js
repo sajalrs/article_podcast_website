@@ -60,6 +60,8 @@ export const typeDefs = gql`
     lastName: String!
     subject: String!
     content: String
+    createdAt: String!
+    updatedAt: String!
   }
 
   type Query {

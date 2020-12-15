@@ -265,6 +265,8 @@ export const resolvers = {
         lastName: message.lastName,
         email: message.email,
         subject: message.subject,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt,
         content: JSON.stringify(message.content),
       }))
     },
@@ -284,6 +286,8 @@ export const resolvers = {
         lastName: message.lastName,
         email: message.email,
         subject: message.subject,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt,
         content: JSON.stringify(message.content),
       }
     },
@@ -519,6 +523,8 @@ export const resolvers = {
         lastName: savedMessage.lastName,
         email: savedMessage.email,
         subject: savedMessage.subject,
+        createdAt: savedMessage.createdAt,
+        updatedAt: savedMessage.updatedAt,
         content: JSON.stringify(savedMessage.content),
       };
     },
