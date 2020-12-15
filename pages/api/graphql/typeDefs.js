@@ -50,6 +50,7 @@ export const typeDefs = gql`
     date: String!
     image: String!
     content: String!
+    isApproved: Boolean!
     comments: [Comment]!
   }
 
@@ -73,6 +74,7 @@ export const typeDefs = gql`
       isSubscribed: Boolean
     ): User!
     subscribe(isSubscribed: Boolean!): User!
-    resetPassword(_id: String!, token: String!, password: String!): User
+    resetPassword(_id: String!, token: String!, password: String!): User!
+    createArticle: Article!
   }
 `;
