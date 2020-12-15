@@ -33,6 +33,13 @@ try {
   Article = require("../models/Articles");
 }
 
+let Comment;
+try {
+  Comment = mongoose.model("Comments");
+} catch {
+  Comment = require("../models/Comments");
+}
+
 export const resolvers = {
   Query: {
     youtubeLinks: async () => await YoutubeLink.find({}).sort("-date"),
@@ -190,6 +197,7 @@ export const resolvers = {
           authorId: article.authorId,
           date: article.date,
           image: article.image,
+          isApproved: article.isApproved,
           content: JSON.stringify(article.content),
           comments: article.comments.map((comment) => ({
             _id: comment._id,
@@ -214,7 +222,24 @@ export const resolvers = {
       } catch (err) {
         throw Error(err);
       }
-      return article;
+      return {
+        _id: article._id,
+        title: article.title,
+        author: article.author,
+        authorId: article.authorId,
+        date: article.date,
+        image: article.image,
+        isApproved: article.isApproved,
+        content: JSON.stringify(article.content),
+        comments: article.comments.map((comment) => ({
+          _id: comment._id,
+          authorId: comment.authorID,
+          author: comment.author,
+          content: JSON.stringify(comment.content),
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt,
+        })),
+      };
     },
   },
 
@@ -312,7 +337,24 @@ export const resolvers = {
       } catch (err) {
         throw Error(err.message);
       }
-      return savedArticle;
+      return {
+        _id: savedArticle._id,
+        title: savedArticle.title,
+        author: savedArticle.author,
+        authorId: savedArticle.authorId,
+        date: savedArticle.date,
+        image: savedArticle.image,
+        isApproved: savedArticle.isApproved,
+        content: JSON.stringify(savedArticle.content),
+        comments: savedArticle.comments.map((comment) => ({
+          _id: comment._id,
+          authorId: comment.authorID,
+          author: comment.author,
+          content: JSON.stringify(comment.content),
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt,
+        })),
+      };
     },
 
     editArticle: async (parent, args, ctx) => {
@@ -334,14 +376,70 @@ export const resolvers = {
           article.author = args.author || article.author;
           article.date = args.date || article.date;
           article.image = args.image || article.image;
-          article.content = args.content || article.content;
+          article.content = JSON.stringify(args.content) || article.content;
           article.isApproved = user.isModerator;
           editedArticle = await article.save();
         }
       } catch (err) {
         throw Error(err.message);
       }
-      return editedArticle;
+      return {
+        _id: editedArticle._id,
+        title: editedArticle.title,
+        author: editedArticle.author,
+        authorId: editedArticle.authorId,
+        date: editedArticle.date,
+        image: editedArticle.image,
+        isApproved: editArticle.isApproved,
+        content: JSON.stringify(editedArticle.content),
+        comments: editedArticle.comments.map((comment) => ({
+          _id: comment._id,
+          authorId: comment.authorID,
+          author: comment.author,
+          content: JSON.stringify(comment.content),
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt,
+        })),
+      };
+    },
+
+    postComment: async (parent, args, ctx) => {
+      const { authData } = ctx;
+      if (!authData) {
+        throw Error("Please login to proceed");
+      }
+      let editedArticle;
+      try {
+        const article = await Article.findById(args._id);
+        const user = await User.findById(authData._id);
+        const comment = new Comment({
+          authorID: user._id,
+          author: `${user.firstName} ${user.lastName}`,
+          content: JSON.parse(args.content),
+        });
+        article.comments.unshift(comment);
+        editedArticle = await article.save();
+      } catch (err) {
+        throw Error(err.message);
+      }
+      return {
+        _id: editedArticle._id,
+        title: editedArticle.title,
+        author: editedArticle.author,
+        authorId: editedArticle.authorId,
+        date: editedArticle.date,
+        image: editedArticle.image,
+        isApproved: editArticle.isApproved,
+        content: JSON.stringify(editedArticle.content),
+        comments: editedArticle.comments.map((comment) => ({
+          _id: comment._id,
+          authorId: comment.authorID,
+          author: comment.author,
+          content: JSON.stringify(comment.content),
+          createdAt: comment.createdAt,
+          updatedAt: comment.updatedAt,
+        })),
+      };
     },
   },
 };

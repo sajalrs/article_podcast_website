@@ -77,5 +77,6 @@ export const typeDefs = gql`
     resetPassword(_id: String!, token: String!, password: String!): User!
     createArticle: Article!
     editArticle(_id: String!, title: String, author: String, date: String, image: String, content: String): Article!
+    postComment(_id: String!, content: String): Article!
   }
 `;
