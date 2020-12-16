@@ -15,7 +15,7 @@ import styles from "./AudioPlayer.module.css";
 import { gql, NetworkStatus, useQuery } from "@apollo/client";
 
 export const ALL_PODCASTS_QUERY = gql`
-  query AllPodcastsQuery {
+  query allPodcastsQuery {
     podcasts {
       title
       by
@@ -35,8 +35,8 @@ const AudioPlayer = forwardRef((props, ref) => {
   const {
     loading,
     error,
+    fetchMore,
     data,
-
     networkStatus,
   } = useQuery(ALL_PODCASTS_QUERY, { notifyOnNetworkStatusChange: true });
 
@@ -177,7 +177,6 @@ const AudioPlayer = forwardRef((props, ref) => {
   const progressDuration = getTime(duration);
   const progressTime = getTime(currentTime);
   const progress = (100 / duration) * currentTime;
-  console.log("Is it rerendering");
   return (
     <div ref={ref} className={styles["audio-player"]}>
       <div

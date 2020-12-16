@@ -11,13 +11,25 @@ import { HeaderContextProvider } from "../contexts/reducers/headerContext";
 import { LoginContextProvider } from "../contexts/reducers/loginContext";
 import { VideoPlayerContextProvider } from "../contexts/reducers/videoPlayerContext";
 import { SocketContextProvider } from "../contexts/reducers/socketContext";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider, gql } from "@apollo/client";
 import {
   useApollo,
   initializeApollo,
   addApolloState,
 } from "../lib/apolloClient";
 import { ALL_PODCASTS_QUERY } from "../components/AudioPlayer/AudioPlayer";
+
+export const ALL_YOUTUBE_LINKS_QUERY = gql`
+  query allYoutubeLinksQuery {
+    youtubeLinks {
+      _id
+      title
+      id
+      date
+    }
+  }
+`;
+
 NProgress.configure({ showSpinner: true });
 
 Router.onRouteChangeStart = () => {
@@ -40,9 +52,7 @@ const MyApp = ({ Component, pageProps }) => {
         <DeviceContextProvider>
           <HeaderContextProvider>
             <LoginContextProvider initialState={pageProps.loginInitialState}>
-              <VideoPlayerContextProvider
-                initialState={pageProps.videoPlayerInitialState}
-              >
+              <VideoPlayerContextProvider>
                 <SocketContextProvider>
                   <AppGlobal>
                     <Component {...pageProps} />
@@ -67,35 +77,13 @@ MyApp.getInitialProps = async (ctx) => {
     user: null,
   };
 
-  let curVideos = [];
-
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/youtube`);
-    const json = await res.json();
-    curVideos = json["items"].map((item, index) => {
-      return {
-        index: index,
-        id: item.id,
-        title: item.title,
-        image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
-        link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
-        date: item.date,
-        contentType: Card.ContentType["video-youtube"],
-      };
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
-
-  appProps.pageProps.videoPlayerInitialState = {
-    selected:
-      "https://www.youtube.com/embed/vpWIvnnWxaY?rel=0&start=0&autoplay=1",
-    isPlaying: false,
-    youtubeVideos: curVideos,
-  };
 
   await apolloClient.query({
     query: ALL_PODCASTS_QUERY,
+  });
+
+  await apolloClient.query({
+    query: ALL_YOUTUBE_LINKS_QUERY,
   });
 
   return addApolloState(apolloClient, { ...appProps });

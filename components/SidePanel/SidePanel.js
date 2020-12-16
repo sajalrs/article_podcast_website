@@ -3,10 +3,9 @@ import SmallCard from "../Cards/SmallCard/SmallCard.js";
 import styles from "./SidePanel.module.css";
 import { Card } from "../Cards/Card.js";
 import { VideoPlayerContext } from "../../contexts/reducers/videoPlayerContext";
-import {
-  disableBodyScroll,
-  enableBodyScroll,
-} from "body-scroll-lock";
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import { NetworkStatus, useQuery } from "@apollo/client";
+import { ALL_YOUTUBE_LINKS_QUERY } from "../../pages/_app";
 
 const SidePanel = (props) => {
   const cardListRef = useRef();
@@ -14,7 +13,34 @@ const SidePanel = (props) => {
   const [videoPlayerState, videoPlayerDispatch] = useContext(
     VideoPlayerContext
   );
-  const youtubeVideos = videoPlayerState.youtubeVideos;
+
+  const {
+    loading,
+    error,
+    fetchMore,
+    data,
+    networkStatus,
+  } = useQuery(ALL_YOUTUBE_LINKS_QUERY, { notifyOnNetworkStatusChange: true });
+
+  const loadingMoreYoutubeLinks = networkStatus === NetworkStatus.fetchMore;
+
+  let youtubeVideos;
+  if (loading && !loadingMoreYoutubeLinks) {
+    youtubeVideos = [];
+  } else {
+    youtubeVideos = data.youtubeLinks.map((item, index) => 
+      ({
+        index: index,
+        id: item.id,
+        title: item.title,
+        image: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
+        link: `https://www.youtube.com/embed/${item.id}?rel=0&start=0&autoplay=1`,
+        date: item.date,
+        contentType: Card.ContentType["video-youtube"],
+      })
+    );
+  }
+
   useEffect(() => {
     if (props.sidebarClicked && props.sidebarFixed) {
       disableBodyScroll(cardListRef.current);
