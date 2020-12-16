@@ -2,6 +2,11 @@ import React, { useReducer, createContext } from "react";
 
 export const LoginContext = createContext();
 
+const initialState = {
+  isLoggedIn: false,
+  user: null,
+};
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "SET_IS_LOGGED_IN":
@@ -20,7 +25,7 @@ const reducer = (state, action) => {
 };
 
 export const LoginContextProvider = (props) => {
-  const [state, dispatch] = useReducer(reducer, props.initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
     <LoginContext.Provider value={[state, dispatch]}>

@@ -51,7 +51,7 @@ const MyApp = ({ Component, pageProps }) => {
       <AudioPlayerContextProvider>
         <DeviceContextProvider>
           <HeaderContextProvider>
-            <LoginContextProvider initialState={pageProps.loginInitialState}>
+            <LoginContextProvider>
               <VideoPlayerContextProvider>
                 <SocketContextProvider>
                   <AppGlobal>
@@ -69,14 +69,7 @@ const MyApp = ({ Component, pageProps }) => {
 
 MyApp.getInitialProps = async (ctx) => {
   const apolloClient = initializeApollo();
-
   const appProps = await App.getInitialProps(ctx);
-
-  appProps.pageProps.loginInitialState = {
-    isLoggedIn: false,
-    user: null,
-  };
-
 
   await apolloClient.query({
     query: ALL_PODCASTS_QUERY,
