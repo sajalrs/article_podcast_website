@@ -177,6 +177,7 @@ const AudioPlayer = forwardRef((props, ref) => {
   const progressDuration = getTime(duration);
   const progressTime = getTime(currentTime);
   const progress = (100 / duration) * currentTime;
+  console.log("Is it rerendering");
   return (
     <div ref={ref} className={styles["audio-player"]}>
       <div
