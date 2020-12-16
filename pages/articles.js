@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useEffect, useContext } from "react";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import Page from "../components/Page/Page";
@@ -7,38 +7,62 @@ import { DeviceContext } from "../contexts/reducers/deviceContext";
 import { LoginContext } from "../contexts/reducers/loginContext";
 import axios from "axios";
 import { useRouter } from "next/router";
-import {Card} from "../components/Cards/Card";
+import { Card } from "../components/Cards/Card";
+import { initializeApollo, addApolloState } from "../lib/apolloClient";
+import { gql, useQuery, NetworkStatus } from "@apollo/client";
+
+export const ALL_ARTICLES_QUERY = gql`
+  query allArticlesQuery {
+    articles {
+      _id
+      date
+      image
+      title
+      author
+      authorId
+      isApproved
+    }
+  }
+`;
 
 const Articles = (props) => {
+  
+  const {
+    loading,
+    error,
+    fetchMore,
+    data,
+    networkStatus,
+    refetch,
+  } = useQuery(ALL_ARTICLES_QUERY, { notifyOnNetworkStatusChange: true });
+
+  const loadingMoreArticles = networkStatus === NetworkStatus.fetchMore;
+
+  let articles;
+  if (loading && !loadingMoreArticles) {
+    articles = [];
+  } else {
+    articles = data.articles.map((item, index) => {
+      return {
+        index: index,
+        ...item,
+        contentType: Card.ContentType["article-internal"],
+        link: `/article?id=${item["_id"]}`,
+      };
+    });
+  }
+
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
-  const [articles, setArticles] = useState(props.articles);
+  // const [articles, setArticles] = useState(props.articles);
   const screen = deviceState.screen;
   const user = loginState.user;
   const loggedIn = loginState.isLoggedIn;
   const history = useRouter();
 
   useEffect(() => {
-    const getArticles = async () => {
-      if(loggedIn){
-        const res = await fetch("http://localhost:3000/api/articles/pages");
-        const json = await res.json();
-        const toReturn = json["links"].map((item, index) => {
-          return {
-            index: index,
-            ...item,
-            contentType: Card.ContentType["article-internal"],
-            link: `/article?id=${item["_id"]}`,
-          };
-        });
-        setArticles(toReturn);
-      }
-    }
-
-    getArticles();
-  }, [loggedIn])
-
-
+    refetch();
+  }, [user]);
 
   const getArticle = async () => {
     axios
@@ -52,7 +76,7 @@ const Articles = (props) => {
       .catch((err) => {
         if (err.response && err.response.status) {
           if (err.response.status === 401 || err.response.status === 400) {
-            if(err.response.data){
+            if (err.response.data) {
               alert(err.response.data.error);
             }
           } else if (err.response.status !== 200) {
@@ -131,24 +155,28 @@ const Articles = (props) => {
 };
 
 export async function getServerSideProps(context) {
+  const apolloClient = initializeApollo();
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/articles/pages`);
-    const json = await res.json();
-    let articles = json["links"].map((item, index) => {
-      return {
-        index: index,
-        ...item,
-        contentType: Card.ContentType["article-internal"],
-        link: `/article?id=${item["_id"]}`,
-      };
-    });
- 
-  return {
-    props: {
-      articles,
-    },
-  };
+  await apolloClient.query({
+    query: ALL_ARTICLES_QUERY,
+  });
+
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_DOMAIN}/api/articles/pages`
+  // );
+  // const json = await res.json();
+  // let articles = json["links"].map((item, index) => {
+  //   return {
+  //     index: index,
+  //     ...item,
+  //     contentType: Card.ContentType["article-internal"],
+  //     link: `/article?id=${item["_id"]}`,
+  //   };
+  // });
+
+  return addApolloState(apolloClient, {
+    props: {},
+  });
 }
-
 
 export default Articles;

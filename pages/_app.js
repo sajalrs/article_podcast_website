@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "../components/Cards/Card.js";
 import App from "next/app";
 import AppGlobal from "../components/App/App";
 import Router from "next/router";
