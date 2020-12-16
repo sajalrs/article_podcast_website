@@ -112,7 +112,7 @@ const Home = (props) => {
       >
         <LargeCard
           image={item.image}
-          date={item.date}
+          date={JSON.parse(item.date)}
           title={item.title}
           text={item.description}
           author={item.author}
@@ -126,7 +126,7 @@ const Home = (props) => {
       <div className={`${styles["main-pane-item"]}`}>
         <MediumCard
           image={item.image}
-          date={item.date}
+          date={JSON.parse(item.date)}
           title={item.title}
           text={item.description}
           author={item.author}

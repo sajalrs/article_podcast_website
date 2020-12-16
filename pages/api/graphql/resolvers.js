@@ -203,7 +203,7 @@ export const resolvers = {
           title: article.title,
           author: article.author,
           authorId: article.authorId,
-          date: article.date,
+          date: JSON.stringify(article.date),
           image: article.image,
           isApproved: article.isApproved,
           content: JSON.stringify(article.content),
@@ -212,8 +212,8 @@ export const resolvers = {
             authorId: comment.authorID,
             author: comment.author,
             content: JSON.stringify(comment.content),
-            createdAt: comment.createdAt,
-            updatedAt: comment.updatedAt,
+            createdAt: JSON.stringify(comment.createdAt),
+            updatedAt: JSON.stringify(comment.updatedAt),
           })),
         }));
         return toReturn;
@@ -235,7 +235,7 @@ export const resolvers = {
         title: article.title,
         author: article.author,
         authorId: article.authorId,
-        date: article.date,
+        date: JSON.stringify(article.date),
         image: article.image,
         isApproved: article.isApproved,
         content: JSON.stringify(article.content),
@@ -244,8 +244,8 @@ export const resolvers = {
           authorId: comment.authorID,
           author: comment.author,
           content: JSON.stringify(comment.content),
-          createdAt: comment.createdAt,
-          updatedAt: comment.updatedAt,
+          createdAt: JSON.stringify(comment.createdAt),
+          updatedAt: JSON.stringify(comment.updatedAt),
         })),
       };
     },
@@ -265,8 +265,8 @@ export const resolvers = {
         lastName: message.lastName,
         email: message.email,
         subject: message.subject,
-        createdAt: message.createdAt,
-        updatedAt: message.updatedAt,
+        createdAt: JSON.stringify(message.createdAt),
+        updatedAt: JSON.stringify(message.updatedAt),
         content: JSON.stringify(message.content),
       }))
     },
@@ -286,8 +286,8 @@ export const resolvers = {
         lastName: message.lastName,
         email: message.email,
         subject: message.subject,
-        createdAt: message.createdAt,
-        updatedAt: message.updatedAt,
+        createdAt: JSON.stringify(message.createdAt),
+        updatedAt: JSON.stringify(message.updatedAt),
         content: JSON.stringify(message.content),
       }
     },
@@ -392,7 +392,7 @@ export const resolvers = {
         title: savedArticle.title,
         author: savedArticle.author,
         authorId: savedArticle.authorId,
-        date: savedArticle.date,
+        date: JSON.stringify(savedArticle.date),
         image: savedArticle.image,
         isApproved: savedArticle.isApproved,
         content: JSON.stringify(savedArticle.content),
@@ -401,8 +401,8 @@ export const resolvers = {
           authorId: comment.authorID,
           author: comment.author,
           content: JSON.stringify(comment.content),
-          createdAt: comment.createdAt,
-          updatedAt: comment.updatedAt,
+          createdAt: JSON.stringify(comment.createdAt),
+          updatedAt: JSON.stringify(comment.updatedAt),
         })),
       };
     },
@@ -424,9 +424,9 @@ export const resolvers = {
         } else {
           article.title = args.title || article.title;
           article.author = args.author || article.author;
-          article.date = args.date || article.date;
+          article.date = JSON.parse(args.date) || article.date;
           article.image = args.image || article.image;
-          article.content = JSON.stringify(args.content) || article.content;
+          article.content = JSON.parse(args.content) || article.content;
           article.isApproved = user.isModerator;
           editedArticle = await article.save();
         }
@@ -438,7 +438,7 @@ export const resolvers = {
         title: editedArticle.title,
         author: editedArticle.author,
         authorId: editedArticle.authorId,
-        date: editedArticle.date,
+        date: JSON.stringify(editedArticle.date),
         image: editedArticle.image,
         isApproved: editArticle.isApproved,
         content: JSON.stringify(editedArticle.content),
@@ -447,8 +447,8 @@ export const resolvers = {
           authorId: comment.authorID,
           author: comment.author,
           content: JSON.stringify(comment.content),
-          createdAt: comment.createdAt,
-          updatedAt: comment.updatedAt,
+          createdAt: JSON.stringify(comment.createdAt),
+          updatedAt: JSON.stringify(comment.updatedAt),
         })),
       };
     },
@@ -477,7 +477,7 @@ export const resolvers = {
         title: editedArticle.title,
         author: editedArticle.author,
         authorId: editedArticle.authorId,
-        date: editedArticle.date,
+        date: JSON.stringify(editedArticle.date),
         image: editedArticle.image,
         isApproved: editArticle.isApproved,
         content: JSON.stringify(editedArticle.content),
@@ -486,8 +486,8 @@ export const resolvers = {
           authorId: comment.authorID,
           author: comment.author,
           content: JSON.stringify(comment.content),
-          createdAt: comment.createdAt,
-          updatedAt: comment.updatedAt,
+          createdAt: JSON.stringify(comment.createdAt),
+          updatedAt: JSON.stringify(comment.updatedAt),
         })),
       };
     },
@@ -523,8 +523,8 @@ export const resolvers = {
         lastName: savedMessage.lastName,
         email: savedMessage.email,
         subject: savedMessage.subject,
-        createdAt: savedMessage.createdAt,
-        updatedAt: savedMessage.updatedAt,
+        createdAt: JSON.stringify(savedMessage.createdAt),
+        updatedAt: JSON.stringify(savedMessage.updatedAt),
         content: JSON.stringify(savedMessage.content),
       };
     },
