@@ -11,7 +11,7 @@ import { SocketContext } from "../../contexts/reducers/socketContext";
 import { Card } from "../../components/Cards/Card.js";
 import { useRouter } from "next/router";
 import { initializeApollo, addApolloState } from "../../lib/apolloClient";
-import { gql, useQuery, NetworkStatus } from "@apollo/client";
+import { gql, useQuery, useMutation, NetworkStatus } from "@apollo/client";
 
 export const ARTICLE_QUERY = gql`
   query articleQuery($_id: String!) {
@@ -36,6 +36,28 @@ export const ARTICLE_QUERY = gql`
   }
 `;
 
+export const POST_COMMENT_MUTATION = gql`
+  mutation postComment($_id: String!, $content: String!) {
+    postComment(_id: $_id, content: $content) {
+      _id
+      date
+      image
+      title
+      author
+      authorId
+      isApproved
+      content
+      comments {
+        _id
+        authorId
+        author
+        content
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
 const ArticlePage = (props) => {
   const router = useRouter();
   const { id } = router.query;
@@ -57,69 +79,62 @@ const ArticlePage = (props) => {
     article = {
       ...data.article,
       date: JSON.parse(data.article.date),
-      content: data.article.content? html.serialize(JSON.parse(data.article.content)) : `<p></p>`,
+      content: data.article.content
+        ? html.serialize(JSON.parse(data.article.content))
+        : `<p></p>`,
       comments: data.article.comments.map((comment) => ({
         ...comment,
         content: JSON.parse(comment.content),
         createdAt: JSON.parse(comment.createdAt),
         updatedAt: JSON.parse(comment.updatedAt),
-      }))
+      })),
     };
   }
+
+  const [savePostedComments, { _ }] = useMutation(POST_COMMENT_MUTATION);
 
   // const socket = useSelector((state) => state.network.socket);
   const [loginState, loginDispatch] = useContext(LoginContext);
   const [socketState, socketDispatch] = useContext(SocketContext);
   const socket = socketState.socket;
   const user = loginState.user;
-  // const [article, setArticle] = useState(props.article);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // useEffect(() => {
-  //   const getArticle = async () => {
-  //     const res = await fetch(`/api/articles/page?id=${id}`);
-  //     const json = await res.json();
-  //     const fetchedArticle = {
-  //       ...article,
-  //       comments: json.comments,
-  //     };
-  //     setArticle(fetchedArticle);
-  //   };
-
-  //   if (socket) {
-  //     socket.on("comments changed", (data) => {
-  //       console.log("Comments changed");
-  //       if (data.articleId === id) {
-  //         try {
-  //           getArticle();
-  //         } catch (error) {
-  //           console.log(error);
-  //         }
-  //       }
-  //     });
-  //   }
-  // }, [socket]);
-
-  const postComment = (comment) => {
-    const toPost = { id: id.toString(), content: comment };
-    const options = {
-      headers: { "Content-Type": "application/json" },
-    };
-
-    axios
-      .post("/api/articles/postcomment", JSON.stringify(toPost), options)
-      .then((res) => {
-        alert("Comment Posted");
-      })
-      .catch((err) => {
-        if (err.response.status === 401 || err.response.status === 400) {
-          alert(err.response.data.error);
-        } else if (err.response.status !== 200) {
-          throw Error(err);
+  useEffect(() => {
+    if (socket) {
+      socket.on("comments changed", (data) => {
+        console.log("Comments changed");
+        if (data.articleId === id) {
+          refetch();
         }
       });
+    }
+  }, [socket]);
+
+  const postComment = (comment) => {
+    // const toPost = { id: id.toString(), content: comment };
+    // const options = {
+    //   headers: { "Content-Type": "application/json" },
+    // };
+
+    // axios
+    //   .post("/api/articles/postcomment", JSON.stringify(toPost), options)
+    //   .then((res) => {
+    //     alert("Comment Posted");
+    //   })
+    //   .catch((err) => {
+    //     if (err.response.status === 401 || err.response.status === 400) {
+    //       alert(err.response.data.error);
+    //     } else if (err.response.status !== 200) {
+    //       throw Error(err);
+    //     }
+    //   });
+
+    savePostedComments({
+      variables: { _id: id.toString(), content: JSON.stringify(comment) },
+    });
   };
 
   const isEditable =
@@ -182,26 +197,6 @@ export async function getServerSideProps({ query }) {
   return addApolloState(apolloClient, {
     props: {},
   });
-
-  // const res = await fetch(
-  //   `${process.env.NEXT_PUBLIC_DOMAIN}/api/articles/page?id=${query.id}`
-  // );
-  // const json = await res.json();
-  // const article = {
-  //   title: json.title,
-  //   author: json.author,
-  //   date: json.date,
-  //   image: json.image,
-  //   isApproved: json.isApproved,
-  //   content: json.content ? html.serialize(json.content) : `<p></p>`,
-  //   comments: json.comments,
-  // };
-
-  // return {
-  //   props: {
-  //     article,
-  //   },
-  // };
 }
 
 export default ArticlePage;

@@ -7,9 +7,11 @@ import withCookies from "../middlewares/cookiesMiddleware";
 import verify from "../verification/verifyTokenGraphql";
 
 const context = (ctx) => {
+  const io = ctx.req.app.get("socket-io");
   return {
     cookie: ctx.res.cookie,
-    authData: ctx.req.authData
+    authData: ctx.req.authData,
+    io: io,
   };
 };
 

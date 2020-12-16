@@ -48,6 +48,8 @@ try {
   Message = require("../models/Messages");
 }
 
+const COMMENT_ADDED = "COMMENT_ADDED";
+
 export const resolvers = {
   Query: {
     youtubeLinks: async () => await YoutubeLink.find({}).sort("-date"),
@@ -268,14 +270,14 @@ export const resolvers = {
         createdAt: JSON.stringify(message.createdAt),
         updatedAt: JSON.stringify(message.updatedAt),
         content: JSON.stringify(message.content),
-      }))
+      }));
     },
 
     message: async (parent, args, ctx) => {
       const _id = args._id;
       let message;
       try {
-        message =  await Message.findById(_id)
+        message = await Message.findById(_id);
       } catch (err) {
         throw Error(err);
       }
@@ -289,7 +291,7 @@ export const resolvers = {
         createdAt: JSON.stringify(message.createdAt),
         updatedAt: JSON.stringify(message.updatedAt),
         content: JSON.stringify(message.content),
-      }
+      };
     },
   },
 
@@ -472,7 +474,14 @@ export const resolvers = {
       } catch (err) {
         throw Error(err.message);
       }
-      return {
+
+      try {
+        const {io} = ctx;
+        io.emit("comments changed", { articleId: args._id });
+      } catch (err) {
+        throw Error(err.message);
+      }
+      const article = {
         _id: editedArticle._id,
         title: editedArticle.title,
         author: editedArticle.author,
@@ -490,6 +499,7 @@ export const resolvers = {
           updatedAt: JSON.stringify(comment.updatedAt),
         })),
       };
+      return article;
     },
 
     createMessage: async (parent, args, ctx) => {
@@ -510,7 +520,7 @@ export const resolvers = {
           lastName: args.lastName,
           email: args.email,
           subject: args.subject,
-          content: args.content? JSON.parse(args.content) : {},
+          content: args.content ? JSON.parse(args.content) : {},
         });
 
         savedMessage = await message.save();
