@@ -54,15 +54,16 @@ const Articles = (props) => {
 
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
-  // const [articles, setArticles] = useState(props.articles);
   const screen = deviceState.screen;
   const user = loginState.user;
   const loggedIn = loginState.isLoggedIn;
   const history = useRouter();
 
   useEffect(() => {
-    refetch();
-  }, [user]);
+    if(loggedIn){
+      refetch();
+    }
+  }, [loggedIn]);
 
   const getArticle = async () => {
     axios
@@ -160,19 +161,6 @@ export async function getServerSideProps(context) {
   await apolloClient.query({
     query: ALL_ARTICLES_QUERY,
   });
-
-  // const res = await fetch(
-  //   `${process.env.NEXT_PUBLIC_DOMAIN}/api/articles/pages`
-  // );
-  // const json = await res.json();
-  // let articles = json["links"].map((item, index) => {
-  //   return {
-  //     index: index,
-  //     ...item,
-  //     contentType: Card.ContentType["article-internal"],
-  //     link: `/article?id=${item["_id"]}`,
-  //   };
-  // });
 
   return addApolloState(apolloClient, {
     props: {},

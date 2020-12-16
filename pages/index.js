@@ -8,33 +8,51 @@ import { LoginContext } from "../contexts/reducers/loginContext";
 import axios from "axios";
 import { Card } from "../components/Cards/Card";
 import { useRouter } from "next/router";
+import { initializeApollo, addApolloState } from "../lib/apolloClient";
+import { useQuery, NetworkStatus } from "@apollo/client";
+import {ALL_ARTICLES_QUERY} from "../pages/articles"
+
 
 const Home = (props) => {
+    
+  const {
+    loading,
+    error,
+    fetchMore,
+    data,
+    networkStatus,
+    refetch,
+  } = useQuery(ALL_ARTICLES_QUERY, { notifyOnNetworkStatusChange: true });
+
+  const loadingMoreArticles = networkStatus === NetworkStatus.fetchMore;
+
+  let articles;
+  if (loading && !loadingMoreArticles) {
+    articles = [];
+  } else {
+    articles = data.articles.map((item, index) => {
+      return {
+        index: index,
+        ...item,
+        contentType: Card.ContentType["article-internal"],
+        link: `/article?id=${item["_id"]}`,
+      };
+    });
+  }
+
+
   const [deviceState, deviceDispatch] = useContext(DeviceContext);
   const [loginState, loginDispatch] = useContext(LoginContext);
-  const [articles, setArticles] = useState(props.articles);
   const history = useRouter();
   const screen = deviceState.screen;
   const loggedIn = loginState.isLoggedIn;
   const user = loginState.user;
-  useEffect(() => {
-    const getArticles = async () => {
-      if (loggedIn) {
-        const res = await fetch("/api/articles/pages");
-        const json = await res.json();
-        const toReturn = json["links"].map((item, index) => {
-          return {
-            index: index,
-            ...item,
-            contentType: Card.ContentType["article-internal"],
-            link: `/article?id=${item["_id"]}`,
-          };
-        });
-        setArticles(toReturn);
-      }
-    };
 
-    getArticles();
+
+  useEffect(() => {
+    if(loggedIn){
+      refetch();
+    }
   }, [loggedIn]);
 
   const getArticle = async () => {
@@ -131,22 +149,15 @@ const Home = (props) => {
 };
 
 export async function getServerSideProps(context) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_DOMAIN}/api/articles/pages`);
-  const json = await res.json();
-  let articles = json["links"].map((item, index) => {
-    return {
-      index: index,
-      ...item,
-      contentType: Card.ContentType["article-internal"],
-      link: `/article?id=${item["_id"]}`,
-    };
+  const apolloClient = initializeApollo();
+
+  await apolloClient.query({
+    query: ALL_ARTICLES_QUERY,
   });
 
-  return {
-    props: {
-      articles,
-    },
-  };
+  return addApolloState(apolloClient, {
+    props: {},
+  });
 }
 
 export default Home;
