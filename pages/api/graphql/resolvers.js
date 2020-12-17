@@ -12,7 +12,6 @@ const {
   resetPasswordValidation,
   messageValidation,
 } = require("../validation/validation");
-
 let YoutubeLink;
 try {
   YoutubeLink = mongoose.model("YoutubeLinks");
@@ -476,7 +475,7 @@ export const resolvers = {
       }
 
       try {
-        const {io} = ctx;
+        const { io } = ctx;
         io.emit("comments changed", { articleId: args._id });
       } catch (err) {
         throw Error(err.message);

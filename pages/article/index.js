@@ -61,7 +61,7 @@ export const POST_COMMENT_MUTATION = gql`
 const ArticlePage = (props) => {
   const router = useRouter();
   const { id } = router.query;
-  const { loading, error, fetchMore, data, networkStatus, refetch } = useQuery(
+  const { loading, fetchMore, data, networkStatus, refetch } = useQuery(
     ARTICLE_QUERY,
     {
       variables: { _id: id },
@@ -91,7 +91,7 @@ const ArticlePage = (props) => {
     };
   }
 
-  const [savePostedComments, { _ }] = useMutation(POST_COMMENT_MUTATION);
+  const [savePostedComments] = useMutation(POST_COMMENT_MUTATION);
 
   // const socket = useSelector((state) => state.network.socket);
   const [loginState, loginDispatch] = useContext(LoginContext);
@@ -114,27 +114,16 @@ const ArticlePage = (props) => {
   }, [socket]);
 
   const postComment = (comment) => {
-    // const toPost = { id: id.toString(), content: comment };
-    // const options = {
-    //   headers: { "Content-Type": "application/json" },
-    // };
-
-    // axios
-    //   .post("/api/articles/postcomment", JSON.stringify(toPost), options)
-    //   .then((res) => {
-    //     alert("Comment Posted");
-    //   })
-    //   .catch((err) => {
-    //     if (err.response.status === 401 || err.response.status === 400) {
-    //       alert(err.response.data.error);
-    //     } else if (err.response.status !== 200) {
-    //       throw Error(err);
-    //     }
-    //   });
 
     savePostedComments({
       variables: { _id: id.toString(), content: JSON.stringify(comment) },
-    });
+    })
+      .then(() => {
+        alert("Comment Posted");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const isEditable =

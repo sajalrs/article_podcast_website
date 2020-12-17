@@ -191,24 +191,13 @@ const Edit = (props) => {
         image: image,
         content: JSON.stringify(textEditorValue.toJSON()),
       },
-    });
-    // const editedArticle = { ...article, content: textEditorValue.toJSON() };
-
-    // const options = {
-    //   headers: { "Content-Type": "application/json" },
-    // };
-    // axios
-    //   .post("/api/articles/edit", JSON.stringify(editedArticle), options)
-    //   .then((res) => {
-    //     alert("Changes saved and submitted for moderator approval");
-    //   })
-    //   .catch((err) => {
-    //     if (err.response.status === 401 || err.response.status === 400) {
-    //       alert(err.response.data.error);
-    //     } else if (err.response.status !== 200) {
-    //       throw Error(err);
-    //     }
-    //   });
+    })
+      .then(() => {
+        alert("Changes saved and submitted for moderator approval");
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const onTitleChange = (event) => {

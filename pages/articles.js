@@ -1,4 +1,4 @@
-import React, {useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import MediumCard from "../components/Cards/MediumCard/MediumCard.js";
 import LargeCard from "../components/Cards/LargeCard/LargeCard.js";
 import Page from "../components/Page/Page";
@@ -26,7 +26,6 @@ export const ALL_ARTICLES_QUERY = gql`
 `;
 
 const Articles = (props) => {
-  
   const {
     loading,
     error,
@@ -60,7 +59,7 @@ const Articles = (props) => {
   const history = useRouter();
 
   useEffect(() => {
-    if(loggedIn){
+    if (loggedIn) {
       refetch();
     }
   }, [loggedIn]);
