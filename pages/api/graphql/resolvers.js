@@ -442,7 +442,7 @@ export const resolvers = {
         authorId: editedArticle.authorId,
         date: JSON.stringify(editedArticle.date),
         image: editedArticle.image,
-        isApproved: editArticle.isApproved,
+        isApproved: editedArticle.isApproved,
         content: JSON.stringify(editedArticle.content),
         comments: editedArticle.comments.map((comment) => ({
           _id: comment._id,
