@@ -1,0 +1,17 @@
+version: '3'
+
+services: 
+  #NextJs
+  nextjs:
+    ports: 
+      - '3000:3000'
+    build: 
+      context: ./NextJs
+      dockerfile: Dockerfile
+    volumes: 
+      - ./NextJs:/usr/src/app
+      - ./NextJs/node_modules:/usr/src/app/node_modules
+      - ./NextJs/.next:/usr/src/app/.next
+    env_file:
+      - .env
+    restart: always

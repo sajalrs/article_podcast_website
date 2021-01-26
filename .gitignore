@@ -1,36 +1,39 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-next.config.js
-.next/
-*.log
+/spring-boot-rest-api/src/main/resources/application.properties
+NextJs/next.config.js
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.env
+
+
 # dependencies
-/node_modules
-/.pnp
-.pnp.js
+NextJs/node_modules
+NextJs/.pnp
+NextJs/.pnp.js
 
 # testing
-/coverage
+NextJs/coverage
 
 # next.js
-/.next/
-/out/
+NextJs/.next/
+NextJs/out/
 
 # production
-/build
+NextJs/build
 
 # misc
-.DS_Store
-*.pem
+NextJs/.DS_Store
+NextJs/*.pem
 
 # debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+NextJs/npm-debug.log*
+NextJs/yarn-debug.log*
+NextJs/yarn-error.log*
 
 # local env files
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+NextJs/.env.local
+NextJs/.env.development.local
+NextJs/.env.test.local
+NextJs/.env.production.local
 
 # vercel
-.vercel
+NextJs/.vercel
